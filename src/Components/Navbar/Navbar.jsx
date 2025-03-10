@@ -19,7 +19,9 @@ const Navbar = () => {
           backgroundColor: "transparent",
           boxShadow: "none",
           px: { xs: 2, sm: 4, md: 6 },
-          py: 2
+          py: 2,
+          width:"100%"
+
         }}
       >
         <Toolbar sx={{ justifyContent: "space-between", px: 3 }}>

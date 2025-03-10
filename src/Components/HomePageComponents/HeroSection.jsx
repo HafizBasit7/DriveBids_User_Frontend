@@ -3,74 +3,104 @@ import { Box, Button, Typography } from "@mui/material";
 import CarSVG from "../../assets/SVG/Carsvg.svg";
 import colors from "../../Style/color";
 
-
 const HeroSection = () => {
   return (
     <Box
-    sx={{
-      minHeight: "100%", // Ensure it fills the whole viewport
-      background: "linear-gradient(-135deg,  #FFD600 50%, #ffffff 50%)",
-      pt: { xs: 15, md: 2 },
-     
-      py: 5,
-      display: "flex",
-      flexDirection: { xs: "column", md: "row" },
-      alignItems: "center",
-      justifyContent: "space-between",
-    }}
-  >
-    {/* Left Content */}
-    <Box sx={{ maxWidth: 500, zIndex: 1, px: { xs: 3, md: 10 }, }}>
-      <Typography
-        variant="h2"
-        fontWeight="bold"
-        sx={{ color: "#000", mb: 2 ,fontFamily:"Outfit" }}
-      >
-        Bid. Buy. Sell. <br /> The Road Starts Here!
-      </Typography>
-
-      <Typography   sx={{ color: "#000000", mb: 3,fontFamily:"Inter",fontWeight:500 }}>
-        Discover the easiest way to auction your car or find the ride of your
-        dreams.
-      </Typography>
-
-      <Button
-        variant="contained"
-        sx={{
-          backgroundColor: colors.buttoncolor,
-          color: "#fff",
-          px: 3,
-          py: 1.5,
-          borderRadius:2,
-          
-          "&:hover": { backgroundColor: "#2F61BF" },
-        }}
-      >
-        Sign Up for Free Now
-      </Button>
-
-      <Typography sx={{ mt: 2 }}>
-        Already have an account?{" "}
-        <a href="#" style={{ color: "#000", fontWeight:600}}>
-          Log In now
-        </a>
-      </Typography>
-    </Box>
-
-    {/* Right Content (Car SVG Fully to the End) */}
-    <Box
       sx={{
-        width: { xs: "100%", md: "50%" },
-        maxWidth: 650,
+        minHeight: "100%",
+        background: "#FFD600",
+        pt: { xs: 15, md: 2 },
+        py: 5,
         display: "flex",
-        justifyContent: "flex-end", // Moves Car SVG completely to the right
-        mt: { xs: 4, md: 0 },
-        zIndex: 1,
+        flexDirection: { xs: "column", md: "row" },
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
+        position: "relative", // Ensures absolute positioning works inside
+        overflow: "hidden", // Prevents unwanted overflow from skew effect
       }}
     >
-      <img src={CarSVG} alt="Car Illustration" style={{ width: "100%" }} />
+      {/* White Strips */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: "-10%",
+          left: "-50%",
+          width: "120%",
+          height: "30%",
+          backgroundColor: "white",
+          transform: "skewY(50deg)", 
+          zIndex: 0,
+        }}
+      />
+      <Box
+      sx={{
+        position: "absolute",
+        top: "-10%",
+        left: "-20%",
+        width: "120%",
+        height: "30%",
+        backgroundColor: "white",
+        transform: "skewY(50deg)", 
+        zIndex: 0,
+      }}
+      />
+
+      {/* Left Content */}
+      <Box sx={{ maxWidth: 500, zIndex: 1, px: { xs: 3, md: 10 } }}>
+        <Typography
+          variant="h2"
+          fontWeight="600"
+          sx={{ color: "#000", mb: 2, fontFamily: "Outfit" }}
+        >
+          Bid. Buy. Sell. <br /> The Road Starts Here!
+        </Typography>
+
+        <Typography
+          sx={{ color: "#000000", mb: 3, fontFamily: "Inter", fontWeight: 500 }}
+        >
+          Discover the easiest way to auction your car or find the ride of your
+          dreams.
+        </Typography>
+
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: colors.buttoncolor,
+            color: "#fff",
+            px: 3,
+            py: 1.5,
+            borderRadius: 2,
+            fontFamily: "Inter",
+            fontSize: 12,
+            "&:hover": { backgroundColor: "#2F61BF" },
+          }}
+        >
+          Sign Up for Free Now
+        </Button>
+
+        <Typography sx={{ mt: 2 }}>
+          Already have an account?{" "}
+          <a href="#" style={{ color: "#000", fontWeight: 600 }}>
+            Log In now
+          </a>
+        </Typography>
+      </Box>
+
+      {/* Right Content - Car Image */}
+      <Box
+        sx={{
+          width: { xs: "100%", md: "50%" },
+          maxWidth: 650,
+          display: "flex",
+          justifyContent: "flex-end",
+          mt: { xs: 4, md: 0 },
+          zIndex: 1,
+        }}
+      >
+        <img src={CarSVG} alt="Car Illustration" style={{ width: "100%" }} />
+      </Box>
     </Box>
-  </Box>
   );
 };
 
