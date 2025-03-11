@@ -22,27 +22,27 @@ const HeroSection = () => {
     >
       {/* White Strips */}
       <Box
-        sx={{
-          position: "absolute",
-          top: "-10%",
-          left: "-50%",
-          width: "120%",
-          height: "30%",
-          backgroundColor: "white",
-          transform: "skewY(50deg)", 
-          zIndex: 0,
-        }}
+      sx={{
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: "25%",
+        width: "13%",
+        backgroundColor: "white",
+        transform: "skew(40deg)",
+        zIndex: 0
+    }}
       />
       <Box
       sx={{
         position: "absolute",
-        top: "-10%",
-        left: "-20%",
-        width: "120%",
-        height: "30%",
+        top: 0,
+        bottom: 0,
+        left: "54%",
+        width: "13%",
         backgroundColor: "white",
-        transform: "skewY(50deg)", 
-        zIndex: 0,
+        transform: "skew(40deg)",
+        zIndex: 0
       }}
       />
 

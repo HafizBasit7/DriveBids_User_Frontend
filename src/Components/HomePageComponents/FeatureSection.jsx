@@ -23,21 +23,7 @@ const FeatureSection = () => {
   return (
     <>
       {/* Features Section */}
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          flexDirection: { xs: "column", sm: "row" },
-          justifyContent: "center",
-          alignItems: "center",
-          gap: { xs: 3, sm: 5 },
-          py: 5,
-          px: { xs: 2, md: 10 },
-          zIndex: 1,
-          width:"100%"
-
-        }}
-      >
+     
         {features.map((feature, index) => (
           <Box
             key={index}
@@ -76,58 +62,9 @@ const FeatureSection = () => {
             </Typography>
           </Box>
         ))}
-      </Box>
+    
 
-      <Box
-        sx={{
-          
-          backgroundColor: "#FFD500",
-          py: 2,
-          pl:{ xs: 2, md: 10 },
-          display: "flex",
-          alignItems: "flex-start", 
-          justifyContent: "flex-start",
-          
-        }}
-      >
-        <Typography
-          
-          sx={{
-            fontWeight: 600,
-            color: "#000",
-            fontFamily: "OutFit",
-            fontSize: { xs: 35, sm: 43 , md:50 },
-            zIndex: 1,
-          }}
-        >
-          Create an Account.
-        </Typography>
-      </Box>
-
-      <Box
-        sx={{
-         
-          backgroundColor: "#fff",
-          py: 4,
-          px: { xs: 2, md: 10 },
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: { xs: 14, sm: 18 , md:22 },
-            color: "#595B61",
-            textAlign: "center",
-            fontWeight:600,
-            fontFamily:"Inter",
-            zIndex: 1,
-          }}
-        >
-          Sign up now to buy and sell cars with ease!
-        </Typography>
-      </Box>
+      
     </>
   );
 };

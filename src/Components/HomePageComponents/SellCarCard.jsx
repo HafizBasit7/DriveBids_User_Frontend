@@ -4,18 +4,7 @@ import SellCarImage from "../../assets/Png/sellcarimage.png"; // Replace with ac
 
 const SellCarCard = () => {
     return (
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-                width: "100%",
-                backgroundColor: "#fff",
-                py: 5,
-
-            }}
-        >
+       
             <Box
                 sx={{
                     display: "flex",
@@ -97,7 +86,7 @@ const SellCarCard = () => {
                     />
                 </Box>
             </Box>
-        </Box>
+        
     );
 };
 

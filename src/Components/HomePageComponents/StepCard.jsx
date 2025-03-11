@@ -39,19 +39,7 @@ const steps = [
 
 const StepsCard = () => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        gap: 3,
-        py: 2,
-        width:"100%",
-        zIndex: 1,
-
-      
-      }}
-    >
+    <>
       {steps.map((step) => (
         <Box
           key={step.id}
@@ -117,7 +105,7 @@ const StepsCard = () => {
           </Box>
         </Box>
       ))}
-    </Box>
+      </>
   );
 };
 
