@@ -2,8 +2,9 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import homeimg from "../../assets/Png/homeimg.jfif";
+import homeimg2 from "../../assets/Png/homeimg2.jfif";
+import homeimg3 from "../../assets/Png/homeimg3.jfif";
 
-// Sample data for the steps
 const steps = [
   {
     id: 1,
@@ -23,7 +24,7 @@ const steps = [
       "Secure account setup for sellers.",
       "Start accessing our trusted auction platform.",
     ],
-    image: homeimg,
+    image: homeimg2,
   },
   {
     id: 3,
@@ -33,7 +34,7 @@ const steps = [
       "Choose the highest or most suitable bid.",
       "Secure and hassle-free payment options.",
     ],
-    image: homeimg,
+    image: homeimg3,
   },
 ];
 
@@ -53,13 +54,19 @@ const StepsCard = () => {
               zIndex: 1,
           }}
         >
-          <Box
-            component="img"
-            src={step.image}
-            alt={step.title}
-            sx={{ width: "95%", height: "70%", objectFit: "cover",m:1,borderRadius:2 }} 
-            
-          />
+         <Box
+  component="img"
+  src={step.image}
+  alt={step.title}
+  sx={{ 
+    width: { xs: "90%", sm: "95%", md: "90%", lg: "85%" }, 
+    height: { xs: "60%", sm: "65%", md: "70%", lg: "75%" }, 
+    objectFit: "cover",
+    m: 1,
+    borderRadius: 2 
+  }} 
+/>
+
 
           <Box sx={{ p: 1 }}>
             <Typography

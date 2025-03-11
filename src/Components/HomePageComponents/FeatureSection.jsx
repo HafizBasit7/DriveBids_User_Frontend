@@ -32,7 +32,7 @@ const FeatureSection = () => {
               alignItems: "center",
               gap: 2,
               maxWidth: 350,
-              width: "100%",
+            
               zIndex: 1,
             }}
           >

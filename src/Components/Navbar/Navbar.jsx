@@ -41,9 +41,10 @@ const Navbar = () => {
                 borderColor: "#2F61BF",
                 backgroundColor: colors.buttoncolor,
                 fontSize: "12px",
-                width: "130px",
+                width: "120px",
                 height: "40px",
                 borderRadius: 2,
+                fontFamily:"Inter",
                 ml: 3,
                 "&:hover": { borderColor: "#2F61BF", backgroundColor: "#1E4BA0" },
               }}

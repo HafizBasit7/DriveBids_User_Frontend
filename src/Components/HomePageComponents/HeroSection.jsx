@@ -8,7 +8,7 @@ const HeroSection = () => {
     <Box
       sx={{
         minHeight: "100%",
-        background: "#FFD600",
+        background: colors.yellowbackground,
         pt: { xs: 15, md: 2 },
         py: 5,
         display: "flex",
@@ -26,7 +26,7 @@ const HeroSection = () => {
         position: "absolute",
         top: 0,
         bottom: 0,
-        left: "25%",
+        left: "24%",
         width: "13%",
         backgroundColor: "white",
         transform: "skew(40deg)",

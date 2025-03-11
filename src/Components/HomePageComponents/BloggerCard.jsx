@@ -19,7 +19,6 @@ const BloggerCard = () => {
         border: "1px solid #E4E4E4", // Add border with color
       }}
     >
-      {/* Profile Image (Avatar) */}
       <Avatar
         src={avatarimg}
         alt="Blogger"
@@ -35,12 +34,11 @@ const BloggerCard = () => {
         }}
       />
 
-      {/* Padding to push content down after Avatar */}
       <Box mt={4}>
-        <Typography variant="h6" fontWeight="bold">
+        <Typography fontWeight="bold" sx={{ fontSize:18, fontFamily:"Inter" }}>
           Sofia
         </Typography>
-        <Typography variant="body2" color="text.secondary" mb={1}>
+        <Typography color="text.secondary" mb={1} sx={{ fontSize:18, fontFamily:"Inter" }}>
           Blogger
         </Typography>
 

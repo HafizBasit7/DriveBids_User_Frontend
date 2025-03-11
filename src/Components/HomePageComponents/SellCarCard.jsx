@@ -1,93 +1,128 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
-import SellCarImage from "../../assets/Png/sellcarimage.png"; // Replace with actual image path
+import { Box, Typography, Button } from "@mui/material";
+import SellCarImage from "../../assets/Png/sellcarimg.png"; // Replace with actual image path
+import colors from "../../Style/color";
+import rigtharrow from "../../assets/SVG/arrow-right-small.svg"; // Replace with actual image path
+
 
 const SellCarCard = () => {
-    return (
-       
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: { xs: "column", md: "row" },
-                    width: "100%",
-                    maxWidth: "1000px",
-                    borderRadius: "12px",
-                    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-                    overflow: "hidden",
-                    position: "relative",
-                    height: { xs: "auto", md: "230px" },
-                    backgroundColor: "#fff",
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: colors.yellowbackground,
+        borderRadius: "10px",
+        overflow: "hidden",
+        width: { xs: "90%", md: "70%" },
+        mx: "auto",
+        boxShadow: 3,
+        height: { md: "25%" },
+        position: "relative", 
+      }}
+    >
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: "58%", 
+          width: "7%",
+          backgroundColor: "white",
+          transform: "skewX(44deg)", 
+          zIndex: 2, 
+        }}
+      />
 
-                }}
-            >
-                <Box
-                    sx={{
-                        position: "absolute",
-                        top: 0,
-                        bottom: 0,
-                        left: "56%",
-                        width: "7%",
-                        backgroundColor: "white",
-                        transform: "skew(44deg)",
-                        zIndex: 2
-                    }}
-                />
+      <Box
+        sx={{
+          flex: 1,
+          textAlign: { xs: "center", md: "left" },
+          padding: { xs: 2, md: 3 },
+          zIndex: 3, 
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: 750,
+            fontSize: { xs: 20, md: 26 },
+            fontFamily: "Outfit",
+          }}
+        >
+          Ready to Sell Your Car Today?
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: { xs: 14, md: 16 },
+            color: "#000",
+            my: 2,
+            fontFamily: "Inter",
+            fontWeight: 550,
+          }}
+        >
+          Join thousands of successful sellers and get the best deal for your car in just a few clicks!
+        </Typography>
+        <Box
+  sx={{
+    display: "flex",
+    justifyContent: { xs: "center", sm: "center", md: "flex-start" }, // Center on xs & sm, left on md+
+  }}
+>
+  <Button
+    variant="contained"
+    sx={{
+      backgroundColor: "#2F61BF",
+      color: "#fff",
+      px: 2,
+      py: 1.5,
+      borderRadius: "5px",
+      fontWeight:600,
+      fontFamily: "Inter",
+      display: "flex",
+      alignItems: "center",
+      gap: 1, // Spacing between text and icon
+      "&:hover": { backgroundColor: "#1D4FB3" },
+      fontSize: 11,
+    }}
+  >
+    Start Selling Now  
+    <Box 
+      component="img"
+      src={rigtharrow} 
+      alt="Right Arrow"
+      sx={{ width: 16, height: 16, ml: 0.5 }} // Adjust size & spacing
+    />
+  </Button>
+</Box>
 
-                <Box
-                    sx={{
-                        backgroundColor: "#FFD600",
-                        padding: "14px",
-                        flex: 1,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                        height: "100%",
-                        zIndex: 1,
-                    }}
-                >
-                    <Typography variant="h5" fontWeight="bold" sx={{ color: "#000", fontFamily: "Outfit" }}>
-                        Ready to Sell Your Car Today?
-                    </Typography>
-                    <Typography sx={{ color: "#000", mt: 1 }}>
-                        Join thousands of successful sellers and get the best deal for your car
-                        in just a few clicks!
-                    </Typography>
-                    <Button
-                        variant="contained"
-                        sx={{
-                            mt: 2,
-                            backgroundColor: "#2F61BF",
-                            color: "#fff",
-                            textTransform: "none",
-                            px: 3,
-                            py: 1,
-                            fontFamily: "Inter",
-                            borderRadius: "8px",
-                            "&:hover": { backgroundColor: "#1E4CA1" },
-                        }}
-                    >
-                        Start Selling Now →
-                    </Button>
-                </Box>
 
-                <Box
-                    sx={{
-                        flex: 1,
-                        height: "100%",
-                        position: "relative",
-                        zIndex: 0,
-                    }}
-                >
-                    <img
-                        src={SellCarImage}
-                        alt="Handshake deal"
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                </Box>
-            </Box>
-        
-    );
+      </Box>
+
+      <Box
+  sx={{
+    flex: 1,
+    display: { xs: "none", md: "flex" }, // Hide on small screens, show on medium+
+    justifyContent: "center",
+    alignItems: "center",
+    mt: { xs: 3, md: 0 },
+  }}
+>
+  <img
+    src={SellCarImage}
+    alt="Sell Your Car"
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      zIndex: 1,
+    }}
+  />
+</Box>
+
+    </Box>
+  );
 };
 
 export default SellCarCard;
