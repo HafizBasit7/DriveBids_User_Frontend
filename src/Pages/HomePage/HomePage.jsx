@@ -11,8 +11,8 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BiddingWork from "../../Components/HomePageComponents/BiddingWork";
 import AskQuestions from "../../Components/HomePageComponents/Frequentlyask";
 import colors from "../../Style/color";
-import Footer from "../../Components/HomePageComponents/Footer";
-import SellCarSlider from "../../Components/HomePageComponents/SellCardSlider";
+import Footer from "../../Components/Footer/Footer";
+import CardCarousel from "../../Components/HomePageComponents/SellCardSlider";
 
 const HomePage = () => {
   return (
@@ -45,8 +45,33 @@ const HomePage = () => {
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "flex-start",
+          position: "relative",
         }}
       >
+        <Box
+    sx={{
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: "56%",
+      width: "15%",
+      backgroundColor: "white",
+      transform: "skew(40deg)",
+      zIndex: 0, 
+    }}
+  />
+  <Box
+    sx={{
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      right: "-1%",
+      width: "15%",
+      backgroundColor: "white",
+      transform: "skew(40deg)",
+      zIndex: 0, 
+    }}
+  />
         <Typography
           sx={{
             fontWeight: 600,
@@ -59,6 +84,7 @@ const HomePage = () => {
         >
           Create an Account.
         </Typography>
+        
       </Box>
 
       <Box
@@ -222,7 +248,7 @@ const HomePage = () => {
         </Typography>
       </Box>
       <Box sx={{  width: "100%" }}>
-      <SellCarSlider/>
+      <CardCarousel/>
       </Box>
       <Box
         sx={{

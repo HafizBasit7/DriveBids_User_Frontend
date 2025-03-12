@@ -107,6 +107,7 @@ const SellCarCard = () => {
     justifyContent: "center",
     alignItems: "center",
     mt: { xs: 3, md: 0 },
+    height: "100%", 
   }}
 >
   <img

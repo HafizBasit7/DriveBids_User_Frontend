@@ -16,21 +16,21 @@ const HeroSection = () => {
         alignItems: "center",
         justifyContent: "space-between",
         width: "100%",
-        position: "relative", // Ensures absolute positioning works inside
-        overflow: "hidden", // Prevents unwanted overflow from skew effect
+        position: "relative", 
+        overflow: "hidden", 
       }}
     >
-      {/* White Strips */}
       <Box
       sx={{
         position: "absolute",
         top: 0,
         bottom: 0,
-        left: "24%",
-        width: "13%",
+        left: "22%",
+        width: "15%",
         backgroundColor: "white",
         transform: "skew(40deg)",
-        zIndex: 0
+        zIndex: 0,
+        
     }}
       />
       <Box
@@ -39,15 +39,14 @@ const HeroSection = () => {
         top: 0,
         bottom: 0,
         left: "54%",
-        width: "13%",
+        width: "15%",
         backgroundColor: "white",
         transform: "skew(40deg)",
         zIndex: 0
       }}
       />
 
-      {/* Left Content */}
-      <Box sx={{ maxWidth: 500, zIndex: 1, px: { xs: 3, md: 10 } }}>
+      <Box sx={{ maxWidth: 600, zIndex: 1, px: { xs: 3, md: 10 } }}>
         <Typography
           variant="h2"
           fontWeight="600"
