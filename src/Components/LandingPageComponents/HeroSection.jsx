@@ -91,7 +91,6 @@ const HeroSection = () => {
         </Typography>
       </Box>
 
-      {/* Right Content - Car Image with Car Light */}
       <Box
         sx={{
           width: { xs: "100%", md: "50%" },
@@ -117,7 +116,7 @@ const HeroSection = () => {
             transform: "translateX(-50%)",
             width: "12%",
             opacity: showLight ? 1 : 0,
-            transition: "opacity 0.5s ease-in-out",
+            transition: "opacity 0.2s ease-in-out",
           }}
         />
       </Box>

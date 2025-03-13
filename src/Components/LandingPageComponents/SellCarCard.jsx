@@ -16,11 +16,13 @@ const SellCarCard = () => {
         backgroundColor: colors.yellowbackground,
         borderRadius: "10px",
         overflow: "hidden",
-        width: { xs: "90%", md: "70%" },
+        width: { xs: "90%", md: "100%" },
         mx: "auto",
-        boxShadow: 3,
-        height: { md: "25%" },
+    
+        borderRadius:2,
+        
         position: "relative", 
+        maxHeight:330
       }}
     >
       <Box
@@ -28,10 +30,10 @@ const SellCarCard = () => {
           position: "absolute",
           top: 0,
           bottom: 0,
-          left: "58%", 
-          width: "7%",
+          left: "49%", 
+          width: "8%",
           backgroundColor: "white",
-          transform: "skewX(44deg)", 
+          transform: "skewX(45deg)", 
           zIndex: 2, 
         }}
       />
@@ -42,12 +44,13 @@ const SellCarCard = () => {
           textAlign: { xs: "center", md: "left" },
           padding: { xs: 2, md: 3 },
           zIndex: 3, 
+          maxWidth:"40%",
         }}
       >
         <Typography
           sx={{
             fontWeight: 750,
-            fontSize: { xs: 20, md: 26 },
+            fontSize: { xs: 20, md: 32 },
             fontFamily: "Outfit",
           }}
         >
@@ -55,9 +58,9 @@ const SellCarCard = () => {
         </Typography>
         <Typography
           sx={{
-            fontSize: { xs: 14, md: 16 },
+            fontSize: { xs: 14, md: 18 },
             color: "#000",
-            my: 2,
+            my: 2.5,
             fontFamily: "Inter",
             fontWeight: 550,
           }}
@@ -84,7 +87,8 @@ const SellCarCard = () => {
       alignItems: "center",
       gap: 1, // Spacing between text and icon
       "&:hover": { backgroundColor: "#1D4FB3" },
-      fontSize: 11,
+      fontSize: 13,
+      mt:1
     }}
   >
     Start Selling Now  
