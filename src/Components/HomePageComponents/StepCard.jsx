@@ -45,7 +45,7 @@ const StepsCard = () => {
         <Box
           key={step.id}
           sx={{
-            width: { xs: "100%", sm: "21%" }, 
+            width: { xs: "100%", sm: "21%",md:"23%" }, 
             backgroundColor: "#fff",
             borderRadius: 2,
             overflow: "hidden",

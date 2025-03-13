@@ -21,7 +21,7 @@ const Footer = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         color: "white",
-        px: { xs: 2, md: 14 },
+        px: { xs: 2, md: 13 },
         py: 7,
         mt: 4,
         zIndex: -1,
@@ -44,8 +44,8 @@ const Footer = () => {
           position: "absolute",
           top: 0,
           bottom: 0,
-          right: "31.5%",
-          width: "15%",
+          right: { xs: 2, md: "26%",lg:"26%"},
+          width: { xs: 2, md: "16%",lg:"17%"},
           backgroundColor: "white",
           transform: "skew(47deg)",
           zIndex: 0,
@@ -57,9 +57,9 @@ const Footer = () => {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            gap: 3,
-            mb: 2,
-            width: "90%",
+            gap: 2,
+            mb: 4,
+            width: "100%",
             ml: 2
           }}
         >
@@ -86,7 +86,7 @@ const Footer = () => {
           ))}
         </Box>
 
-        <Box sx={{ width: "90%", height: "2px", backgroundColor: "#545454", mb: 3 }} />
+        <Box sx={{ width: "95%", height: "1px", backgroundColor: "#545454", mb: 3 }} />
 
         <Box
           sx={{
@@ -94,7 +94,8 @@ const Footer = () => {
             justifyContent: { xs: "center", md: "space-between" }, 
             alignItems: "center",
             flexWrap: "wrap",
-            pr: { xs: 0, md: 20 }, 
+            width: "100%",
+            pr: { xs: 0, md: 4 }, 
             textAlign: { xs: "center", md: "left" }, 
           }}
         >
@@ -130,7 +131,7 @@ const Footer = () => {
               width: { xs: "100%", md: "45%" },
               textAlign: { xs: "center", md: "right" },
               p: 2,
-              mr: { xs: 0, md: 1 },
+              mr: { xs: 0, md: 0 },
             }}
           >
             <Box
@@ -139,6 +140,7 @@ const Footer = () => {
                 justifyContent: { xs: "center", md: "flex-end" },
                 gap: 2,
                 mb: 3,
+               
               }}
             >
               <Box
@@ -168,7 +170,8 @@ const Footer = () => {
                   alignItems: "center",
                   cursor: "pointer",
                   fontFamily: "Inter",
-                  fontSize: 12,
+                  fontSize: 14,
+                  
                 }}
               >
                 <AndroidIcon sx={{ mr: 0.5 }} /> Google Play
@@ -180,6 +183,8 @@ const Footer = () => {
                 display: "flex",
                 justifyContent: { xs: "center", md: "flex-end" },
                 gap: 0.7,
+                
+                
               }}
             >
               {[FacebookIcon, XIcon, LinkedInIcon, YouTubeIcon, InstagramIcon, TikTokIcon].map(

@@ -88,7 +88,7 @@ const Navbar = () => {
                 fontSize: "12px",
                 height: "45px",
                 borderRadius: 2,
-                "&:hover": { backgroundColor: "#1E4BA0" },
+               
               }}
             >
               Login

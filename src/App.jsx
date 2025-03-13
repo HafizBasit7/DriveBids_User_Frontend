@@ -15,11 +15,11 @@ function App() {
       
       <Routes>
         <Route path="/h" element={<HomePage />} />
-        <Route path="/l" element={<  LoginPage />} />
+        <Route path="/" element={<  LoginPage />} />
         <Route path="/s" element={<  SignupPage />} />
         <Route path="/f" element={<  ForgetPasswordPage />} />
         <Route path="/r" element={<  ResetPasswordPage />} />
-        <Route path="/" element={<  EnterOtpPage />} />
+        <Route path="/o" element={<  EnterOtpPage />} />
 
         
 

@@ -14,7 +14,7 @@ const SliderSellCard = () => {
         overflow: "hidden",
         width: { xs: "90%", md: "100%" },
         mx: "auto",
-        height: { xs: "auto", md: 160 }, // Auto height on small screens, fixed height on medium
+        height: { xs: "auto", md: 160 }, 
         position: "relative",
         my: 1,
         border: "2px solid #E4E4E4",
@@ -37,15 +37,15 @@ const SliderSellCard = () => {
       <Box
         sx={{
           flex: 1,
-          textAlign: "left",
+          textAlign: "center",
           padding: { xs: 2, md: 3 },
           zIndex: 3,
         }}
       >
         <Typography
           sx={{
-            fontWeight: 750,
-            fontSize: { xs: 18, md: 22 },
+            fontWeight: 600,
+            fontSize: { xs: 14, md: 17 },
             fontFamily: "Outfit",
           }}
         >
@@ -53,7 +53,7 @@ const SliderSellCard = () => {
         </Typography>
         <Typography
           sx={{
-            fontSize: { xs: 14, md: 16 },
+            fontSize: { xs: 10, md: 12 },
             color: "#000",
             mt: 1,
             fontFamily: "Inter",

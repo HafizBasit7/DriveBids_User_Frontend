@@ -36,7 +36,7 @@ const AskQuestions = () => {
           width: { xs: "90%", md: "75%" },
           mx: "auto",
           position: "relative",
-          minHeight: 400, // Ensures SVGs don't move
+       
         }}
       >
         <Box sx={{ position: "relative", zIndex: 2 }}>

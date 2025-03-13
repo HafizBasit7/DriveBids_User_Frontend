@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import CarSVG from "../../assets/SVG/Carsvg.svg";
+import CarLight from "../../assets/SVG/carlight.svg";
 import colors from "../../Style/color";
 
 const HeroSection = () => {
+  const [showLight, setShowLight] = useState(false);
+
   return (
     <Box
       sx={{
@@ -16,36 +19,36 @@ const HeroSection = () => {
         alignItems: "center",
         justifyContent: "space-between",
         width: "100%",
-        position: "relative", 
-        overflow: "hidden", 
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       <Box
-      sx={{
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        left: "22%",
-        width: "15%",
-        backgroundColor: "white",
-        transform: "skew(40deg)",
-        zIndex: 0,
-        
-    }}
+        sx={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: "22%",
+          width: "15%",
+          backgroundColor: "white",
+          transform: "skew(40deg)",
+          zIndex: 0,
+        }}
       />
       <Box
-      sx={{
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        left: "54%",
-        width: "15%",
-        backgroundColor: "white",
-        transform: "skew(40deg)",
-        zIndex: 0
-      }}
+        sx={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: "54%",
+          width: "15%",
+          backgroundColor: "white",
+          transform: "skew(40deg)",
+          zIndex: 0,
+        }}
       />
 
+      {/* Left Content */}
       <Box sx={{ maxWidth: 600, zIndex: 1, px: { xs: 3, md: 10 } }}>
         <Typography
           variant="h2"
@@ -64,6 +67,8 @@ const HeroSection = () => {
 
         <Button
           variant="contained"
+          onMouseEnter={() => setShowLight(true)}
+          onMouseLeave={() => setShowLight(false)}
           sx={{
             backgroundColor: colors.buttoncolor,
             color: "#fff",
@@ -72,7 +77,7 @@ const HeroSection = () => {
             borderRadius: 2,
             fontFamily: "Inter",
             fontSize: 12,
-            "&:hover": { backgroundColor: "#2F61BF" },
+            "&:hover": { backgroundColor: "#1D4FB3" },
           }}
         >
           Sign Up for Free Now
@@ -86,7 +91,7 @@ const HeroSection = () => {
         </Typography>
       </Box>
 
-      {/* Right Content - Car Image */}
+      {/* Right Content - Car Image with Car Light */}
       <Box
         sx={{
           width: { xs: "100%", md: "50%" },
@@ -95,9 +100,26 @@ const HeroSection = () => {
           justifyContent: "flex-end",
           mt: { xs: 4, md: 0 },
           zIndex: 1,
+          position: "relative",
         }}
       >
+        {/* Car Image */}
         <img src={CarSVG} alt="Car Illustration" style={{ width: "100%" }} />
+
+        {/* Car Light - Hidden by default, appears on button hover */}
+        <img
+          src={CarLight}
+          alt="Car Light"
+          style={{
+            position: "absolute",
+            top: "42%", // Adjust to fit the headlights properly
+            left: "24%",
+            transform: "translateX(-50%)",
+            width: "12%",
+            opacity: showLight ? 1 : 0,
+            transition: "opacity 0.5s ease-in-out",
+          }}
+        />
       </Box>
     </Box>
   );

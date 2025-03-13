@@ -25,8 +25,8 @@ const AuthLayout = ({ children }) => {
           position: "absolute",
           top: 0,
           bottom: 0,
-          left: "27%",
-          width: "15%",
+          left: {md:"25%",lg:"27%"},
+          width: "17%",
           backgroundColor: "white",
           transform: "skew(45deg)",
           zIndex: 0,
@@ -37,15 +37,14 @@ const AuthLayout = ({ children }) => {
           position: "absolute",
           top: 0,
           bottom: 0,
-          left: "57%",
-          width: "15%",
+          left: "56%",
+          width: "17%",
           backgroundColor: "white",
           transform: "skew(45deg)",
           zIndex: 0,
         }}
       />
 
-      {/* LOGO BOX (Separate from Car) */}
       <Box 
         sx={{ 
           width: "100%", 
@@ -54,13 +53,13 @@ const AuthLayout = ({ children }) => {
           alignItems: "center",
           mt: isSmallScreen ? 3 : 0, 
           position: "absolute",
-          top: isSmallScreen ? 20 : 30, 
-          left: isSmallScreen ? "50%" : 80, 
+          top: isSmallScreen ? 20 : 25, 
+          left: isSmallScreen ? "50%" : 70, 
           transform: isSmallScreen ? "translateX(-50%)" : "none",
           zIndex: 2,
         }}
       >
-        <img src={Logo} alt="DriveBidz Logo" width={isSmallScreen ? 200 : 160} />
+        <img src={Logo} alt="DriveBidz Logo" width={isSmallScreen ? 200 : 180} />
       </Box>
 
       {/* LEFT SECTION (Car Image - Hidden on Small Screens) */}
