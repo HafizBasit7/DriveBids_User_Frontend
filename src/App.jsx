@@ -8,6 +8,8 @@ import ForgetPasswordPage from "./Pages/Auth/ForgetPassword";
 import ResetPasswordPage from "./Pages/Auth/ResetPassword";
 import EnterOtpPage from "./Pages/Auth/EnterOtpPage";
 import HomePage from "./Pages/HomePage/HomePage";
+import FilterPage from "./Pages/FiltersPage/FilterPage";
+import CarDetailsPage from "./Pages/CarDetailsPage/CarDeatilsPage";
 
 
 function App() {
@@ -21,7 +23,12 @@ function App() {
         <Route path="/f" element={< ForgetPasswordPage />} />
         <Route path="/r" element={< ResetPasswordPage />} />
         <Route path="/o" element={< EnterOtpPage />} />
-        <Route path="/" element={<HomePage />} />
+        <Route path="/h" element={<HomePage />} />
+        <Route path="/f" element={<FilterPage />} />
+        <Route path="/" element={<CarDetailsPage />} />
+    
+
+        
 
       
       </Routes>

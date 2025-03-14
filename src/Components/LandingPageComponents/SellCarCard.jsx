@@ -44,7 +44,7 @@ const SellCarCard = () => {
           textAlign: { xs: "center", md: "left" },
           padding: { xs: 2, md: 3 },
           zIndex: 3, 
-          maxWidth:"40%",
+          maxWidth:{ xs:"100%", md: "40%" },
         }}
       >
         <Typography

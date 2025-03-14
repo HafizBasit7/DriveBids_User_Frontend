@@ -1,7 +1,7 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material"; 
-import Logo from "../../assets/SVG/Mainlogo.svg";
-import Carfront from "../../assets/SVG/carfrontsvg.svg";
-import colors from "../../Style/color";
+import Logo from "../assets/SVG/Mainlogo.svg";
+import Carfront from "../assets/SVG/carfrontsvg.svg";
+import colors from "../Style/color";
 
 const AuthLayout = ({ children }) => {
   const theme = useTheme();

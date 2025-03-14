@@ -1,5 +1,5 @@
 import LoginBox from "../../Components/AuthComponents/LoginBox";
-import AuthLayout from "./AuthLayout";
+import AuthLayout from "../../Layouts/AuthLayout";
 
 const LoginPage = () => {
   return (

@@ -1,8 +1,11 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import colors from "../../Style/color";
 
 const DealsBanner = ({ title, subtitle, buttonText }) => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // xs and sm screens
+
   return (
     <Box
       sx={{
@@ -12,55 +15,76 @@ const DealsBanner = ({ title, subtitle, buttonText }) => {
         backgroundColor: colors.yellowbackground,
         borderRadius: 2,
         overflow: "hidden",
-        width: "100%",
+  
         position: "relative",
+        flexDirection: isSmallScreen ? "column" : "row",
+        textAlign: isSmallScreen ? "center" : "left",
+        padding: isSmallScreen ? "20px" : "0",
+        mx: isSmallScreen ? 2: "0",
       }}
     >
       {/* Left Section: Inline Text */}
       <Box
         sx={{
           display: "flex",
-          alignItems: "baseline", // Ensures proper horizontal alignment
-          gap: 2, // Adjusts spacing
+          alignItems: "baseline",
+          gap: 2,
           px: 3,
+          flexDirection: isSmallScreen ? "column" : "row",
         }}
       >
-        <Typography sx={{ fontWeight: 700, fontFamily: "Outfit", fontSize: 30 }}>
+        <Typography
+          sx={{
+            fontWeight: 700,
+            fontFamily: "Outfit",
+            fontSize: isSmallScreen ? 24 : 30, // Responsive font size
+          }}
+        >
           {title}
         </Typography>
-        <Typography sx={{ fontWeight: 600, fontFamily: "Outfit", fontSize: 22 }}>
+        <Typography
+          sx={{
+            fontWeight: 600,
+            fontFamily: "Outfit",
+            fontSize: isSmallScreen ? 18 : 22, // Responsive font size
+          }}
+        >
           {subtitle}
         </Typography>
       </Box>
 
-      {/* Skewed Strip */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          right: "28%", // Positioning adjusted
-          width: "8%", // Adjust strip width
-          backgroundColor: "white",
-          transform: "skewX(45deg)",
-          zIndex: 2,
-        }}
-      />
+      {/* Skewed Strip (Hidden on xs & sm screens) */}
+      {!isSmallScreen && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            right: "28%",
+            width: "8%",
+            backgroundColor: "white",
+            transform: "skewX(45deg)",
+            zIndex: 2,
+          }}
+        />
+      )}
 
-      {/* Right Section: Clickable Text */}
+      {/* Right Section: Clickable Button */}
       <Box
         sx={{
           backgroundColor: colors.buttoncolor,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "100%",
-          width: "32%", // Adjusted for better layout
-          minWidth: "200px",
-          padding: "15px 20px",
+          height: isSmallScreen ? "auto" : "100%",
+          width: isSmallScreen ? "60%" : "32%", // Reduce width on xs & sm screens
+          minWidth: "150px", // Ensure it doesn't get too small
+          padding: "12px 18px", // Adjust padding for better scaling
           cursor: "pointer",
           position: "relative",
+          borderRadius: isSmallScreen ? 1 : 0, // Reduce width on xs & sm screens
           zIndex: 1,
+          mt: isSmallScreen ? 2 : 0, // Adds margin on small screens
         }}
         onClick={() => console.log("Clicked View All")}
       >
@@ -68,7 +92,7 @@ const DealsBanner = ({ title, subtitle, buttonText }) => {
           sx={{
             color: "white",
             fontWeight: 500,
-            fontSize: 16,
+            fontSize: isSmallScreen ? 14 : 16, // Responsive font size
             textTransform: "uppercase",
             fontFamily: "Inter",
             "&:hover": {

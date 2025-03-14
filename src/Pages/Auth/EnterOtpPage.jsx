@@ -1,5 +1,5 @@
 import Enteropt from "../../Components/AuthComponents/EnterOtp";
-import AuthLayout from "./AuthLayout";
+import AuthLayout from "../../Layouts/AuthLayout";
 
 const EnterOtpPage = () => {
   return (
