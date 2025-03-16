@@ -26,7 +26,7 @@ const MainLayout = ({ children }) => {
       </Box>
 
       {/* Footer */}
-      <Box sx={{ width: "100%", mt: 10}}>
+      <Box sx={{ width: "100%", }}>
         <Footer />
       </Box>
     </>

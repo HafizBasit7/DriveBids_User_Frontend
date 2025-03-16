@@ -10,6 +10,7 @@ import EnterOtpPage from "./Pages/Auth/EnterOtpPage";
 import HomePage from "./Pages/HomePage/HomePage";
 import FilterPage from "./Pages/FiltersPage/FilterPage";
 import CarDetailsPage from "./Pages/CarDetailsPage/CarDeatilsPage";
+import ChatPage from "./Pages/ChatPage/ChatPage";
 
 
 function App() {
@@ -26,6 +27,9 @@ function App() {
         <Route path="/h" element={<HomePage />} />
         <Route path="/f" element={<FilterPage />} />
         <Route path="/" element={<CarDetailsPage />} />
+        <Route path="/c" element={<    ChatPage/>} />
+
+    
     
 
         

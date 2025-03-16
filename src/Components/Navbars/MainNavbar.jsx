@@ -18,6 +18,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useTheme, useMediaQuery } from "@mui/material";
 import Logosvg from "../../assets/SVG/Mainlogo.svg";
 import colors from "../../Style/color";
+import Notifications from "../Modals/Notification";
 
 const MainNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -143,18 +144,16 @@ const MainNavbar = () => {
           </Box>
         )}
 
-        {/* Icons */}
+       
         {!isMobile && (
           <IconButton>
             <ChatBubbleOutlineIcon sx={{ color: "black" }} />
           </IconButton>
         )}
-        <IconButton>
-          <NotificationsNoneIcon sx={{ color: "black" }} />
-        </IconButton>
+        <Notifications />
         <Avatar sx={{ bgcolor: "blue", width: 32, height: 32 }}>U</Avatar>
 
-        {/* Hamburger Menu (Mobile) */}
+        
         {isMobile && (
           <IconButton onClick={handleDrawerToggle} sx={{ color: "black" }}>
             <MenuIcon />

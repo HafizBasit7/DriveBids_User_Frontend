@@ -25,24 +25,25 @@ const CarDetailsComponent = () => {
   return (
     <Box
       sx={{
-        padding: 2,
+        padding: 2.5,
         borderRadius: 2,
-        boxShadow: 2,
+       border:"1px solid #D9D9D9",
         backgroundColor: "white",
         fontFamily: "Inter",
+        
       }}
     >
-      <Typography variant="h6" fontWeight="bold" mb={2}>
+      <Typography variant="h5"  mb={2} sx={{fontFamily:"Inter", fontWeight:500 , pl:3}} >
         Car Details
       </Typography>
 
-      {/* Icons Layout */}
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, justifyContent: "center" }}>
+      
+      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         {carDetails.map((item, index) => (
           <Box
             key={index}
             sx={{
-              width: "18%", // Controls number of items per row
+              width: "20%", 
             
               textAlign: "center",
             }}
@@ -58,14 +59,15 @@ const CarDetailsComponent = () => {
                 backgroundColor: "#E8F0FE",
                 color: "#2F61BF",
                 margin: "auto",
+                my:1
               }}
             >
               {item.icon}
             </Box>
-            <Typography variant="caption" color="gray" fontWeight={600}>
+            <Typography variant="caption" color="#6F6F6F" fontWeight={600}  sx={{fontFamily:"Inter"}}>
               {item.label}
             </Typography>
-            <Typography variant="body2" fontWeight={500}>
+            <Typography variant="body2" fontWeight={600}>
               {item.value}
             </Typography>
           </Box>

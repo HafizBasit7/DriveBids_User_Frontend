@@ -20,6 +20,10 @@ const carFeatures = [
   { name: "Reverse Camera", enabled: false },
   { name: "Push Start", enabled: false },
   { name: "Immobilizer", enabled: false },
+  { name: "Reverse Camera", enabled: false },
+  { name: "Push Start", enabled: false },
+  { name: "Immobilizer", enabled: false },
+  
 ];
 
 const CarFeaturesComponent = () => {
@@ -28,12 +32,13 @@ const CarFeaturesComponent = () => {
       sx={{
         padding: 2,
         borderRadius: 2,
-        boxShadow: 2,
+        border:"1px solid #D9D9D9",
         backgroundColor: "white",
         fontFamily: "Inter, sans-serif",
+        minHeight:300
       }}
     >
-      <Typography variant="h6" fontWeight="bold" mb={2}>
+      <Typography variant="h5"  mb={2} sx={{fontFamily:"Inter", fontWeight:500 , }}>
         Car Features
       </Typography>
 

@@ -3,6 +3,7 @@ import { Box, IconButton, Button } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Carimg from "../../assets/Png/cardetailimg.png"
 import colors from "../../Style/color";
+import BidModal from "../Modals/BidModal";
 
 const images = [
     Carimg,
@@ -14,6 +15,8 @@ const images = [
 
 const CarSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [open, setOpen] = useState(false);
+
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -39,7 +42,7 @@ const CarSlider = () => {
           }}
         />
 
-        {/* Navigation Arrows */}
+      
         <IconButton
   onClick={handlePrev}
   sx={{
@@ -47,16 +50,16 @@ const CarSlider = () => {
     left: 10,
     top: "50%",
     transform: "translateY(-50%)",
-    width: 55, // Increased size
-    height: 55, // Ensures square shape
-    borderRadius: 2, // Square shape
+    width: 55,
+    height: 55, 
+    borderRadius: 2, 
     backgroundColor: "rgba(0,0,0,0.30)",
     color: "white",
     
     "&:hover": { backgroundColor: "rgba(0,0,0,0.9)" },
   }}
 >
-  <ArrowBackIos sx={{ fontSize: 30 , }} /> {/* Increased arrow size */}
+  <ArrowBackIos sx={{ fontSize: 30 , }} /> 
 </IconButton>
 <IconButton
   onClick={handleNext}
@@ -65,18 +68,18 @@ const CarSlider = () => {
     right: 10,
     top: "50%",
     transform: "translateY(-50%)",
-    width: 55, // Increased size
-    height: 55, // Ensures square shape
-    borderRadius: 2, // Square shape
+    width: 55, 
+    height: 55, 
+    borderRadius: 2, 
     backgroundColor: "rgba(0, 0, 0, 0.30)",
     color: "white",
     "&:hover": { backgroundColor: "rgba(0,0,0,0.9)" },
   }}
 >
-  <ArrowForwardIos sx={{ fontSize: 30 }} /> {/* Increased arrow size */}
+  <ArrowForwardIos sx={{ fontSize: 30 }} /> 
 </IconButton>
 
-        {/* Thumbnails positioned over main image */}
+        
         <Box
           sx={{
             position: "absolute",
@@ -147,6 +150,7 @@ const CarSlider = () => {
       fontWeight:600,
       fontFamily:"Inter"
     }}
+    onClick={() => setOpen(true)}
   >
     PLACE BID
   </Button>
@@ -194,7 +198,7 @@ const CarSlider = () => {
   </Box>
   <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} /> 
 </Box>
-
+<BidModal open={open} onClose={() => setOpen(false)} />
     </Box>
   );
 };
