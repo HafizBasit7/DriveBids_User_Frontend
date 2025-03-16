@@ -4,7 +4,7 @@ import colors from "../../Style/color";
 
 const ChatList = () => {
   const [tabValue, setTabValue] = useState(0);
-  const [activeChat, setActiveChat] = useState(2); // Active chat ID for highlight
+  const [activeChat, setActiveChat] = useState(2);
 
   const chats = [
     { id: 1, name: "Bryan", message: "Sleek 2018 Tesla Model 3", time: "4:30 PM", img: "/images/tesla.jpg", unread: 4 },
@@ -127,7 +127,7 @@ const ChatList = () => {
                       py: 0.5,
                       borderRadius: "12px",
                       display: "block",
-                      mt: 0.5, // Spacing below time
+                      mt: 0.5, 
                     }}
                   >
                     {chat.unread}
@@ -143,3 +143,8 @@ const ChatList = () => {
 };
 
 export default ChatList;
+
+
+
+
+

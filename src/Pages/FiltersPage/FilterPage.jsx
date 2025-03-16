@@ -8,12 +8,15 @@ import colors from "../../Style/color.js";
 const FilterPage = () => {
   return (
     <MainLayout>
-      {/* Deals Banner */}
+  
       <Box sx={{ width: "100%" }}>
-        <DealsBanner title="Super Odd Deals" subtitle="3000 Cars Available" buttonText="View All" />
+        <DealsBanner
+          title="Super Odd Deals"
+          subtitle="3000 Cars Available"
+          buttonText="View All"
+        />
       </Box>
 
-      {/* Main Content Layout */}
       <Box
         sx={{
           width: "100%",
@@ -57,38 +60,34 @@ const FilterPage = () => {
               mt: 4,
             }}
           >
-<Pagination
-  count={5}
-  shape="rounded"
-  sx={{
-    "& .MuiPaginationItem-root": {
-      fontSize: "1.3rem",
-      padding: "20px 16px",
-      mt: 3,
-      backgroundColor: "white", 
-      color: "black", 
-      mx: 1.5, 
-      border: "1px solid #6F6F6F", 
-      borderRadius: "8px",
-    },
-    "& .MuiPaginationItem-root.Mui-selected": {
-      backgroundColor: colors.buttoncolor, 
-      color: "white", 
-      border: `1px solid ${colors.buttoncolor}`,
-    },
-    "& .MuiPaginationItem-previousNext": {
-      backgroundColor: "white", 
-      color: "black", 
-      borderRadius: "8px",
-      border: "1px solid #6F6F6F",
-      mx: 1.5,
-    },
-  }}
-/>
-
-
-
-
+            <Pagination
+              count={5}
+              shape="rounded"
+              sx={{
+                "& .MuiPaginationItem-root": {
+                  fontSize: "1.3rem",
+                  padding: "20px 16px",
+                  mt: 3,
+                  backgroundColor: "white",
+                  color: "black",
+                  mx: 1.5,
+                  border: "1px solid #6F6F6F",
+                  borderRadius: "8px",
+                },
+                "& .MuiPaginationItem-root.Mui-selected": {
+                  backgroundColor: colors.buttoncolor,
+                  color: "white",
+                  border: `1px solid ${colors.buttoncolor}`,
+                },
+                "& .MuiPaginationItem-previousNext": {
+                  backgroundColor: "white",
+                  color: "black",
+                  borderRadius: "8px",
+                  border: "1px solid #6F6F6F",
+                  mx: 1.5,
+                },
+              }}
+            />
           </Box>
         </Box>
 

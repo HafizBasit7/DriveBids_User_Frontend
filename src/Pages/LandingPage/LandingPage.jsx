@@ -14,7 +14,6 @@ import Footer from "../../Components/Footer/Footer";
 import CardCarousel from "../../Components/LandingPageComponents/SellCardSlider";
 import Navbar from "../../Components/Navbars/Navbar";
 
-
 const LandingPage = () => {
   return (
     <Box sx={{ width: "100%", overflowX: "hidden" }}>
@@ -50,29 +49,29 @@ const LandingPage = () => {
         }}
       >
         <Box
-    sx={{
-      position: "absolute",
-      top: 0,
-      bottom: 0,
-      left: "56%",
-      width: "15%",
-      backgroundColor: "white",
-      transform: "skew(40deg)",
-      zIndex: 0, 
-    }}
-  />
-  <Box
-    sx={{
-      position: "absolute",
-      top: 0,
-      bottom: 0,
-      right: "-1%",
-      width: "15%",
-      backgroundColor: "white",
-      transform: "skew(40deg)",
-      zIndex: 0, 
-    }}
-  />
+          sx={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: "56%",
+            width: "15%",
+            backgroundColor: "white",
+            transform: "skew(40deg)",
+            zIndex: 0,
+          }}
+        />
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            right: "-1%",
+            width: "15%",
+            backgroundColor: "white",
+            transform: "skew(40deg)",
+            zIndex: 0,
+          }}
+        />
         <Typography
           sx={{
             fontWeight: 600,
@@ -85,7 +84,6 @@ const LandingPage = () => {
         >
           Create an Account.
         </Typography>
-        
       </Box>
 
       <Box
@@ -123,22 +121,22 @@ const LandingPage = () => {
           width: "100%",
           zIndex: 1,
           backgroundColor: "#fff",
-          px: { xs: 2 }
+          px: { xs: 2 },
         }}
       >
         <StepsCard />
       </Box>
 
-
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center",
+          alignSelf: "center",
           height: "100%",
-          width: "100%",
+          width: "70%",
           backgroundColor: "#fff",
           py: 5,
+          mx:"auto"
         }}
       >
         <SellCarCard />
@@ -172,10 +170,17 @@ const LandingPage = () => {
             fontSize: 14,
           }}
         >
-          See how real users sold their cars easily and successfully on our platform.
+          See how real users sold their cars easily and successfully on our
+          platform.
         </Typography>
 
-        <Box display="flex" alignItems="center" justifyContent="center" gap={2} mt={10}>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          gap={2}
+          mt={10}
+        >
           <IconButton
             sx={{
               background: "#fff",
@@ -192,17 +197,14 @@ const LandingPage = () => {
               display: "flex",
               gap: { xs: 6 },
               flexWrap: "wrap",
-              flexDirection: { xs: "column", sm: "column", md: "row" }, // Vertical on small, row on large
-              alignItems: { xs: "center", sm: "center", md: "flex-start" }, // Center items on small screens
-
+              flexDirection: { xs: "column", sm: "column", md: "row" }, 
+              alignItems: { xs: "center", sm: "center", md: "flex-start" }, 
             }}
           >
             <BloggerCard />
             <BloggerCard />
             <BloggerCard />
           </Box>
-
-
 
           <IconButton
             sx={{
@@ -245,11 +247,12 @@ const LandingPage = () => {
             fontSize: 14,
           }}
         >
-          See how real users sold their cars easily and successfully on our platform.
+          See how real users sold their cars easily and successfully on our
+          platform.
         </Typography>
       </Box>
-      <Box sx={{  width: "100%" }}>
-      <CardCarousel/>
+      <Box sx={{ width: "100%" }}>
+        <CardCarousel />
       </Box>
       <Box
         sx={{
@@ -282,10 +285,17 @@ const LandingPage = () => {
           Simple, Transparent, and Competitive Bidding Explained
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", py: 5 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          py: 5,
+        }}
+      >
         <BiddingWork />
       </Box>
-
 
       <Box
         sx={{
@@ -294,13 +304,11 @@ const LandingPage = () => {
           alignItems: "center",
           textAlign: "center",
 
-
           width: "100%",
           gap: 0.5,
         }}
       >
         <Typography
-
           fontWeight="bold"
           sx={{
             color: "#000",
@@ -312,13 +320,22 @@ const LandingPage = () => {
           Frequently Asked Questions
         </Typography>
 
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", py: 5 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            py: 5,
+          }}
+        >
           <AskQuestions />
         </Box>
-
       </Box>
 
-      <Box sx={{ width: "100%" }}><Footer /></Box>
+      <Box sx={{ width: "100%" }}>
+        <Footer />
+      </Box>
     </Box>
   );
 };

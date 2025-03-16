@@ -18,16 +18,16 @@ function App() {
     <Router>
       
       <Routes>
-        <Route path="/ld" element={<LandingPage />} />
+        <Route path="/l" element={<LandingPage />} />
         <Route path="/l" element={< LoginPage />} />
         <Route path="/s" element={< SignupPage />} />
         <Route path="/f" element={< ForgetPasswordPage />} />
         <Route path="/r" element={< ResetPasswordPage />} />
         <Route path="/o" element={< EnterOtpPage />} />
         <Route path="/h" element={<HomePage />} />
-        <Route path="/f" element={<FilterPage />} />
+        <Route path="/h" element={<FilterPage />} />
         <Route path="/" element={<CarDetailsPage />} />
-        <Route path="/c" element={<    ChatPage/>} />
+        <Route path="/ch" element={<    ChatPage/>} />
 
     
     
