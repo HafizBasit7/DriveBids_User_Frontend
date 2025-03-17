@@ -11,7 +11,9 @@ const ChatList = () => {
     { id: 2, name: "Bryan", message: "Reliable 2015 Honda Accord", time: "4:30 PM", img: "/images/honda.jpg", unread: 2 },
     { id: 3, name: "Bryan", message: "Sporty 2020 Ford Mustang GT", time: "4:30 PM", img: "/images/mustang.jpg", unread: 6 },
     { id: 4, name: "Diana", message: "Fuel-Efficient 2019 Toyota", time: "4:12 PM", img: "/images/toyota.jpg", unread: 0 },
-    
+    { id: 4, name: "Diana", message: "Fuel-Efficient 2019 Toyota", time: "4:12 PM", img: "/images/toyota.jpg", unread: 0 },
+    { id: 4, name: "Diana", message: "Fuel-Efficient 2019 Toyota", time: "4:12 PM", img: "/images/toyota.jpg", unread: 0 },
+
    
   ];
 

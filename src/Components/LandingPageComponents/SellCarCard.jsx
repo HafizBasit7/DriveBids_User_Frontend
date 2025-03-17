@@ -3,9 +3,11 @@ import { Box, Typography, Button } from "@mui/material";
 import SellCarImage from "../../assets/Png/sellcarimg.png"; // Replace with actual image path
 import colors from "../../Style/color";
 import rigtharrow from "../../assets/SVG/arrow-right-small.svg"; // Replace with actual image path
+import { useNavigate } from "react-router-dom";
 
 
 const SellCarCard = () => {
+  const navigate =useNavigate()
   return (
     <Box
       sx={{
@@ -53,6 +55,7 @@ const SellCarCard = () => {
             fontSize: { xs: 20, md: 30 },
             fontFamily: "Outfit",
           }}
+         
         >
           Ready to Sell Your Car Today?
         </Typography>
@@ -64,6 +67,8 @@ const SellCarCard = () => {
             fontFamily: "Inter",
             fontWeight: 550,
           }}
+
+        
         >
           Join thousands of successful sellers and get the best deal for your car in just a few clicks!
         </Typography>
@@ -90,6 +95,7 @@ const SellCarCard = () => {
       fontSize: 13,
       mt:1
     }}
+    onClick={() => navigate("/sellmycar")}
   >
     Start Selling Now  
     <Box 

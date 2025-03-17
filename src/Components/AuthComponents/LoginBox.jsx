@@ -124,6 +124,7 @@ const LoginBox = () => {
           borderRadius: 2,
           "&:hover": { backgroundColor: colors.buttoncolor },
         }}
+        onClick={() => navigate("/home")}
       >
         Login
       </Button>

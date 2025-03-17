@@ -34,6 +34,7 @@ const CarCard = () => {
         position: "relative",
         paddingBottom: "20px",
         borderBottom: "2px solid #E5E7E8",
+        mb:3
       }}
     >
       {/* Image Section */}

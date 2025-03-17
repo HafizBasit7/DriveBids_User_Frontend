@@ -16,6 +16,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useTheme, useMediaQuery } from "@mui/material";
+import { useNavigate } from "react-router-dom"; // Import navigation hook
 import Logosvg from "../../assets/SVG/Mainlogo.svg";
 import colors from "../../Style/color";
 import Notifications from "../Modals/Notification";
@@ -25,12 +26,17 @@ const MainNavbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate(); // Initialize navigate function
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const navItems = ["Home", "How it Works", "Contact Us"];
+  const navItems = [
+    { label: "Home", path: "/home" },
+    { label: "How it Works", path: "/how-it-works" },
+    { label: "Contact Us", path: "/contact" }, // Added navigation path
+  ];
 
   return (
     <Box
@@ -59,7 +65,6 @@ const MainNavbar = () => {
         },
       }}
     >
-      {/* Logo */}
       <Box
         sx={{
           display: "flex",
@@ -68,7 +73,7 @@ const MainNavbar = () => {
           px: isMobile ? 0 : 7,
         }}
       >
-        <img src={Logosvg} alt="DriveBidz Logo" style={{ height: isMobile ? 50 : 62 }} />
+        <img src={Logosvg} alt="DriveBidz Logo" style={{ height: isMobile ? 50 : 62 }}     onClick={() => navigate("/")}  />
       </Box>
 
       <Box
@@ -94,12 +99,15 @@ const MainNavbar = () => {
       >
         {!isMobile &&
           navItems.map((item, index) => (
-            <Button key={index} sx={{ color: "black", textTransform: "none" }}>
-              {item}
+            <Button
+              key={index}
+              sx={{ color: "black", textTransform: "none" }}
+              onClick={() => navigate(item.path)} 
+            >
+              {item.label}
             </Button>
           ))}
 
-        {/* Search Bar (Always visible on large screens) */}
         {!isMobile && (
           <Box
             sx={{
@@ -118,14 +126,12 @@ const MainNavbar = () => {
           </Box>
         )}
 
-        {/* Search Icon for Small Screens */}
         {isMobile && !showSearch && (
           <IconButton onClick={() => setShowSearch(true)}>
             <SearchIcon sx={{ color: "black" }} />
           </IconButton>
         )}
 
-        {/* Expandable Search Bar for Small Screens */}
         {isMobile && showSearch && (
           <Box
             sx={{
@@ -144,7 +150,6 @@ const MainNavbar = () => {
           </Box>
         )}
 
-       
         {!isMobile && (
           <IconButton>
             <ChatBubbleOutlineIcon sx={{ color: "black" }} />
@@ -153,7 +158,6 @@ const MainNavbar = () => {
         <Notifications />
         <Avatar sx={{ bgcolor: "blue", width: 32, height: 32 }}>U</Avatar>
 
-        
         {isMobile && (
           <IconButton onClick={handleDrawerToggle} sx={{ color: "black" }}>
             <MenuIcon />
@@ -164,9 +168,12 @@ const MainNavbar = () => {
       {/* Mobile Drawer */}
       <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
         <List sx={{ width: 250 }}>
-          {navItems.map((text, index) => (
-            <ListItem button key={index} onClick={handleDrawerToggle}>
-              <ListItemText primary={text} />
+          {navItems.map((item, index) => (
+            <ListItem button key={index} onClick={() => { 
+              navigate(item.path); 
+              handleDrawerToggle(); // Close drawer on navigation
+            }}>
+              <ListItemText primary={item.label} />
             </ListItem>
           ))}
           <ListItem button onClick={handleDrawerToggle}>

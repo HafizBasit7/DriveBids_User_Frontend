@@ -35,7 +35,7 @@ const Navbar = () => {
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", pr: { md: 6, lg: 8 } }}>
             <Button sx={{ color: "#000", mx: 1,fontSize:13,fontFamily:"Inter",fontWeight:500 }}  onClick={() => navigate("/home")}>Home</Button>
             <Button sx={{ color: "#000", mx: 1,fontSize:13,fontFamily:"Inter",fontWeight:500 }}>How It Works</Button>
-            <Button sx={{ color: "#000", mx: 1 ,fontSize:13,fontFamily:"Inter",fontWeight:500}}>Contact Us</Button>
+            <Button sx={{ color: "#000", mx: 1 ,fontSize:13,fontFamily:"Inter",fontWeight:500}} onClick={() => navigate("/contact")}>Contact Us</Button>
             <Button
               sx={{
                 color: "#fff",
@@ -49,6 +49,8 @@ const Navbar = () => {
                 ml: 3,
                 "&:hover": { borderColor: "#2F61BF", backgroundColor: "#1E4BA0" },
               }}
+              onClick={() => navigate("/login")}
+
             >
               Login
             </Button>
@@ -91,6 +93,7 @@ const Navbar = () => {
                 borderRadius: 2,
                
               }}
+              onClick={() => navigate("/login")}
             >
               Login
             </Button>

@@ -27,11 +27,10 @@ const ChatPage = () => {
           <ChatList />
         </Box>
 
-        {/* Right Box - Chat Window */}
         <Box
           sx={{
             width: { xs: "0%", sm: "65%", md: "70%" },
-            display: { xs: "none", sm: "block" }, // Hide on extra small screens
+            display: { xs: "none", sm: "block" }, 
             height: "100%",
             
           }}

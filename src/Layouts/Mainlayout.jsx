@@ -17,6 +17,8 @@ const MainLayout = ({ children }) => {
           gap: 2,
           p: 3,
           px: { xs: 0.5, md: 4, lg: 4 },
+          width: "100%",
+          height:"100%"
         }}
       >
          <Box sx={{ width: "100%" }}>

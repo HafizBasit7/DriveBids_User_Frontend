@@ -15,7 +15,10 @@ const ChatWindow = () => {
     { id: 2, text: "perfect ✅", sender: "Bryan", avatar: "/images/bryan.jpg", type: "left" },
     { id: 3, text: "How are you?", sender: "Me", avatar: "/images/me.jpg", type: "right" },
     { id: 2, text: "perfect ✅", sender: "Bryan", avatar: "/images/bryan.jpg", type: "left" },
-   
+    { id: 2, text: "perfect ✅", sender: "Bryan", avatar: "/images/bryan.jpg", type: "left" },
+    { id: 3, text: "How are you?", sender: "Me", avatar: "/images/me.jpg", type: "right" },
+    { id: 3, text: "ada ada adsfdf", sender: "Me", avatar: "/images/me.jpg", type: "right" },
+
   ];
 
   useEffect(() => {
