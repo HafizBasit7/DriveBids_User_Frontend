@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom"; // Import navigation hook
 import CarSVG from "../../assets/SVG/Carsvg.svg";
 import CarLight from "../../assets/SVG/carlight.svg";
 import colors from "../../Style/color";
 
 const HeroSection = () => {
   const [showLight, setShowLight] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate function
 
   return (
     <Box
@@ -23,6 +25,7 @@ const HeroSection = () => {
         overflow: "hidden",
       }}
     >
+      {/* Background Strips */}
       <Box
         sx={{
           position: "absolute",
@@ -65,8 +68,10 @@ const HeroSection = () => {
           dreams.
         </Typography>
 
+        {/* Sign-Up Button with Navigation */}
         <Button
           variant="contained"
+          onClick={() => navigate("/signup")}
           onMouseEnter={() => setShowLight(true)}
           onMouseLeave={() => setShowLight(false)}
           sx={{
@@ -83,14 +88,25 @@ const HeroSection = () => {
           Sign Up for Free Now
         </Button>
 
+        {/* Log-In Navigation */}
         <Typography sx={{ mt: 2 }}>
           Already have an account?{" "}
-          <a href="#" style={{ color: "#000", fontWeight: 600 }}>
+          <Button
+            onClick={() => navigate("/login")}
+            sx={{
+              color: "#000",
+              fontWeight: 600,
+              textTransform: "none",
+              padding: 0,
+              minWidth: "auto",
+            }}
+          >
             Log In now
-          </a>
+          </Button>
         </Typography>
       </Box>
 
+      {/* Right Side - Car Image & Lights */}
       <Box
         sx={{
           width: { xs: "100%", md: "50%" },
@@ -102,10 +118,9 @@ const HeroSection = () => {
           position: "relative",
         }}
       >
-        {/* Car Image */}
         <img src={CarSVG} alt="Car Illustration" style={{ width: "100%" }} />
 
-        {/* Car Light - Hidden by default, appears on button hover */}
+        {/* Car Light Effect on Hover */}
         <img
           src={CarLight}
           alt="Car Light"

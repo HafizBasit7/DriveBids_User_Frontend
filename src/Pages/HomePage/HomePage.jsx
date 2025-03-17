@@ -4,8 +4,10 @@ import SellCarCard from "../../Components/LandingPageComponents/SellCarCard";
 import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import CarCard from "../../Components/HomePageComponents/CarCard";
 import Footer from "../../Components/Footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate =useNavigate()
   return (
     <>
     <Box
@@ -27,32 +29,35 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%" }}>
-        <DealsBanner title="Super Odd Deals" subtitle="3000 Cars Available" buttonText="View All" />
+        <DealsBanner title="Super Odd Deals" subtitle="3000 Cars Available" buttonText="View All"             onClick={() => navigate("/filter")} 
+ />
       </Box>
 
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 7, flexWrap: "wrap" ,justifyContent:{xs:"center"} }}>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 4, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
         <CarCard />
         <CarCard />
         <CarCard />
         <CarCard />
+        
+        
       </Box>
 
       <Box sx={{ width: "100%", mt: 5 }}> {/* Added margin-top instead of top */}
         <DealsBanner title="Spotlight Deals" subtitle="3000 Cars Available" buttonText="View All" />
       </Box>
 
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 7, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center"}  }}>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 4, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
         <CarCard />
         <CarCard />
         <CarCard />
         <CarCard />
       </Box>
 
-      <Box sx={{ width: "100%", mt: 5 }}> {/* Added margin-top */}
+      <Box sx={{ width: "100%", mt: 5 }}> 
         <DealsBanner title="Premium Deals" subtitle="3000 Cars Available" buttonText="View All" />
       </Box>
 
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 7, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center"} }}>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 4, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
         <CarCard />
         <CarCard />
         <CarCard />

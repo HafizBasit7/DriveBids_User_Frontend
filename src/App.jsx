@@ -18,23 +18,16 @@ function App() {
     <Router>
       
       <Routes>
-        <Route path="/l" element={<LandingPage />} />
-        <Route path="/l" element={< LoginPage />} />
-        <Route path="/s" element={< SignupPage />} />
-        <Route path="/f" element={< ForgetPasswordPage />} />
-        <Route path="/r" element={< ResetPasswordPage />} />
-        <Route path="/o" element={< EnterOtpPage />} />
-        <Route path="/h" element={<HomePage />} />
-        <Route path="/h" element={<FilterPage />} />
-        <Route path="/" element={<CarDetailsPage />} />
-        <Route path="/ch" element={<    ChatPage/>} />
-
-    
-    
-
-        
-
-      
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={< LoginPage />} />
+        <Route path="/signup" element={< SignupPage />} />
+        <Route path="forgetpassword" element={< ForgetPasswordPage />} />
+        <Route path="/reset-password" element={< ResetPasswordPage />} />
+        <Route path="/otp" element={< EnterOtpPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/filter" element={<FilterPage />} />
+        <Route path="/car-detail" element={<CarDetailsPage />} />
+        <Route path="/chat-page" element={<ChatPage/>} />
       </Routes>
     </Router>
   );

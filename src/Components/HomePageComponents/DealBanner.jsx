@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import colors from "../../Style/color";
 
-const DealsBanner = ({ title, subtitle, buttonText }) => {
+const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // xs and sm screens
 
@@ -99,6 +99,7 @@ const DealsBanner = ({ title, subtitle, buttonText }) => {
               textDecoration: "underline",
             },
           }}
+          onClick={onClick} // Use passed function
         >
           {buttonText}
         </Typography>

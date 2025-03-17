@@ -13,11 +13,13 @@ import {
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import colors from "../../Style/color";
+import { useNavigate } from "react-router-dom";
 
 const LoginBox = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); 
 
   return (
     <Paper
@@ -25,10 +27,10 @@ const LoginBox = () => {
     sx={{
       p: 5,
       width: "100%",
-      maxWidth: 400,
+      maxWidth: 450,
       py: 12,
       borderRadius: 1,
-      boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)", // Left-side shadow only
+      boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)", 
       zIndex: 1,
     }}
   >
@@ -39,7 +41,7 @@ const LoginBox = () => {
       </Typography>
 
       {/* Subtitle */}
-      <Typography  color="textSecondary" sx={{ mb: 3, fontFamily: "Inter", fontSize: 15,fontWeight:400 }}>
+      <Typography  color="textSecondary" sx={{ mb: 4, fontFamily: "Inter", fontSize: 15,fontWeight:400 }}>
         Please login to continue to your account.
       </Typography>
 
@@ -104,7 +106,8 @@ const LoginBox = () => {
           control={<Checkbox />}
           label="Remember me"
         />
-        <Typography variant="body2" sx={{ cursor: "pointer", fontWeight: 500, color: colors.buttoncolor }}>
+        <Typography variant="body2" sx={{ cursor: "pointer", fontWeight: 500, color: colors.buttoncolor }}     onClick={() => navigate("/forgetpassword")}
+ >
           Forgot Password?
         </Typography>
       </Box>
@@ -148,6 +151,7 @@ const LoginBox = () => {
       color: colors.buttoncolor,
       textDecoration: "underline", 
     }}
+    onClick={() => navigate("/signup")}
   >
     Create one
   </Typography>

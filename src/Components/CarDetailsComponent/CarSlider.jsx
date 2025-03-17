@@ -5,18 +5,11 @@ import Carimg from "../../assets/Png/cardetailimg.png"
 import colors from "../../Style/color";
 import BidModal from "../Modals/BidModal";
 
-const images = [
-    Carimg,
-    Carimg,
-    Carimg,
-    Carimg,
-    Carimg,
-];
+const images = [Carimg, Carimg, Carimg, Carimg, Carimg];
 
 const CarSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [open, setOpen] = useState(false);
-
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -27,59 +20,77 @@ const CarSlider = () => {
   };
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <Box
+      sx={{
+        width: "100%",
+        // Restrict max width for large screens
+        mx: "auto",
+        overflow: "hidden", // Prevents scrolling issues
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        px: 2, // Add some padding for smaller screens
+      }}
+    >
       {/* Main Image Box */}
-      <Box sx={{ position: "relative", width: "100%",}}>
+      <Box
+        sx={{
+          position: "relative",
+          width: "100%",
+          overflow: "hidden",
+        }}
+      >
         <Box
           component="img"
           src={images[currentIndex]}
           alt="Car Image"
           sx={{
             width: "100%",
-           height:"500px",
+            height: { xs: "250px", sm: "350px", md: "500px" }, // Adjust height for responsiveness
             objectFit: "cover",
             borderRadius: 2,
           }}
         />
 
-      
+        {/* Previous Button */}
         <IconButton
-  onClick={handlePrev}
-  sx={{
-    position: "absolute",
-    left: 10,
-    top: "50%",
-    transform: "translateY(-50%)",
-    width: 55,
-    height: 55, 
-    borderRadius: 2, 
-    backgroundColor: "rgba(0,0,0,0.30)",
-    color: "white",
-    
-    "&:hover": { backgroundColor: "rgba(0,0,0,0.9)" },
-  }}
->
-  <ArrowBackIos sx={{ fontSize: 30 , }} /> 
-</IconButton>
-<IconButton
-  onClick={handleNext}
-  sx={{
-    position: "absolute",
-    right: 10,
-    top: "50%",
-    transform: "translateY(-50%)",
-    width: 55, 
-    height: 55, 
-    borderRadius: 2, 
-    backgroundColor: "rgba(0, 0, 0, 0.30)",
-    color: "white",
-    "&:hover": { backgroundColor: "rgba(0,0,0,0.9)" },
-  }}
->
-  <ArrowForwardIos sx={{ fontSize: 30 }} /> 
-</IconButton>
+          onClick={handlePrev}
+          sx={{
+            position: "absolute",
+            left: 10,
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: { xs: 40, sm: 50 },
+            height: { xs: 40, sm: 50 },
+            borderRadius: 2,
+            backgroundColor: "rgba(0,0,0,0.30)",
+            color: "white",
+            "&:hover": { backgroundColor: "rgba(0,0,0,0.9)" },
+          }}
+        >
+          <ArrowBackIos sx={{ fontSize: { xs: 20, sm: 30 } }} />
+        </IconButton>
 
-        
+        {/* Next Button */}
+        <IconButton
+          onClick={handleNext}
+          sx={{
+            position: "absolute",
+            right: 10,
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: { xs: 40, sm: 50 },
+            height: { xs: 40, sm: 50 },
+            borderRadius: 2,
+            backgroundColor: "rgba(0, 0, 0, 0.30)",
+            color: "white",
+            "&:hover": { backgroundColor: "rgba(0,0,0,0.9)" },
+          }}
+        >
+          <ArrowForwardIos sx={{ fontSize: { xs: 20, sm: 30 } }} />
+        </IconButton>
+
+        {/* Thumbnails */}
         <Box
           sx={{
             position: "absolute",
@@ -91,6 +102,8 @@ const CarSlider = () => {
             backgroundColor: "transparent",
             padding: "5px 10px",
             borderRadius: 2,
+            overflowX: "auto", // Allow scrolling if too many thumbnails
+            maxWidth: "100%",
           }}
         >
           {images.map((img, index) => (
@@ -101,8 +114,8 @@ const CarSlider = () => {
               alt={`Thumbnail ${index}`}
               onClick={() => setCurrentIndex(index)}
               sx={{
-                width: 180,
-                height: 100,
+                width: { xs: 80, sm: 120, md: 180 },
+                height: { xs: 50, sm: 70, md: 100 },
                 objectFit: "cover",
                 borderRadius: 1,
                 cursor: "pointer",
@@ -114,41 +127,53 @@ const CarSlider = () => {
         </Box>
       </Box>
 
-   {/* Top Three Buttons */}
-<Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", gap: 2, mt: 2 }}>
+      {/* Buttons */}
+      <Box
+  sx={{
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: 2,
+    mt: 2,
+    width: "100%",
+  }}
+>
   <Button
     variant="outlined"
     sx={{
       flex: 1,
+      minWidth: "30%",
       color: "#6F6F6F",
       fontWeight: "bold",
       borderRadius: 2,
-      py: 0.5,
+      py: 1,
       border: "1px solid #D9D9D9",
+      fontSize: { xs: 12, sm: 14, md: 16 },
+      fontFamily: "Inter",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      fontSize: 16, 
-      fontWeight:700,
-       fontFamily:"Inter"
     }}
   >
     BUY IT NOW
-    <Box sx={{ color: "#BC413A",  fontSize: 14, fontFamily:"Inter", 
-      fontWeight:700 }}>$28000</Box>
+    <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+      $28000
+    </Box>
   </Button>
 
   <Button
     variant="contained"
     sx={{
       flex: 1,
+      minWidth: "30%",
       backgroundColor: colors.buttoncolor,
       color: "white",
       borderRadius: 2,
-      py: 2,
-      fontSize: 14, 
-      fontWeight:600,
-      fontFamily:"Inter"
+      py: 1.5,
+      fontSize: { xs: 12, sm: 16 },
+      fontWeight: 500,
+      fontFamily: "Inter",
+      textAlign: "center",
     }}
     onClick={() => setOpen(true)}
   >
@@ -159,26 +184,29 @@ const CarSlider = () => {
     variant="outlined"
     sx={{
       flex: 1,
+      minWidth: "30%",
       color: "#6F6F6F",
       borderRadius: 2,
-      py: 0.5,
+      py: 1,
       border: "1px solid #D9D9D9",
+      fontSize: { xs: 12, sm: 14, md: 16 },
+      fontWeight: 700,
+      fontFamily: "Inter",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      fontSize: 16, 
-      fontWeight:700,
-       fontFamily:"Inter"
     }}
   >
     QUICK BID
-    <Box sx={{ color: "#BC413A", fontSize: 14, fontWeight:700 , fontFamily:"Inter"}}>$28100</Box>
+    <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+      $28100
+    </Box>
   </Button>
 </Box>
 
-{/* Reserve Status with Side Lines */}
+{/* Reserve Status */}
 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", mt: 2 }}>
-  <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} /> 
+  <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} />
   <Box
     sx={{
       padding: "10px 20px",
@@ -187,18 +215,22 @@ const CarSlider = () => {
       color: "#2F61BF",
       fontWeight: 700,
       fontFamily: "Inter",
-      mx: 2,
-      py: 2.3,
-      fontSize: 15,
-      width: "33.33%", // Matches PLACE BID button width
+      fontSize: { xs: 12, sm: 15 },
+      width: "33.33%",
       textAlign: "center",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      py: 2.3,
     }}
   >
     RESERVE NOT MET
   </Box>
-  <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} /> 
+  <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} />
 </Box>
-<BidModal open={open} onClose={() => setOpen(false)} />
+
+
+      <BidModal open={open} onClose={() => setOpen(false)} />
     </Box>
   );
 };

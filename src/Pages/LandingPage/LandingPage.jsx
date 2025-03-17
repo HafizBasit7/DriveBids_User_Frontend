@@ -133,7 +133,7 @@ const LandingPage = () => {
           justifyContent: "center",
           alignSelf: "center",
           height: "100%",
-          width: "70%",
+          width: {md:"70%",lg:"70%"},
           backgroundColor: "#fff",
           py: 5,
           mx:"auto"
@@ -195,7 +195,7 @@ const LandingPage = () => {
           <Box
             sx={{
               display: "flex",
-              gap: { xs: 6 },
+              gap: { xs: 6,md:3 },
               flexWrap: "wrap",
               flexDirection: { xs: "column", sm: "column", md: "row" }, 
               alignItems: { xs: "center", sm: "center", md: "flex-start" }, 

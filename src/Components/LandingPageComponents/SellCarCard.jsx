@@ -50,7 +50,7 @@ const SellCarCard = () => {
         <Typography
           sx={{
             fontWeight: 750,
-            fontSize: { xs: 20, md: 32 },
+            fontSize: { xs: 20, md: 30 },
             fontFamily: "Outfit",
           }}
         >
@@ -58,7 +58,7 @@ const SellCarCard = () => {
         </Typography>
         <Typography
           sx={{
-            fontSize: { xs: 14, md: 18 },
+            fontSize: { xs: 14, md: 16 },
             color: "#000",
             my: 2.5,
             fontFamily: "Inter",

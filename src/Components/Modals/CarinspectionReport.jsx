@@ -48,103 +48,109 @@ const CarInspectionModal = ({ open, onClose }) => {
   ];
   
   return (
-    <Modal open={open} onClose={onClose}>
+   <Modal open={open} onClose={onClose}>
+  <Box
+    sx={{
+      backgroundColor: "white",
+      borderRadius: 2,
+      width: { xs: "90%", md: "80%" },
+      p: 3,
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      boxShadow: 24,
+      maxHeight: { xs: "90vh", sm: "80vh", md: "auto" }, // Limit height on small screens
+      overflowY: { xs: "auto", sm: "auto", md: "visible" }, // Enable scrolling on xs/sm
+      scrollbarWidth: "none", // Hide scrollbar for Firefox
+      "&::-webkit-scrollbar": { display: "none" }, // Hide scrollbar for Webkit browsers
+    }}
+  >
+    <DealsBanner title="Car Inspection Report" subtitle="" buttonText="Close" />
+
+    <Box
+  sx={{
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "start", // Center-align on small screens
+    gap: { xs: 1, sm: 2 }, // Reduce gap on small screens
+    p: { xs: 1, sm: 2 }, // Adjust padding for better spacing
+    border: "1px solid #ddd",
+    m: { xs: 1, sm: 2 }, // Reduce margin on small screens
+    borderRadius: 2,
+    width: "100%", // Ensure it adjusts to the screen width
+  }}
+>
+  <ReportButton title="Indicator" />
+  <Box
+    sx={{
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: { xs: "start", sm: "space-betweeen" }, // Center on small screens
+      gap: { xs: 2, sm: 10 }, // Adjust spacing for better fit
+      width: "100%", // Take full width
+    }}
+  >
+    {indicators.map((item, index) => (
       <Box
+        key={index}
         sx={{
-          backgroundColor: "white",
-          borderRadius: 2,
-          width: "80%",
-          p: 3,
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          boxShadow: 24,
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "row",
         }}
       >
-        <DealsBanner
-          title="Car Inspection Report"
-          subtitle=""
-          buttonText="Close"
-        />
+        <img src={item.icon} alt={item.label} width={24} height={24} />
+        <Typography sx={{ ml: 1, fontSize: { xs: "0.8rem", sm: "1rem" } }}>
+          {item.label}
+        </Typography>
+      </Box>
+    ))}
+  </Box>
+</Box>
 
+
+    {/* Sections for Checks */}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
+        gap: 2,
+        p: 2,
+      }}
+    >
+      {sections.map((section, index) => (
         <Box
+          key={index}
           sx={{
+            flex: 1,
+            border: "1px solid #ddd",
+            borderRadius: 2,
+            p: 2,
             display: "flex",
             flexDirection: "column",
-            alignItems: "flex-start",
             gap: 2,
-            p: 2,
-            border: "1px solid #ddd",
-            m: 2,
-            borderRadius: 2,
+            alignItems: "flex-start",
           }}
         >
-          <ReportButton title="Indicator" />
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              gap: 10,
-            }}
-          >
-            {indicators.map((item, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "row ",
-                }}
+          <ReportButton title={section.title} />
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            {section.items.map((item, idx) => (
+              <Typography
+                key={idx}
+                sx={{ display: "flex", alignItems: "center", gap: 1 }}
               >
-                <img src={item.icon} alt={item.label} width={24} height={24}  />
-                <Typography sx={{ml:1}}>{item.label}</Typography>
-              </Box>
+                <img src={item.icon} alt={item.label} width={24} height={24} />
+                {item.label}
+              </Typography>
             ))}
           </Box>
         </Box>
+      ))}
+    </Box>
+  </Box>
+</Modal>
 
-        {/* Sections for Checks */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
-            gap: 2,
-            p: 2,
-          }}
-        >
-          {sections.map((section, index) => (
-            <Box
-              key={index}
-              sx={{
-                flex: 1,
-                border: "1px solid #ddd",
-                borderRadius: 2,
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-                alignItems: "flex-start",
-              }}
-            >
-              <ReportButton title={section.title} />
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                {section.items.map((item, idx) => (
-                 <Typography
-                 key={idx}
-                 sx={{ display: "flex", alignItems: "center", gap: 1 }}
-               >
-                 <img src={item.icon} alt={item.label} width={24} height={24} />
-                 {item.label}
-               </Typography>
-                ))}
-              </Box>
-            </Box>
-          ))}
-        </Box>
-      </Box>
-    </Modal>
   );
 };
 

@@ -4,8 +4,10 @@ import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import CarCard from "../../Components/HomePageComponents/CarCard";
 import FilterSidebar from "../../Components/FilterPageComponent/FilterSideBar.jsx";
 import colors from "../../Style/color.js";
+import { useNavigate } from "react-router-dom";
 
 const FilterPage = () => {
+  const navigate = useNavigate()
   return (
     <MainLayout>
   
@@ -14,6 +16,7 @@ const FilterPage = () => {
           title="Super Odd Deals"
           subtitle="3000 Cars Available"
           buttonText="View All"
+          onClick={() => navigate("/car-detail")} 
         />
       </Box>
 
@@ -22,21 +25,15 @@ const FilterPage = () => {
           width: "100%",
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          gap: 2,
-          mt: 4,
+          gap: 0.2,
+          mt: 3,
           alignItems: "flex-start",
         }}
       >
         {/* Left Section (Car Listings) */}
-        <Box sx={{ width: { xs: "100%", md: "70%" } }}>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: { xs: "1fr", sm: "1fr", md: "1fr 1fr 1fr" },
-              gap: 4,
-              justifyItems: "center",
-            }}
-          >
+        <Box sx={{ width: { xs: "100%", md: "75%",lg:"80%" } }}>
+        <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 4, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start",  borderRadius: 2,
+            padding: 1,} }}>
             <CarCard />
             <CarCard />
             <CarCard />
@@ -94,12 +91,13 @@ const FilterPage = () => {
         {/* Right Section (Filter Sidebar) */}
         <Box
           sx={{
-            width: { xs: "100%", md: "30%" },
+            width: { xs: "100%", md: "25%" },
             border: "1px solid #ddd",
             borderRadius: 2,
             padding: 1,
             alignSelf: "flex-start",
             order: { xs: -1, md: 1 }, // Moves filter above on small screens
+          
           }}
         >
           <FilterSidebar />

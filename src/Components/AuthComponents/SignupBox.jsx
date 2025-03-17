@@ -13,6 +13,8 @@ import {
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import colors from "../../Style/color";
+import { useNavigate } from "react-router-dom";
+
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +22,7 @@ const Signup = () => {
   const [phone, setPhone] = useState(""); // For trader
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("Individual"); 
+  const navigate = useNavigate(); 
 
   return (
     <Paper
@@ -27,14 +30,14 @@ const Signup = () => {
       sx={{
         p: 5,
         width: "100%",
-        maxWidth: 400,
-        py: 12,
+        maxWidth: 450,
+        py: {sm:10,md:10},
         borderRadius: 1,
         boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)", 
         zIndex: 1,
       }}
     >
-     <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+     <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
   <ToggleButtonGroup
     value={role}
     exclusive
@@ -102,7 +105,7 @@ const Signup = () => {
       <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 30, textAlign: "start" }}>
         Create An Account
       </Typography>
-      <Typography color="textSecondary" sx={{ mb: 2, fontFamily: "Inter", fontSize: 12, fontWeight: 350, textAlign: "start" }}>
+      <Typography color="textSecondary" sx={{ mb: 4, fontFamily: "Inter", fontSize: 12, fontWeight: 350, textAlign: "start" }}>
         Sign up to enjoy the features of DriveBidz
       </Typography>
       <Box sx={{ mb: 2 }}>
@@ -214,6 +217,7 @@ const Signup = () => {
             color: colors.buttoncolor,
             textDecoration: "underline",
           }}
+          onClick={() => navigate("/login")}
         >
           Sign in
         </Typography>

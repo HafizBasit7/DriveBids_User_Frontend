@@ -8,9 +8,12 @@ import {
 } from "@mui/material";
 import OtpInput from "react-otp-input";
 import colors from "../../Style/color";
+import { useNavigate } from "react-router-dom";
 
 const Enteropt = () => {
   const [otp, setOtp] = useState("");
+
+  const navigate =useNavigate()
 
   return (
     <Paper
@@ -18,7 +21,7 @@ const Enteropt = () => {
       sx={{
         p: 5,
         width: "100%",
-        maxWidth: 400,
+        maxWidth: 450,
         py: 15,
         borderRadius: 1,
         boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)",
@@ -38,9 +41,9 @@ const Enteropt = () => {
       <Typography
         color="textSecondary"
         sx={{
-          mb: 2,
+          mb: 3,
           fontFamily: "Inter",
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: 350,
         }}
       >
@@ -117,6 +120,7 @@ const Enteropt = () => {
           borderRadius: 2,
           "&:hover": { backgroundColor: colors.buttoncolor },
         }}
+        onClick={() => navigate("/reset-password")}
         disabled={otp.length < 4}
       >
         Verify

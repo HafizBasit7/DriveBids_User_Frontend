@@ -15,8 +15,8 @@ const BloggerCard = () => {
         p: 2,
         backgroundColor: "#FAFCFF",
         position: "relative",
-        overflow: "visible", // Ensure avatar is visible outside the box
-        border: "1px solid #E4E4E4", // Add border with color
+        overflow: "visible", 
+        border: "1px solid #E4E4E4", 
       }}
     >
       <Avatar

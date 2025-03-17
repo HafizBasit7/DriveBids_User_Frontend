@@ -3,10 +3,11 @@ import { AppBar, Toolbar, Box, Button, IconButton, Drawer, List, ListItem, ListI
 import MenuIcon from "@mui/icons-material/Menu";
 import Logosvg from "../../assets/SVG/Mainlogo.svg";
 import colors from "../../Style/color";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const navigate = useNavigate(); 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -32,7 +33,7 @@ const Navbar = () => {
 
          
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", pr: { md: 6, lg: 8 } }}>
-            <Button sx={{ color: "#000", mx: 1,fontSize:13,fontFamily:"Inter",fontWeight:500 }}>Home</Button>
+            <Button sx={{ color: "#000", mx: 1,fontSize:13,fontFamily:"Inter",fontWeight:500 }}  onClick={() => navigate("/home")}>Home</Button>
             <Button sx={{ color: "#000", mx: 1,fontSize:13,fontFamily:"Inter",fontWeight:500 }}>How It Works</Button>
             <Button sx={{ color: "#000", mx: 1 ,fontSize:13,fontFamily:"Inter",fontWeight:500}}>Contact Us</Button>
             <Button
@@ -63,7 +64,7 @@ const Navbar = () => {
         </Toolbar>
       </AppBar>
 
-      {/* Mobile Drawer */}
+      
       <Drawer
         anchor="right"
         open={mobileOpen}

@@ -7,12 +7,14 @@ import CarFeaturesComponent from "../../Components/CarDetailsComponent/CarFeatur
 import BidsHistory from "../../Components/CarDetailsComponent/BidsHistory";
 import DescriptionBox from "../../Components/CarDetailsComponent/DescriptionBox";
 import CarInspectionReport from "../../Components/CarDetailsComponent/CarInspectionReport";
+import { useNavigate } from "react-router-dom";
 
 const CarDetailsPage = () => {
+  const navigate=useNavigate()
   return (
     <MainLayout>
       <Box sx={{ width: "100%" }}>
-        <DealsBanner title="1996 Ford Mustang" subtitle="Posted 2 days ago" buttonText="Message Owner" />
+        <DealsBanner title="1996 Ford Mustang" subtitle="Posted 2 days ago" buttonText="Message Owner"  onClick={() => navigate("/chat-page")} />
       </Box>
 
       <Box

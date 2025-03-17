@@ -13,11 +13,14 @@ import {
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import colors from "../../Style/color";
+import { useNavigate } from "react-router-dom";
 
 const ForgetPassword = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+      const navigate = useNavigate(); 
+    
 
     return (
         <Paper
@@ -25,7 +28,7 @@ const ForgetPassword = () => {
             sx={{
                 p: 5,
                 width: "100%",
-                maxWidth: 400,
+                maxWidth: 450,
                 py: 17,
                 borderRadius: 1,
                 boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)",
@@ -35,7 +38,7 @@ const ForgetPassword = () => {
         >
 
             <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 30 }}>
-                Forget Password
+                Forget Password?
             </Typography>
 
             <Typography color="textSecondary" sx={{ mb: 3, fontFamily: "Inter", fontSize: 13, fontWeight: 350 }}>
@@ -78,6 +81,7 @@ const ForgetPassword = () => {
                     borderRadius: 2,
                     "&:hover": { backgroundColor: colors.buttoncolor },
                 }}
+                onClick={() => navigate("/otp")}
             >
                 Send Code
             </Button>
