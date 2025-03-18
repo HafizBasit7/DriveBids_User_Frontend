@@ -1,19 +1,19 @@
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../../Layouts/MainLayout";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
-import CarSelectionBox from "../../Components/SellMyCarComponents/CarCompanyBox";
+import MainLayout from "../../../Layouts/MainLayout";
+import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
+import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 
-const CarColorPage = () => {
+const CarVarient = () => {
   const navigate = useNavigate();
 
   return (
     <MainLayout>
-      
+      {/* Step Title */}
       <Box width="100%">
         <DealsBanner
-          title="Car Colour"
-          subtitle="Pick The Colour Of Your Car"
+          title="Car Variant"
+          subtitle="Pick The Variant of Your Car"
           buttonText="Back to Home"
           onClick={() => navigate("/home")}
         />
@@ -26,7 +26,7 @@ const CarColorPage = () => {
         mt={3}
         sx={{ fontFamily: "Inter",fontSize:30  }}
       >
-        Step <span style={{ color: colors.buttoncolor }}>7</span> of 10
+        Step <span style={{ color: colors.buttoncolor }}>2</span> of 10
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
@@ -36,4 +36,4 @@ const CarColorPage = () => {
   );
 };
 
-export default CarColorPage;
+export default CarVarient;

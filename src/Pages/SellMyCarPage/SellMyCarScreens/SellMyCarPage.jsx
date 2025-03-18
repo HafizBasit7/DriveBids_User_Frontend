@@ -1,7 +1,7 @@
 import { Box, Typography, Stack, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../../Layouts/MainLayout";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
+import MainLayout from "../../../Layouts/MainLayout";
+import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";

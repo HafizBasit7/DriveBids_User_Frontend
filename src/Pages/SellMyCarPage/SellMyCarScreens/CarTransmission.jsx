@@ -1,9 +1,9 @@
 import { Box, Typography, Radio, RadioGroup, FormControlLabel, Button, Paper } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../../Layouts/MainLayout";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
-import colors from "../../Style/color";
+import MainLayout from "../../../Layouts/MainLayout";
+import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
+import colors from "../../../Style/color";
 
 const CarTransmissionPage = () => {
     const navigate = useNavigate();

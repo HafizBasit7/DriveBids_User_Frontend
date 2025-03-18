@@ -1,7 +1,7 @@
 import { Box, Typography, Stack, Paper, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../../Layouts/MainLayout";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
+import MainLayout from "../../../Layouts/MainLayout";
+import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import ImageIcon from "@mui/icons-material/Image";
@@ -9,15 +9,25 @@ import ShieldIcon from "@mui/icons-material/Shield";
 import ReportIcon from "@mui/icons-material/Report";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import colors from "../../Style/color";
+import colors from "../../../Style/color";
 
 const steps = [
   { title: "Car Details", status: "Complete", steps: 9, icon: <InsertDriveFileIcon fontSize="large" /> },
   { title: "Car Features", status: "Incomplete", steps: 3, icon: <DirectionsCarIcon fontSize="large" /> },
   { title: "Car Images", status: "Incomplete", steps: 4, icon: <ImageIcon fontSize="large" /> },
-  { title: "Inspection Report", status: "Incomplete", steps: 2, icon: <ShieldIcon fontSize="large" /> },
+  { title: "Inspection Report", status: "Incomplete", steps: 3, icon: <ShieldIcon fontSize="large" /> },
   { title: "Damage Report", status: "Incomplete", steps: 4, icon: <ReportIcon fontSize="large" /> },
   { title: "Car Pricing", status: "Incomplete", steps: 4, icon: <MonetizationOnIcon fontSize="large" /> },
+];
+
+// Define your navigation routes for each step
+const routes = [
+  "/post-ad/car-details",
+  "/car-features1",
+  "/car-images",
+  "/inspection-report1",
+  "/post-ad/damage-report",
+  "/pricing1",
 ];
 
 const PostAds = () => {
@@ -39,6 +49,7 @@ const PostAds = () => {
           {steps.map((item, index) => (
             <Box
               key={index}
+              onClick={() => navigate(routes[index])} // Navigation added here
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -52,7 +63,9 @@ const PostAds = () => {
               }}
             >
               <Box display="flex" alignItems="center" gap={2}>
-                <Box  color={item.status === "Complete" ? colors.buttoncolor : "#6F6F6F"} sx={{ fontSize: 40,  }}>{item.icon}</Box>
+                <Box color={item.status === "Complete" ? colors.buttoncolor : "#6F6F6F"} sx={{ fontSize: 40 }}>
+                  {item.icon}
+                </Box>
                 <Box>
                   <Typography fontWeight={600} sx={{ fontFamily: "Inter" }}>
                     {item.title}
@@ -80,13 +93,12 @@ const PostAds = () => {
         <Box display="flex" justifyContent="flex-end" mt={3}>
           <Button
             variant="contained"
-           
             sx={{
               fontFamily: "Inter",
               borderRadius: 1.5,
-              width: 150, 
-              py:1,
-              backgroundColor:colors.buttoncolor
+              width: 150,
+              py: 1,
+              backgroundColor: colors.buttoncolor,
             }}
           >
             Post Ad
