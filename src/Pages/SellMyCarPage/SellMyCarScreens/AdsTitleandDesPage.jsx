@@ -17,7 +17,7 @@ const AdsDescription = () => {
         <DealsBanner
           title="Ad Decription"
           subtitle="Enter Ad Title & Description"
-          buttonText="Back to Home"
+          buttonText="Back"
           onClick={() => navigate("/car-fuel")}
         />
       </Box>

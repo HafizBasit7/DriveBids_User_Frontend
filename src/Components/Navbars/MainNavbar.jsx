@@ -35,7 +35,7 @@ const MainNavbar = () => {
 
   const navItems = [
     { label: "Home", path: "/home" },
-    { label: "How it Works", path: "/how-it-works" },
+    { label: "Browse Deals", path: "/filter" },
     { label: "Contact Us", path: "/contact" }, // Added navigation path
   ];
 
@@ -152,8 +152,8 @@ const MainNavbar = () => {
         )}
 
         {!isMobile && (
-          <IconButton>
-            <ChatBubbleOutlineIcon sx={{ color: "black" }} />
+          <IconButton onClick={() => navigate("/chat-page")} >
+            <ChatBubbleOutlineIcon sx={{ color: "black" }}     />
           </IconButton>
         )}
         <Notifications />

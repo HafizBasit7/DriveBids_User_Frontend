@@ -46,7 +46,8 @@ const CityPage = () => {
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox carBrands={carBrands}  onNext={() => navigate("/car-mileage")}/>
+        <CarSelectionBox  isLocation={true}  // Hides "Enter custom company"
+  searchPlaceholder="Search City" carBrands={carBrands}  onNext={() => navigate("/car-mileage")}/>
       </Box>
     </MainLayout>
   );

@@ -15,7 +15,7 @@ const CarFuelPage = () => {
                 <DealsBanner
                     title="Fuel"
                     subtitle="Pick Your Car Fuel Type"
-                    buttonText="Back to Home"
+                    buttonText="Back"
                     onClick={() => navigate("/car-mileage")}
                 />
             </Box>
@@ -42,12 +42,12 @@ const CarFuelPage = () => {
                 }}
             >
                 <Typography fontWeight={600} sx={{ fontSize: 18, mb: 3, fontFamily: "Inter" }}>
-                    Transmission type of the car?
+                Fuel type the car runs on?
                 </Typography>
 
                 
                 <RadioGroup value={transmission} onChange={(e) => setTransmission(e.target.value)}>
-                    {["AGS", "Manual", "CVT", "DCT"].map((type) => (
+                    {["Petrol", "Diesel", "High Octane", "Electricity"].map((type) => (
                         <FormControlLabel
                             key={type}
                             value={type}

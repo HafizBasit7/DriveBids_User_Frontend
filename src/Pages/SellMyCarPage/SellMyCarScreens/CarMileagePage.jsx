@@ -24,7 +24,7 @@ const CarMileagePage = () => {
         <DealsBanner
           title="Car Mileage"
           subtitle="Select the Mileage of Your Car"
-          buttonText="Back to Home"
+          buttonText="Back "
           onClick={() => navigate("/city")}
         />
       </Box>
@@ -57,12 +57,13 @@ const CarMileagePage = () => {
 
         {/* Slider */}
         <Box px={3} mb={8}>
-  <Typography textAlign="center" fontWeight={600} color={colors.buttoncolor}>
-    {mileage.toLocaleString()} KM
-  </Typography>
-  <Typography fontWeight={500} textAlign="start" mb={3} sx={{ fontSize: 15 ,fontFamily:"Inter" }}>
+  
+  <Typography fontWeight={500} textAlign="start" mb={2} sx={{ fontSize: 18 ,fontFamily:"Inter" ,alignitem:{xs:"center"}}}>
   Mileage in KMs
         </Typography>
+        <Typography textAlign="center"  mb={3} fontWeight={600} color={colors.buttoncolor}>
+    {mileage.toLocaleString()} KM
+  </Typography>
   <Slider
     value={mileage}
     onChange={(_, newValue) => setMileage(newValue)}

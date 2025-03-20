@@ -11,10 +11,10 @@ const MyBidsPage = () => {
 
   // Full Bids Data with status
   const bidsData = [
-    { status: "winning", chipText: "Winning", buttons: ["Cancel Bid", "Increase Bid"] },
-    { status: "losing", chipText: "Losing", buttons: ["Cancel Bid", "Increase Bid"] },
-    { status: "won", chipText: "Bid Won", buttons: ["Pay Now", "Cancel"] },
-    { status: "won", chipText: "Bid Won", buttons: ["Pay Now", "Cancel"] },
+    { status: "winning", chipText: "Winning", buttons: [ "Increase Bid"] },
+    { status: "losing", chipText: "Losing", buttons: [ "Increase Bid"] },
+    { status: "won", chipText: "Bid Won", buttons: ["Pay Now" ] },
+    { status: "won", chipText: "Bid Won", buttons: ["Pay Now"] },
     { status: "lost", chipText: "Bid Lost", buttons: [] },
     { status: "lost", chipText: "Bid Lost", buttons: [] },
   ];

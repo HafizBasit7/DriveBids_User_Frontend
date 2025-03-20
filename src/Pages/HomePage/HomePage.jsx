@@ -28,7 +28,7 @@ const HomePage = () => {
         <SellCarCard />
       </Box>
 
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%" ,mt: 2}}>
         <DealsBanner title="Super Odd Deals" subtitle="3000 Cars Available" buttonText="View All"             onClick={() => navigate("/filter")} 
  />
       </Box>
@@ -42,7 +42,7 @@ const HomePage = () => {
         
       </Box>
 
-      <Box sx={{ width: "100%", mt: 5 }}> {/* Added margin-top instead of top */}
+      <Box sx={{ width: "100%", mt: 3 }}> {/* Added margin-top instead of top */}
         <DealsBanner title="Spotlight Deals" subtitle="3000 Cars Available" buttonText="View All" />
       </Box>
 

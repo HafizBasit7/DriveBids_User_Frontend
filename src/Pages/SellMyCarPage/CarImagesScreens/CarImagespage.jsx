@@ -49,8 +49,8 @@ const CarImages = () => {
         <DealsBanner
           title="Car Images"
           subtitle="Complete 4 Easy Steps"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          buttonText="Back "
+          onClick={() => navigate("/post-ad")}
         />
       </Box>
 
@@ -100,7 +100,7 @@ const CarImages = () => {
           ))}
         </Stack>
 
-        <Box display="flex" justifyContent="flex-end" mt={3}>
+        {/* <Box display="flex" justifyContent="flex-end" mt={3}>
           <Button
             variant="contained"
             sx={{
@@ -113,7 +113,7 @@ const CarImages = () => {
           >
             Post Ad
           </Button>
-        </Box>
+        </Box> */}
       </Box>
     </MainLayout>
   );

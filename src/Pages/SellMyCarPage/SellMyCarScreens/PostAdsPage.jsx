@@ -1,21 +1,23 @@
-import { Box, Typography, Stack, Paper, Button } from "@mui/material";
+import { Box, Typography, Stack, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import ArticleIcon from '@mui/icons-material/Article';
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import ImageIcon from "@mui/icons-material/Image";
-import ShieldIcon from "@mui/icons-material/Shield";
+import GppGoodIcon from '@mui/icons-material/GppGood';
 import ReportIcon from "@mui/icons-material/Report";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 import colors from "../../../Style/color";
 
 const steps = [
-  { title: "Car Details", status: "Complete", steps: 9, icon: <InsertDriveFileIcon fontSize="large" /> },
+  { title: "Car Details", status: "Complete", steps: 10, icon: <ArticleIcon fontSize="large" /> },
   { title: "Car Features", status: "Incomplete", steps: 3, icon: <DirectionsCarIcon fontSize="large" /> },
   { title: "Car Images", status: "Incomplete", steps: 4, icon: <ImageIcon fontSize="large" /> },
-  { title: "Inspection Report", status: "Incomplete", steps: 3, icon: <ShieldIcon fontSize="large" /> },
+  { title: "Inspection Report", status: "Incomplete", steps: 3, icon: <GppGoodIcon fontSize="large" /> },
   { title: "Damage Report", status: "Incomplete", steps: 4, icon: <ReportIcon fontSize="large" /> },
   { title: "Car Pricing", status: "Incomplete", steps: 4, icon: <MonetizationOnIcon fontSize="large" /> },
 ];
@@ -30,7 +32,6 @@ const routes = [
 ];
 
 const PostAds = () => {
-  
   const navigate = useNavigate();
 
   return (
@@ -40,46 +41,69 @@ const PostAds = () => {
           title="Post Ad"
           subtitle="Complete 6 Easy Steps"
           buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/sellmycar")}
         />
       </Box>
 
-      <Box width={{ xs: "95%", sm: "80%", md: "85%" }} mx="auto" mt={4}>
+      <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={4}>
         <Stack spacing={2}>
           {steps.map((item, index) => (
             <Box
               key={index}
-              onClick={() => navigate(routes[index])} // Navigation added here
+              onClick={() => navigate(routes[index])}
               sx={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                p: 2,
+                p: 1.5,
                 border: "1px solid #D9D9D9",
                 borderRadius: 2,
                 cursor: "pointer",
-                transition: "all 0.3s ease",
+                fontFamily: "Inter",
                 "&:hover": { backgroundColor: "#f9f9f9" },
               }}
             >
+              {/* Left Side */}
               <Box display="flex" alignItems="center" gap={2}>
-                <Box color={item.status === "Complete" ? colors.buttoncolor : "#6F6F6F"} sx={{ fontSize: 40 }}>
+                <Box
+                  sx={{
+                    minWidth: 50,
+                    minHeight: 55,
+                    backgroundColor: item.status === "Complete" ? colors.buttoncolor : "#F2EFF2",
+                    color: item.status === "Complete" ? "white" : "#6F6F6F",
+                    borderRadius: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    ml: 1
+                  }}
+                >
                   {item.icon}
                 </Box>
-                <Box>
-                  <Typography fontWeight={600} sx={{ fontFamily: "Inter-Regular" }}>
+
+                <Box sx={{ ml: 2 }}>
+                  <Typography fontWeight={600} sx={{ fontFamily: "Inter", fontSize: 16 }}>
                     {item.title}
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    color={item.status === "Complete" ? "primary" : "#6F6F6F"}
-                    sx={{ fontFamily: "Inter" }}
-                  >
-                    ● {item.status}
-                  </Typography>
+                  {/* Status Icon */}
+                  <Box display="flex" alignItems="center" gap={0.3} mt={0.5}>
+                    {item.status === "Complete" ? (
+                      <CheckCircleIcon sx={{ color: "#2F61BF",fontSize: 16 }}  /> 
+                    ) : (
+                      <CancelIcon sx={{ color: "#6F6F6F",fontSize: 16 }}  /> 
+                    )}
+                    <Typography
+                      variant="body2"
+                      color={item.status === "Complete" ? "#2F61BF" : "#6F6F6F"}
+                      sx={{ fontFamily: "Inter" }}
+                    >
+                      {item.status}
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
 
+              {/* Right Side */}
               <Box display="flex" alignItems="center" gap={2} justifyContent="flex-end">
                 <Typography fontSize={14} fontWeight={500} color="#6F6F6F" sx={{ fontFamily: "Inter" }}>
                   {item.steps} Steps

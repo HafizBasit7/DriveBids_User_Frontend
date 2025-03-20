@@ -15,14 +15,20 @@ const CarTransmissionPage = () => {
                 <DealsBanner
                     title="Transmission"
                     subtitle="Pick The Transmission Type Of Your Car"
-                    buttonText="Back to Home"
+                    buttonText="Back "
                     onClick={() => navigate("/car-engine")}
                 />
             </Box>
 
-            <Typography fontWeight={600} textAlign="center" mt={3} sx={{ fontSize: { xs: 20, md: 22 } }}>
-                Step <span style={{ color: colors.buttoncolor }}>9</span> of 10
-            </Typography>
+            <Typography
+        variant="h4"
+        fontWeight={600}
+        textAlign="center"
+        mt={3}
+        sx={{ fontFamily: "Inter",fontSize:30  }}
+      >
+        Step <span style={{ color: colors.buttoncolor }}>9</span> of 10
+      </Typography>
 
             <Box
                 component={Paper}

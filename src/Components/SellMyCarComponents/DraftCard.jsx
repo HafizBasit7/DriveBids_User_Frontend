@@ -3,7 +3,6 @@ import {
   Box,
   CardMedia,
   Button,
-  IconButton,
   Typography,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -39,7 +38,7 @@ const DraftCard = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: 1,  // Reduced horizontal gap
+            gap: 0.5, // Reduced horizontal gap
             mb: 1,
           }}
         >
@@ -65,6 +64,7 @@ const DraftCard = () => {
         border: "1px solid #E5E7E8",
         backgroundColor: "#fff",
         boxShadow: 2,
+        fontFamily: "Inter",
       }}
     >
       {/* Image */}
@@ -76,26 +76,6 @@ const DraftCard = () => {
           alt="Car"
           sx={{ width: "100%", objectFit: "cover" }}
         />
-
-        <IconButton
-          onClick={handleFavoriteClick}
-          sx={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            backgroundColor: "#363D2D",
-            color: "#FFFFFF",
-            width: 34,
-            height: 34,
-            borderRadius: 2,
-          }}
-        >
-          {isFavorited ? (
-            <FavoriteIcon sx={{ color: "white" }} />
-          ) : (
-            <FavoriteBorderIcon />
-          )}
-        </IconButton>
       </Box>
 
       {/* Reg No */}
@@ -106,6 +86,7 @@ const DraftCard = () => {
           mt: 1.5,
           mb: 1.5,
           textAlign: "center",
+          fontFamily: "Inter",
         }}
       >
         Reg No: J 12345
@@ -128,6 +109,7 @@ const DraftCard = () => {
             px: 3,
             py: 1.5,
             "&:hover": { backgroundColor: colors.buttoncolor },
+            fontFamily: "Inter",
           }}
         >
           Complete Registration
@@ -137,15 +119,17 @@ const DraftCard = () => {
   );
 };
 
-// Step Item with fixed width for alignment
+// Step Item with reduced width and font size for tighter alignment
 const StepItem = ({ label, completed }) => {
   return (
     <Box
       sx={{
         display: "flex",
         alignItems: "center",
-        width: 125,  // Fixed width to maintain alignment
+        width: 120,  // Increased width to avoid text wrapping
         gap: 0.5,
+        fontFamily: "Inter",
+        my:0.2,
       }}
     >
       {completed ? (
@@ -153,9 +137,12 @@ const StepItem = ({ label, completed }) => {
       ) : (
         <CancelIcon sx={{ color: "#C4C4C4", fontSize: 18 }} />
       )}
-      <Typography sx={{ fontSize: 14 }}>{label}</Typography>
+      <Typography sx={{ fontSize: 13, fontFamily: "Inter", whiteSpace: "nowrap" }}>
+        {label}
+      </Typography>
     </Box>
   );
 };
+
 
 export default DraftCard;

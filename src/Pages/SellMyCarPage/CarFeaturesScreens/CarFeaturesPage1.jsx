@@ -2,8 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
-import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
+import CarFeatureBox from "../../../Components/SellMyCarComponents/CarFeatureBox";
 
 const CarFeaturesPage1 = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const CarFeaturesPage1 = () => {
         <DealsBanner
           title="Car Features"
           subtitle="Pick The Feature of Your Car"
-          buttonText="Back to Home"
+          buttonText="Back "
           onClick={() => navigate("/post-ad")}
         />
       </Box>
@@ -31,7 +31,10 @@ const CarFeaturesPage1 = () => {
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox  onNext={() => navigate("/car-features2")} />
+      <CarFeatureBox
+  carBrands={["Toyota", "Honda", "Ford", "BMW", "Mercedes","Toyota", "Honda", "Ford", "BMW", "Mercedes"]}
+  title="Select exterior features"
+  searchPlaceholder="enter custom feature" onNext={() => navigate("/car-features2")} />
       </Box>
     </MainLayout>
   );

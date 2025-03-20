@@ -13,8 +13,13 @@ import {
 import { Search, Business } from "@mui/icons-material";
 import colors from "../../Style/color";
 
-// carBrands will come from props now
-const CarSelectionBox = ({ carBrands = [], onNext }) => {
+const CarSelectionBox = ({
+  carBrands = [],
+  onNext,
+  isLocation ,
+  searchPlaceholder ,
+  customPlaceholder 
+}) => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [customBrand, setCustomBrand] = useState("");
 
@@ -26,56 +31,105 @@ const CarSelectionBox = ({ carBrands = [], onNext }) => {
       border="1px solid #D9D9D9"
       borderRadius={2}
     >
-      {/* Search & Custom Input */}
+      {/* Search & Conditional Custom Input */}
       <Grid container spacing={2} mb={2}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="Search Company"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search sx={{ color: "#777" }} />
-                </InputAdornment>
-              ),
-              sx: { height: 40, fontSize: 14, padding: "0 10px" },
-            }}
-            sx={{
-              fontFamily: "Inter",
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  borderColor: colors.buttoncolor,
+        {/* If isLocation is false, show both inputs in one row */}
+        {isLocation ? (
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder={searchPlaceholder}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search sx={{ color: "#777" }} />
+                  </InputAdornment>
+                ),
+                sx: {
+                  height: 40,
+                  fontSize: 14,
+                  padding: "0 10px",
+                  borderRadius: 2,
+                  backgroundColor: "#F3F3F3",
                 },
-              },
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="Enter custom company"
-            value={customBrand}
-            onChange={(e) => setCustomBrand(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Business sx={{ color: "#777" }} />
-                </InputAdornment>
-              ),
-              sx: { height: 40, fontSize: 14, padding: "0 10px" },
-            }}
-            sx={{
-              fontFamily: "Inter",
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  borderColor: colors.buttoncolor,
+              }}
+              sx={{
+                fontFamily: "Inter",
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: colors.buttoncolor,
+                  },
                 },
-              },
-            }}
-          />
-        </Grid>
+              }}
+            />
+          </Grid>
+        ) : (
+          <>
+            {/* Both search and custom input side by side */}
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder={searchPlaceholder}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Search sx={{ color: "#777" }} />
+                    </InputAdornment>
+                  ),
+                  sx: {
+                    height: 40,
+                    fontSize: 14,
+                    padding: "0 10px",
+                    borderRadius: 2,
+                    backgroundColor: "#F3F3F3",
+                  },
+                }}
+                sx={{
+                  fontFamily: "Inter",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: colors.buttoncolor,
+                    },
+                  },
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder={customPlaceholder}
+                value={customBrand}
+                onChange={(e) => setCustomBrand(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Business sx={{ color: "#777" }} />
+                    </InputAdornment>
+                  ),
+                  sx: {
+                    height: 40,
+                    fontSize: 14,
+                    padding: "0 10px",
+                    borderRadius: 2,
+                    backgroundColor: "#F3F3F3",
+                  },
+                }}
+                sx={{
+                  fontFamily: "Inter",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: colors.buttoncolor,
+                    },
+                  },
+                }}
+              />
+            </Grid>
+          </>
+        )}
       </Grid>
 
       {/* Car Brands Selection */}
@@ -98,7 +152,7 @@ const CarSelectionBox = ({ carBrands = [], onNext }) => {
         </Grid>
       </RadioGroup>
 
-      {/* Next Step Button inside the Box, aligned right */}
+      {/* Next Step Button */}
       <Box display="flex" justifyContent="flex-end" mt={2}>
         <Button
           variant="contained"

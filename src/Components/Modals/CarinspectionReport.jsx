@@ -86,6 +86,7 @@ const CarInspectionModal = ({ open, onClose }) => {
     sx={{
       display: "flex",
       flexWrap: "wrap",
+     
       justifyContent: { xs: "start", sm: "space-betweeen" }, // Center on small screens
       gap: { xs: 2, sm: 10 }, // Adjust spacing for better fit
       width: "100%", // Take full width

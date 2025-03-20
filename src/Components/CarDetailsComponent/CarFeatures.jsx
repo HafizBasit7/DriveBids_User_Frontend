@@ -20,6 +20,9 @@ const carFeatures = [
   { name: "Reverse Camera", enabled: false },
   { name: "Push Start", enabled: false },
   { name: "Immobilizer", enabled: false },
+  { name: "Reverse Camera", enabled: false },
+  { name: "Push Start", enabled: false },
+  { name: "Immobilizer", enabled: false },
 ];
 
 const CarFeaturesComponent = () => {

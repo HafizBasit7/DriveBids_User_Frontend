@@ -39,7 +39,7 @@ const Footer = () => {
         }}
       />
 
-      <Box
+      {/* <Box
         sx={{
           position: "absolute",
           top: 0,
@@ -50,7 +50,7 @@ const Footer = () => {
           transform: "skew(47deg)",
           zIndex: 0,
         }}
-      />
+      /> */}
 
       <Box sx={{ position: "relative", zIndex: 1 }}>
         <Box
@@ -78,7 +78,7 @@ const Footer = () => {
                 fontSize: 12,
                 fontFamily: "Inter",
                 zIndex: 1,
-                color: index === 3 || index === 8 ? "black" : "white", 
+                color: index === 3 || index === 8 ? "white" : "white", 
               }}
             >
               {item}
@@ -191,7 +191,7 @@ const Footer = () => {
                 (Icon, index) => (
                   <IconButton
                     key={index}
-                    sx={{ color: index < 3 ? "black" : "white" }}
+                    sx={{ color: index < 3 ? "white" : "white" }}
                   >
                     <Icon />
                   </IconButton>

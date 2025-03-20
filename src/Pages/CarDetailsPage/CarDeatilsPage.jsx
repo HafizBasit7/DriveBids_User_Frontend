@@ -21,12 +21,12 @@ const CarDetailsPage = () => {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          gap: 2,
+          gap: 1,
           mt: 2,
           width: "100%",
         }}
       >
-        <Box sx={{ width: { xs: "100%", md: "70%" }, backgroundColor: "", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Box sx={{ width: { xs: "100%", md: "70%" }, backgroundColor: "", display: "flex", justifyContent: "center", alignItems: "start",pt:2 }}>
         <CarSlider />
         </Box>
         <Box sx={{ width: { xs: "100%", md: "30%" }, backgroundColor: "", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -39,7 +39,7 @@ const CarDetailsPage = () => {
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           gap: 2,
-          mt: 2,
+          mt: 1,
           width: "100%",
         }}
       >

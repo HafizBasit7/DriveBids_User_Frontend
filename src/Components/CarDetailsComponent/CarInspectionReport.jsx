@@ -10,6 +10,7 @@ import CarReportSvg from "../../assets/SVG/carreportsvg.svg";
 import CarInspectionModal from "../Modals/CarinspectionReport";
 import { useState } from "react";
 import DamageModal from "../Modals/DamageModal";
+import img from "../../assets/Png/prseller.png"
 
 const CarInspectionReport = () => {
   const [open, setOpen] = useState(false);
@@ -26,10 +27,47 @@ const CarInspectionReport = () => {
         fontFamily: "Inter, sans-serif",
         display: "flex",
         flexDirection: "column",
-        gap: 3,
+        gap: 1,
         minHeight: "100%",
       }}
     >
+
+<Box sx={{ p: 1, borderRadius: 2, border: "1px solid #ddd", display: "flex", justifyContent: "space-between", alignItems: "center",pl:2 }}>
+  <Box>
+    <Typography sx={{ fontWeight: 500, fontFamily: "Inter", textTransform: "uppercase", fontSize: 18 }}>
+      Adam Williams
+    </Typography>
+    <Typography sx={{ fontWeight: 500, fontFamily: "Inter", fontSize: 14, color: "#6F6F6F" }}>
+      Private Seller
+    </Typography>
+    <Link
+      href="#"
+      underline="hover"
+      sx={{
+        fontSize: 13,
+        display: "flex",
+        alignItems: "center",
+        gap: 0.5,
+        color: "#0056D2",
+        fontWeight: 500,
+        textDecoration: "underline",
+        fontFamily: "Inter",
+        mt: 1,
+      }}
+      onClick={() => setOpen(true)}
+    >
+      
+      View All Car
+    </Link>
+  </Box>
+
+  <Box component="img" 
+       src={img}
+       alt="Seller" 
+       sx={{ width: 80, height: 80, borderRadius: 2, objectFit: "cover" }} 
+  />
+</Box>
+
       {/* Car Inspection Report */}
       <Box sx={{ p: 2, borderRadius: 2, border: "1px solid #ddd" }}>
         <Typography variant="h6" sx={{ fontWeight: 500, fontFamily: "Inter" }}>
@@ -39,7 +77,7 @@ const CarInspectionReport = () => {
           href="#"
           underline="hover"
           sx={{
-            fontSize: 15,
+            fontSize: 14,
             display: "flex",
             alignItems: "center",
             gap: 0.5,
@@ -100,7 +138,7 @@ const CarInspectionReport = () => {
       sx={{
         border: "2px dashed #2F61BF",
         borderRadius: 2,
-        p: 3,
+        p: 2,
         textAlign: "center",
         display: "flex",
         flexDirection: "column",
@@ -110,10 +148,10 @@ const CarInspectionReport = () => {
       }}
     >
       {/* Title */}
-      <Typography variant="body1" sx={{ fontSize: 16, fontWeight: 600 }}>
+      <Typography variant="body1" sx={{ fontSize: 13, fontWeight: 600 }}>
         Click the label to reveal the damage report
       </Typography>
-      <Typography variant="body1"  sx={{ color: "#2F61BF", cursor: "pointer",fontWeight: 500,fontFamily:"Inter" }}>
+      <Typography variant="body1"  sx={{ color: "#2F61BF", cursor: "pointer",fontWeight: 500,fontFamily:"Inter",fontSize: 12, }}>
         Front View
       </Typography>
 

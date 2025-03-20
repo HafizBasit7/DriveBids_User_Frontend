@@ -25,7 +25,7 @@ const AuthLayout = ({ children }) => {
           position: "absolute",
           top: 0,
           bottom: 0,
-          left: {md:"25%",lg:"27%"},
+          left: {md:"25%",lg:"23%"},
           width: "17%",
           backgroundColor: "white",
           transform: "skew(40deg)",

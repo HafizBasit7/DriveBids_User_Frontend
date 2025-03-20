@@ -27,7 +27,7 @@ const CarColorPage = () => {
         <DealsBanner
           title="Car Colour"
           subtitle="Pick The Colour Of Your Car"
-          buttonText="Back to Home"
+          buttonText="Back"
           onClick={() => navigate("/car-fuel")}
         />
       </Box>
@@ -43,7 +43,9 @@ const CarColorPage = () => {
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox carBrands={carBrands}   onNext={() => navigate("/car-engine")}/>
+        <CarSelectionBox carBrands={carBrands} isLocation={false} 
+  searchPlaceholder = "Search Company"
+  customPlaceholder = "Enter custom company"  onNext={() => navigate("/car-engine")}/>
       </Box>
     </MainLayout>
   );

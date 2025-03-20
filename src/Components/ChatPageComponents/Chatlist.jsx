@@ -22,7 +22,7 @@ const ChatList = () => {
       {/* Header Section */}
       <Box sx={{ bgcolor: colors.yellowbackground, p: 2, borderRadius: "8px", mb: 2, display:"flex", justifyContent:"flex-start", pl:3 }}>
         <Typography variant="h5" fontWeight="bold">
-          Messages <span style={{ fontWeight: "normal", color: "#000", fontSize:15, }}>5 unread messages</span>
+          Messages <span style={{ fontWeight: "normal", color: "#000", fontSize:15,fontWeight:700 }}>5 unread messages</span>
         </Typography>
       </Box>
 

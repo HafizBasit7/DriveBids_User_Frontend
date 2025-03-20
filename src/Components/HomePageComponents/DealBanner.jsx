@@ -37,7 +37,9 @@ const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
           sx={{
             fontWeight: 700,
             fontFamily: "Outfit",
-            fontSize: isSmallScreen ? 24 : 30, // Responsive font size
+            fontSize: isSmallScreen ? 24 : 30, 
+            mx:{xs:"auto"}
+          
           }}
         >
           {title}
@@ -46,14 +48,13 @@ const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
           sx={{
             fontWeight: 600,
             fontFamily: "Outfit",
-            fontSize: isSmallScreen ? 18 : 22, // Responsive font size
+            fontSize: isSmallScreen ? 16 : 18, 
           }}
         >
           {subtitle}
         </Typography>
       </Box>
 
-      {/* Skewed Strip (Hidden on xs & sm screens) */}
       {!isSmallScreen && (
         <Box
           sx={{
@@ -69,7 +70,6 @@ const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
         />
       )}
 
-      {/* Right Section: Clickable Button */}
       <Box
         sx={{
           backgroundColor: colors.buttoncolor,
@@ -77,7 +77,7 @@ const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
           alignItems: "center",
           justifyContent: "center",
           height: isSmallScreen ? "auto" : "100%",
-          width: isSmallScreen ? "60%" : "32%", // Reduce width on xs & sm screens
+          width: isSmallScreen ? "60%" : "32%", 
           minWidth: "150px", // Ensure it doesn't get too small
           padding: "12px 18px", // Adjust padding for better scaling
           cursor: "pointer",
@@ -96,7 +96,7 @@ const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
             textTransform: "uppercase",
             fontFamily: "Inter",
             "&:hover": {
-              textDecoration: "underline",
+              textDecoration: "none",
             },
           }}
           onClick={onClick} // Use passed function

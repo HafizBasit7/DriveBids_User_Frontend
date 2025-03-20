@@ -64,27 +64,24 @@ const CarCard = ({ isMyAdsPage }) => {
         />
 
         {/* Conditional Icon Button */}
-        <IconButton
-  sx={{
-    position: "absolute",
-    top: 10,
-    left: 10,
-    backgroundColor: "#363D2D",
-    color: "#FFFFFF",
-    width: 34,
-    height: 34,
-    borderRadius: 2,
-  }}
-  onClick={() => {
-    if (isMyAdsPage) {
-      // Delete logic here if needed
-    } else {
-      navigate("/chat-page");  // ✅ Navigate to chat page
-    }
-  }}
->
-  {isMyAdsPage ? <DeleteIcon /> : <ChatBubbleOutlineIcon />}
-</IconButton>
+        {isMyAdsPage && (
+  <IconButton
+    sx={{
+      position: "absolute",
+      top: 10,
+      left: 10,
+      backgroundColor: "#363D2D",
+      color: "#FFFFFF",
+      width: 34,
+      height: 34,
+      borderRadius: 2,
+    }}
+    // onClick={handleDelete} // Replace with your delete logic
+  >
+    <DeleteIcon />
+  </IconButton>
+)}
+
 
         {/* Favorite Button */}
         <IconButton
@@ -121,7 +118,7 @@ const CarCard = ({ isMyAdsPage }) => {
             justifyContent: "center",
             alignItems: "center",
          gap:0.1,
-            fontSize: 18,
+        
             color: "#000",
             fontWeight: 550,
             mt: 1,
@@ -131,50 +128,50 @@ const CarCard = ({ isMyAdsPage }) => {
         >
           {/* Year */}
           <DirectionsCarIcon fontSize="small" sx={{ width: 20, }} />
-          <span style={{ width: 40 }}>{carData.year}</span>
+          <span style={{ width: 40,fontFamily:"Inter",fontSize:15 }}>{carData.year}</span>
           <span style={{ fontWeight: 800, fontSize: 18, width: 10 }}>|</span>
 
           {/* Engine */}
           <SpeedIcon fontSize="small" sx={{ width: 20 }} />
-          <span style={{ width: 70 }}>{carData.engine}</span>
+          <span style={{ width: 70,fontFamily:"Inter",fontSize:15 }}>{carData.engine}</span>
           <span style={{ fontWeight: 800, fontSize: 18, width: 10 }}>|</span>
 
           {/* Transmission */}
           <SettingsIcon fontSize="small" sx={{ width: 20 }} />
-          <span style={{ width: 70 }}>{carData.transmission}</span>
+          <span style={{ width: 70,fontFamily:"Inter",fontSize:15 }}>{carData.transmission}</span>
 
           {/* Show extra stats only on My Ads Page */}
           {isMyAdsPage && (
             <>
-              <span style={{ fontWeight: 800, fontSize: 18, width: 10 }}>|</span>
+              
 
               {/* Views */}
               <VisibilityIcon fontSize="small" sx={{ width: 20, }} />
-              <span style={{ width: 80, }}>{carData.views} views</span>
+              <span style={{ width: 90,fontFamily:"Inter",fontSize:15 }}>{carData.views} views</span>
 
               <span style={{ fontWeight: 800, fontSize: 18, width: 10 }}>|</span>
 
               {/* Messages */}
               <ChatBubbleOutlineIcon fontSize="small" sx={{ width: 20 }} />
-              <span style={{ width: 100 }}>{carData.messages} messages</span>
+              <span style={{ width: 110,fontFamily:"Inter",fontSize:15 }}>{carData.messages} messages</span>
 
-              <span style={{ fontWeight: 800, fontSize: 18, width: 10 }}>|</span>
+              
 
               {/* Bids */}
               <GavelIcon fontSize="small" sx={{ width: 20,ml:1 }} />
-              <span style={{ width: 50 }}>{carData.bids} bids</span>
+              <span style={{ width: 50,fontFamily:"Inter",fontSize:15 }}>{carData.bids} bids</span>
             </>
           )}
         </Box>
 
         {/* Top Bid */}
-        <Typography sx={{ fontWeight: 700, mt: 1, fontSize: 20 }}>
+        <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter"  }}>
           Top Bid: {carData.topBid}
         </Typography>
 
         {/* Timer */}
         <Typography
-          sx={{ color: "#B3261E", mt: 1, fontSize: 16, fontWeight: 550 }}
+          sx={{ color: "#B3261E", mt: 0.5, fontSize: 16, fontWeight: 500 ,fontFamily:"Inter" }}
         >
           {carData.timer}
         </Typography>

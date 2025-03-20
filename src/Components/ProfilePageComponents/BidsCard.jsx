@@ -30,7 +30,7 @@ const BidsCard = ({ chipText, buttons }) => {
 
   const getChipStyles = () => {
     if (chipText === "Winning") {
-      return { bgcolor: "#DEF6EE", color: "#008B27" };
+      return { bgcolor: "#DEF6EE", color: "#008B27", };
     } else if (chipText === "Losing") {
       return { bgcolor: "#F3DCE1", color: "#B3261E" };
     } else if (chipText === "Bid Won") {
@@ -61,7 +61,7 @@ const BidsCard = ({ chipText, buttons }) => {
           alt="Volkswagen Passat"
           sx={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
         />
-        <IconButton
+        {/* <IconButton
           sx={{
             position: "absolute",
             top: 10,
@@ -74,7 +74,7 @@ const BidsCard = ({ chipText, buttons }) => {
           }}
         >
           <ChatBubbleOutlineIcon />
-        </IconButton>
+        </IconButton> */}
         <IconButton
           onClick={handleFavoriteClick}
           sx={{
@@ -110,35 +110,35 @@ const BidsCard = ({ chipText, buttons }) => {
             flexWrap:"wrap"
           }}
         >
-          <img src={modal} alt="" width={18} height={18} />
-          <span>1967</span>
+          <img src={modal} alt="" width={16} height={16} />
+          <span style={{ fontWeight: 500,fontFamily:"Inter" }}>1967</span>
           <span style={{ fontWeight: 800, fontSize: 20 }}>|</span>
-          <img src={cc} alt="" width={18} height={18}  />
-          <span>34000 cc</span>
+          <img src={cc} alt="" width={16} height={16}  />
+          <span style={{ fontWeight: 500 ,fontFamily:"Inter"}}>34000 cc</span>
           <span style={{ fontWeight: 800, fontSize: 20 }}>|</span>
-          <img src={manual} alt=""width={18} height={18}  />
-          <span>Manual</span>
+          <img src={manual} alt=""width={16} height={16}  />
+          <span style={{ fontWeight: 500,fontFamily:"Inter" }}>Manual</span>
           
-          <img src={petrol} alt="" width={18} height={18}  />
-          <span>petrol</span>
+          <img src={petrol} alt="" width={16} height={16}  />
+          <span style={{ fontWeight: 500,fontFamily:"Inter" }}>petrol</span>
           <span style={{ fontWeight: 800, fontSize: 20 }}>|</span>
-          <img src={km} alt="" width={18} height={18}  />
-          <span>24000 km</span>
+          <img src={km} alt="" width={16} height={16}  />
+          <span style={{ fontWeight: 500 ,fontFamily:"Inter"}}>24000 km</span>
           <span style={{ fontWeight: 800, fontSize: 20 }}>|</span>
-          <img src={black} alt="" width={18} height={18}  />
-          <span>Black</span>
+          <img src={black} alt="" width={16} height={16}  />
+          <span style={{ fontWeight: 500,fontFamily:"Inter" }}>Black</span>
         </Box>
 
-        <Typography sx={{ fontWeight: 700, mt: 1, fontSize: 20 }}>
+        <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter" }}>
           Top Bid: $25k
         </Typography>
 
-        <Typography sx={{ color: "#B3261E", mt: 1, fontSize: 16, fontWeight: 550 }}>
+        <Typography sx={{ color: "#B3261E", mt: 0.5, fontSize: 15, fontWeight: 500,fontFamily:"Inter"  }}>
           10h:20m:11s
         </Typography>
 
         {/* Chip based on Status */}
-        <Chip label={chipText} sx={{ mt: 1, ...getChipStyles() ,borderRadius:2 }} />
+        <Chip label={chipText} sx={{ mt: 1, ...getChipStyles() ,borderRadius:2,p:1 }} />
 
         {/* Buttons from Parent */}
         <Box mt={2} display="flex" justifyContent="space-between" gap={1}>
@@ -148,7 +148,7 @@ const BidsCard = ({ chipText, buttons }) => {
       fullWidth
       sx={{
         textTransform:"none",
-        fontSize:15,
+        fontSize:16,
         fontWeight:500,
         bgcolor:
           btn === "Cancel" || btn === "Cancel Bid" ? "#fff" : colors.buttoncolor,
