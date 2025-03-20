@@ -64,6 +64,7 @@ import EditProfilePage from "./Pages/MyProfilePage/EditProfilePage";
 import ChangePasswordPage from "./Pages/MyProfilePage/ChangePasswordPage";
 import CarFuelPage from "./Pages/SellMyCarPage/SellMyCarScreens/CarFuelPage";
 import AdsDescription from "./Pages/SellMyCarPage/SellMyCarScreens/AdsTitleandDesPage";
+import CarListingPage from "./Pages/CarListingPage/CarListingPage";
 
 
 function App() {
@@ -80,6 +81,9 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/filter" element={<FilterPage />} />
         <Route path="/car-detail" element={<CarDetailsPage />} />
+        <Route path="/car-listing" element={<CarListingPage />} />
+
+        
         <Route path="/chat-page" element={<ChatPage/>} />
         <Route path="/contact" element={<ContactPage/>} />
         <Route path="/sellmycar" element={< SellMyCar/>} />
