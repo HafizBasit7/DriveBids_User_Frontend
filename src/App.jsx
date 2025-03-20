@@ -53,6 +53,16 @@ import PricingPage1 from "./Pages/SellMyCarPage/PricingScreens/Pricingpage1";
 import PricingPage2 from "./Pages/SellMyCarPage/PricingScreens/Pricingpage2";
 import PricingPage3 from "./Pages/SellMyCarPage/PricingScreens/Pricingpage3";
 import PricingPage4 from "./Pages/SellMyCarPage/PricingScreens/Pricingpage4";
+import DamgeReportPage1 from "./Pages/SellMyCarPage/DamageReportScreens/DamageReportPage1";
+import DamgeReportPage2 from "./Pages/SellMyCarPage/DamageReportScreens/DamageReportPage2";
+import DamgeReportPage4 from "./Pages/SellMyCarPage/DamageReportScreens/DamageReportPage4";
+import DamgeReportPage3 from "./Pages/SellMyCarPage/DamageReportScreens/DamageReportPage3";
+import AdsSuccessScreen from "./Pages/SellMyCarPage/Ads-SuccessScreen";
+import MyAdsPage from "./Pages/MyAds/MyAdsPage";
+import MyBidsPage from "./Pages/MybidsPage/MyBidsPage";
+import EditProfilePage from "./Pages/MyProfilePage/EditProfilePage";
+import ChangePasswordPage from "./Pages/MyProfilePage/ChangePasswordPage";
+import CarFuelPage from "./Pages/SellMyCarPage/SellMyCarScreens/CarFuelPage";
 
 
 function App() {
@@ -78,8 +88,9 @@ function App() {
         <Route path="/car-varient" element={< CarVarient/>} />
         <Route path="/city" element={< CityPage/>} />
         <Route path="/car-color" element={< CarColorPage/>} />
-        <Route path="/car-model" element={< CarModelPage/>} />
+        <Route path="/car-modal" element={< CarModelPage/>} />
         <Route path="/car-mileage" element={< CarMileagePage/>} />
+        <Route path="/car-fuel" element={< CarFuelPage/>} />
         <Route path="/car-engine" element={< CarEnginePage/>} />
         <Route path="/car-transmission" element={< CarTransmissionPage/>} />
         <Route path="/car-features1" element={< CarFeaturesPage1/>} />
@@ -120,6 +131,29 @@ function App() {
         <Route path="/pricing3" element={<    PricingPage3/>} />
 
         <Route path="/pricing4" element={<    PricingPage4/>} />
+        <Route path="/damage-report1" element={<  DamgeReportPage1/>} />
+        <Route path="/damage-report2" element={<  DamgeReportPage2/>} />
+        <Route path="/damage-report3" element={<  DamgeReportPage3/>} />
+
+        <Route path="/damage-report4" element={<  DamgeReportPage4/>} />
+        <Route path="/ads-posted" element={< AdsSuccessScreen/>} />
+              <Route path="/my-ads" element={<MyAdsPage  />} />
+              <Route path="/my-bids" element={<MyBidsPage />} />
+              <Route path="/edit-profile" element={<EditProfilePage />} />
+              <Route path="/change-password" element={<ChangePasswordPage />} />
+
+              
+
+              
+
+              
+
+
+
+
+
+
+
 
 
 

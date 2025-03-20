@@ -3,14 +3,14 @@ import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import colors from "../../Style/color";
 
-const getAllYears = () => {
+const getAllYears = ( ) => {
   const currentYear = new Date().getFullYear();
   return Array.from({ length: currentYear - 1899 }, (_, i) => 1900 + i);
 };
 
-const YearSelectionBox = () => {
+const YearSelectionBox = ({onNext}) => {
   const navigate = useNavigate();
-  const years = getAllYears().reverse(); 
+  const years = getAllYears().reverse() ;
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const scrollRef = useRef(null);
 
@@ -105,7 +105,7 @@ const YearSelectionBox = () => {
               minWidth: "120px",
               height: "40px",
             }}
-            onClick={() => navigate("/next")}
+            onClick={onNext}
           >
             Next Step
           </Button>

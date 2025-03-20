@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom"; // Import navigation hook
 import Logosvg from "../../assets/SVG/Mainlogo.svg";
 import colors from "../../Style/color";
 import Notifications from "../Modals/Notification";
+import ProfileMenu from "../Modals/Profilemenu";
 
 const MainNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -156,7 +157,8 @@ const MainNavbar = () => {
           </IconButton>
         )}
         <Notifications />
-        <Avatar sx={{ bgcolor: "blue", width: 32, height: 32 }}>U</Avatar>
+        <ProfileMenu />
+
 
         {isMobile && (
           <IconButton onClick={handleDrawerToggle} sx={{ color: "black" }}>

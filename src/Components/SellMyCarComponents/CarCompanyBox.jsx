@@ -18,7 +18,7 @@ const carBrands = [
   "Porsche", "Tesla", "Lamborghini", "Bentley",
 ];
 
-const CarSelectionBox = () => {
+const CarSelectionBox = ({ onNext }) => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [customBrand, setCustomBrand] = useState("");
 
@@ -113,6 +113,7 @@ const CarSelectionBox = () => {
             height: 40,
             backgroundColor: colors.buttoncolor,
           }}
+          onClick={onNext}
         >
           Next Step
         </Button>

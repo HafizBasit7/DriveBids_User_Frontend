@@ -6,6 +6,7 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CarCard from "../../../Components/HomePageComponents/CarCard";
+import DraftCard from "../../../Components/SellMyCarComponents/DraftCard";
 
 const Draft = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Draft = () => {
           title="Sell My Car"
           subtitle="Sell Your Car Hassle-Free!"
           buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/sellmycar")}
         />
       </Box>
 
@@ -38,14 +39,14 @@ const Draft = () => {
         justifyContent:{ xs: "center", sm: "flex-start" },
       }}
     >
-     <CarCard/>
-     <CarCard/>
-     <CarCard/>
-     <CarCard/>
-     <CarCard/>
-     <CarCard/>
-     <CarCard/>
-     <CarCard/>
+     <DraftCard/>
+     <DraftCard/>
+     <DraftCard/>
+     <DraftCard/>
+     <DraftCard/>
+     <DraftCard/>
+     <DraftCard/>
+     <DraftCard/>
     </Box>
 
     </MainLayout>

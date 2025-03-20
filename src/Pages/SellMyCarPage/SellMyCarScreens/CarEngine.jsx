@@ -25,19 +25,20 @@ const CarEnginePage = () => {
         <DealsBanner
           title="Car Engine"
           subtitle="Pick The Engine Size Of Your Car"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          buttonText="Back "
+          onClick={() => navigate("/car-color")}
         />
       </Box>
 
       {/* Step Count */}
       <Typography
+        variant="h4"
         fontWeight={600}
         textAlign="center"
         mt={3}
-        sx={{ fontFamily: "Inter", fontSize: { xs: 22, md: 25 } }}
+        sx={{ fontFamily: "Inter",fontSize:30  }}
       >
-        Step <span style={{ color: colors.buttoncolor }}>5</span> of 10
+        Step <span style={{ color: colors.buttoncolor }}>8</span> of 10
       </Typography>
 
       {/* Mileage Selection */}
@@ -102,7 +103,7 @@ const CarEnginePage = () => {
               fontFamily:"Inter",
               backgroundColor:colors.buttoncolor,
             }}
-            onClick={() => navigate("/next")}
+            onClick={() => navigate("/car-transmission")}
           >
             Next Step
           </Button>

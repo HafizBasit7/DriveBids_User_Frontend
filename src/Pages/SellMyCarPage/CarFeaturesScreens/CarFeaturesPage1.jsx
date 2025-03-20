@@ -16,7 +16,7 @@ const CarFeaturesPage1 = () => {
           title="Car Features"
           subtitle="Pick The Feature of Your Car"
           buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/post-ad")}
         />
       </Box>
 
@@ -31,7 +31,7 @@ const CarFeaturesPage1 = () => {
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox />
+        <CarSelectionBox  onNext={() => navigate("/car-features2")} />
       </Box>
     </MainLayout>
   );

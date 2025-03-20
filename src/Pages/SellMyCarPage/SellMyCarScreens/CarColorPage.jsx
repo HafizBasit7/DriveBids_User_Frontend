@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
+import colors from "../../../Style/color";
 
 const CarColorPage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const CarColorPage = () => {
           title="Car Colour"
           subtitle="Pick The Colour Of Your Car"
           buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/car-fuel")}
         />
       </Box>
 
@@ -30,7 +31,7 @@ const CarColorPage = () => {
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox />
+        <CarSelectionBox  onNext={() => navigate("/car-engine")}/>
       </Box>
     </MainLayout>
   );

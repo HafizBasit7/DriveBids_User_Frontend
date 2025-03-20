@@ -20,17 +20,17 @@ const steps = [
   { title: "Car Pricing", status: "Incomplete", steps: 4, icon: <MonetizationOnIcon fontSize="large" /> },
 ];
 
-// Define your navigation routes for each step
 const routes = [
-  "/post-ad/car-details",
+  "/car-company",
   "/car-features1",
   "/car-images",
   "/inspection-report1",
-  "/post-ad/damage-report",
+  "/damage-report1",
   "/pricing1",
 ];
 
 const PostAds = () => {
+  
   const navigate = useNavigate();
 
   return (
@@ -67,7 +67,7 @@ const PostAds = () => {
                   {item.icon}
                 </Box>
                 <Box>
-                  <Typography fontWeight={600} sx={{ fontFamily: "Inter" }}>
+                  <Typography fontWeight={600} sx={{ fontFamily: "Inter-Regular" }}>
                     {item.title}
                   </Typography>
                   <Typography

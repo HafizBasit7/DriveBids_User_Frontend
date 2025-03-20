@@ -4,6 +4,7 @@ import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import YearSelectionBox from "../../../Components/SellMyCarComponents/YearSelectionBox";
+import colors from "../../../Style/color";
 
 const CarModelPage = () => {
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ const CarModelPage = () => {
         <DealsBanner
           title="Car Model"
           subtitle="Pick The Model of Your Car"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          buttonText="Back "
+          onClick={() => navigate("/car-varient")}
         />
       </Box>
 
@@ -30,7 +31,7 @@ const CarModelPage = () => {
         Step <span style={{ color: colors.buttoncolor }}>3</span> of 10
       </Typography>
 
-      <YearSelectionBox />
+      <YearSelectionBox onNext={() => navigate("/city")} />
 
      
     </MainLayout>

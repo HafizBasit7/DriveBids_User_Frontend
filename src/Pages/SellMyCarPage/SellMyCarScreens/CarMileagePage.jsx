@@ -25,17 +25,18 @@ const CarMileagePage = () => {
           title="Car Mileage"
           subtitle="Select the Mileage of Your Car"
           buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/city")}
         />
       </Box>
 
       <Typography
+        variant="h4"
         fontWeight={600}
         textAlign="center"
         mt={3}
-        sx={{ fontFamily: "Inter", fontSize: { xs: 22, md: 25 } }}
+        sx={{ fontFamily: "Inter",fontSize:30  }}
       >
-        Step <span style={{ color: colors.buttoncolor }}>8</span> of 10
+        Step <span style={{ color: colors.buttoncolor }}>5</span> of 10
       </Typography>
 
       <Box
@@ -98,7 +99,7 @@ const CarMileagePage = () => {
               fontFamily:"Inter",
               backgroundColor:colors.buttoncolor,
             }}
-            onClick={() => navigate("/next")}
+            onClick={() => navigate("/car-fuel")}
           >
             Next Step
           </Button>

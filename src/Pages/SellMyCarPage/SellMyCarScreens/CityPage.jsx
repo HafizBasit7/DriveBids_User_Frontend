@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
+import colors from "../../../Style/color";
 
 const CityPage = () => {
   const navigate = useNavigate();
@@ -14,8 +15,8 @@ const CityPage = () => {
         <DealsBanner
           title="Location"
           subtitle="Pick Your City"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          buttonText="Back "
+          onClick={() => navigate("/car-modal")}
         />
       </Box>
 
@@ -26,11 +27,11 @@ const CityPage = () => {
         mt={3}
         sx={{ fontFamily: "Inter",fontSize:30  }}
       >
-        Step <span style={{color: colors.buttoncolor }}>2</span> of 10
+        Step <span style={{color: colors.buttoncolor }}>4</span> of 10
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox />
+        <CarSelectionBox  onNext={() => navigate("/car-mileage")}/>
       </Box>
     </MainLayout>
   );

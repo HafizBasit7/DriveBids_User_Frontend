@@ -5,7 +5,7 @@ import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../Style/color";
 
-const CarTransmissionPage = () => {
+const CarFuelPage = () => {
     const navigate = useNavigate();
     const [transmission, setTransmission] = useState("AGS");
 
@@ -13,16 +13,22 @@ const CarTransmissionPage = () => {
         <MainLayout>
             <Box width="100%">
                 <DealsBanner
-                    title="Transmission"
-                    subtitle="Pick The Transmission Type Of Your Car"
+                    title="Fuel"
+                    subtitle="Pick Your Car Fuel Type"
                     buttonText="Back to Home"
-                    onClick={() => navigate("/car-engine")}
+                    onClick={() => navigate("/car-mileage")}
                 />
             </Box>
 
-            <Typography fontWeight={600} textAlign="center" mt={3} sx={{ fontSize: { xs: 20, md: 22 } }}>
-                Step <span style={{ color: colors.buttoncolor }}>9</span> of 10
-            </Typography>
+            <Typography
+        variant="h4"
+        fontWeight={600}
+        textAlign="center"
+        mt={3}
+        sx={{ fontFamily: "Inter",fontSize:30  }}
+      >
+        Step <span style={{ color: colors.buttoncolor }}>6</span> of 10
+      </Typography>
 
             <Box
                 component={Paper}
@@ -63,7 +69,7 @@ const CarTransmissionPage = () => {
                             fontFamily: "Inter",
                             backgroundColor: colors.buttoncolor,
                         }}
-                        onClick={() => navigate("/post-ad")}
+                        onClick={() => navigate("/car-color")}
                     >
                         Next Step
                     </Button>
@@ -73,4 +79,4 @@ const CarTransmissionPage = () => {
     );
 };
 
-export default CarTransmissionPage;
+export default CarFuelPage;
