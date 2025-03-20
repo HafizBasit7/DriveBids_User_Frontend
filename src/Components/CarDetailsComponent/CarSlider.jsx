@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Box, IconButton, Button } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Carimg from "../../assets/Png/cardetailimg.png"
+import Carimg from "../../assets/Png/cardetailimg.png";
 import colors from "../../Style/color";
 import BidModal from "../Modals/BidModal";
 
-const images = [Carimg, Carimg, Carimg, Carimg, Carimg];
+const images = [Carimg, Carimg, Carimg, Carimg, Carimg, Carimg, Carimg, Carimg];
 
 const CarSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [open, setOpen] = useState(false);
+  const thumbnailRef = useRef();
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -19,40 +20,43 @@ const CarSlider = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
+  // Auto-scroll active thumbnail into view
+  useEffect(() => {
+    const activeThumbnail = thumbnailRef.current?.querySelector(".active-thumb");
+    activeThumbnail?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest"  // ✅ Prevent page scroll
+    });
+  }, [currentIndex]);
+
   return (
     <Box
       sx={{
         width: "100%",
-        // Restrict max width for large screens
         mx: "auto",
-        overflow: "hidden", // Prevents scrolling issues
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        px: 2, // Add some padding for smaller screens
+        px: 2,
       }}
     >
-      {/* Main Image Box */}
-      <Box
-        sx={{
-          position: "relative",
-          width: "100%",
-          overflow: "hidden",
-        }}
-      >
+      {/* Main Image */}
+      <Box sx={{ position: "relative", width: "100%", overflow: "hidden" }}>
         <Box
           component="img"
           src={images[currentIndex]}
           alt="Car Image"
           sx={{
             width: "100%",
-            height: { xs: "250px", sm: "350px", md: "500px" }, // Adjust height for responsiveness
+            height: { xs: "250px", sm: "350px", md: "500px" },
             objectFit: "cover",
             borderRadius: 2,
           }}
         />
 
-        {/* Previous Button */}
+        {/* Prev Button */}
         <IconButton
           onClick={handlePrev}
           sx={{
@@ -82,7 +86,7 @@ const CarSlider = () => {
             width: { xs: 40, sm: 50 },
             height: { xs: 40, sm: 50 },
             borderRadius: 2,
-            backgroundColor: "rgba(0, 0, 0, 0.30)",
+            backgroundColor: "rgba(0,0,0,0.30)",
             color: "white",
             "&:hover": { backgroundColor: "rgba(0,0,0,0.9)" },
           }}
@@ -92,18 +96,22 @@ const CarSlider = () => {
 
         {/* Thumbnails */}
         <Box
+          ref={thumbnailRef}
           sx={{
             position: "absolute",
             bottom: 10,
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",
-            gap: 1,
             backgroundColor: "transparent",
             padding: "5px 10px",
             borderRadius: 2,
-            overflowX: "auto", // Allow scrolling if too many thumbnails
+            overflowX: "auto",
             maxWidth: "100%",
+            whiteSpace: "nowrap",
+            '&::-webkit-scrollbar': { height: '6px' },
+            '&::-webkit-scrollbar-thumb': { backgroundColor: '#ccc', borderRadius: '4px' },
+            '&::-webkit-scrollbar-track': { backgroundColor: 'transparent' },
           }}
         >
           {images.map((img, index) => (
@@ -113,7 +121,9 @@ const CarSlider = () => {
               src={img}
               alt={`Thumbnail ${index}`}
               onClick={() => setCurrentIndex(index)}
+              className={currentIndex === index ? "active-thumb" : ""}
               sx={{
+                display: 'inline-flex',
                 width: { xs: 80, sm: 120, md: 180 },
                 height: { xs: 50, sm: 70, md: 100 },
                 objectFit: "cover",
@@ -121,115 +131,116 @@ const CarSlider = () => {
                 cursor: "pointer",
                 border: currentIndex === index ? "2px solid white" : "2px solid transparent",
                 transition: "0.3s",
+                mx: 0.5,
               }}
             />
           ))}
         </Box>
       </Box>
 
-      {/* Buttons */}
+      {/* Action Buttons */}
       <Box
-  sx={{
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: 2,
-    mt: 2,
-    width: "100%",
-  }}
->
-  <Button
-    variant="outlined"
-    sx={{
-      flex: 1,
-      minWidth: "30%",
-      color: "#6F6F6F",
-      fontWeight: "bold",
-      borderRadius: 2,
-      py: 1,
-      border: "1px solid #D9D9D9",
-      fontSize: { xs: 12, sm: 14, md: 16 },
-      fontFamily: "Inter",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
-  >
-    BUY IT NOW
-    <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-      $28000
-    </Box>
-  </Button>
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 2,
+          mt: 2,
+          width: "100%",
+        }}
+      >
+        <Button
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: "30%",
+            color: "#6F6F6F",
+            fontWeight: "bold",
+            borderRadius: 2,
+            py: 1,
+            border: "1px solid #D9D9D9",
+            fontSize: { xs: 12, sm: 14, md: 16 },
+            fontFamily: "Inter",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          BUY IT NOW
+          <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+            $28000
+          </Box>
+        </Button>
 
-  <Button
-    variant="contained"
-    sx={{
-      flex: 1,
-      minWidth: "30%",
-      backgroundColor: colors.buttoncolor,
-      color: "white",
-      borderRadius: 2,
-      py: 1.5,
-      fontSize: { xs: 12, sm: 16 },
-      fontWeight: 500,
-      fontFamily: "Inter",
-      textAlign: "center",
-    }}
-    onClick={() => setOpen(true)}
-  >
-    PLACE BID
-  </Button>
+        <Button
+          variant="contained"
+          sx={{
+            flex: 1,
+            minWidth: "30%",
+            backgroundColor: colors.buttoncolor,
+            color: "white",
+            borderRadius: 2,
+            py: 1.5,
+            fontSize: { xs: 12, sm: 16 },
+            fontWeight: 500,
+            fontFamily: "Inter",
+            textAlign: "center",
+          }}
+          onClick={() => setOpen(true)}
+        >
+          PLACE BID
+        </Button>
 
-  <Button
-    variant="outlined"
-    sx={{
-      flex: 1,
-      minWidth: "30%",
-      color: "#6F6F6F",
-      borderRadius: 2,
-      py: 1,
-      border: "1px solid #D9D9D9",
-      fontSize: { xs: 12, sm: 14, md: 16 },
-      fontWeight: 700,
-      fontFamily: "Inter",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
-  >
-    QUICK BID
-    <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-      $28100
-    </Box>
-  </Button>
-</Box>
+        <Button
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: "30%",
+            color: "#6F6F6F",
+            borderRadius: 2,
+            py: 1,
+            border: "1px solid #D9D9D9",
+            fontSize: { xs: 12, sm: 14, md: 16 },
+            fontWeight: 700,
+            fontFamily: "Inter",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          QUICK BID
+          <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+            $28100
+          </Box>
+        </Button>
+      </Box>
 
-{/* Reserve Status */}
-<Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", mt: 2 }}>
-  <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} />
-  <Box
-    sx={{
-      padding: "10px 20px",
-      border: "1px solid #D9D9D9",
-      borderRadius: 2,
-      color: "#2F61BF",
-      fontWeight: 700,
-      fontFamily: "Inter",
-      fontSize: { xs: 12, sm: 15 },
-      width: "33.33%",
-      textAlign: "center",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      py: 2.3,
-    }}
-  >
-    RESERVE NOT MET
-  </Box>
-  <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} />
-</Box>
+      {/* Reserve Status */}
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", mt: 2 }}>
+        <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} />
+        <Box
+          sx={{
+            padding: "10px 20px",
+            border: "1px solid #D9D9D9",
+            borderRadius: 2,
+            color: "#2F61BF",
+            fontWeight: 700,
+            fontFamily: "Inter",
+            fontSize: { xs: 12, sm: 15 },
+            width: "33.33%",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            py: 2.3,
+          }}
+        >
+          RESERVE NOT MET
+        </Box>
+        <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} />
+      </Box>
 
-
+      {/* Bid Modal */}
       <BidModal open={open} onClose={() => setOpen(false)} />
     </Box>
   );

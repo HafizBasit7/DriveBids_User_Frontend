@@ -63,7 +63,7 @@ const CarTransmissionPage = () => {
                             fontFamily: "Inter",
                             backgroundColor: colors.buttoncolor,
                         }}
-                        onClick={() => navigate("/post-ad")}
+                        onClick={() => navigate("/car-addtitle")}
                     >
                         Next Step
                     </Button>

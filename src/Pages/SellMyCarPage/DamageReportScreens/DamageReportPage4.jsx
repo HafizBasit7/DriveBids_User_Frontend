@@ -5,7 +5,6 @@ import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../Style/color";
 import imgsketch4 from "../../../assets/SVG/rightdamage.svg";
 import DamageReportBox from "../../../Components/SellMyCarComponents/DamgeReportbox";
-
 const DamgeReportPage4 = () => {
   const navigate = useNavigate();
 
@@ -15,8 +14,8 @@ const DamgeReportPage4 = () => {
         <DealsBanner
           title="Damage Report"
           subtitle="Place Pointers Accurately"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          buttonText="Back"
+          onClick={() => navigate("/damage-report3")}
         />
       </Box>
 

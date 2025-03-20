@@ -16,7 +16,7 @@ const WheelsImagesPage2 = () => {
           title="Wheels"
           subtitle="Pick these 4 images"
           buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/car-wheelimg1")}
         />
       </Box>
 

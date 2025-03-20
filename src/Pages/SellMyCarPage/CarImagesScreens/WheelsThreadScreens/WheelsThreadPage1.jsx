@@ -16,7 +16,7 @@ const WheelsThreadPage1 = () => {
           title="Wheel Treads"
           subtitle="Pick these 4 images"
           buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/car-images")}
         />
       </Box>
 

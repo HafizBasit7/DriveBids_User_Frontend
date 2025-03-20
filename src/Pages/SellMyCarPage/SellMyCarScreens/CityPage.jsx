@@ -8,6 +8,21 @@ import colors from "../../../Style/color";
 const CityPage = () => {
   const navigate = useNavigate();
 
+  
+  const carBrands = [
+    "Karachi",
+    "Lahore",
+    "Islamabad",
+    "Rawalpindi",
+    "Faisalabad",
+    "Multan",
+    "Peshawar",
+    "Quetta",
+    "Sialkot",
+    "Gujranwala",
+  ];
+  
+
   return (
     <MainLayout>
       {/* Step Title */}
@@ -31,7 +46,7 @@ const CityPage = () => {
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox  onNext={() => navigate("/car-mileage")}/>
+        <CarSelectionBox carBrands={carBrands}  onNext={() => navigate("/car-mileage")}/>
       </Box>
     </MainLayout>
   );

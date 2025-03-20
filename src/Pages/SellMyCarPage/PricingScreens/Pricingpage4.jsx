@@ -14,8 +14,8 @@ const PricingPage4 = () => {
         <DealsBanner
           title="Pricing"
           subtitle="Set The Bidding Price For Your Car"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          buttonText="Back"
+          onClick={() => navigate("/pricing3")}
         />
       </Box>
 

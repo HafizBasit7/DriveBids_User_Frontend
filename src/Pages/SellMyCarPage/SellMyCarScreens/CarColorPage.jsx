@@ -7,6 +7,18 @@ import colors from "../../../Style/color";
 
 const CarColorPage = () => {
   const navigate = useNavigate();
+  const carBrands = [
+    "Black",
+    "White",
+    "Green",
+    "Red",
+    "Yellow",
+    "Pink",
+   "Green",
+    "Red",
+    "Yellow",
+    "Pink",
+  ];
 
   return (
     <MainLayout>
@@ -31,7 +43,7 @@ const CarColorPage = () => {
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox  onNext={() => navigate("/car-engine")}/>
+        <CarSelectionBox carBrands={carBrands}   onNext={() => navigate("/car-engine")}/>
       </Box>
     </MainLayout>
   );

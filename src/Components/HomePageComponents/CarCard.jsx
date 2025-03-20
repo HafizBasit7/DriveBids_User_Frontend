@@ -200,6 +200,7 @@ const CarCard = ({ isMyAdsPage }) => {
             "&:hover": { backgroundColor: "" },
           }}
           endIcon={<img src={cardarrow} alt="arrow" width={20} height={20} />}
+          onClick={()=>navigate("/car-detail")}
         >
           View Ad
         </Button>

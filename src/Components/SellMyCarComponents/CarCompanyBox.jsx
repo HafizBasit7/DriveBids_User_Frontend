@@ -13,12 +13,8 @@ import {
 import { Search, Business } from "@mui/icons-material";
 import colors from "../../Style/color";
 
-const carBrands = [
-  "Suzuki", "Toyota", "Honda", "Hyundai", "Ford",
-  "Porsche", "Tesla", "Lamborghini", "Bentley",
-];
-
-const CarSelectionBox = ({ onNext }) => {
+// carBrands will come from props now
+const CarSelectionBox = ({ carBrands = [], onNext }) => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [customBrand, setCustomBrand] = useState("");
 

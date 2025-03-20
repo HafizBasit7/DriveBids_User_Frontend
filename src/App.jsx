@@ -63,6 +63,7 @@ import MyBidsPage from "./Pages/MybidsPage/MyBidsPage";
 import EditProfilePage from "./Pages/MyProfilePage/EditProfilePage";
 import ChangePasswordPage from "./Pages/MyProfilePage/ChangePasswordPage";
 import CarFuelPage from "./Pages/SellMyCarPage/SellMyCarScreens/CarFuelPage";
+import AdsDescription from "./Pages/SellMyCarPage/SellMyCarScreens/AdsTitleandDesPage";
 
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
         <Route path="/car-modal" element={< CarModelPage/>} />
         <Route path="/car-mileage" element={< CarMileagePage/>} />
         <Route path="/car-fuel" element={< CarFuelPage/>} />
+        <Route path="/car-addtitle" element={< AdsDescription/>} />
         <Route path="/car-engine" element={< CarEnginePage/>} />
         <Route path="/car-transmission" element={< CarTransmissionPage/>} />
         <Route path="/car-features1" element={< CarFeaturesPage1/>} />

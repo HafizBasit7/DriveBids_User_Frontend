@@ -32,7 +32,7 @@ const FilterPage = () => {
       >
         {/* Left Section (Car Listings) */}
         <Box sx={{ width: { xs: "100%", md: "75%",lg:"80%" } }}>
-        <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 4, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start",  borderRadius: 2,
+        <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start",  borderRadius: 2,
             padding: 1,} }}>
             <CarCard />
             <CarCard />

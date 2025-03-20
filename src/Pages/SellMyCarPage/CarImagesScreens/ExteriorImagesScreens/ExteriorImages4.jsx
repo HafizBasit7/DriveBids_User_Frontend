@@ -15,8 +15,8 @@ const ExteriorImages4 = () => {
         <DealsBanner
           title="Exterior Images"
           subtitle="Pick these 6 images"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          buttonText="Back"
+          onClick={() => navigate("/car-exteriorimg3")}
         />
       </Box>
 

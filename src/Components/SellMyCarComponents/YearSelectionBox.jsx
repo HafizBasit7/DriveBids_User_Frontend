@@ -1,30 +1,37 @@
 import { useState, useRef, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import colors from "../../Style/color";
 
-const getAllYears = ( ) => {
+const getAllYears = () => {
   const currentYear = new Date().getFullYear();
-  return Array.from({ length: currentYear - 1899 }, (_, i) => 1900 + i);
+  return Array.from({ length: currentYear - 1899 + 2 }, (_, i) => 1900 + i);
 };
 
-const YearSelectionBox = ({onNext}) => {
-  const navigate = useNavigate();
-  const years = getAllYears().reverse() ;
+const YearSelectionBox = ({ onNext }) => {
+  const years = getAllYears().reverse();
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const scrollRef = useRef(null);
 
-  
+  // Center the selected year initially
+  useEffect(() => {
+    centerYear(selectedYear);
+  }, []);
+
+  // Scroll Handler to highlight the middle year
   useEffect(() => {
     const handleScroll = () => {
       if (scrollRef.current) {
-        const items = scrollRef.current.children;
+        const container = scrollRef.current;
+        const items = container.children;
         let closest = null;
         let closestOffset = Infinity;
+        const containerCenter = container.getBoundingClientRect().top + container.clientHeight / 2;
 
         for (let item of items) {
           const rect = item.getBoundingClientRect();
-          const offset = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
+          const itemCenter = rect.top + rect.height / 2;
+          const offset = Math.abs(containerCenter - itemCenter);
+
           if (offset < closestOffset) {
             closest = item;
             closestOffset = offset;
@@ -32,7 +39,7 @@ const YearSelectionBox = ({onNext}) => {
         }
 
         if (closest) {
-          setSelectedYear(Number(closest.textContent)); // Automatically set selected year
+          setSelectedYear(Number(closest.textContent));
         }
       }
     };
@@ -44,9 +51,25 @@ const YearSelectionBox = ({onNext}) => {
     }
   }, []);
 
+  // Function to center the selected year
+  const centerYear = (year) => {
+    const container = scrollRef.current;
+    if (container) {
+      const index = years.indexOf(year);
+      const itemHeight = container.scrollHeight / years.length;
+      const scrollPosition = itemHeight * index - container.clientHeight / 2 + itemHeight / 2;
+      container.scrollTo({ top: scrollPosition, behavior: "smooth" });
+    }
+  };
+
+  // Handle year click
+  const handleYearClick = (year) => {
+    setSelectedYear(year);
+    centerYear(year);
+  };
+
   return (
     <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
-      {/* Scrollable Year Selection Box */}
       <Box
         width={{ xs: "90%", sm: "70%", md: "65%" }}
         height={350}
@@ -77,6 +100,7 @@ const YearSelectionBox = ({onNext}) => {
             <Typography
               key={year}
               variant="h5"
+              onClick={() => handleYearClick(year)}
               sx={{
                 fontFamily: "Inter",
                 fontWeight: selectedYear === year ? 600 : 300,
@@ -86,7 +110,6 @@ const YearSelectionBox = ({onNext}) => {
                 cursor: "pointer",
                 padding: "10px 0",
                 scrollSnapAlign: "center",
-                
               }}
             >
               {year}
@@ -94,7 +117,6 @@ const YearSelectionBox = ({onNext}) => {
           ))}
         </Box>
 
-        {/* Next Step Button at Flex End */}
         <Box width="100%" display="flex" justifyContent="flex-end" p={2}>
           <Button
             variant="contained"

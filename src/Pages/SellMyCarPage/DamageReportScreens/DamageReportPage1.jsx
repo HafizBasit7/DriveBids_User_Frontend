@@ -15,8 +15,8 @@ const DamgeReportPage1 = () => {
         <DealsBanner
           title="Damage Report"
           subtitle="Place Pointers Accurately"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          buttonText="Back"
+          onClick={() => navigate("/post-ad")}
         />
       </Box>
 

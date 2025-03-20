@@ -65,8 +65,8 @@ const InspectionReportPage1 = () => {
         <DealsBanner
           title="Inspection Report"
           subtitle="Key Features & Condition"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          buttonText="Back"
+          onClick={() => navigate("/post-ad")}
         />
       </Box>
 

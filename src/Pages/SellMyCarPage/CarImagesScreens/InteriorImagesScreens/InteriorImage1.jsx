@@ -16,7 +16,7 @@ const InteriorImagesPage1 = () => {
           title="Interior Images"
           subtitle="Pick these 5 images"
           buttonText="Back to Home"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/car-images")}
         />
       </Box>
 

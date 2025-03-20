@@ -7,6 +7,17 @@ import colors from "../../../Style/color";
 
 const CarVarient = () => {
   const navigate = useNavigate();
+  const carBrands = [
+    "Suzuki",
+    "Toyota",
+    "Honda",
+    "Hyundai",
+    "Ford",
+    "Porsche",
+    "Tesla",
+    "Lamborghini",
+    "Bentley",
+  ];
 
   return (
     <MainLayout>
@@ -31,7 +42,9 @@ const CarVarient = () => {
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox onNext={() => navigate("/car-modal")} />
+       
+                  <CarSelectionBox carBrands={carBrands} onNext={() => navigate("/car-modal")}  />
+          
       </Box>
     </MainLayout>
   );

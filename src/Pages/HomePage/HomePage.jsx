@@ -33,7 +33,7 @@ const HomePage = () => {
  />
       </Box>
 
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 4, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
         <CarCard />
         <CarCard />
         <CarCard />
@@ -46,7 +46,7 @@ const HomePage = () => {
         <DealsBanner title="Spotlight Deals" subtitle="3000 Cars Available" buttonText="View All" />
       </Box>
 
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 4, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
         <CarCard />
         <CarCard />
         <CarCard />
@@ -57,7 +57,7 @@ const HomePage = () => {
         <DealsBanner title="Premium Deals" subtitle="3000 Cars Available" buttonText="View All" />
       </Box>
 
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 4, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
         <CarCard />
         <CarCard />
         <CarCard />

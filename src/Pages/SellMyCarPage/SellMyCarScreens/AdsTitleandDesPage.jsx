@@ -4,51 +4,39 @@ import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
+import AdsTiltleandDescrip from "../../../Components/SellMyCarComponents/AdsTiltleandDescrip";
 
-const CarCompanyPage = () => {
+const AdsDescription = () => {
   const navigate = useNavigate();
-
-  const carBrands = [
-    "Suzuki",
-    "Toyota",
-    "Honda",
-    "Hyundai",
-    "Ford",
-    "Porsche",
-    "Tesla",
-    "Lamborghini",
-    "Bentley",
-  ];
+ 
 
   return (
     <MainLayout>
       
       <Box width="100%">
         <DealsBanner
-          title="Car Company"
-          subtitle="Pick The Company of Your Car"
-          buttonText="Back "
-          onClick={() => navigate("/post-ad")}
+          title="Ad Decription"
+          subtitle="Enter Ad Title & Description"
+          buttonText="Back to Home"
+          onClick={() => navigate("/car-fuel")}
         />
       </Box>
 
       <Typography
-     
+        variant="h4"
         fontWeight={600}
         textAlign="center"
         mt={3}
-        sx={{ fontFamily: "Inter" ,fontSize:30 }}
+        sx={{ fontFamily: "Inter",fontSize:30  }}
       >
-        Step <span style={{ color: colors.buttoncolor }}>1</span> of 10
+        Step <span style={{ color: colors.buttoncolor }}>10</span> of 10
       </Typography>
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        
-        <CarSelectionBox carBrands={carBrands} onNext={() => navigate("/car-varient")}  />
-
+        <AdsTiltleandDescrip   onNext={() => navigate("/post-ad")}/>
       </Box>
     </MainLayout>
   );
 };
 
-export default CarCompanyPage;
+export default AdsDescription;
