@@ -5,6 +5,8 @@ import Ok from "../../assets/SVG/ok.svg";
 import Rattntion from "../../assets/SVG/Rattention.svg";
 import Nottested from "../../assets/SVG/Nottested.svg";
 import Rimmediate from "../../assets/SVG/Requireimmediat.svg";
+import CloseIcon from "@mui/icons-material/Close";
+
 
 const CarInspectionModal = ({ open, onClose }) => {
   const indicators = [
@@ -60,25 +62,32 @@ const CarInspectionModal = ({ open, onClose }) => {
       left: "50%",
       transform: "translate(-50%, -50%)",
       boxShadow: 24,
-      maxHeight: { xs: "90vh", sm: "80vh", md: "auto" }, // Limit height on small screens
+      maxHeight: { xs: "90vh", sm: "80vh", md: "90%" }, // Limit height on small screens
       overflowY: { xs: "auto", sm: "auto", md: "visible" }, // Enable scrolling on xs/sm
       scrollbarWidth: "none", // Hide scrollbar for Firefox
       "&::-webkit-scrollbar": { display: "none" }, // Hide scrollbar for Webkit browsers
     }}
   >
-    <DealsBanner title="Car Inspection Report" subtitle="" buttonText="Close" />
+ <DealsBanner 
+          title="Car Inspection Report" 
+          subtitle="" 
+          buttonText="Close" 
+          showClose 
+          onClose={onClose}
+          icon={<CloseIcon sx={{ cursor: 'pointer' }} onClick={onClose} />} 
 
+        />
     <Box
   sx={{
     display: "flex",
     flexDirection: "column",
-    alignItems: "start", // Center-align on small screens
-    gap: { xs: 1, sm: 2 }, // Reduce gap on small screens
-    p: { xs: 1, sm: 2 }, // Adjust padding for better spacing
+    alignItems: "start", 
+    gap: { xs: 1, sm: 2 }, 
+    p: { xs: 1, sm: 2 }, 
     border: "1px solid #ddd",
-    m: { xs: 1, sm: 2 }, // Reduce margin on small screens
+    m: { xs: 1, sm: 2 }, 
     borderRadius: 2,
-    width: "100%", // Ensure it adjusts to the screen width
+    width: "100%",
   }}
 >
   <ReportButton title="Indicator" />
@@ -87,9 +96,9 @@ const CarInspectionModal = ({ open, onClose }) => {
       display: "flex",
       flexWrap: "wrap",
      
-      justifyContent: { xs: "start", sm: "space-betweeen" }, // Center on small screens
-      gap: { xs: 2, sm: 10 }, // Adjust spacing for better fit
-      width: "100%", // Take full width
+      justifyContent: { xs: "start", sm: "space-betweeen" },
+      gap: { xs: 2, sm: 10 }, 
+      width: { xs:"75%", md: "100%" }, 
     }}
   >
     {indicators.map((item, index) => (

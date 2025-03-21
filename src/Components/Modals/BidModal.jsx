@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Box, Typography, Button, TextField, useMediaQuery } from "@mui/material";
 import DealsBanner from "../HomePageComponents/DealBanner";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 const colors = {
   buttoncolor: "#0052CC",
@@ -34,7 +35,9 @@ const BidModal = ({ open, onClose }) => {
       >
         {/* Header Banner */}
         <Box sx={{ width: "100%" }}>
-          <DealsBanner title="Max Bid" subtitle="" buttonText="Place Bid" />
+          <DealsBanner title="Max Bid" subtitle="" buttonText="Place Bid" showClose 
+                    onClose={onClose}
+                    icon={<AttachMoneyIcon sx={{ cursor: 'pointer' }} onClick={onClose} />}  />
         </Box>
 
         {/* Bid Description */}

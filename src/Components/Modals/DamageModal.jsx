@@ -1,7 +1,9 @@
 import React from "react";
 import { Modal, Box, Typography, Button } from "@mui/material";
 import DealsBanner from "../HomePageComponents/DealBanner";
-import ScratchImage from "../../assets/Png/scratch.png"; // Use uploaded image
+import ScratchImage from "../../assets/Png/scratch.png"; 
+import CloseIcon from "@mui/icons-material/Close";
+
 
 const DamageModal = ({ open, onClose }) => {
   return (
@@ -10,14 +12,15 @@ const DamageModal = ({ open, onClose }) => {
         sx={{
           backgroundColor: "white",
           borderRadius: 2,
-          width: { xs: "90%", sm: "80%", md: "60%" }, // Responsive width
-          p: { xs: 2, sm: 3 }, // Reduce padding on small screens
+          width: { xs: "90%", sm: "80%", md: "70%" }, 
+          p: { xs: 2, sm: 3 }, 
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           boxShadow: 24,
           textAlign: "center",
+          height:600
         }}
       >
         {/* Header */}
@@ -26,6 +29,10 @@ const DamageModal = ({ open, onClose }) => {
             title="Car Inspection Report"
             subtitle=""
             buttonText="Close"
+            showClose 
+                      onClose={onClose}
+                      icon={<CloseIcon sx={{ cursor: 'pointer' }} onClick={onClose} />}
+
           />
         </Box>
 
@@ -33,11 +40,13 @@ const DamageModal = ({ open, onClose }) => {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: "#0052CC",
+            backgroundColor: "#2F61BF",
             borderRadius: 2,
             m: { xs: 1, sm: 2 }, // Adjust margin for small screens
             fontSize: { xs: "0.8rem", sm: "1rem" }, // Responsive font size
             fontWeight: 600,
+            fontFamily:"Inter",
+            textTransform:"none"
           }}
         >
           Damage Description
@@ -45,28 +54,30 @@ const DamageModal = ({ open, onClose }) => {
         <Typography
           sx={{
             fontSize: { xs: "12px", sm: "14px" }, // Adjust text size for readability
-            color: "#666",
-            fontWeight: 500,
-            backgroundColor: "#F7F7F7",
+            color: "#000",
+            fontWeight: 400,
+            backgroundColor: "#fff",
             p: { xs: 1, sm: 2 },
             borderRadius: 2,
+            fontFamily:"Inter",
+            textAlign: "start",   // ✅ Ensures text starts from the left
+
           }}
         >
-          There is a noticeable 6-inch scratch on the front passenger-side door,
-          running horizontally near the center of the panel. The scratch has
-          penetrated the clear coat, exposing the paint layer beneath. If left
-          untreated, it may lead to oxidation or further damage.
+         There is a noticeable 6-inch scratch on the front passenger-side door, running horizontally near the center of the panel. The scratch has penetrated the clear coat, exposing the paint layer beneath. While it is not deep enough to reach the primer, the exposed area is clearly visible and may be vulnerable to further damage over time, especially due to exposure to moisture, dirt, and environmental elements. If left untreated, the affected area could deteriorate, potentially leading to paint chipping or oxidation.
         </Typography>
 
         {/* Photos Section */}
         <Button
           variant="contained"
           sx={{
-            backgroundColor: "#0052CC",
+            backgroundColor: "#2F61BF",
             borderRadius: 2,
             mt: { xs: 1, sm: 2 },
             fontSize: { xs: "0.8rem", sm: "1rem" },
             fontWeight: 600,
+            textTransform:"none"
+
           }}
         >
           Photos

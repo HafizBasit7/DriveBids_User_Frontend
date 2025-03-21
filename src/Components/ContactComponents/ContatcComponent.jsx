@@ -2,127 +2,263 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import colors from "../../Style/color";
+import animationData from "../../assets/animation.json";
+import Lottie from "lottie-react";
+import { useState } from "react";
 
 const ContactForm = () => {
+  const [showName, setShowName] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
+  const [showPhone, setShowPhone] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h5" fontWeight="bold" mb={1} sx={{ fontFamily: "Inter" }}>
-        Discover Us
-      </Typography>
-      <Typography variant="body1" mb={3} sx={{ fontFamily: "Inter" }}>
-        Drive Bidz is here to help you;
-        Our experts are available to answer any questions you might have. We've got the answers.
-      </Typography>
+    <Box sx={{ p: 3, height: { xs: "190vh", md: "140vh" } }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+        }}
+      >
+        {/* Content Section - Left */}
+        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
+          <Typography
+            variant="h5"
+            fontWeight="bold"
+            mb={1}
+            sx={{ fontFamily: "Inter" }}
+          >
+            Discover Us
+          </Typography>
+          <Typography variant="body1" mb={3} sx={{ fontFamily: "Inter" }}>
+            Drive Bidz is here to help you; Our experts are available to answer
+            any questions you might have. We've got the answers.
+          </Typography>
 
-      {/* Visit Us Section */}
-      <Typography variant="h6" fontWeight="bold" mb={1} sx={{ fontFamily: "Inter" }}>
-        Visit Us
-      </Typography>
-      <Typography variant="body1" mb={1} sx={{ fontFamily: "Inter" }}>
-        Office No. G-02, Building 1, Ground Floor, Dubai Media City – Dubai
-      </Typography>
-      <Typography variant="body1" mb={2} sx={{ fontFamily: "Inter" }}>
-        Feel free to get in touch with us through our channels:
-      </Typography>
+          {/* Visit Us Section */}
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            mb={1}
+            sx={{ fontFamily: "Inter" }}
+          >
+            Visit Us
+          </Typography>
+          <Typography variant="body1" mb={1} sx={{ fontFamily: "Inter" }}>
+            Office No. G-02, Building 1, Ground Floor, Dubai Media City – Dubai
+          </Typography>
+          <Typography variant="body1" mb={2} sx={{ fontFamily: "Inter" }}>
+            Feel free to get in touch with us through our channels:
+          </Typography>
 
-      {/* Contact Details */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
-        <EmailIcon sx={{ color: colors.buttoncolor }} />
-        <Typography variant="body1" sx={{ color: colors.buttoncolor, fontFamily: "Inter" }}>
-          flick@flick.com
-        </Typography>
+          {/* Contact Details */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+            <EmailIcon sx={{ color: colors.buttoncolor }} />
+            <Typography
+              variant="body1"
+              sx={{ color: colors.buttoncolor, fontFamily: "Inter" }}
+            >
+              flick@flick.com
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3 }}>
+            <PhoneIcon sx={{ color: colors.buttoncolor }} />
+            <Typography
+              variant="body1"
+              sx={{ color: colors.buttoncolor, fontFamily: "Inter" }}
+            >
+              +971-4-576-6770
+            </Typography>
+          </Box>
+        </Box>
+
+        {/* Lottie Animation - Right */}
+        <Box
+          sx={{
+            width: { xs: "100%", md: "50%" },
+            zIndex: 2,
+            pointerEvents: "none",
+            mx: "auto",
+            pl: { xs: 0, md: 20 },
+          }}
+        >
+          <Lottie
+            animationData={animationData}
+            loop
+            style={{
+              width: 350,
+              height: 350,
+            }}
+          />
+        </Box>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3 }}>
-        <PhoneIcon sx={{ color: colors.buttoncolor }} />
-        <Typography variant="body1" sx={{ color: colors.buttoncolor, fontFamily: "Inter" }}>
-          +971-4-576-6770
-        </Typography>
-      </Box>
-
 
       <Box
         sx={{
           background: "white",
           borderRadius: "8px",
           p: 3,
-          boxShadow: "0px 0px 10px rgba(0,0,0,0.2)",
+          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.09)",
         }}
       >
-        <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-          <TextField
-            label="Your Name"
-            fullWidth
-            InputLabelProps={{
-              sx: {
-                color: "colors.buttoncolor", // Label color
-                "&.Mui-focused": { color: colors.buttoncolor, }, // Label color when active
-              },
-            }}
-            InputProps={{
-              sx: {
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: colors.buttoncolor, // Active border color
-                },
-              },
-            }}
-          />
-          <TextField
-            label="Email Address"
-            fullWidth
-            InputLabelProps={{
-              sx: {
-                color: "colors.buttoncolor",
-                "&.Mui-focused": { color: colors.buttoncolor, },
-              },
-            }}
-            InputProps={{
-              sx: {
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: colors.buttoncolor,
-                },
-              },
-            }}
-          />
-        </Box>
-        <TextField
-          label="Phone Number (optional)"
-          fullWidth
-          sx={{ mb: 2 }}
-          InputLabelProps={{
-            sx: {
-              color: "colors.buttoncolor",
-              "&.Mui-focused": { color: colors.buttoncolor, },
-            },
+        {/* First Row */}
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            mb: 2,
+            flexDirection: { xs: "column", sm: "row" }, // Stacks on xs
           }}
-          InputProps={{
-            sx: {
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: colors.buttoncolor,
-              },
-            },
-          }}
-        />
-        <TextField
-          label="Message"
-          multiline
-          rows={4}
-          fullWidth
-          sx={{ mb: 2 }}
-          InputLabelProps={{
-            sx: {
-              color: "colors.buttoncolor",
-              "&.Mui-focused": { color: colors.buttoncolor, },
-            },
-          }}
-          InputProps={{
-            sx: {
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: colors.buttoncolor,
-              },
-            },
-          }}
-        />
+        >
+          {/* Name */}
+          <Box sx={{ flex: 1 }}>
+            {showName ? (
+              <TextField
+                label="Your Name"
+                fullWidth
+                autoFocus
+                InputLabelProps={{
+                  sx: {
+                    color: "black",
+                    "&.Mui-focused": { color: colors.buttoncolor },
+                  },
+                }}
+                InputProps={{
+                  sx: {
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: colors.buttoncolor,
+                    },
+                  },
+                }}
+              />
+            ) : (
+              <Typography
+                sx={{
+                  cursor: "pointer",
+                  color: "black",
+                  py: 2,
+                  textAlign: "left",
+                }}
+                onClick={() => setShowName(true)}
+              >
+                Your Name
+              </Typography>
+            )}
+          </Box>
 
+          {/* Email */}
+          <Box sx={{ flex: 1 }}>
+            {showEmail ? (
+              <TextField
+                label="Email Address"
+                fullWidth
+                autoFocus
+                InputLabelProps={{
+                  sx: {
+                    color: "black",
+                    "&.Mui-focused": { color: colors.buttoncolor },
+                  },
+                }}
+                InputProps={{
+                  sx: {
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: colors.buttoncolor,
+                    },
+                  },
+                }}
+              />
+            ) : (
+              <Typography
+                sx={{
+                  cursor: "pointer",
+                  color: "black",
+                  py: 2,
+                  textAlign: "left",
+                }}
+                onClick={() => setShowEmail(true)}
+              >
+                Email Address
+              </Typography>
+            )}
+          </Box>
+
+          {/* Phone */}
+          <Box sx={{ flex: 1 }}>
+            {showPhone ? (
+              <TextField
+                label="Phone Number (optional)"
+                fullWidth
+                autoFocus
+                InputLabelProps={{
+                  sx: {
+                    color: "black",
+                    "&.Mui-focused": { color: colors.buttoncolor },
+                  },
+                }}
+                InputProps={{
+                  sx: {
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: colors.buttoncolor,
+                    },
+                  },
+                }}
+              />
+            ) : (
+              <Typography
+                sx={{
+                  cursor: "pointer",
+                  color: "black",
+                  py: 2,
+                  textAlign: "left",
+                }}
+                onClick={() => setShowPhone(true)}
+              >
+                Phone Number (optional)
+              </Typography>
+            )}
+          </Box>
+        </Box>
+
+        {/* Message */}
+        <Box sx={{ mb: 2, display: "flex", justifyContent: "flex-start" }}>
+          {showMessage ? (
+            <TextField
+              label="Message"
+              multiline
+              rows={4}
+              fullWidth
+              autoFocus
+              InputLabelProps={{
+                sx: {
+                  color: "black",
+                  "&.Mui-focused": { color: colors.buttoncolor },
+                },
+              }}
+              InputProps={{
+                sx: {
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: colors.buttoncolor,
+                  },
+                },
+              }}
+            />
+          ) : (
+            <Typography
+              sx={{
+                cursor: "pointer",
+                color: "black",
+                py: 2,
+                textAlign: "left",
+              }}
+              onClick={() => setShowMessage(true)}
+            >
+              Message
+            </Typography>
+          )}
+        </Box>
+
+        {/* Submit Button */}
         <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
           <Button
             variant="contained"
@@ -141,17 +277,16 @@ const ContactForm = () => {
         </Box>
       </Box>
 
-
-
       <Box
         sx={{
           background: colors.buttoncolor,
           color: "white",
-          borderRadius: "8px",
-
+          position: "absolute",
+          left: 0,
+          right: 0,
           p: { xs: 2, md: 4 },
-          mt: 4,
-
+          my: 5,
+          width: "100%",
         }}
       >
         <Box
@@ -161,15 +296,22 @@ const ContactForm = () => {
             alignItems: "center", // Center vertically
             justifyContent: "space-between", // Space out the text and input
             py: 5,
+            px: 6,
           }}
         >
           {/* Left Section: Text Content */}
           <Box sx={{ maxWidth: "500px" }}>
-            <Typography fontWeight="bold" sx={{ mb: 1, fontFamily: "Inter", fontSize: 25, fontWeight: 700 }}>
+            <Typography
+              fontWeight="bold"
+              sx={{ mb: 1, fontFamily: "Inter", fontSize: 25, fontWeight: 700 }}
+            >
               Subscribe to our Newsletter
             </Typography>
-            <Typography sx={{ fontFamily: "Inter", fontSize: 13, fontWeight: 300 }}>
-              Stay informed about the latest investor updates, financial insights, and announcements by subscribing to our newsletter.
+            <Typography
+              sx={{ fontFamily: "Inter", fontSize: 13, fontWeight: 300 }}
+            >
+              Stay informed about the latest investor updates, financial
+              insights, and announcements by subscribing to our newsletter.
             </Typography>
           </Box>
 
@@ -229,11 +371,8 @@ const ContactForm = () => {
               Subscribe
             </Button>
           </Box>
-
         </Box>
       </Box>
-
-
     </Box>
   );
 };

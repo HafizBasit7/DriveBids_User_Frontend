@@ -8,29 +8,53 @@ import BidsHistory from "../../Components/CarDetailsComponent/BidsHistory";
 import DescriptionBox from "../../Components/CarDetailsComponent/DescriptionBox";
 import CarInspectionReport from "../../Components/CarDetailsComponent/CarInspectionReport";
 import { useNavigate } from "react-router-dom";
+import ChatIcon from "@mui/icons-material/Chat";
 
 const CarDetailsPage = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   return (
     <MainLayout>
       <Box sx={{ width: "100%" }}>
-        <DealsBanner title="1996 Ford Mustang" subtitle="Posted 2 days ago" buttonText="Message Owner"  onClick={() => navigate("/chat-page")} />
+        <DealsBanner
+          title="1996 Ford Mustang"
+          subtitle="Posted 2 days ago"
+          buttonText="Message Owner"
+          onClick={() => navigate("/chat-page")}
+          icon={<ChatIcon sx={{ cursor: "pointer" }} />}
+        />
       </Box>
 
       <Box
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          gap: 1,
+          gap: 2,
           mt: 2,
           width: "100%",
         }}
       >
-        <Box sx={{ width: { xs: "100%", md: "70%" }, backgroundColor: "", display: "flex", justifyContent: "center", alignItems: "start",pt:2 }}>
-        <CarSlider />
+        <Box
+          sx={{
+            width: { xs: "100%", md: "70%" },
+            backgroundColor: "",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "start",
+            pt: 1,
+          }}
+        >
+          <CarSlider />
         </Box>
-        <Box sx={{ width: { xs: "100%", md: "30%" }, backgroundColor: "", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <CarInspectionReport/>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "30%" },
+            backgroundColor: "",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CarInspectionReport />
         </Box>
       </Box>
 
@@ -38,16 +62,33 @@ const CarDetailsPage = () => {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
+
           gap: 2,
           mt: 1,
           width: "100%",
         }}
       >
-        <Box sx={{ width: { xs: "100%", md: "40%" },  backgroundColor: "", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <CarDetailsComponent/>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "40%" },
+            backgroundColor: "",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CarDetailsComponent />
         </Box>
-        <Box sx={{ width: { xs: "100%", md: "60%" },  backgroundColor: "", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <CarFeaturesComponent/>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "60%" },
+            backgroundColor: "",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CarFeaturesComponent />
         </Box>
       </Box>
 
@@ -60,11 +101,27 @@ const CarDetailsPage = () => {
           width: "100%",
         }}
       >
-        <Box sx={{ width: { xs: "100%", md: "65%" },  backgroundColor: "", display: "flex", justifyContent: "center", alignItems: "center" }}>
-         <DescriptionBox/>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "65%" },
+            backgroundColor: "",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <DescriptionBox />
         </Box>
-        <Box sx={{ width: { xs: "100%", md: "35%" },  backgroundColor: "", display: "flex", justifyContent: "center", alignItems: "center" }}>
-         <BidsHistory/>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "35%" },
+            backgroundColor: "",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <BidsHistory />
         </Box>
       </Box>
     </MainLayout>

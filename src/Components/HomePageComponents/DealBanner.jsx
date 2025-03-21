@@ -2,9 +2,9 @@ import React from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import colors from "../../Style/color";
 
-const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
+const DealsBanner = ({ title, subtitle, buttonText, onClick, icon }) => {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // xs and sm screens
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); 
 
   return (
     <Box
@@ -15,15 +15,13 @@ const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
         backgroundColor: colors.yellowbackground,
         borderRadius: 2,
         overflow: "hidden",
-  
         position: "relative",
         flexDirection: isSmallScreen ? "column" : "row",
         textAlign: isSmallScreen ? "center" : "left",
         padding: isSmallScreen ? "20px" : "0",
-        mx: isSmallScreen ? 2: "0",
+        mx: isSmallScreen ? 2 : "0",
       }}
     >
-      {/* Left Section: Inline Text */}
       <Box
         sx={{
           display: "flex",
@@ -37,9 +35,8 @@ const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
           sx={{
             fontWeight: 700,
             fontFamily: "Outfit",
-            fontSize: isSmallScreen ? 24 : 30, 
-            mx:{xs:"auto"}
-          
+            fontSize: isSmallScreen ? 24 : 30,
+            mx: { xs: "auto" },
           }}
         >
           {title}
@@ -48,7 +45,7 @@ const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
           sx={{
             fontWeight: 600,
             fontFamily: "Outfit",
-            fontSize: isSmallScreen ? 16 : 18, 
+            fontSize: isSmallScreen ? 16 : 18,
           }}
         >
           {subtitle}
@@ -69,41 +66,52 @@ const DealsBanner = ({ title, subtitle, buttonText,onClick }) => {
           }}
         />
       )}
+<Box
+  sx={{
+    backgroundColor: colors.buttoncolor,
+    display: "flex",
+    alignItems: "center",   // Keeps icon and text vertically aligned
+    justifyContent: "center",
+    height: isSmallScreen ? "auto" : "100%",
+    width: isSmallScreen ? "60%" : "32%",
+    minWidth: "150px",
+    padding: "12px 18px",
+    cursor: "pointer",
+    position: "relative",
+    borderRadius: isSmallScreen ? 1 : 0,
+    zIndex: 1,
+    mt: isSmallScreen ? 2 : 0,
+    gap: 0.5,  // 0.1 might be too small; 0.5 keeps it tighter but balanced
+  }}
+  onClick={onClick}
+>
+  {icon && (
+    <Box
+      sx={{
+        color: "white",
+        display: "flex",
+        alignItems: "center", 
+      }}
+    >
+      {icon}
+    </Box>
+  )}
 
-      <Box
-        sx={{
-          backgroundColor: colors.buttoncolor,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: isSmallScreen ? "auto" : "100%",
-          width: isSmallScreen ? "60%" : "32%", 
-          minWidth: "150px", // Ensure it doesn't get too small
-          padding: "12px 18px", // Adjust padding for better scaling
-          cursor: "pointer",
-          position: "relative",
-          borderRadius: isSmallScreen ? 1 : 0, // Reduce width on xs & sm screens
-          zIndex: 1,
-          mt: isSmallScreen ? 2 : 0, // Adds margin on small screens
-        }}
-        onClick={() => console.log("Clicked View All")}
-      >
-        <Typography
-          sx={{
-            color: "white",
-            fontWeight: 500,
-            fontSize: isSmallScreen ? 14 : 16, // Responsive font size
-            textTransform: "uppercase",
-            fontFamily: "Inter",
-            "&:hover": {
-              textDecoration: "none",
-            },
-          }}
-          onClick={onClick} // Use passed function
-        >
-          {buttonText}
-        </Typography>
-      </Box>
+  <Typography
+    sx={{
+      color: "white",
+      fontWeight: 500,
+      fontSize: isSmallScreen ? 14 : 16,
+      textTransform: "uppercase",
+      fontFamily: "Inter",
+      whiteSpace: "nowrap", // Prevents text from breaking
+    }}
+  >
+    {buttonText}
+  </Typography>
+</Box>
+
+
     </Box>
   );
 };

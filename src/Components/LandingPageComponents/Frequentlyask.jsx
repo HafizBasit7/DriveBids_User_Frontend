@@ -14,7 +14,8 @@ const faqs = [
     answer:
       "You don’t have to have paid off all of the finance already; but subject to your contract, there may be a minimum repayment before you have the right to sell.",
   },
-  { question: "Does Drivebids allow me to sell my car for free?", answer: "" },
+  { question: "Does Drivebids allow me to sell my car for free?",  answer:
+    "You don’t have to have paid off all of the finance already; but subject to your contract, there may be a minimum repayment before you have the right to sell.",},
   { question: "What’s the quickest way to sell my car?", answer: "" },
   { question: "What is the estimated value of my car?", answer: "" },
   { question: "Who are the potential buyers for my car?", answer: "" },
@@ -77,7 +78,7 @@ const AskQuestions = () => {
                 <Typography
                   sx={{
                     color: "#2F61BF",
-                    pl: 4,
+                    pl: 6,
                     pt: 1,
                     fontFamily: "Inter",
                     fontSize: { xs: "12px", sm: "14px", md: "16px" },

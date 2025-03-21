@@ -36,14 +36,14 @@ const CarFeaturesComponent = () => {
         borderRadius: 2,
         border: "1px solid #D9D9D9",
         backgroundColor: "white",
-        fontFamily: "Inter, sans-serif",
-        minHeight: 330,
+        fontFamily: "Inter",
+        minHeight: 340,
       }}
     >
       <Typography
         variant={isSmallScreen ? "h6" : "h5"}
-        mb={2}
-        sx={{ fontFamily: "Inter", fontWeight: 600, textAlign: "start" }}
+        mb={4}
+        sx={{ fontFamily: "Inter", fontWeight: 500, textAlign: "start" }}
       >
         Car Features
       </Typography>

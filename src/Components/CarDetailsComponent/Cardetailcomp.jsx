@@ -1,4 +1,9 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import SportsCarIcon from "@mui/icons-material/EmojiTransportation";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
@@ -18,13 +23,54 @@ const carDetails = [
   { icon: <DateRangeIcon />, label: "REGISTERED", value: "1996, California" },
   { icon: <BuildIcon />, label: "ENGINE", value: "Mustang" },
   { icon: <LocalGasStationIcon />, label: "FUEL", value: "Sedan" },
-  { icon: <SettingsIcon />, label: "TRANSMISSION", value: "Manual" },
+  { icon: <SettingsIcon />, label: "TRANSMISSION", value: "Manual" }
 ];
 
 const CarDetailsComponent = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
+
+  // Split the array for large screens
+  const firstRow = carDetails.slice(0, 5);
+  const secondRow = carDetails.slice(5);
+
+  const renderDetailBox = (item, index) => (
+    <Box
+      key={index}
+      sx={{
+        textAlign: "center",
+        fontFamily: "Inter",
+      }}
+    >
+      <Box
+        sx={{
+          width: isSmallScreen ? 35 : 40,
+          height: isSmallScreen ? 35 : 40,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: 2,
+          backgroundColor: "#E8F0FE",
+          color: "#2F61BF",
+          margin: "auto",
+          my: 2,
+        }}
+      >
+        {item.icon}
+      </Box>
+      <Typography
+        variant="caption"
+        color="#6F6F6F"
+        fontWeight={600}
+        sx={{ fontFamily: "Inter",fontSize: 13 }}
+      >
+        {item.label}
+      </Typography>
+      <Typography fontWeight={600} sx={{ fontFamily: "Inter", fontSize: 11 }}>
+        {item.value}
+      </Typography>
+    </Box>
+  );
 
   return (
     <Box
@@ -39,60 +85,49 @@ const CarDetailsComponent = () => {
       <Typography
         variant={isSmallScreen ? "h6" : "h5"}
         mb={2}
-        sx={{ fontFamily: "Inter", fontWeight: 500, pl: 3, textAlign: "start" }}
+        sx={{ fontFamily: "Inter", fontWeight: 500, pl: 1, textAlign: "start" }}
       >
         Car Details
       </Typography>
 
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: isExtraSmallScreen
-            ? "repeat(2, 1fr)"
-            : isSmallScreen
-            ? "repeat(3, 1fr)"
-            : "repeat(5, 1fr)",
-          gap: 2,
-          justifyContent: "center",
-        }}
-      >
-        {carDetails.map((item, index) => (
+      {isSmallScreen ? (
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: isSmallScreen
+              ? "repeat(3, 1fr)"
+              : "repeat(5, 1fr)",
+            gap: 3,
+            justifyContent: "center",
+          }}
+        >
+          {carDetails.map(renderDetailBox)}
+        </Box>
+      ) : (
+        <>
           <Box
-            key={index}
             sx={{
-              textAlign: "center",
+              display: "grid",
+              gridTemplateColumns: "repeat(5, 1fr)",
+              gap: 3,
+              mb: 3,
             }}
           >
-            <Box
-              sx={{
-                width: isSmallScreen ? 40 : 50,
-                height: isSmallScreen ? 40 : 50,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 2,
-                backgroundColor: "#E8F0FE",
-                color: "#2F61BF",
-                margin: "auto",
-                my: 1,
-              }}
-            >
-              {item.icon}
-            </Box>
-            <Typography
-              variant="caption"
-              color="#6F6F6F"
-              fontWeight={600}
-              sx={{ fontFamily: "Inter" }}
-            >
-              {item.label}
-            </Typography>
-            <Typography variant="body2" fontWeight={600}>
-              {item.value}
-            </Typography>
+            {firstRow.map(renderDetailBox)}
           </Box>
-        ))}
-      </Box>
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              gap: 3,
+              ml: `calc(100% / 5 / 4)`, 
+            }}
+          >
+            {secondRow.map(renderDetailBox)}
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
