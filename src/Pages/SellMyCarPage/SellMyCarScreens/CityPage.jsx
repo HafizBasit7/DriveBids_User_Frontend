@@ -4,11 +4,11 @@ import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
+import BackgroundImage from "../backgroundsvg";
 
 const CityPage = () => {
   const navigate = useNavigate();
 
-  
   const carBrands = [
     "Karachi",
     "Lahore",
@@ -21,33 +21,53 @@ const CityPage = () => {
     "Sialkot",
     "Gujranwala",
   ];
-  
 
   return (
     <MainLayout>
-      {/* Step Title */}
-      <Box width="100%">
-        <DealsBanner
-          title="Location"
-          subtitle="Pick Your City"
-          buttonText="Back "
-          onClick={() => navigate("/car-modal")}
+      <Box width="100%" position="relative"  minHeight="80vh">
+        
+        {/* Background Image */}
+        <BackgroundImage
+          width={{ xs: "60%", md: "50%" }}
+          height={1000}
+          top={20}
+          right={-30}
         />
-      </Box>
 
-      <Typography
-        variant="h5"
-        fontWeight={600}
-        textAlign="center"
-        mt={3}
-        sx={{ fontFamily: "Inter",fontSize:30  }}
-      >
-        Step <span style={{color: colors.buttoncolor }}>4</span> of 10
-      </Typography>
+        {/* Foreground Content */}
+        <Box position="relative" zIndex={2}>
+          <DealsBanner
+            title="Location"
+            subtitle="Pick Your City"
+            buttonText="Back"
+            onClick={() => navigate("/car-modal")}
+          />
 
-      <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
-        <CarSelectionBox  isLocation={true}  // Hides "Enter custom company"
-  searchPlaceholder="Search City" carBrands={carBrands}  onNext={() => navigate("/car-mileage")}/>
+          <Typography
+            variant="h5"
+            fontWeight={600}
+            textAlign="center"
+            mt={3}
+            sx={{ fontFamily: "Inter", fontSize: 30 }}
+          >
+            Step <span style={{ color: colors.buttoncolor }}>4</span> of 10
+          </Typography>
+
+          <Box
+            width={{ xs: "95%", sm: "80%", md: "70%" }}
+            mx="auto"
+            mt={3}
+            position="relative"
+            zIndex={2}
+          >
+            <CarSelectionBox
+              isLocation={true}
+              searchPlaceholder="Search City"
+              carBrands={carBrands}
+              onNext={() => navigate("/car-mileage")}
+            />
+          </Box>
+        </Box>
       </Box>
     </MainLayout>
   );

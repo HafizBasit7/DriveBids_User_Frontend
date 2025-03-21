@@ -4,79 +4,110 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../Style/color";
+import BackgroundImage from "../backgroundsvg";
+
+const transmissionTypes = ["AGS", "Manual", "CVT", "DCT"];
 
 const CarTransmissionPage = () => {
-    const navigate = useNavigate();
-    const [transmission, setTransmission] = useState("AGS");
+  const navigate = useNavigate();
+  const [transmission, setTransmission] = useState("AGS");
 
-    return (
-        <MainLayout>
-            <Box width="100%">
-                <DealsBanner
-                    title="Transmission"
-                    subtitle="Pick The Transmission Type Of Your Car"
-                    buttonText="Back "
-                    onClick={() => navigate("/car-engine")}
-                />
-            </Box>
+  return (
+    <MainLayout>
+      <Box width="100%" position="relative" minHeight="80vh">
+        {/* Background SVG */}
+        <BackgroundImage
+          width={{ xs: "60%", md: "50%" }}
+          height={1000}
+          top={20}
+          right={-30}
+        />
 
-            <Typography
-        variant="h4"
-        fontWeight={600}
-        textAlign="center"
-        mt={3}
-        sx={{ fontFamily: "Inter",fontSize:30  }}
-      >
-        Step <span style={{ color: colors.buttoncolor }}>9</span> of 10
-      </Typography>
+        {/* Content over the background */}
+        <Box position="relative" zIndex={2}>
+          <DealsBanner
+            title="Transmission"
+            subtitle="Pick The Transmission Type Of Your Car"
+            buttonText="Back"
+            onClick={() => navigate("/car-engine")}
+          />
 
-            <Box
-                component={Paper}
-                elevation={3}
-                sx={{
-                    width: { xs: "90%", sm: "70%", md: "60%" },
-                    margin: "auto",
-                    mt: 4,
-                    p: 3,
-                    borderRadius: 2,
-                }}
+          <Typography
+            variant="h4"
+            fontWeight={600}
+            textAlign="center"
+            mt={3}
+            sx={{ fontFamily: "Inter", fontSize: 30 }}
+          >
+            Step <span style={{ color: colors.buttoncolor }}>9</span> of 10
+          </Typography>
+
+          {/* Transmission Form */}
+          <Box
+            component={Paper}
+            elevation={3}
+            sx={{
+              width: { xs: "90%", sm: "70%", md: "60%" },
+              margin: "auto",
+              mt: 4,
+              p: 4,
+              borderRadius: 2,
+            }}
+          >
+            <Typography fontWeight={600} sx={{ fontSize: 20, mb: 4, fontFamily: "Inter" }}>
+              What’s the transmission type of the car?
+            </Typography>
+
+            <RadioGroup
+              value={transmission}
+              onChange={(e) => setTransmission(e.target.value)}
             >
-                <Typography fontWeight={600} sx={{ fontSize: 18, mb: 3, fontFamily: "Inter" }}>
-                    Transmission type of the car?
-                </Typography>
+              {transmissionTypes.map((type) => (
+                <FormControlLabel
+                  key={type}
+                  value={type}
+                  control={
+                    <Radio
+                      sx={{
+                        color: colors.buttoncolor,
+                        "&.Mui-checked": { color: colors.buttoncolor },
+                      }}
+                    />
+                  }
+                  label={type}
+                  sx={{
+                    fontFamily: "Inter",
+                    fontSize: 16,
+                    mb: 1,
+                  }}
+                />
+              ))}
+            </RadioGroup>
 
-                
-                <RadioGroup value={transmission} onChange={(e) => setTransmission(e.target.value)}>
-                    {["AGS", "Manual", "CVT", "DCT"].map((type) => (
-                        <FormControlLabel
-                            key={type}
-                            value={type}
-                            control={<Radio sx={{ color: colors.buttoncolor }} />}
-                            label={type}
-                            sx={{ fontFamily: "Inter", fontSize: 16 }}
-                        />
-                    ))}
-                </RadioGroup>
-
-
-                <Box display="flex" justifyContent="flex-end" mt={3}>
-                    <Button
-                        variant="contained"
-                        sx={{
-                            textTransform: "none",
-                            minWidth:120,
-                            height: "40px",
-                            fontFamily: "Inter",
-                            backgroundColor: colors.buttoncolor,
-                        }}
-                        onClick={() => navigate("/car-addtitle")}
-                    >
-                        Next Step
-                    </Button>
-                </Box>
+            {/* Next Step Button */}
+            <Box display="flex" justifyContent="flex-end" mt={5}>
+              <Button
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  minWidth: 120,
+                  height: 40,
+                  fontFamily: "Inter",
+                  backgroundColor: colors.buttoncolor,
+                  "&:hover": {
+                    backgroundColor: colors.buttoncolor,
+                  },
+                }}
+                onClick={() => navigate("/car-addtitle")}
+              >
+                Next Step
+              </Button>
             </Box>
-        </MainLayout>
-    );
+          </Box>
+        </Box>
+      </Box>
+    </MainLayout>
+  );
 };
 
 export default CarTransmissionPage;

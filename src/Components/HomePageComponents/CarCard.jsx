@@ -20,9 +20,12 @@ import cardimg from "../../assets/Png/cardimg.png";
 import cardarrow from "../../assets/SVG/cardarrow.SVG";
 import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
+import DeleteAdModal from "../Modals/DelModal";
 
 const CarCard = ({ isMyAdsPage }) => {
   const [isFavorited, setIsFavorited] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
   const navigate = useNavigate()
 
   const [carData] = useState({
@@ -41,6 +44,10 @@ const CarCard = ({ isMyAdsPage }) => {
   const handleFavoriteClick = () => {
     setIsFavorited(!isFavorited);
   };
+  const handleDelete = () => {
+    console.log("Ad Deleted"); // Replace with API call
+    setOpenDelete(false);
+  };
 
   return (
     <Box
@@ -53,7 +60,7 @@ const CarCard = ({ isMyAdsPage }) => {
         mb: 1,
       }}
     >
-      {/* Image Section */}
+      
       <Box sx={{ position: "relative" }}>
         <CardMedia
           component="img"
@@ -76,8 +83,7 @@ const CarCard = ({ isMyAdsPage }) => {
       height: 34,
       borderRadius: 2,
     }}
-    // onClick={handleDelete} // Replace with your delete logic
-  >
+    onClick={() => setOpenDelete(true)}  >
     <DeleteIcon />
   </IconButton>
 )}
@@ -202,6 +208,11 @@ const CarCard = ({ isMyAdsPage }) => {
           View Ad
         </Button>
       </CardContent>
+      <DeleteAdModal 
+  open={openDelete} 
+  handleClose={() => setOpenDelete(false)} 
+  handleDelete={handleDelete} 
+/>
     </Box>
   );
 };

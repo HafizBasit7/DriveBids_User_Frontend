@@ -1,8 +1,9 @@
-import { Box, Typography, TextField, List, ListItem, ListItemAvatar, ListItemText, Avatar, Badge } from "@mui/material";
+import { Box, Typography, TextField, List, ListItem, ListItemAvatar, ListItemText, Avatar, Badge, IconButton } from "@mui/material";
 import { useState } from "react";
 import colors from "../../Style/color";
+import SearchIcon from "@mui/icons-material/Search";
 
-const ChatList = () => {
+const ChatList = ({ onSelectChat }) => {
   const [tabValue, setTabValue] = useState(0);
   const [activeChat, setActiveChat] = useState(2);
 
@@ -49,7 +50,7 @@ const ChatList = () => {
             position: "absolute",
             top: "50%",
             left: "50%",
-            width: "13%",
+            width: "15%",
             height: "100%",
             transform: "translate(-50%, -50%) skewX(47deg)",
             backgroundColor:"white",
@@ -80,7 +81,41 @@ const ChatList = () => {
       {/* Search Bar & Chat List Box */}
       <Box sx={{ border: "1px solid #ccc", borderRadius: "12px", p: 2, bgcolor: "white" }}>
         {/* Search Bar */}
-        <TextField fullWidth placeholder="Search messages" variant="outlined" size="small" sx={{ mb: 2,borderRadius:2 }} />
+        <Box 
+      sx={{ 
+        position: "relative", 
+        mb: 2, 
+        borderRadius: 2, 
+        overflow: "hidden", 
+        border: "1px solid #ccc",
+        bgcolor: "#fff"
+      }}
+    >
+        <IconButton 
+        sx={{ 
+          position: "absolute", 
+          bottom: 5, 
+          left: 2, 
+          padding: "2px",
+          
+        }}
+      >
+        <SearchIcon />
+      </IconButton>
+      <input
+        type="text"
+        placeholder="Search messages"
+        style={{
+          width: "100%",
+          padding: "12px 10px 9px 30px", 
+          border: "#F3F3F3",
+          outline: "none",
+          fontSize: "16px",
+          background: "#D9D9D9",
+        }}
+      />
+    
+    </Box>
 
         {/* Chat List */}
         <List>
@@ -88,7 +123,8 @@ const ChatList = () => {
             <ListItem
               key={chat.id}
               button
-              onClick={() => setActiveChat(chat.id)}
+             
+              onClick={() => onSelectChat(chat)}
               sx={{
                 display: "flex",
                 alignItems: "center",

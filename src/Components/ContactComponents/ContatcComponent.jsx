@@ -12,7 +12,7 @@ const ContactForm = () => {
   const [showPhone, setShowPhone] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   return (
-    <Box sx={{ p: 3, height: { xs: "190vh", md: "140vh" } }}>
+    <Box sx={{ p: 3, height: { xs: "190vh", md: "105vh" } }}>
       <Box
         sx={{
           display: "flex",
@@ -22,7 +22,7 @@ const ContactForm = () => {
         }}
       >
         {/* Content Section - Left */}
-        <Box sx={{ width: { xs: "100%", md: "50%" } }}>
+        <Box sx={{ width: { xs: "100%", md: "50%", } }}>
           <Typography
             variant="h5"
             fontWeight="bold"
@@ -73,7 +73,6 @@ const ContactForm = () => {
           </Box>
         </Box>
 
-        {/* Lottie Animation - Right */}
         <Box
           sx={{
             width: { xs: "100%", md: "50%" },
@@ -284,6 +283,7 @@ const ContactForm = () => {
           position: "absolute",
           left: 0,
           right: 0,
+          
           p: { xs: 2, md: 4 },
           my: 5,
           width: "100%",

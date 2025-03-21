@@ -9,17 +9,15 @@ const MyBidsPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("active");
 
-  // Full Bids Data with status
   const bidsData = [
     { status: "winning", chipText: "Winning", buttons: [ "Increase Bid"] },
     { status: "losing", chipText: "Losing", buttons: [ "Increase Bid"] },
-    { status: "won", chipText: "Bid Won", buttons: ["Pay Now" ] },
-    { status: "won", chipText: "Bid Won", buttons: ["Pay Now"] },
+    { status: "won", chipText: "Bid Won", buttons: ["View Ad" ] },
+    { status: "won", chipText: "Bid Won", buttons: ["View Ad"] },
     { status: "lost", chipText: "Bid Lost", buttons: [] },
     { status: "lost", chipText: "Bid Lost", buttons: [] },
   ];
 
-  // Filter bids based on activeTab
   const filteredBids = bidsData.filter((bid) => {
     if (activeTab === "active") return bid.status === "winning" || bid.status === "losing";
     if (activeTab === "won") return bid.status === "won";

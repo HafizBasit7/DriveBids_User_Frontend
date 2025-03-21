@@ -5,10 +5,10 @@ import Footer from "../Components/Footer/Footer";
 const MainLayout = ({ children }) => {
   return (
     <>
-      {/* Navbar */}
+      
      
 
-      {/* Main Content */}
+      
       <Box
         sx={{
           display: "flex",

@@ -30,10 +30,10 @@ const CarSelectionBox = ({
       p={3}
       border="1px solid #D9D9D9"
       borderRadius={2}
+      sx={{backgroundColor:"white"}}
+      
     >
-      {/* Search & Conditional Custom Input */}
       <Grid container spacing={2} mb={2}>
-        {/* If isLocation is false, show both inputs in one row */}
         {isLocation ? (
           <Grid item xs={12}>
             <TextField

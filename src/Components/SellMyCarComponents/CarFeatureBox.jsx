@@ -9,8 +9,8 @@ import {
   Typography,
   InputAdornment,
 } from "@mui/material";
-import { Search } from "@mui/icons-material";
 import colors from "../../Style/color";
+import EditIcon from '@mui/icons-material/Edit';
 
 const CarFeatureBox = ({
   carBrands = [],
@@ -51,7 +51,7 @@ const CarFeatureBox = ({
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Search sx={{ color: "#777" }} />
+              <EditIcon  sx={{ color: "#777" }} />
             </InputAdornment>
           ),
           sx: {
@@ -73,7 +73,6 @@ const CarFeatureBox = ({
         }}
       />
 
-      {/* Square Checkboxes */}
       <Grid container spacing={2}>
         {carBrands
           .filter((brand) =>
@@ -97,7 +96,6 @@ const CarFeatureBox = ({
           ))}
       </Grid>
 
-      {/* Next Button */}
       <Box display="flex" justifyContent="flex-end" mt={3}>
         <Button
           variant="contained"
