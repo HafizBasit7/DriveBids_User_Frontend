@@ -9,17 +9,14 @@ const MyAdsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="My Ads"
-          subtitle="20 Cars Listed "
-          buttonText="Back"
-          onClick={() => navigate("/home")}
-        />
-      </Box>
+    <MainLayout  title="My Ads"
+    subtitle="20 Cars Listed "
+    buttonText="Back"
+    onClick={() => navigate("/home")}
+    isnotSellMyCar ={true}>
+    
       
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 4, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
         <CarCard isMyAdsPage={true} />
         <CarCard isMyAdsPage={true} />
 

@@ -26,15 +26,12 @@ const MyBidsPage = () => {
   });
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="My Bids"
-          subtitle="20 Bids In Progress"
-          buttonText="Back"
-          onClick={() => navigate("/home")}
-        />
-      </Box>
+    <MainLayout    title="My Bids"
+    subtitle="20 Bids In Progress"
+    buttonText="Back"
+    onClick={() => navigate("/home")}
+    isnotSellMyCar ={true}>
+      
 
       <Box display="flex" justifyContent="center" my={4}>
         {["active", "won", "lost"].map((tab) => (

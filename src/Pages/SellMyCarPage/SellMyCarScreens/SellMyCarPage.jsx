@@ -18,7 +18,7 @@ const SellMyCar = () => {
     backgroundColor: "white",
     cursor: "pointer",
     transition: "all 0.3s",
-    "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.05)" },
+   
     zIndex: 1, 
   };
 
@@ -45,10 +45,10 @@ const SellMyCar = () => {
               <Box display="flex" alignItems="center" gap={2}>
                 <DirectionsCarIcon sx={{ fontSize: 24, color: "black" }} />
                 <Box>
-                  <Typography fontWeight={600} sx={{ fontFamily: "Inter, sans-serif" }}>
+                  <Typography fontWeight={600} sx={{ fontFamily: "Inter" }}>
                     Post a new ad
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ fontFamily: "Inter, sans-serif" }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontFamily: "Inter" }}>
                     Complete six easy steps to sell your car.
                   </Typography>
                 </Box>
@@ -60,10 +60,10 @@ const SellMyCar = () => {
               <Box display="flex" alignItems="center" gap={2}>
                 <DraftsIcon sx={{ fontSize: 24, color: "black" }} />
                 <Box>
-                  <Typography fontWeight={600} sx={{ fontFamily: "Inter, sans-serif" }}>
+                  <Typography fontWeight={600} sx={{ fontFamily: "Inter" }}>
                     Drafts
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ fontFamily: "Inter, sans-serif" }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontFamily: "Inter" }}>
                     Clear your drafts and complete your ad today.
                   </Typography>
                 </Box>

@@ -45,7 +45,7 @@ const CarCard = ({ isMyAdsPage }) => {
     setIsFavorited(!isFavorited);
   };
   const handleDelete = () => {
-    console.log("Ad Deleted"); // Replace with API call
+    console.log("Ad Deleted"); 
     setOpenDelete(false);
   };
 
@@ -111,64 +111,65 @@ const CarCard = ({ isMyAdsPage }) => {
         </IconButton>
       </Box>
 
-      {/* Card Content */}
       <CardContent sx={{ textAlign: "center" }}>
         <Typography variant="h5" fontWeight={600} sx={{ fontFamily: "Inter" }}>
           {carData.title}
         </Typography>
 
-        {/* Car Features with width */}
         <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-         gap:0.1,
-        
-            color: "#000",
-            fontWeight: 550,
-            mt: 1,
-            flexWrap: "wrap",
-            
-          }}
-        >
-          {/* Year */}
-          <DirectionsCarIcon fontSize="small" sx={{ width: 20, }} />
-          <span style={{ width: 40,fontFamily:"Inter",fontSize:15 }}>{carData.year}</span>
-          <span style={{ fontWeight: 800, fontSize: 18, width: 10 }}>|</span>
+  sx={{
+    display: "flex",
+    flexWrap: "wrap",
+    color: "#000",
+    fontWeight: 550,
+    mt: 1,
+    gap: 0.7,
+  }}
+>
+  <Box sx={{ display: "flex", alignItems: "center", width: "29%",pl:1}}>
+    <DirectionsCarIcon sx={{ fontSize: 18, mr: 0.5 }} />
+    <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{carData.year}</Typography>
+  </Box>
 
-          {/* Engine */}
-          <SpeedIcon fontSize="small" sx={{ width: 20 }} />
-          <span style={{ width: 70,fontFamily:"Inter",fontSize:15 }}>{carData.engine}</span>
-          <span style={{ fontWeight: 800, fontSize: 18, width: 10 }}>|</span>
+  <Box sx={{ display: "flex", alignItems: "center", width: "32%",}}>
+    <SpeedIcon sx={{ fontSize: 18, mr: 0.5 }} />
+    <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{carData.engine}</Typography>
+  </Box>
 
-          {/* Transmission */}
-          <SettingsIcon fontSize="small" sx={{ width: 20 }} />
-          <span style={{ width: 70,fontFamily:"Inter",fontSize:15 }}>{carData.transmission}</span>
+  <Box sx={{ display: "flex", alignItems: "center", width: "31%",pl:2}}>
+    <SettingsIcon sx={{ fontSize: 18, mr: 0.5 }} />
+    <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{carData.transmission}</Typography>
+  </Box>
 
-          {/* Show extra stats only on My Ads Page */}
-          {isMyAdsPage && (
-            <>
-              
+  {isMyAdsPage && (
+    <>
+      <Box sx={{ display: "flex", alignItems: "center", width: "48%",pl:5, }}>
+        <VisibilityIcon sx={{ fontSize: 18, mr: 0.5 }} />
+        <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{carData.views} views</Typography>
+      </Box>
 
-              {/* Views */}
-              <VisibilityIcon fontSize="small" sx={{ width: 20, }} />
-              <span style={{ width: 90,fontFamily:"Inter",fontSize:15 }}>{carData.views} views</span>
+      <Box sx={{ display: "flex", alignItems: "center", width: "48%" }}>
+        <ChatBubbleOutlineIcon sx={{ fontSize: 18, mr: 0.5 }} />
+        <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{carData.messages} messages</Typography>
+      </Box>
 
-              <span style={{ fontWeight: 800, fontSize: 18, width: 10 }}>|</span>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          mt: 0.5,
+        }}
+      >
+        <GavelIcon sx={{ fontSize: 18, mr: 0.5 }} />
+        <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{carData.bids} bids</Typography>
+      </Box>
+    </>
+  )}
+</Box>
 
-              {/* Messages */}
-              <ChatBubbleOutlineIcon fontSize="small" sx={{ width: 20 }} />
-              <span style={{ width: 110,fontFamily:"Inter",fontSize:15 }}>{carData.messages} messages</span>
 
-              
-
-              {/* Bids */}
-              <GavelIcon fontSize="small" sx={{ width: 20,ml:1 }} />
-              <span style={{ width: 50,fontFamily:"Inter",fontSize:15 }}>{carData.bids} bids</span>
-            </>
-          )}
-        </Box>
 
         {/* Top Bid */}
         <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter"  }}>

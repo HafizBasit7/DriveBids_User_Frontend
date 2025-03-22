@@ -10,7 +10,8 @@ const MainLayout = ({
   subtitle,
   buttonText,
   onClick,
-  isnotSellMyCar 
+  isnotSellMyCar ,
+  icon,ischatScreen
 }) => {
   return (
     <>
@@ -50,14 +51,15 @@ const MainLayout = ({
             <MainNavbar />
           </Box>
 
-          <Box width="100%" zIndex={2} mt={1}>
+         {!ischatScreen &&(<Box width="100%" zIndex={2} mt={1}>
             <DealsBanner
               title={title}
               subtitle={subtitle}
               buttonText={buttonText}
               onClick={onClick}
+              icon={icon}
             />
-          </Box>
+          </Box>    )}
 
           <Box sx={{ width: "100%", zIndex: 2 }}>
             {children}

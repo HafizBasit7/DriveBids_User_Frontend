@@ -12,7 +12,7 @@ const ContactForm = () => {
   const [showPhone, setShowPhone] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   return (
-    <Box sx={{ p: 3, height: { xs: "190vh", md: "105vh" } }}>
+    <Box sx={{ p: 3, height: { xs: "190vh", md: "120vh" } }}>
       <Box
         sx={{
           display: "flex",
@@ -21,7 +21,6 @@ const ContactForm = () => {
           justifyContent: "space-between",
         }}
       >
-        {/* Content Section - Left */}
         <Box sx={{ width: { xs: "100%", md: "50%", } }}>
           <Typography
             variant="h5"
@@ -36,7 +35,6 @@ const ContactForm = () => {
             any questions you might have. We've got the answers.
           </Typography>
 
-          {/* Visit Us Section */}
           <Typography
             variant="h6"
             fontWeight="bold"
@@ -52,7 +50,6 @@ const ContactForm = () => {
             Feel free to get in touch with us through our channels:
           </Typography>
 
-          {/* Contact Details */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
             <EmailIcon sx={{ color: colors.buttoncolor }} />
             <Typography
@@ -99,6 +96,7 @@ const ContactForm = () => {
           borderRadius: "8px",
           p: 3,
           boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.09)",
+          my:5,
         }}
       >
       

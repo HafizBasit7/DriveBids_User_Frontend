@@ -5,14 +5,21 @@ import ChatWindow from "../../Components/ChatPageComponents/ChatWindow";
 import { useEffect, useState } from "react";
 
 const ChatPage = () => {
-  const [selectedChat, setSelectedChat] = useState(null); // Track selected chat
+  const [selectedChat, setSelectedChat] = useState(null); 
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to top when chat page loads
+    window.scrollTo(0, 0); 
   }, []);
 
   return (
-    <MainLayout>
+    <MainLayout 
+
+    ischatScreen={true}
+   
+   
+   
+    isnotSellMyCar ={true}
+    >
       <Box
         sx={{
           display: "flex",
@@ -22,7 +29,6 @@ const ChatPage = () => {
           gap: 2,
         }}
       >
-        {/* Chat List */}
         <Box
           sx={{
             width: {

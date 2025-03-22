@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import MainLayout from "../../Layouts/MainLayout";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import CarSlider from "../../Components/CarDetailsComponent/CarSlider";
 import CarDetailsComponent from "../../Components/CarDetailsComponent/Cardetailcomp";
 import CarFeaturesComponent from "../../Components/CarDetailsComponent/CarFeatures";
@@ -13,16 +12,13 @@ import ChatIcon from "@mui/icons-material/Chat";
 const CarDetailsPage = () => {
   const navigate = useNavigate();
   return (
-    <MainLayout>
-      <Box sx={{ width: "100%" }}>
-        <DealsBanner
-          title="1996 Ford Mustang"
-          subtitle="Posted 2 days ago"
-          buttonText="Message Owner"
-          onClick={() => navigate("/chat-page")}
-          icon={<ChatIcon sx={{ cursor: "pointer" }} />}
-        />
-      </Box>
+    <MainLayout  title="1996 Ford Mustang"
+    subtitle="Posted 2 days ago"
+    buttonText="Message Owner"
+    onClick={() => navigate("/chat-page")}
+    isnotSellMyCar ={true}
+    icon={<ChatIcon sx={{ cursor: "pointer" }} />}>
+   
 
       <Box
         sx={{
@@ -97,7 +93,7 @@ const CarDetailsPage = () => {
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           gap: 2,
-          mt: 2,
+          mt: 3,
           width: "100%",
         }}
       >

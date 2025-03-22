@@ -8,7 +8,11 @@ const ContactPage = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
+    <MainLayout  title="Contact Us"
+    subtitle="Get in Touch – We're Here to Help!"
+    buttonText="Back to Home "
+    onClick={() => navigate("/home")}
+    isnotSellMyCar ={true}>
       <Box
         sx={{
           display: "flex",
@@ -21,14 +25,7 @@ const ContactPage = () => {
           py: 4,
         }}
       >
-        <Box sx={{ width: "100%" }}>
-          <DealsBanner
-            title="Contact Us"
-            subtitle="Get in Touch – We're Here to Help!"
-            buttonText="Back to Home "
-            onClick={() => navigate("/home")}
-          />
-        </Box>
+      
 
         
         <ContactForm />

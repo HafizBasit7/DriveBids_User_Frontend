@@ -11,16 +11,13 @@ const FilterPage = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); 
   return (
-    <MainLayout>
+    <MainLayout   title="Super Odd Deals"
+    subtitle="3000 Cars Available"
+    buttonText="View All"
+    onClick={() => navigate("/car-detail")} 
+    isnotSellMyCar ={true}>
   
-      <Box sx={{ width: "100%" }}>
-        <DealsBanner
-          title="Super Odd Deals"
-          subtitle="3000 Cars Available"
-          buttonText="View All"
-          onClick={() => navigate("/car-detail")} 
-        />
-      </Box>
+     
 
       <Box
         sx={{

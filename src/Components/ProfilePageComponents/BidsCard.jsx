@@ -102,31 +102,31 @@ const BidsCard = ({ chipText, buttons }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: 0.6,
-            fontSize: 17,
+            gap: 0.7,
+            fontSize: 16,
             color: "#000",
-            fontWeight: 550,
+            fontWeight: 400,
             mt: 1,
             flexWrap:"wrap"
           }}
         >
           <img src={modal} alt="" width={16} height={16} />
-          <span style={{ fontWeight: 500,fontFamily:"Inter" }}>1967</span>
-          <span style={{ fontWeight: 800, fontSize: 20 }}>|</span>
+          <span style={{ fontFamily:"Inter" }}>1967</span>
+          <span style={{  fontSize: 20 }}>|</span>
           <img src={cc} alt="" width={16} height={16}  />
-          <span style={{ fontWeight: 500 ,fontFamily:"Inter"}}>34000 cc</span>
-          <span style={{ fontWeight: 800, fontSize: 20 }}>|</span>
+          <span style={{  fontFamily:"Inter"}}>34000 cc</span>
+          <span style={{  fontSize: 20 }}>|</span>
           <img src={manual} alt=""width={16} height={16}  />
-          <span style={{ fontWeight: 500,fontFamily:"Inter" }}>Manual</span>
+          <span style={{fontFamily:"Inter" }}>Manual</span>
           
           <img src={petrol} alt="" width={16} height={16}  />
-          <span style={{ fontWeight: 500,fontFamily:"Inter" }}>petrol</span>
-          <span style={{ fontWeight: 800, fontSize: 20 }}>|</span>
+          <span style={{ fontFamily:"Inter" }}>petrol</span>
+          <span style={{  fontSize: 20 }}>|</span>
           <img src={km} alt="" width={16} height={16}  />
-          <span style={{ fontWeight: 500 ,fontFamily:"Inter"}}>24000 km</span>
-          <span style={{ fontWeight: 800, fontSize: 20 }}>|</span>
+          <span style={{fontFamily:"Inter"}}>24000 km</span>
+          <span style={{ fontSize: 20 }}>|</span>
           <img src={black} alt="" width={16} height={16}  />
-          <span style={{ fontWeight: 500,fontFamily:"Inter" }}>Black</span>
+          <span style={{ fontFamily:"Inter" }}>Black</span>
         </Box>
 
         <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter" }}>
