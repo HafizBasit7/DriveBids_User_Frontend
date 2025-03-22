@@ -38,7 +38,7 @@ const DraftCard = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: 0.5, // Reduced horizontal gap
+            gap: 0.5, 
             mb: 1,
           }}
         >

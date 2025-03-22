@@ -9,16 +9,11 @@ const PricingPage4 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="Pricing"
-          subtitle="Set The Bidding Price For Your Car"
-          buttonText="Back"
-          onClick={() => navigate("/pricing3")}
-        />
-      </Box>
-
+    <MainLayout   title="Pricing"
+    subtitle="Set The Bidding Price For Your Car"
+    buttonText="Back"
+    onClick={() => navigate("/pricing3")}>
+      
       <Typography
         fontWeight={600}
         textAlign="center"

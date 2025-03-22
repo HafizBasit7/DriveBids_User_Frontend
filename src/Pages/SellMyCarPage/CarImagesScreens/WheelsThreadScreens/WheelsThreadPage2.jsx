@@ -10,15 +10,11 @@ const WheelsThreadPage2 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="Wheel Treads"
-          subtitle="Pick these 4 images"
-          buttonText="Back to Home"
-          onClick={() => navigate("/car-tyrethread1")}
-        />
-      </Box>
+    <MainLayout title="Wheel Treads"
+    subtitle="Pick these 4 images"
+    buttonText="Back to Home"
+    onClick={() => navigate("/car-tyrethread1")}>
+     
 
       <Typography
         fontWeight={600}

@@ -10,15 +10,11 @@ const WheelsImagesPage2 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="Wheels"
-          subtitle="Pick these 4 images"
-          buttonText="Back to Home"
-          onClick={() => navigate("/car-wheelimg1")}
-        />
-      </Box>
+    <MainLayout title="Wheels"
+    subtitle="Pick these 4 images"
+    buttonText="Back to Home"
+    onClick={() => navigate("/car-wheelimg1")}>
+      
 
       <Typography
         fontWeight={600}

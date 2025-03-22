@@ -13,7 +13,7 @@ const CustomInput = ({ label, placeholder }) => (
       component="input"
       placeholder={placeholder}
       sx={{
-        width: '100%',
+        width: "100%",
         p: 1.5,
         borderRadius: "8px",
         backgroundColor: "#FAFAFA",
@@ -30,18 +30,14 @@ const EditProfilePage = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="Profile"
-          subtitle="Edit Your Profile"
-          buttonText="Back"
-          onClick={() => navigate("/home")}
-        />
-      </Box>
-
+    <MainLayout
+      title="Profile"
+      subtitle="Edit Your Profile"
+      buttonText="Back"
+      onClick={() => navigate("/home")}
+    >
       <Box
-       width="70%"
+        width="70%"
         mx="auto"
         my={4}
         p={{ xs: 2, md: 4 }}
@@ -50,15 +46,23 @@ const EditProfilePage = () => {
         bgcolor="#fff"
       >
         {/* Header */}
-        <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+        >
           <Box display="flex" alignItems="center" gap={2}>
             <Avatar src="/profile.png" sx={{ width: 70, height: 70 }} />
             <Box>
-              <Typography variant="h6" sx={{color:"#000"}}>Adriana</Typography>
-              <Typography color="text.secondary">Adriana123@gmail.com</Typography>
+              <Typography variant="h6" sx={{ color: "#000" }}>
+                Adriana
+              </Typography>
+              <Typography color="text.secondary">
+                Adriana123@gmail.com
+              </Typography>
             </Box>
           </Box>
-       
         </Box>
 
         {/* Input Fields */}
@@ -85,7 +89,9 @@ const EditProfilePage = () => {
 
         {/* Email Section */}
         <Box mt={4}>
-          <Typography   fontWeight={600} mb={1} sx={{fontSize:16}}>My Email Address</Typography>
+          <Typography fontWeight={600} mb={1} sx={{ fontSize: 16 }}>
+            My Email Address
+          </Typography>
           <Box
             display="flex"
             alignItems="center"
@@ -95,17 +101,26 @@ const EditProfilePage = () => {
             borderRadius={2}
           >
             <Box display="flex" alignItems="center" gap={1}>
-              <Avatar sx={{ width: 24, height: 24, bgcolor: "#1976D2" }}>📧</Avatar>
+              <Avatar sx={{ width: 24, height: 24, bgcolor: "#1976D2" }}>
+                📧
+              </Avatar>
               <Box>
                 <Typography fontSize={14}>Adriana123@gmail.com</Typography>
-                <Typography fontSize={12} color="text.secondary">1 month ago</Typography>
+                <Typography fontSize={12} color="text.secondary">
+                  1 month ago
+                </Typography>
               </Box>
             </Box>
           </Box>
 
           <Button
-          
-            sx={{ mt: 2, textTransform: "none", color:colors.buttoncolor,border:"1px solid #2F61BF" ,backgroundColor:"#EAEFF9"}}
+            sx={{
+              mt: 2,
+              textTransform: "none",
+              color: colors.buttoncolor,
+              border: "1px solid #2F61BF",
+              backgroundColor: "#EAEFF9",
+            }}
           >
             + Add Email Address
           </Button>
@@ -113,10 +128,15 @@ const EditProfilePage = () => {
 
         {/* Next Button aligned to bottom right */}
         <Box display="flex" justifyContent="flex-end" mt={2}>
-        <Button
+          <Button
             variant="contained"
             color="primary"
-            sx={{ textTransform: "none", px: 4, mt: { xs: 2, md: 0 } ,backgroundColor:colors.buttoncolor}}
+            sx={{
+              textTransform: "none",
+              px: 4,
+              mt: { xs: 2, md: 0 },
+              backgroundColor: colors.buttoncolor,
+            }}
           >
             Save
           </Button>

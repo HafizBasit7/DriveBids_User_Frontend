@@ -20,26 +20,18 @@ const CarEnginePage = () => {
   const [mileage, setMileage] = useState(50000); 
 
   return (
-    <MainLayout>
-      <Box width="100%" position="relative" minHeight="80vh">
-        {/* ✅ Background SVG */}
-        <BackgroundImage 
-          width={{ xs: "60%", md: "50%" }} 
-          height={1000} 
-          top={20} 
-          right={-30} 
-        />
+    <MainLayout
+    title="Car Engine"
+    subtitle="Pick The Engine Size Of Your Car"
+    buttonText="Back "
+    onClick={() => navigate("/car-color")}>
 
-        <Box position="relative" zIndex={2}>
-          {/* Header Banner */}
-          <DealsBanner
-            title="Car Engine"
-            subtitle="Pick The Engine Size Of Your Car"
-            buttonText="Back "
-            onClick={() => navigate("/car-color")}
-          />
+      <Box width="100%" >
+        
 
-          {/* Step Count */}
+        <Box  zIndex={2}>
+          
+
           <Typography
             variant="h4"
             fontWeight={600}
@@ -50,7 +42,6 @@ const CarEnginePage = () => {
             Step <span style={{ color: colors.buttoncolor }}>8</span> of 10
           </Typography>
 
-          {/* Mileage Selection */}
           <Box
             sx={{
               width: { xs: "90%", sm: "70%", md: "70%" },
@@ -66,7 +57,6 @@ const CarEnginePage = () => {
               What’s the engine size of the car?
             </Typography>
 
-            {/* Slider */}
             <Box px={3} mb={8}>
               <Typography fontWeight={500} textAlign="start" mb={3} sx={{ fontSize: 18, fontFamily: "Inter" }}>
                 Engine Size (CCs)

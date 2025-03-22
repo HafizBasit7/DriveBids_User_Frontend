@@ -44,15 +44,11 @@ const CarImages = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%" sx={{ mt: 2 }}>
-        <DealsBanner
-          title="Car Images"
-          subtitle="Complete 4 Easy Steps"
-          buttonText="Back "
-          onClick={() => navigate("/post-ad")}
-        />
-      </Box>
+    <MainLayout  title="Car Images"
+    subtitle="Complete 4 Easy Steps"
+    buttonText="Back "
+    onClick={() => navigate("/post-ad")}>
+    
 
       <Box width={{ xs: "95%", sm: "80%", md: "85%" }} mx="auto" mt={4}>
         <Stack spacing={2}>
@@ -66,6 +62,7 @@ const CarImages = () => {
                 justifyContent: "space-between",
                 p: 2,
                 border: "1px solid #D9D9D9",
+                backgroundColor:"#f9f9f9",
                 borderRadius: 2,
                 cursor: "pointer",
                 transition: "all 0.3s ease",

@@ -1,35 +1,72 @@
 import { Box } from "@mui/material";
 import MainNavbar from "../Components/Navbars/MainNavbar";
 import Footer from "../Components/Footer/Footer";
+import DealsBanner from "../Components/HomePageComponents/DealBanner";
+import road from "../assets/SVG/roadsvg.svg";
 
-const MainLayout = ({ children }) => {
+const MainLayout = ({ 
+  children, 
+  title,
+  subtitle,
+  buttonText,
+  onClick,
+  isnotSellMyCar 
+}) => {
   return (
     <>
-      
-     
+      <Box width="100%" minHeight="100%">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 2,
+            p: 3,
+            px: { xs: 0.5, md: 4, lg: 4 },
+            width: "100%",
+            height: "100%",
+            position: "relative",
+            zIndex: 2,
+          }}
+        >
+          {!isnotSellMyCar && (
+            <Box
+              component="img"
+              src={road}
+              alt="Road SVG"
+              sx={{
+                position: "absolute",
+                top: 130,
+                right: 0,
+                height: 1000,
+                width: "50%",
+                zIndex: 1,
+                opacity: 0.2,
+              }}
+            />
+          )}
 
-      
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 2,
-          p: 3,
-          px: { xs: 0.5, md: 4, lg: 4 },
-          width: "100%",
-          height:"100%",
-        }}
-      >
-         <Box sx={{ width: "100%" }}>
-        <MainNavbar />
-      </Box  >
-        {children}
-      </Box>
+          <Box sx={{ width: "100%", zIndex: 2 }}>
+            <MainNavbar />
+          </Box>
 
-      {/* Footer */}
-      <Box sx={{ width: "100%", }}>
-        <Footer />
+          <Box width="100%" zIndex={2} mt={1}>
+            <DealsBanner
+              title={title}
+              subtitle={subtitle}
+              buttonText={buttonText}
+              onClick={onClick}
+            />
+          </Box>
+
+          <Box sx={{ width: "100%", zIndex: 2 }}>
+            {children}
+          </Box>
+        </Box>
+
+        <Box sx={{ width: "100%" }}>
+          <Footer />
+        </Box>
       </Box>
     </>
   );

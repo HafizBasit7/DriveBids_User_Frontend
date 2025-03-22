@@ -20,26 +20,16 @@ const CarMileagePage = () => {
   const [mileage, setMileage] = useState(50000);
 
   return (
-    <MainLayout>
-      {/* Wrapper for background positioning */}
-      <Box width="100%" position="relative" minHeight="80vh">
+    <MainLayout  title="Car Mileage"
+    subtitle="Select the Mileage of Your Car"
+    buttonText="Back"
+    onClick={() => navigate("/city")}>
+      <Box width="100%">
 
-        {/* Background Image */}
-        <BackgroundImage
-          width={{ xs: "60%", md: "50%" }}
-          height={1050}
-          top={20}
-          right={-30}
-        />
+       
 
-        {/* Foreground content */}
-        <Box position="relative" zIndex={2}>
-          <DealsBanner
-            title="Car Mileage"
-            subtitle="Select the Mileage of Your Car"
-            buttonText="Back"
-            onClick={() => navigate("/city")}
-          />
+        <Box  zIndex={2}>
+         
 
           <Typography
             variant="h4"

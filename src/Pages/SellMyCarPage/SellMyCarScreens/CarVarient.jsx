@@ -22,26 +22,17 @@ const CarVarient = () => {
   ];
 
   return (
-    <MainLayout>
-      {/* Main Content Wrapper with relative position */}
-      <Box width="100%" position="relative" minHeight="80vh" >
-        
-        {/* Background Image placed behind */}
-        <BackgroundImage 
-          width={{ xs: "60%", md: "50%" }} 
-          height={1000}
-          top={20} 
-          right={-30} 
-        />
+    <MainLayout title="Car Variant"
+    subtitle="Pick The Variant of Your Car"
+    buttonText="Back"
+    onClick={() => navigate("/car-company")}>
 
-        {/* Foreground Content */}
-        <Box position="relative" zIndex={2}>
-          <DealsBanner
-            title="Car Variant"
-            subtitle="Pick The Variant of Your Car"
-            buttonText="Back"
-            onClick={() => navigate("/car-company")}
-          />
+      <Box width="100%"  >
+        
+       
+
+        <Box zIndex={2}>
+        
 
           <Typography
             variant="h4"

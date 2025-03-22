@@ -13,24 +13,15 @@ const CarTransmissionPage = () => {
   const [transmission, setTransmission] = useState("AGS");
 
   return (
-    <MainLayout>
-      <Box width="100%" position="relative" minHeight="80vh">
-        {/* Background SVG */}
-        <BackgroundImage
-          width={{ xs: "60%", md: "50%" }}
-          height={1000}
-          top={20}
-          right={-30}
-        />
+    <MainLayout  title="Transmission"
+    subtitle="Pick The Transmission Type Of Your Car"
+    buttonText="Back"
+    onClick={() => navigate("/car-engine")}>
+      <Box width="100%" >
+      
 
-        {/* Content over the background */}
-        <Box position="relative" zIndex={2}>
-          <DealsBanner
-            title="Transmission"
-            subtitle="Pick The Transmission Type Of Your Car"
-            buttonText="Back"
-            onClick={() => navigate("/car-engine")}
-          />
+        <Box  zIndex={2}>
+       
 
           <Typography
             variant="h4"

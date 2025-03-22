@@ -10,24 +10,15 @@ const AdsDescription = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%" position="relative" minHeight="80vh">
-        {/* Background SVG */}
-        <BackgroundImage
-          width={{ xs: "60%", md: "50%" }}
-          height={1000}
-          top={20}
-          right={-30}
-        />
+    <MainLayout title="Ad Description"
+    subtitle="Enter Ad Title & Description"
+    buttonText="Back"
+    onClick={() => navigate("/car-fuel")}>
+      <Box width="100%" >
+       
 
-        {/* Content over background */}
-        <Box position="relative" zIndex={2}>
-          <DealsBanner
-            title="Ad Description"
-            subtitle="Enter Ad Title & Description"
-            buttonText="Back"
-            onClick={() => navigate("/car-fuel")}
-          />
+        <Box  zIndex={2}>
+         
 
           <Typography
             variant="h4"

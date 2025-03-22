@@ -10,26 +10,17 @@ const CarModelPage = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      {/* Main Content Wrapper with relative positioning */}
-      <Box width="100%" position="relative" minHeight="80vh" >
+    <MainLayout
+    title="Car Model"
+    subtitle="Pick The Model of Your Car"
+    buttonText="Back"
+    onClick={() => navigate("/car-varient")}>
+      <Box width="100%"  >
         
-        {/* Background Image */}
-        <BackgroundImage
-          width={{ xs: "60%", md: "50%" }}
-          height={1050}
-          top={20}
-          right={-30}
-        />
+       
 
-        {/* Foreground Content */}
-        <Box position="relative" zIndex={2}>
-          <DealsBanner
-            title="Car Model"
-            subtitle="Pick The Model of Your Car"
-            buttonText="Back"
-            onClick={() => navigate("/car-varient")}
-          />
+        <Box  zIndex={2}>
+         
 
           <Typography
             fontWeight={600}

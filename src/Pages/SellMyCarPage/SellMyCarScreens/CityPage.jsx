@@ -23,25 +23,18 @@ const CityPage = () => {
   ];
 
   return (
-    <MainLayout>
-      <Box width="100%" position="relative"  minHeight="80vh">
-        
-        {/* Background Image */}
-        <BackgroundImage
-          width={{ xs: "60%", md: "50%" }}
-          height={1000}
-          top={20}
-          right={-30}
-        />
-
-        {/* Foreground Content */}
-        <Box position="relative" zIndex={2}>
-          <DealsBanner
-            title="Location"
+    <MainLayout
+    title="Location"
             subtitle="Pick Your City"
             buttonText="Back"
             onClick={() => navigate("/car-modal")}
-          />
+  >
+      <Box width="100%" >
+        
+        
+
+        <Box  zIndex={2}>
+          
 
           <Typography
             variant="h5"

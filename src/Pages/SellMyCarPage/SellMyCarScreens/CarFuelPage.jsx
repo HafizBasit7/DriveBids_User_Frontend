@@ -2,33 +2,22 @@ import { Box, Typography, Radio, RadioGroup, FormControlLabel, Button, Paper } f
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../Style/color";
-import BackgroundImage from "../backgroundsvg"; // ✅ Importing same background svg
 
 const CarFuelPage = () => {
     const navigate = useNavigate();
     const [transmission, setTransmission] = useState("Petrol");
 
     return (
-        <MainLayout>
-            <Box width="100%" position="relative" minHeight="80vh">
-                {/* ✅ Background Image */}
-                <BackgroundImage 
-                    width={{ xs: "60%", md: "50%" }} 
-                    height={1000} 
-                    top={20} 
-                    right={-30} 
-                />
+        <MainLayout title="Fuel"
+        subtitle="Pick Your Car Fuel Type"
+        buttonText="Back"
+        onClick={() => navigate("/car-mileage")}>
+            <Box width="100%" >
+               
 
-                {/* ✅ Content above the background */}
-                <Box position="relative" zIndex={2}>
-                    <DealsBanner
-                        title="Fuel"
-                        subtitle="Pick Your Car Fuel Type"
-                        buttonText="Back"
-                        onClick={() => navigate("/car-mileage")}
-                    />
+                <Box  zIndex={2}>
+                    
 
                     <Typography
                         variant="h4"

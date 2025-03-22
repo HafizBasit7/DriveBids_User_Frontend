@@ -39,15 +39,11 @@ const ChangePasswordPage = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="Profile"
-          subtitle="Change Password"
-          buttonText="Back"
-          onClick={() => navigate("/home")}
-        />
-      </Box>
+    <MainLayout  title="Profile"
+    subtitle="Change Password"
+    buttonText="Back"
+    onClick={() => navigate("/home")}>
+  
 
       <Box
     width="70%"

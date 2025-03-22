@@ -101,16 +101,16 @@ const ContactForm = () => {
           boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.09)",
         }}
       >
-        {/* First Row */}
+      
         <Box
           sx={{
             display: "flex",
             gap: 2,
             mb: 2,
-            flexDirection: { xs: "column", sm: "row" }, // Stacks on xs
+            flexDirection: { xs: "column", sm: "row" }, 
           }}
         >
-          {/* Name */}
+        
           <Box sx={{ flex: 1 }}>
             {showName ? (
               <TextField

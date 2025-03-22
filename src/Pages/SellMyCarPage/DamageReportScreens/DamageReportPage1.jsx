@@ -10,15 +10,11 @@ const DamgeReportPage1 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="Damage Report"
-          subtitle="Place Pointers Accurately"
-          buttonText="Back"
-          onClick={() => navigate("/post-ad")}
-        />
-      </Box>
+    <MainLayout     title="Damage Report"
+    subtitle="Place Pointers Accurately"
+    buttonText="Back"
+    onClick={() => navigate("/post-ad")}>
+      
 
       <Typography
         fontWeight={600}

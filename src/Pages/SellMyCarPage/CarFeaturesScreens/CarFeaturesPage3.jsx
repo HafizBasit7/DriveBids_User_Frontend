@@ -9,16 +9,12 @@ const CarFeaturesPage3 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
+    <MainLayout    title="Car Features"
+    subtitle="Pick The Feature of Your Car"
+    buttonText="Back"
+    onClick={() => navigate("/car-features2")}>
       
-      <Box width="100%">
-        <DealsBanner
-          title="Car Features"
-          subtitle="Pick The Feature of Your Car"
-          buttonText="Back"
-          onClick={() => navigate("/car-features2")}
-        />
-      </Box>
+     
 
       <Typography
      

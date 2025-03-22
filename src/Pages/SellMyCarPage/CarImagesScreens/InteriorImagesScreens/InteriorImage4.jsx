@@ -10,15 +10,11 @@ const InteriorImagesPage4 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="Interior Images"
-          subtitle="Pick these 5 images"
-          buttonText="Back to Home"
-          onClick={() => navigate("/car-interiorimg3")}
-        />
-      </Box>
+    <MainLayout    title="Interior Images"
+    subtitle="Pick these 5 images"
+    buttonText="Back to Home"
+    onClick={() => navigate("/car-interiorimg3")}>
+     
 
       <Typography
         fontWeight={600}

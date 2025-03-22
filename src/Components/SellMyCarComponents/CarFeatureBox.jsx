@@ -34,6 +34,7 @@ const CarFeatureBox = ({
       p={3}
       border="1px solid #D9D9D9"
       borderRadius={2}
+      backgroundColor="white"
     >
       <Typography
         variant="h6"

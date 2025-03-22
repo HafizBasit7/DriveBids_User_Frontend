@@ -60,15 +60,11 @@ const InspectionReportPage1 = () => {
   ];
 
   return (
-    <MainLayout>
-      <Box width="100%">
-        <DealsBanner
-          title="Inspection Report"
-          subtitle="Key Features & Condition"
-          buttonText="Back"
-          onClick={() => navigate("/post-ad")}
-        />
-      </Box>
+    <MainLayout  title="Inspection Report"
+    subtitle="Key Features & Condition"
+    buttonText="Back"
+    onClick={() => navigate("/post-ad")}>
+      
 
       <Typography fontWeight={600} textAlign="center" mt={3} sx={{ fontSize: 30 }}>
         Step <span style={{ color: "#007bff" }}>1</span> of 3

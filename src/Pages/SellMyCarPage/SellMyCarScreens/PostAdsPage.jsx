@@ -36,25 +36,17 @@ const PostAds = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
-      <Box width="100%" sx={{ mt: 2, position: "relative"  }}>
-        {/* Background Image */}
-        <BackgroundImage 
-          width={{ xs: "60%", md: "50%" }} 
-          height={1050} 
-          top={10} 
-          right={-30} 
-        />
+    <MainLayout
+    title="Post Ad"
+    subtitle="Complete 6 Easy Steps"
+    buttonText="Back to Home"
+    onClick={() => navigate("/sellmycar")}
+  >
+      <Box width="100%" sx={{ mt: 2,  }}>
+        
 
-        {/* Top Banner */}
-        <DealsBanner
-          title="Post Ad"
-          subtitle="Complete 6 Easy Steps"
-          buttonText="Back to Home"
-          onClick={() => navigate("/sellmycar")}
-        />
+      
 
-        {/* Steps Box */}
         <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={4} sx={{ position: "relative", zIndex: 1 }}>
           <Stack spacing={2}>
             {steps.map((item, index) => (

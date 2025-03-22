@@ -1,11 +1,9 @@
 import { Box, Typography, Stack, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import BackgroundImage from "../backgroundsvg";
 
 
 const SellMyCar = () => {
@@ -25,22 +23,13 @@ const SellMyCar = () => {
   };
 
   return (
-    <MainLayout >
+    <MainLayout
+    title="Sell My Car"
+    subtitle="Sell Your Car Hassle-Free!"
+    buttonText="Back to Home"
+    onClick={() => navigate("/home")}
+  >
       <Box width="100%" >
-      <BackgroundImage 
-  width={{ xs: "60%", md: "30%" }} 
-  height={650} 
-  top={100} 
-  right={0} 
-/>
-
-        <DealsBanner
-          title="Sell My Car"
-          subtitle="Sell Your Car Hassle-Free!"
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
-        />
-
         <Box
           sx={{
             width: "85%",
