@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../Style/color";
 import CarFeatureBox from "../../../Components/SellMyCarComponents/CarFeatureBox";
 

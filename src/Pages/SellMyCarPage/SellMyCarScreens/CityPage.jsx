@@ -1,10 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
-import BackgroundImage from "../backgroundsvg";
 
 const CityPage = () => {
   const navigate = useNavigate();

@@ -1,7 +1,6 @@
 import { Box, Typography, Avatar, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import colors from "../../Style/color";
 
 const CustomInput = ({ label, placeholder }) => (
@@ -19,7 +18,7 @@ const CustomInput = ({ label, placeholder }) => (
         backgroundColor: "#FAFAFA",
         fontSize: 14,
         outline: "none",
-        border: "none", // Removed border
+        border: "none",
         "&::placeholder": { color: "#A0A0A0" },
       }}
     />
@@ -45,7 +44,7 @@ const EditProfilePage = () => {
         boxShadow={2}
         bgcolor="#fff"
       >
-        {/* Header */}
+
         <Box
           display="flex"
           justifyContent="space-between"
@@ -65,7 +64,7 @@ const EditProfilePage = () => {
           </Box>
         </Box>
 
-        {/* Input Fields */}
+
         <Grid container spacing={2} mt={3}>
           <Grid item xs={12} sm={6}>
             <CustomInput label="Full Name" placeholder="Your First Name" />
@@ -87,7 +86,7 @@ const EditProfilePage = () => {
           </Grid>
         </Grid>
 
-        {/* Email Section */}
+
         <Box mt={4}>
           <Typography fontWeight={600} mb={1} sx={{ fontSize: 16 }}>
             My Email Address
@@ -126,7 +125,7 @@ const EditProfilePage = () => {
           </Button>
         </Box>
 
-        {/* Next Button aligned to bottom right */}
+
         <Box display="flex" justifyContent="flex-end" mt={2}>
           <Button
             variant="contained"

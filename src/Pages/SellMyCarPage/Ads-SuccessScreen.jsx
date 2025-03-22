@@ -19,7 +19,6 @@ const AdsSuccessScreen = () => {
         />
       </Box>
 
-      {/* Success Content */}
       <Box
         sx={{
           width: "100%",
@@ -32,7 +31,6 @@ const AdsSuccessScreen = () => {
           p: { xs: 2, md: 4 },
         }}
       >
-        {/* Full-Width SVG Wrapper */}
         <Box
           sx={{
             position: "absolute",
@@ -40,13 +38,12 @@ const AdsSuccessScreen = () => {
             right: 0,
             top: "60%",
             transform: "translateY(-50%)",
-            display: { xs: "none", md: "flex" }, // Hides on xs & sm
+            display: { xs: "none", md: "flex" }, 
             justifyContent: "space-between",
             zIndex: 1,
-            pointerEvents: "none", // prevents blocking clicks
+            pointerEvents: "none", 
           }}
         >
-          {/* Left Car */}
           <Box
             component="img"
             src={bmw}
@@ -56,7 +53,6 @@ const AdsSuccessScreen = () => {
             }}
           />
 
-          {/* Right Car */}
           <Box
             component="img"
             src={bmw}
@@ -68,7 +64,6 @@ const AdsSuccessScreen = () => {
           />
         </Box>
 
-        {/* Center Content */}
         <Box
           sx={{
             textAlign: "center",

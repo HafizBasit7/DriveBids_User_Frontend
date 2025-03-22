@@ -104,7 +104,7 @@ const ProfileMenu = () => {
         </MenuItem>
 
         <MenuItem
-          onClick={() => handleNavigate("/watchlist")}
+          onClick={() => handleNavigate("/my-watchlist")}
           sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

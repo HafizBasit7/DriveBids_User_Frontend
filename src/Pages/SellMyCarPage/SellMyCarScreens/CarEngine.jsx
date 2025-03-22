@@ -2,9 +2,7 @@ import { Box, Typography, Slider, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../Style/color";
-import BackgroundImage from "../backgroundsvg"; // ✅ Background SVG Import
 
 const marks = [
   { value: 10000, label: "10K" },
@@ -89,7 +87,6 @@ const CarEnginePage = () => {
               />
             </Box>
 
-            {/* Next Step Button */}
             <Box display="flex" justifyContent="flex-end" mt={3}>
               <Button
                 variant="contained"

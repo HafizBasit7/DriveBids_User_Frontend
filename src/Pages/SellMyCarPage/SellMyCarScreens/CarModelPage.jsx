@@ -1,10 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import YearSelectionBox from "../../../Components/SellMyCarComponents/YearSelectionBox";
 import colors from "../../../Style/color";
-import BackgroundImage from "../backgroundsvg";
 
 const CarModelPage = () => {
   const navigate = useNavigate();

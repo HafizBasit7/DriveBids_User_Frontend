@@ -1,8 +1,7 @@
 import { Box, Typography, Avatar, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 import colors from "../../Style/color";
 
 const PasswordInput = ({ label, placeholder }) => (

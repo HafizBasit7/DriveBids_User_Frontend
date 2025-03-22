@@ -42,7 +42,7 @@ const HomePage = () => {
         
       </Box>
 
-      <Box sx={{ width: "100%", mt: 3 }}> {/* Added margin-top instead of top */}
+      <Box sx={{ width: "100%", mt: 3 }}> 
         <DealsBanner title="Spotlight Deals" subtitle="3000 Cars Available" buttonText="View All" />
       </Box>
 
@@ -66,7 +66,7 @@ const HomePage = () => {
 
    
     </Box>
-       {/* Footer at the bottom */}
+       
        <Box sx={{ width: "100%", mt: 10 }}> 
         <Footer />
       </Box>

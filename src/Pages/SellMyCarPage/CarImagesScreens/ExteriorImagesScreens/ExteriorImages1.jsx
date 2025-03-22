@@ -1,7 +1,6 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Typography,  } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../../Layouts/MainLayout";
-import DealsBanner from "../../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../../Style/color";
 import imgsketch1 from "../../../../assets/SVG/exteriorimg1.svg";
 import UploadBox from "../../../../Components/SellMyCarComponents/UploadSection";

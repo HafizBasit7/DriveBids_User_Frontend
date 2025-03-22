@@ -2,9 +2,8 @@ import { Box, Typography, Slider, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../Style/color";
-import BackgroundImage from "../backgroundsvg";
+
 
 const marks = [
   { value: 10000, label: "10K" },
@@ -107,7 +106,7 @@ const CarMileagePage = () => {
               />
             </Box>
 
-            {/* Next Button */}
+          
             <Box display="flex" justifyContent="flex-end" mt={3}>
               <Button
                 variant="contained"

@@ -2,9 +2,7 @@ import { Box, Typography, Radio, RadioGroup, FormControlLabel, Button, Paper } f
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../Style/color";
-import BackgroundImage from "../backgroundsvg";
 
 const transmissionTypes = ["AGS", "Manual", "CVT", "DCT"];
 

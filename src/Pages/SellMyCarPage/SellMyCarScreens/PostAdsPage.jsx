@@ -1,7 +1,6 @@
 import { Box, Typography, Stack, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import ArticleIcon from '@mui/icons-material/Article';
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import ImageIcon from "@mui/icons-material/Image";
@@ -12,7 +11,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import colors from "../../../Style/color";
-import BackgroundImage from "../backgroundsvg";
 
 const steps = [
   { title: "Car Details", status: "Complete", steps: 10, icon: <ArticleIcon fontSize="large" /> },
@@ -87,7 +85,7 @@ const PostAds = () => {
                     <Typography fontWeight={600} sx={{ fontFamily: "Inter", fontSize: 16 }}>
                       {item.title}
                     </Typography>
-                    {/* Status Icon */}
+                   
                     <Box display="flex" alignItems="center" gap={0.3} mt={0.5}>
                       {item.status === "Complete" ? (
                         <CheckCircleIcon sx={{ color: "#2F61BF", fontSize: 16 }} /> 
@@ -105,7 +103,7 @@ const PostAds = () => {
                   </Box>
                 </Box>
 
-                {/* Right Side */}
+             
                 <Box display="flex" alignItems="center" gap={2} justifyContent="flex-end">
                   <Typography fontSize={14} fontWeight={500} color="#6F6F6F" sx={{ fontFamily: "Inter" }}>
                     {item.steps} Steps
@@ -116,7 +114,7 @@ const PostAds = () => {
             ))}
           </Stack>
 
-          {/* Post Ad Button */}
+         
           <Box display="flex" justifyContent="flex-end" mt={3}>
             <Button
               variant="contained"

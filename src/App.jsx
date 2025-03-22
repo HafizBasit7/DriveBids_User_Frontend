@@ -65,6 +65,7 @@ import ChangePasswordPage from "./Pages/MyProfilePage/ChangePasswordPage";
 import CarFuelPage from "./Pages/SellMyCarPage/SellMyCarScreens/CarFuelPage";
 import AdsDescription from "./Pages/SellMyCarPage/SellMyCarScreens/AdsTitleandDesPage";
 import CarListingPage from "./Pages/CarListingPage/CarListingPage";
+import MyWatchPage from "./Pages/MyWatchlistPage/MywatchlistPage";
 
 
 function App() {
@@ -145,6 +146,9 @@ function App() {
         <Route path="/ads-posted" element={< AdsSuccessScreen/>} />
               <Route path="/my-ads" element={<MyAdsPage  />} />
               <Route path="/my-bids" element={<MyBidsPage />} />
+              <Route path="/my-watchlist" element={<MyWatchPage />} />
+
+              
               <Route path="/edit-profile" element={<EditProfilePage />} />
               <Route path="/change-password" element={<ChangePasswordPage />} />
 

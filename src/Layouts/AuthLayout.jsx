@@ -19,7 +19,6 @@ const AuthLayout = ({ children }) => {
         position: "relative",
       }}
     >
-      {/* Skewed White Strips */}
       <Box
         sx={{
           position: "absolute",
@@ -62,7 +61,6 @@ const AuthLayout = ({ children }) => {
         <img src={Logo} alt="DriveBidz Logo" width={isSmallScreen ? 200 : 180} />
       </Box>
 
-      {/* LEFT SECTION (Car Image - Hidden on Small Screens) */}
       {!isSmallScreen && (
         <Box 
           sx={{ 
@@ -83,7 +81,6 @@ const AuthLayout = ({ children }) => {
         </Box>
       )}
 
-      {/* RIGHT SECTION (Children - Dynamic Content) */}
       <Box 
         sx={{ 
           flex: isSmallScreen ? "none" : 1, 

@@ -2,7 +2,6 @@ import { Box, Typography, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import BidsCard from "../../Components/ProfilePageComponents/BidsCard";
 
 const MyBidsPage = () => {

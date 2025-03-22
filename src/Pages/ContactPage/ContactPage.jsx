@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import MainLayout from "../../Layouts/MainLayout";
 import { Box } from "@mui/material";
 import ContactForm from "../../Components/ContactComponents/ContatcComponent";

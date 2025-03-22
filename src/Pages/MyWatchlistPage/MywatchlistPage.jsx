@@ -4,11 +4,11 @@ import MainLayout from "../../Layouts/MainLayout";
 
 import CarCard from "../../Components/HomePageComponents/CarCard";
 
-const MyAdsPage = () => {
+const MyWatchPage = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout  title="My Ads"
+    <MainLayout  title="My Watchlist"
     subtitle="20 Cars Listed "
     buttonText="Back"
     onClick={() => navigate("/home")}
@@ -45,4 +45,4 @@ const MyAdsPage = () => {
   );
 };
 
-export default MyAdsPage;
+export default MyWatchPage;
