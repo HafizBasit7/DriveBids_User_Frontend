@@ -2,13 +2,20 @@ import { Box, Typography, Avatar, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
 import colors from "../../Style/color";
+import { useAuth } from "../../context/auth.context";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { updateProfile } from "../../api/calls/auth";
 
-const CustomInput = ({ label, placeholder }) => (
+const CustomInput = ({ label, placeholder, value, setValue, disabled }) => (
   <Box>
     <Typography fontWeight={600} mb={0.5} fontSize={14}>
       {label}
     </Typography>
     <Box
+      disabled={disabled}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
       component="input"
       placeholder={placeholder}
       sx={{
@@ -27,6 +34,38 @@ const CustomInput = ({ label, placeholder }) => (
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
+  const {authState, dispatch} = useAuth();
+  const user = authState.user;
+  
+  const [loading, setLoading] = useState(false);
+
+  const [name, setName] = useState(user.name);
+  const [phone, setPhone] = useState(user.phoneNumber);
+  const [city, setCity] = useState(user.city);
+  const [country, setCountry] = useState(user.country);
+
+  //Trader
+  const [businessAddress, setBusinessAddress] = useState(user.businessAddress);
+
+  const handleSaveClick = () => {
+    toast.promise(handleSave(), {
+      loading: 'Saving profile...',
+      error: (error) => error.message,
+      success: 'Profile Updated!'
+    });
+  };
+
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const data = await updateProfile({name, city, country, phoneNumber: phone, businessAddress});
+      dispatch({type: 'setUser', payload: data.data.user});
+    } catch(e) {
+      throw e;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <MainLayout
@@ -52,13 +91,13 @@ const EditProfilePage = () => {
           flexWrap="wrap"
         >
           <Box display="flex" alignItems="center" gap={2}>
-            <Avatar src="/profile.png" sx={{ width: 70, height: 70 }} />
+            <Avatar src={user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} sx={{ width: 70, height: 70 }} />
             <Box>
               <Typography variant="h6" sx={{ color: "#000" }}>
-                Adriana
+                {user.name}
               </Typography>
               <Typography color="text.secondary">
-                Adriana123@gmail.com
+                {user.email}
               </Typography>
             </Box>
           </Box>
@@ -67,27 +106,29 @@ const EditProfilePage = () => {
 
         <Grid container spacing={2} mt={3}>
           <Grid item xs={12} sm={6}>
-            <CustomInput label="Full Name" placeholder="Your First Name" />
+            <CustomInput disabled={loading} value={name} setValue={setName} label="Full Name" placeholder="Your First Name" />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <CustomInput label="Phone Number" placeholder="Your Phone Number" />
+            <CustomInput disabled={loading} value={phone} setValue={setPhone} label="Phone Number" placeholder="Your Phone Number" />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <CustomInput label="Gender" placeholder="Your Gender" />
+            <CustomInput disabled={loading} value={city} setValue={setCity} label="City" placeholder="Enter city" />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <CustomInput label="Country" placeholder="Your Country" />
+            <CustomInput disabled={loading} value={country} setValue={setCountry} label="Country" placeholder="Your Country" />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <CustomInput label="Language" placeholder="Your Language" />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          {user.type == 'trader' && (
+            <Grid item xs={12} sm={6}>
+              <CustomInput disabled={loading} value={businessAddress} setValue={setBusinessAddress} label="Language" placeholder="Your Language" />
+            </Grid>
+          )}
+          {/* <Grid item xs={12} sm={6}>
             <CustomInput label="Time Zone" placeholder="Your Time Zone" />
-          </Grid>
+          </Grid> */}
         </Grid>
 
-
-        <Box mt={4}>
+        {/* TODO: OK  */}
+        {/* <Box mt={4}>
           <Typography fontWeight={600} mb={1} sx={{ fontSize: 16 }}>
             My Email Address
           </Typography>
@@ -123,11 +164,13 @@ const EditProfilePage = () => {
           >
             + Add Email Address
           </Button>
-        </Box>
+        </Box> */}
 
 
         <Box display="flex" justifyContent="flex-end" mt={2}>
           <Button
+            disabled={loading}
+            onClick={handleSaveClick}
             variant="contained"
             color="primary"
             sx={{

@@ -20,6 +20,9 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useAuth } from "../../context/auth.context";
 
 const ProfileMenu = () => {
+  const {authState} = useAuth();
+  const user = authState.user;
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -42,7 +45,7 @@ const ProfileMenu = () => {
   return (
     <Box>
       <IconButton onClick={handleClick}>
-        <Avatar sx={{ bgcolor: "blue" }}>S</Avatar>
+        <Avatar src={user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} sx={{ bgcolor: "blue" }}/>
       </IconButton>
 
       <Menu
@@ -61,11 +64,11 @@ const ProfileMenu = () => {
       >
         {/* User Info */}
         <Box sx={{ p: 1.5, display: "flex", alignItems: "center", gap: 1.5 }}>
-          <Avatar sx={{ bgcolor: "blue", width: 50, height: 50 }}>S</Avatar>
+          <Avatar src={user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} sx={{ bgcolor: "blue", width: 50, height: 50 }}/>
           <Box>
-            <Typography fontWeight="bold">Sofia Gul</Typography>
+            <Typography fontWeight="bold">{user.name}</Typography>
             <Typography variant="body2" color="gray">
-              sofiagul@gmail.com
+              {user.email}
             </Typography>
           </Box>
         </Box>
@@ -74,7 +77,7 @@ const ProfileMenu = () => {
 
         {/* Menu Items */}
         <MenuItem
-          onClick={() => handleNavigate("/edit-profile")}
+          onClick={() => handleNavigate("/profile/edit")}
           sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -107,7 +110,7 @@ const ProfileMenu = () => {
         </MenuItem>
 
         <MenuItem
-          onClick={() => handleNavigate("/my-watchlist")}
+          onClick={() => handleNavigate("/watchlist")}
           sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -118,7 +121,7 @@ const ProfileMenu = () => {
         </MenuItem>
 
         <MenuItem
-          onClick={() => handleNavigate("/change-password")}
+          onClick={() => handleNavigate("/profile/change-password")}
           sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

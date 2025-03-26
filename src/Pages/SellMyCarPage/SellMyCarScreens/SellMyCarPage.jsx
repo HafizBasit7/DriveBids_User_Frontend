@@ -41,7 +41,7 @@ const SellMyCar = () => {
           }}
         >
           <Stack spacing={7}  >
-            <Paper sx={cardStyle} onClick={() => navigate("/post-ad")}>
+            <Paper sx={cardStyle} onClick={() => navigate("post")}>
               <Box display="flex" alignItems="center" gap={2}>
                 <DirectionsCarIcon sx={{ fontSize: 24, color: "black" }} />
                 <Box>
@@ -56,7 +56,7 @@ const SellMyCar = () => {
               <ArrowForwardIosIcon fontSize="small" color="action" />
             </Paper>
 
-            <Paper sx={cardStyle} onClick={() => navigate("/drafts")}>
+            <Paper sx={cardStyle} onClick={() => navigate("drafts")}>
               <Box display="flex" alignItems="center" gap={2}>
                 <DraftsIcon sx={{ fontSize: 24, color: "black" }} />
                 <Box>

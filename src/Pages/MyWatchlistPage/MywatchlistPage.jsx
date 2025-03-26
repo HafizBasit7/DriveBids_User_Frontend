@@ -3,13 +3,22 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
 
 import CarCard from "../../Components/HomePageComponents/CarCard";
+import { useQuery } from "@tanstack/react-query";
+import {getWatchList} from "../../api/calls/watchlist";
 
 const MyWatchPage = () => {
   const navigate = useNavigate();
 
+  const {data, isLoading} = useQuery({
+    queryKey: ['watchlist'],
+    queryFn: getWatchList,
+  });
+
+  console.log(data);
+
   return (
     <MainLayout  title="My Watchlist"
-    subtitle="20 Cars Listed "
+    // subtitle="20 Cars Listed "
     buttonText="Back"
     onClick={() => navigate("/home")}
     isnotSellMyCar ={true}>

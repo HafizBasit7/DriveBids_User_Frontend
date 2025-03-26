@@ -3,8 +3,12 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
 
 import colors from "../../Style/color";
+import { useAuth } from "../../context/auth.context";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { updatePassword } from "../../api/calls/auth";
 
-const PasswordInput = ({ label, placeholder }) => (
+const PasswordInput = ({ label, placeholder, disabled, setPassword, password }) => (
   <Box mb={2}>
     <Typography fontWeight={600} mb={0.5} fontSize={15}>
       {label}
@@ -17,7 +21,10 @@ const PasswordInput = ({ label, placeholder }) => (
       p={1.5}
     >
       <Box
+        disabled={disabled}
         component="input"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         type="password"
         placeholder={placeholder}
         sx={{
@@ -36,6 +43,35 @@ const PasswordInput = ({ label, placeholder }) => (
 
 const ChangePasswordPage = () => {
   const navigate = useNavigate();
+  const {authState} = useAuth();
+  const user = authState.user;
+
+  const [loading, setLoading] = useState(false);
+
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+
+  const handlePasswordChangeClick = () => {
+    toast.promise(handlePasswordChange(), {
+      loading: 'Changing password',
+      error: (error) => error.message,
+      success: 'Password updated!'
+    });
+  };
+
+  const handlePasswordChange = async () => {
+    setLoading(true);
+    try {
+      await updatePassword({oldPassword, newPassword});
+      setNewPassword('');
+      setOldPassword('');
+    }
+    catch(e) {
+      throw e;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <MainLayout  title="Profile"
@@ -54,21 +90,23 @@ const ChangePasswordPage = () => {
         bgcolor="#fff"
       >
         <Box display="flex" alignItems="center" gap={2}>
-          <Avatar src="/profile.png" sx={{ width: 70, height: 70 }} />
+          <Avatar src={user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} sx={{ width: 70, height: 70 }} />
           <Box>
-            <Typography variant="h6">Adriana</Typography>
-            <Typography color="text.secondary">Adriana123@gmail.com</Typography>
+            <Typography variant="h6">{user.name}</Typography>
+            <Typography color="text.secondary">{user.email}</Typography>
           </Box>
         </Box>
 
         <Box mt={4}>
-          <PasswordInput label="Current Password" placeholder="Current Password" />
-          <PasswordInput label="New Password" placeholder="New Password" />
-          <PasswordInput label="Confirm New Password" placeholder="Confirm New Password" />
+          <PasswordInput disabled={loading} password={oldPassword} setPassword={setOldPassword} label="Current Password" placeholder="Current Password" />
+          <PasswordInput disabled={loading} password={newPassword} setPassword={setNewPassword} label="New Password" placeholder="New Password" />
+          {/* <PasswordInput label="Confirm New Password" placeholder="Confirm New Password" /> */}
         </Box>
 
         <Box display="flex" justifyContent="flex-end" mt={3}>
         <Button
+            disabled={loading}
+            onClick={handlePasswordChangeClick}
             variant="contained"
             color="primary"
             sx={{ textTransform: "none", px: 4, mt: { xs: 2, md: 0 },backgroundColor:colors.buttoncolor }}

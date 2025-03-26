@@ -95,7 +95,7 @@ const SellCarCard = () => {
       fontSize: 13,
       mt:1
     }}
-    onClick={() => navigate("/sellmycar")}
+    onClick={() => navigate("/ad")}
   >
     Start Selling Now  
     <Box 

@@ -34,7 +34,7 @@ const authReducerFunction = (state, action) => {
 };
 
 //Context
-const AuthContext = createContext({authState: intialState, login: async (payload) => {}, logoutUser: async () => {}});
+const AuthContext = createContext({authState: intialState, login: async (payload) => {}, logoutUser: async () => {}, dispatch: () => {}});
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthContextProvider ({children}) {
@@ -81,7 +81,7 @@ export default function AuthContextProvider ({children}) {
     };
 
     return (
-        <AuthContext.Provider value={{authState, login, logoutUser}}>
+        <AuthContext.Provider value={{authState, login, logoutUser, dispatch}}>
             {children}
         </AuthContext.Provider>
     )
