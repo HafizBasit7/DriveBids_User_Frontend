@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 const Enteropt = () => {
   const [otp, setOtp] = useState("");
 
-  const navigate =useNavigate()
+  const navigate = useNavigate();
 
   return (
     <Paper
@@ -120,7 +120,7 @@ const Enteropt = () => {
           borderRadius: 2,
           "&:hover": { backgroundColor: colors.buttoncolor },
         }}
-        onClick={() => navigate("/reset-password")}
+        onClick={() => navigate(`/confirm-reset-pass?otp=${otp}`)}
         disabled={otp.length < 4}
       >
         Verify

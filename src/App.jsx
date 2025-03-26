@@ -1,5 +1,4 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import  "./App.css"
 import LoginPage from "./Pages/Auth/LoginPage";
@@ -66,27 +65,27 @@ import CarFuelPage from "./Pages/SellMyCarPage/SellMyCarScreens/CarFuelPage";
 import AdsDescription from "./Pages/SellMyCarPage/SellMyCarScreens/AdsTitleandDesPage";
 import CarListingPage from "./Pages/CarListingPage/CarListingPage";
 import MyWatchPage from "./Pages/MyWatchlistPage/MywatchlistPage";
+import AuthContextProvider from "./context/auth.context";
+import AppBrowserRouter from "./router/brower-router";
 
 
-function App() {
+export default function App() {
+  return (
+    <AuthContextProvider>
+      <AppBrowserRouter/>
+    </AuthContextProvider>
+  );
+}
+
+function App1() {
   return (
     <Router>
       
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={< LoginPage />} />
-        <Route path="/signup" element={< SignupPage />} />
-        <Route path="forgetpassword" element={< ForgetPasswordPage />} />
-        <Route path="/reset-password" element={< ResetPasswordPage />} />
-        <Route path="/otp" element={< EnterOtpPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/filter" element={<FilterPage />} />
-        <Route path="/car-detail" element={<CarDetailsPage />} />
-        <Route path="/car-listing" element={<CarListingPage />} />
+        
 
         
         <Route path="/chat-page" element={<ChatPage/>} />
-        <Route path="/contact" element={<ContactPage/>} />
         <Route path="/sellmycar" element={< SellMyCar/>} />
         <Route path="/drafts" element={< Draft/>} />
         <Route path="/post-ad" element={< PostAds/>} />
@@ -144,67 +143,15 @@ function App() {
 
         <Route path="/damage-report4" element={<  DamgeReportPage4/>} />
         <Route path="/ads-posted" element={< AdsSuccessScreen/>} />
-              <Route path="/my-ads" element={<MyAdsPage  />} />
-              <Route path="/my-bids" element={<MyBidsPage />} />
-              <Route path="/my-watchlist" element={<MyWatchPage />} />
+        <Route path="/my-ads" element={<MyAdsPage  />} />
+        <Route path="/my-bids" element={<MyBidsPage />} />
+        <Route path="/my-watchlist" element={<MyWatchPage />} />
 
               
-              <Route path="/edit-profile" element={<EditProfilePage />} />
-              <Route path="/change-password" element={<ChangePasswordPage />} />
-
-              
-
-              
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
-     
-
-
-
-
-        
-
-
-
-
-        
-
-
-        
-
-        
-
-
-
-
-
-
-       
-
-      
-
-
-
-
+        <Route path="/edit-profile" element={<EditProfilePage />} />
+        <Route path="/change-password" element={<ChangePasswordPage />} />
 
       </Routes>
     </Router>
   );
 }
-
-export default App;

@@ -20,10 +20,8 @@ import {
   import { useNavigate } from "react-router-dom";
 import SortIcon from '@mui/icons-material/Sort';
 import PlaylistAddIcon from '@mui/icons-material/Sort';
+import {useAuth} from "../../context/auth.context";
 
-
-
-  
   const MobileSidebar = ({ open, handleClose, navigate }) => {
     const menuItems = [
       { icon: <PlaylistAddIcon/>, label: 'My Ads', route: '/my-ads' },
@@ -31,6 +29,8 @@ import PlaylistAddIcon from '@mui/icons-material/Sort';
       { icon: <PersonOutlineIcon />, label: 'Message', route: '/chat-page' },
       { icon: <SortIcon />, label: 'Browse Deals', route: '/filter' },
     ];
+
+    const {logoutUser} = useAuth();
   
     const handleMenuClick = (route) => {
       navigate(route);
@@ -101,6 +101,7 @@ import PlaylistAddIcon from '@mui/icons-material/Sort';
           </Box>
   
           <Button
+            onClick={logoutUser}
             fullWidth
             variant="contained"
             startIcon={<LogoutIcon sx={{ fontSize: 30 }} />}  

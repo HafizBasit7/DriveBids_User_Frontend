@@ -14,12 +14,37 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
+import {useAuth} from "../../context/auth.context.jsx";
+import toast from "react-hot-toast";
 
 const LoginBox = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate(); 
+
+  const [loading, setLoading] = useState(false);
+
+  const {login} = useAuth();
+
+  const handleLoginUser = () => {
+    toast.promise(loginUser(), {
+      loading: 'Logging In...',
+      error: (error) => error.message,
+      success: 'Succesfully logged in...'
+    });
+  };
+
+  const loginUser = async () => {
+    setLoading(true);
+    try {
+      await login({email, password});
+    }
+    catch(e) {
+      setLoading(false);
+      throw e;
+    }
+  };
 
   return (
     <Paper
@@ -48,6 +73,7 @@ const LoginBox = () => {
       {/* Email Input */}
       <Box sx={{ mb: 3 }}>
   <TextField
+    disabled={loading}
     label="Email"
     fullWidth
     value={email}
@@ -70,6 +96,7 @@ const LoginBox = () => {
       {/* Password Input with Eye Icon */}
       <Box sx={{ mb: 2 }}>
         <TextField
+          disabled={loading}
           label="Password"
           variant="outlined"
           fullWidth
@@ -106,7 +133,7 @@ const LoginBox = () => {
           control={<Checkbox />}
           label="Remember me"
         />
-        <Typography variant="body2" sx={{ cursor: "pointer", fontWeight: 500, color: colors.buttoncolor }}     onClick={() => navigate("/forgetpassword")}
+        <Typography variant="body2" sx={{ cursor: "pointer", fontWeight: 500, color: colors.buttoncolor }}     onClick={() => navigate("/reset-pass")}
  >
           Forgot Password?
         </Typography>
@@ -114,6 +141,7 @@ const LoginBox = () => {
 
       {/* Login Button */}
       <Button
+        disabled={loading}
         fullWidth
         variant="contained"
         sx={{
@@ -124,7 +152,7 @@ const LoginBox = () => {
           borderRadius: 2,
           "&:hover": { backgroundColor: colors.buttoncolor },
         }}
-        onClick={() => navigate("/home")}
+        onClick={handleLoginUser}
       >
         Login
       </Button>

@@ -14,15 +14,57 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { signupUser } from "../../api/calls/auth";
 
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState(""); // For trader
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [businessAddress, setBusinessAddress] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [role, setRole] = useState("Individual"); 
+
   const navigate = useNavigate(); 
+
+  const handleSignupClick = () => {
+    toast.promise(handleSignupUser(), {
+      loading: 'Creating your account',
+      error: (error) => error.message,
+      success: 'Account, created! Please Login now.'
+    });
+  };
+
+  const handleSignupUser = async () => {
+    setLoading(true);
+    try {
+      await signupUser({
+        email, 
+        password, 
+        type: role === 'Individual' ? 'individual' : 'trader',
+        city, 
+        country, 
+        name, 
+        phoneNumber: phone,
+        businessAddress 
+      });
+
+      setTimeout(() => {
+        navigate('/login')
+      }, 2000);
+    }
+    catch(e) {
+      setLoading(false);
+      throw e;
+    }
+  };
 
   return (
     <Paper
@@ -108,8 +150,31 @@ const Signup = () => {
       <Typography color="textSecondary" sx={{ mb: 4, fontFamily: "Inter", fontSize: 12, fontWeight: 350, textAlign: "start" }}>
         Sign up to enjoy the features of DriveBidz
       </Typography>
+      
       <Box sx={{ mb: 2 }}>
         <TextField
+          disabled={loading}
+          label="Full Name"
+          fullWidth
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              height: 50, 
+              borderRadius: 2,
+              "& fieldset": { borderColor: "#ccc" },
+              "&:hover fieldset": { borderColor: "#2F61BF" },
+              "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+            },
+            "& .MuiInputLabel-root": { color: "#888" }, 
+            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+          }}
+        />
+      </Box>
+      
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          disabled={loading}
           label="Email"
           fullWidth
           value={email}
@@ -130,6 +195,7 @@ const Signup = () => {
 
       <Box sx={{ mb: 2 }}>
         <TextField
+          disabled={loading}
           label="Password"
           fullWidth
           type={showPassword ? "text" : "password"}
@@ -157,13 +223,78 @@ const Signup = () => {
           }}
         />
       </Box>
+
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Phone Number"
+          disabled={loading}
+          fullWidth
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              height: 50,
+              borderRadius: 2,
+              "& fieldset": { borderColor: "#ccc" },
+              "&:hover fieldset": { borderColor: "#2F61BF" },
+              "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+            },
+            "& .MuiInputLabel-root": { color: "#888" }, 
+            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+          }}
+        />
+      </Box>
+
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="City"
+          disabled={loading}
+          fullWidth
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              height: 50,
+              borderRadius: 2,
+              "& fieldset": { borderColor: "#ccc" },
+              "&:hover fieldset": { borderColor: "#2F61BF" },
+              "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+            },
+            "& .MuiInputLabel-root": { color: "#888" }, 
+            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+          }}
+        />
+      </Box>
+
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          label="Country"
+          disabled={loading}
+          fullWidth
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              height: 50,
+              borderRadius: 2,
+              "& fieldset": { borderColor: "#ccc" },
+              "&:hover fieldset": { borderColor: "#2F61BF" },
+              "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+            },
+            "& .MuiInputLabel-root": { color: "#888" }, 
+            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+          }}
+        />
+      </Box>
+
        {role === "Trader" && (
         <Box sx={{ mb: 2 }}>
           <TextField
-            label="Phone Number"
+            disabled={loading}
+            label="Business Address"
             fullWidth
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            value={businessAddress}
+            onChange={(e) => setBusinessAddress(e.target.value)}
             sx={{
               "& .MuiOutlinedInput-root": {
                 height: 50,
@@ -180,6 +311,7 @@ const Signup = () => {
       )}
 
       <Button
+        onClick={handleSignupClick}
         fullWidth
         variant="contained"
         sx={{

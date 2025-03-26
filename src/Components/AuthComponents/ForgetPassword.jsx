@@ -14,13 +14,38 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
+import {sendResetOtp} from "../../api/calls/reset";
+import toast from "react-hot-toast";
 
 const ForgetPassword = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-      const navigate = useNavigate(); 
-    
+    const navigate = useNavigate(); 
+    const [loading, setLoading] = useState(false);
+
+
+    const handleSendCode = () => {
+        toast.promise(sendCode(), {
+            loading: 'Requesting OTP...',
+            error: (error) => error.message,
+            success: 'You will receive OTP, if relevant account exists. Redirecting...'
+        });
+    };
+
+    const sendCode = async () => {
+        setLoading(true);
+        try {
+            await sendResetOtp({email});
+            setTimeout(() => {
+                navigate('/otp')
+            }, 2000);
+        }
+        catch(e) {
+            setLoading(false);
+        throw e;
+        }
+    };
 
     return (
         <Paper
@@ -47,6 +72,7 @@ const ForgetPassword = () => {
             {/* Email Input */}
             <Box sx={{ mb: 3 }}>
                 <TextField
+                    disabled={loading}
                     label="Email"
                     fullWidth
                     value={email}
@@ -71,6 +97,7 @@ const ForgetPassword = () => {
 
 
             <Button
+                disabled={loading}
                 fullWidth
                 variant="contained"
                 sx={{
@@ -81,7 +108,7 @@ const ForgetPassword = () => {
                     borderRadius: 2,
                     "&:hover": { backgroundColor: colors.buttoncolor },
                 }}
-                onClick={() => navigate("/otp")}
+                onClick={handleSendCode}
             >
                 Send Code
             </Button>

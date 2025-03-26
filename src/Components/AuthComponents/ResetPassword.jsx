@@ -12,11 +12,40 @@ import {
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import colors from "../../Style/color";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { confirmResetPassword } from "../../api/calls/reset";
+import toast from "react-hot-toast";
 
 const ResetPassword = () => {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [searhParams] = useSearchParams();
+  const otp = searhParams.get('otp');
+  const navigate = useNavigate();
+
+  const handleResetPassword = () => {
+    toast.promise(resetPass(), {
+      loading: 'Setting new password',
+      error: (error) => error.message,
+      success: 'Password reset successful, redirecting'
+    });
+  };
+
+  const resetPass = async () => {
+    setLoading(true);
+    try {
+      await confirmResetPassword({password, otpCode: parseInt(otp)});
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+    }
+    catch(e) {
+      setLoading(false);
+      throw e;
+    }
+  };
 
   return (
     <Paper
@@ -42,6 +71,7 @@ const ResetPassword = () => {
 
  <Box sx={{ mb: 3 }}>
         <TextField
+          disabled={loading}
           label=" New Password"
           variant="outlined"
           fullWidth
@@ -73,7 +103,7 @@ const ResetPassword = () => {
 
 
       {/* Password Input with Eye Icon */}
-      <Box sx={{ mb: 5 }}>
+      {/* <Box sx={{ mb: 5 }}>
         <TextField
           label=" Confirm New Password"
           variant="outlined"
@@ -102,12 +132,14 @@ const ResetPassword = () => {
             "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, // Active label color
           }}
         />
-      </Box>
+      </Box> */}
 
       
 
       {/* Login Button */}
       <Button
+        onClick={handleResetPassword}
+        disabled={loading}
         fullWidth
         variant="contained"
         sx={{

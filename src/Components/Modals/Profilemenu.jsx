@@ -17,11 +17,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import GavelIcon from "@mui/icons-material/Gavel";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useAuth } from "../../context/auth.context";
 
 const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+
+  const {logoutUser} = useAuth();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -127,7 +130,7 @@ const ProfileMenu = () => {
 
         {/* Logout */}
         <MenuItem
-          onClick={() => handleNavigate("/login")}
+          onClick={logoutUser}
           sx={{ p: 2 }}
         >
           <ListItemIcon><LogoutIcon fontSize="small" /></ListItemIcon>
