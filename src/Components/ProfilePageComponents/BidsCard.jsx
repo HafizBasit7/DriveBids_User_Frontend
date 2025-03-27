@@ -90,12 +90,6 @@ const BidsCard = ({ chipText, buttons }) => {
           <span style={{ fontFamily:"Inter" }}>Black</span>
         </Box>
 
-       
-
-       
-
-        
-
         {/* Buttons from Parent */}
         <Box mt={2} display="flex" justifyContent="space-between" gap={1}>
   {buttons.map((btn, idx) => (

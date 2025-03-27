@@ -26,9 +26,21 @@ const carDetails = [
   { icon: <SettingsIcon />, label: "TRANSMISSION", value: "Manual" }
 ];
 
-const CarDetailsComponent = () => {
+const CarDetailsComponent = ({car}) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const carDetails = [
+    { icon: <DirectionsCarIcon />, label: "MAKE", value: car.make },
+    { icon: <SportsCarIcon />, label: "VARIANT", value: car.variant },
+    { icon: <DriveEtaIcon />, label: "Registration No", value: car.regNo },
+    { icon: <SpeedIcon />, label: "MILEAGE", value: `${car.mileage} KM` },
+    { icon: <ColorLensIcon />, label: "COLOUR", value: car.color },
+    { icon: <DateRangeIcon />, label: "MODEL", value: car.model },
+    { icon: <BuildIcon />, label: "ENGINE", value: car.engineSize },
+    { icon: <LocalGasStationIcon />, label: "FUEL", value: car.fuel },
+    { icon: <SettingsIcon />, label: "TRANSMISSION", value: car.transmission },
+  ];
 
   // Split the array for large screens
   const firstRow = carDetails.slice(0, 5);

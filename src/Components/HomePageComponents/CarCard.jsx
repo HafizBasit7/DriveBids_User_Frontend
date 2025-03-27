@@ -238,6 +238,10 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid }) => {
           </Typography>
         )}
 
+        {isCarSold && (
+          <Chip label={'Sold'} sx={{ mt: 1, fontWeight: 'bold', borderRadius:2, p:1, mb: 1 }} />
+        )}
+
         {/* Timer */}
         {!isCarSold && (
           <Typography
@@ -268,7 +272,7 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid }) => {
             "&:hover": { backgroundColor: "" },
           }}
           endIcon={<img src={cardarrow} alt="arrow" width={20} height={20} />}
-          onClick={()=>navigate("/car-detail")}
+          onClick={()=>navigate(`/car/${ad._id}`)}
         >
           View Ad
         </Button>

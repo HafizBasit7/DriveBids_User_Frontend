@@ -5,9 +5,34 @@ import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import CarCard from "../../Components/HomePageComponents/CarCard";
 import Footer from "../../Components/Footer/Footer";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getCarsIdInWatchList } from "../../api/calls/watchlist";
+import { listCars, listCarsByBidCount } from "../../api/calls/car";
 
 const HomePage = () => {
-  const navigate =useNavigate()
+  const navigate = useNavigate()
+
+  const {data, isLoading} = useQuery({
+    queryKey: ['cars'],
+    queryFn: () => listCars(1, 10, 'recent'),
+  });
+
+  const {data: endingCarList, isLoading: endingCarListLoading} = useQuery({
+    queryKey: ['carsEnding'],
+    queryFn: () => listCars(1, 10, 'ending')
+  });
+
+  const {data: carsByBidCount, isLoading: carsByBidCountLoading} = useQuery({
+    queryKey: ['carsByBidCount'],
+    queryFn: () => listCarsByBidCount(1, 10)
+  });
+
+  //Watchlist
+  const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
+    queryKey: ['carsInWatchList'],
+    queryFn: getCarsIdInWatchList,
+  });
+
   return (
     <>
     <Box
@@ -29,39 +54,34 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%" ,mt: 2}}>
-        <DealsBanner title="Super Odd Deals" subtitle="3000 Cars Available" buttonText="View All"             onClick={() => navigate("/filter")} 
- />
+        <DealsBanner title="Spotlight Deals" subtitle="3000 Cars Available" buttonText="View All"             onClick={() => navigate("/filter")} 
+      />
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        <CarCard />
-        <CarCard />
-        <CarCard />
-        <CarCard />
-        
-        
+        {carsByBidCount?.data.cars.map((car, index) => (
+           <CarCard key={index} carsInWatchList={carsInWatchList} ad={car.car} />
+        ))}
       </Box>
 
       <Box sx={{ width: "100%", mt: 3 }}> 
-        <DealsBanner title="Spotlight Deals" subtitle="3000 Cars Available" buttonText="View All" />
+        <DealsBanner title="Ending Soonest" subtitle="3000 Cars Available" buttonText="View All" />
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
-        <CarCard />
-        <CarCard />
-        <CarCard />
-        <CarCard />
+        {endingCarList?.data.cars.map((car, index) => (
+           <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
+        ))}
       </Box>
 
       <Box sx={{ width: "100%", mt: 5 }}> 
-        <DealsBanner title="Premium Deals" subtitle="3000 Cars Available" buttonText="View All" />
+        <DealsBanner title="Newly Listed" subtitle="3000 Cars Available" buttonText="View All" />
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        <CarCard />
-        <CarCard />
-        <CarCard />
-        <CarCard />
+        {data?.data.cars.map((car, index) => (
+           <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
+        ))}
       </Box>
 
    

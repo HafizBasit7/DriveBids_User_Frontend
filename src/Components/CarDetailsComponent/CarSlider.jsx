@@ -6,12 +6,12 @@ import Carimgg from "../../assets/Png/sellcarimage.png";
 import colors from "../../Style/color";
 import BidModal from "../Modals/BidModal";
 
-const images = [Carimg, Carimg, Carimg, Carimgg, Carimg, Carimg, Carimg];
-
-const CarSlider = () => {
+const CarSlider = ({car}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [open, setOpen] = useState(false);
   const thumbnailRef = useRef();
+
+  const images = Object.values(car.images).flat().map(val => val.url);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);

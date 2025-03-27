@@ -6,18 +6,38 @@ import CarFeaturesComponent from "../../Components/CarDetailsComponent/CarFeatur
 import BidsHistory from "../../Components/CarDetailsComponent/BidsHistory";
 import DescriptionBox from "../../Components/CarDetailsComponent/DescriptionBox";
 import CarInspectionReport from "../../Components/CarDetailsComponent/CarInspectionReport";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ChatIcon from "@mui/icons-material/Chat";
+import { useQuery } from "@tanstack/react-query";
+import { getCar } from "../../api/calls/car";
+import { useAuth } from "../../context/auth.context";
+import { timeAgo } from "../../utils/utils";
 
 const CarDetailsPage = () => {
   const navigate = useNavigate();
+  const {carId} = useParams();
+
+  const {authState} = useAuth();
+  
+  const {data, isLoading} = useQuery({
+    queryKey: ['car', carId],
+    queryFn: () => getCar(carId),
+  });
+
+  if(isLoading) {
+    return null;
+  }
+  const car = data.data.car;
+  //Calculations
+  const isMyCar = car.user._id === authState.user._id;
+
   return (
-    <MainLayout  title="1996 Ford Mustang"
-    subtitle="Posted 2 days ago"
-    buttonText="Message Owner"
-    onClick={() => navigate("/chat-page")}
-    isnotSellMyCar ={true}
-    icon={<ChatIcon sx={{ cursor: "pointer" }} />}>
+    <MainLayout  title={car.title}
+      subtitle={`Posted ${timeAgo(car.createdAt)}`}
+      buttonText="Message Owner"
+      onClick={() => navigate("/chat-page")}
+      isnotSellMyCar ={true}
+      icon={<ChatIcon sx={{ cursor: "pointer" }} />}>
    
 
       <Box
@@ -39,7 +59,7 @@ const CarDetailsPage = () => {
             pt: 1,
           }}
         >
-          <CarSlider />
+          <CarSlider car={car} />
         </Box>
         <Box
           sx={{
@@ -73,7 +93,7 @@ const CarDetailsPage = () => {
             alignItems: "center",
           }}
         >
-          <CarDetailsComponent />
+          <CarDetailsComponent car={car}/>
         </Box>
         <Box
           sx={{
@@ -106,7 +126,7 @@ const CarDetailsPage = () => {
             alignItems: "center",
           }}
         >
-          <DescriptionBox />
+          <DescriptionBox description={car.description}/>
         </Box>
         <Box
           sx={{
@@ -117,7 +137,7 @@ const CarDetailsPage = () => {
             alignItems: "center",
           }}
         >
-          <BidsHistory />
+          <BidsHistory car={car._id}/>
         </Box>
       </Box>
     </MainLayout>

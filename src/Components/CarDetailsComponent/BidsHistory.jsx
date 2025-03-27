@@ -1,4 +1,7 @@
 import { Box, Typography, Divider, Chip } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { getCarBiddingHistory } from "../../api/calls/car";
+import { formatAmount, formatDateTime } from "../../utils/utils";
 
 const bids = [
   { amount: "$30,000", bidOrder: "4th Bid", date: "12 December", time: "12:00PM", highest: true },
@@ -6,7 +9,14 @@ const bids = [
   { amount: "$22,000", bidOrder: "2nd Bid", date: "12 December", time: "12:00PM" },
 ];
 
-const BidsHistory = () => {
+const BidsHistory = ({car}) => {
+
+  const {data, isLoading} = useQuery({
+    queryKey: ['biddingHistory', car],
+    queryFn: () => getCarBiddingHistory(car),
+  });
+  const bids = data?.data?.bids;
+
   return (
     <Box
       sx={{
@@ -25,7 +35,7 @@ const BidsHistory = () => {
       {bids.map((bid, index) => (
         <Box key={index} sx={{ mb: index !== bids.length - 1 ? 2 : 0 }}>
           {/* Highest Bid Chip */}
-          {bid.highest && (
+          {index === 0 && (
             <Chip
               label="Highest Bid"
               size="small"
@@ -44,22 +54,22 @@ const BidsHistory = () => {
           {/* Amount & Date (First Row) */}
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <Typography variant="body1" sx={{ fontFamily: "Inter", fontWeight: 500 }}>
-              {bid.amount}
+              AED {formatAmount(bid.bidAmount)}
             </Typography>
             <Typography variant="caption" color="gray" sx={{ fontFamily: "Inter, sans-serif" }}>
-              {bid.date}
+              Bid At {formatDateTime(bid.createdAt)}
             </Typography>
           </Box>
-
+{/* todo: ok  */}
           {/* Bid Order & Time (Second Row) */}
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          {/* <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <Typography variant="body2" color="black" sx={{ fontFamily: "Inter" }}>
               {bid.bidOrder}
             </Typography>
             <Typography variant="caption" color="gray" sx={{ fontFamily: "Inter, sans-serif" }}>
               {bid.time}
             </Typography>
-          </Box>
+          </Box> */}
 
           {/* Divider */}
           {index !== bids.length - 1 && <Divider sx={{ mt: 2 }} />}
