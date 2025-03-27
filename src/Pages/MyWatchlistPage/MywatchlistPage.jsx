@@ -14,42 +14,26 @@ const MyWatchPage = () => {
     queryFn: getWatchList,
   });
 
-  console.log(data);
+  const watchList = data?.data?.watchList
+  const carsInWatchList = {
+    data: {
+      carsInWatchList: watchList?.map(val => ({car: val.car._id})),
+    }
+  };
 
   return (
     <MainLayout  title="My Watchlist"
-    // subtitle="20 Cars Listed "
+    subtitle="20 Cars Listed "
     buttonText="Back"
     onClick={() => navigate("/home")}
     isnotSellMyCar ={true}>
     
       
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        <CarCard isMyAdsPage={true} />
-        <CarCard isMyAdsPage={true} />
-
-        <CarCard isMyAdsPage={true} />
-
-        <CarCard isMyAdsPage={true} />
-
-        <CarCard isMyAdsPage={true} />
-
-        <CarCard isMyAdsPage={true} />
-        <CarCard isMyAdsPage={true} />
-
-        <CarCard isMyAdsPage={true} />
-        <CarCard isMyAdsPage={true} />
-
-
-        
-
-      
-        
-        
+        {watchList?.map((item, index) => (
+           <CarCard carsInWatchList={carsInWatchList} ad={item.car}/>
+        ))}
       </Box>
-
-     
-      
     </MainLayout>
   );
 };

@@ -22,25 +22,9 @@ import black from "../../assets/SVG/black.svg"
 
 
 const BidsCard = ({ chipText, buttons }) => {
-  const [isFavorited, setIsFavorited] = useState(false);
 
-  const handleFavoriteClick = () => {
-    setIsFavorited(!isFavorited);
-  };
 
-  const getChipStyles = () => {
-    if (chipText === "Winning") {
-      return { bgcolor: "#DEF6EE", color: "#008B27", };
-    } else if (chipText === "Losing") {
-      return { bgcolor: "#F3DCE1", color: "#B3261E" };
-    } else if (chipText === "Bid Won") {
-      return { bgcolor: "#DEF6EE", color: "#008B27" };
-    } else if (chipText === "Bid Lost") {
-      return { bgcolor: "#F3DCE1", color: "#B3261E" };
-    } else {
-      return {};
-    }
-  };
+
   return (
     <Box
       sx={{
@@ -54,13 +38,7 @@ const BidsCard = ({ chipText, buttons }) => {
       }}
     >
       <Box sx={{ position: "relative" }}>
-        <CardMedia
-          component="img"
-          height="180"
-          image={cardimg}
-          alt="Volkswagen Passat"
-          sx={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
-        />
+      
         {/* <IconButton
           sx={{
             position: "absolute",
@@ -75,28 +53,11 @@ const BidsCard = ({ chipText, buttons }) => {
         >
           <ChatBubbleOutlineIcon />
         </IconButton> */}
-        <IconButton
-          onClick={handleFavoriteClick}
-          sx={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            backgroundColor: "#363D2D",
-            color: "#FFFFFF",
-            width: 34,
-            height: 34,
-            borderRadius: 2,
-          }}
-        >
-          {isFavorited ? <FavoriteIcon sx={{ color: "white" }} /> : <FavoriteBorderIcon />}
-        </IconButton>
+      
       </Box>
 
       <CardContent sx={{ textAlign: "center" }}>
-        <Typography variant="h5" fontWeight={600} sx={{ fontFamily: "Inter" }}>
-          Volkswagen Passat
-        </Typography>
-
+       
         <Box
           sx={{
             display: "flex",
@@ -129,16 +90,11 @@ const BidsCard = ({ chipText, buttons }) => {
           <span style={{ fontFamily:"Inter" }}>Black</span>
         </Box>
 
-        <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter" }}>
-          Top Bid: $25k
-        </Typography>
+       
 
-        <Typography sx={{ color: "#B3261E", mt: 0.5, fontSize: 15, fontWeight: 500,fontFamily:"Inter"  }}>
-          10h:20m:11s
-        </Typography>
+       
 
-        {/* Chip based on Status */}
-        <Chip label={chipText} sx={{ mt: 1, ...getChipStyles() ,borderRadius:2,p:1 }} />
+        
 
         {/* Buttons from Parent */}
         <Box mt={2} display="flex" justifyContent="space-between" gap={1}>

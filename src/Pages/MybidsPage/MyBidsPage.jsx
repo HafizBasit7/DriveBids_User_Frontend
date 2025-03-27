@@ -3,26 +3,43 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
 import BidsCard from "../../Components/ProfilePageComponents/BidsCard";
+import { useQuery } from "@tanstack/react-query";
+import { listMyBids } from "../../api/calls/car";
+import { getCarsIdInWatchList } from "../../api/calls/watchlist";
+import CarCard from "../../Components/HomePageComponents/CarCard";
 
 const MyBidsPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("active");
 
-  const bidsData = [
-    { status: "winning", chipText: "Winning", buttons: [ "Increase Bid"] },
-    { status: "losing", chipText: "Losing", buttons: [ "Increase Bid"] },
-    { status: "won", chipText: "Bid Won", buttons: ["View Ad" ] },
-    { status: "won", chipText: "Bid Won", buttons: ["View Ad"] },
-    { status: "lost", chipText: "Bid Lost", buttons: [] },
-    { status: "lost", chipText: "Bid Lost", buttons: [] },
-  ];
-
-  const filteredBids = bidsData.filter((bid) => {
-    if (activeTab === "active") return bid.status === "winning" || bid.status === "losing";
-    if (activeTab === "won") return bid.status === "won";
-    if (activeTab === "lost") return bid.status === "lost";
-    return true;
+  const type = activeTab === 'active' ? 'open' : activeTab;
+  const {data, isLoading} = useQuery({
+    queryKey: ['myBids', type],
+    queryFn: () => listMyBids(1, 10, type),
   });
+
+  const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
+    queryKey: ['carsInWatchList'],
+    queryFn: getCarsIdInWatchList,
+  });
+
+  const bids = data?.data?.bids;
+
+  // const bidsData = [
+  //   { status: "winning", chipText: "Winning", buttons: [ "Increase Bid"] },
+  //   { status: "losing", chipText: "Losing", buttons: [ "Increase Bid"] },
+  //   { status: "won", chipText: "Bid Won", buttons: ["View Ad" ] },
+  //   { status: "won", chipText: "Bid Won", buttons: ["View Ad"] },
+  //   { status: "lost", chipText: "Bid Lost", buttons: [] },
+  //   { status: "lost", chipText: "Bid Lost", buttons: [] },
+  // ];
+
+  // const filteredBids = bidsData.filter((bid) => {
+  //   if (activeTab === "active") return bid.status === "winning" || bid.status === "losing";
+  //   if (activeTab === "won") return bid.status === "won";
+  //   if (activeTab === "lost") return bid.status === "lost";
+  //   return true;
+  // });
 
   return (
     <MainLayout    title="My Bids"
@@ -54,10 +71,10 @@ const MyBidsPage = () => {
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexWrap: "wrap", gap: 4, justifyContent: { xs: "center", lg: "start" } }}>
-        {filteredBids.map((bid, index) => (
-          <BidsCard key={index} chipText={bid.chipText} buttons={bid.buttons} />
+        {bids?.map((bid, index) => (
+          <CarCard key={index} carsInWatchList={carsInWatchList} ad={bid.car} isFromMyBids={true} bid={bid}/>
         ))}
-        {filteredBids.length === 0 && (
+        {bids?.length === 0 && (
           <Typography textAlign="center" width="100%">No bids found for this status.</Typography>
         )}
       </Box>
