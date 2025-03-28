@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
+import { useCar } from "../../../context/car.context";
 
 const marks = [
   { value: 20, label: "20" },
@@ -15,14 +16,25 @@ const marks = [
 
 const CarHorsePower = () => {
   const navigate = useNavigate();
-  const [horsepower, setHorsepower] = useState(150); // Default to 150 HP
+
+    const {carState, dispatch} = useCar();
+    
+    function onCangeCarDetails (value) {
+      dispatch({
+        type: 'UPDATE_FIELD',
+        section: 'carDetails',
+        field: 'horsePower',
+        value,
+      });
+
+    };
 
   return (
     <MainLayout
       title="Car HorsePower"
       subtitle="Select the horse-power of Your Car"
       buttonText="Back"
-      onClick={() => navigate("/city")}
+      onClick={() => navigate("../owner")}
     >
       <Box width="100%">
         <Box zIndex={2}>
@@ -33,7 +45,7 @@ const CarHorsePower = () => {
             mt={3}
             sx={{ fontFamily: "Inter", fontSize: 30 }}
           >
-            Step <span style={{ color: colors.buttoncolor }}>5</span> of 10
+            Step <span style={{ color: colors.buttoncolor }}>11</span> of 14
           </Typography>
 
           {/* Horsepower Selection Box */}
@@ -74,12 +86,12 @@ const CarHorsePower = () => {
                 fontWeight={600}
                 color={colors.buttoncolor}
               >
-                {horsepower} HP
+                {carState.carDetails.horsePower} HP
               </Typography>
 
               <Slider
-                value={horsepower}
-                onChange={(_, newValue) => setHorsepower(newValue)}
+                value={carState.carDetails.horsePower}
+                onChange={(_, newValue) => onCangeCarDetails(parseInt(newValue))}
                 step={10}
                 min={20}
                 max={1000}
@@ -113,7 +125,7 @@ const CarHorsePower = () => {
                   fontFamily: "Inter",
                   backgroundColor: colors.buttoncolor,
                 }}
-                onClick={() => navigate("/car-fuel")}
+                onClick={() => navigate("../condition")}
               >
                 Next Step
               </Button>

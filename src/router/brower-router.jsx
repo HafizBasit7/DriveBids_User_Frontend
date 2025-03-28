@@ -73,6 +73,7 @@ import CarHorsePower from "../Pages/SellMyCarPage/SellMyCarScreens/CarHorsePower
 import AccidentDescription from "../Pages/SellMyCarPage/SellMyCarScreens/CarAccidentHistory";
 import CarConditionPage from "../Pages/SellMyCarPage/SellMyCarScreens/CarConditionPage";
 import Page404 from "../Pages/NotFounf404Page";
+import ChatPage from "../Pages/ChatPage/ChatPage";
 
 const createRouter = (authState) => createBrowserRouter([
     {path: '/', element: <LandingPage/>},
@@ -97,6 +98,7 @@ const createRouter = (authState) => createBrowserRouter([
         children: [
             {path: 'home', element: <HomePage/>},
             {path: 'search', element: <FilterPage/>},
+            {path: 'chat', element: <ChatPage/>},
             {path: 'car/:carId', element: <CarDetailsPage/>},
             {path: 'car/:carId/owner', element: <CarListingPage/>},
             {path: 'contact', element: <ContactPage/>},
@@ -121,9 +123,9 @@ const createRouter = (authState) => createBrowserRouter([
                             {path: 'variant', element: <CarVarient/>},
                             {path: 'model', element: <CarModelPage/>},
                             {path: 'city', element: <CityPage/>},
-                            {path: 'color', element: <CarColorPage/>},
                             {path: 'mileage', element: <CarMileagePage/>},
                             {path: 'fuel', element: <CarFuelPage/>},
+                            {path: 'color', element: <CarColorPage/>},
                             {path: 'engine', element: <CarEnginePage/>},
                             {path: 'transmission', element: <CarTransmissionPage/>},
                             {path: 'owner', element: <CarOwnerPage/>},

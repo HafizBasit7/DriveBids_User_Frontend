@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
+import { useCar } from "../../../context/car.context";
 
 const CarColorPage = () => {
   const navigate = useNavigate();
@@ -13,17 +14,24 @@ const CarColorPage = () => {
     "Red",
     "Yellow",
     "Pink",
-    "Green",
-    "Red",
-    "Yellow",
-    "Pink",
+    "Orange",
   ];
+  const {carState, dispatch} = useCar();
+    
+    function onCangeCarDetails (value) {
+      dispatch({
+        type: 'UPDATE_FIELD',
+        section: 'carDetails',
+        field: 'color',
+        value,
+      });
+    };
 
   return (
     <MainLayout  title="Car Colour"
     subtitle="Pick The Colour Of Your Car"
     buttonText="Back"
-    onClick={() => navigate("/car-fuel")}>
+    onClick={() => navigate("../fuel")}>
       <Box width="100%" >
       
 
@@ -37,7 +45,7 @@ const CarColorPage = () => {
             mt={3}
             sx={{ fontFamily: "Inter", fontSize: 30 }}
           >
-            Step <span style={{ color: colors.buttoncolor }}>7</span> of 10
+            Step <span style={{ color: colors.buttoncolor }}>7</span> of 14
           </Typography>
 
           <Box
@@ -48,11 +56,13 @@ const CarColorPage = () => {
             zIndex={2}
           >
             <CarSelectionBox 
+            value={carState.carDetails.color}
+            onChange={onCangeCarDetails}
               carBrands={carBrands} 
               isLocation={false}
               searchPlaceholder="Search Company"
               customPlaceholder="Enter custom company"
-              onNext={() => navigate("/car-engine")}
+              onNext={() => navigate("../engine")}
             />
           </Box>
         </Box>

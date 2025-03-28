@@ -3,16 +3,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
+import { useCar } from "../../../context/car.context";
 
 const CarConditionPage = () => {
     const navigate = useNavigate();
-    const [transmission, setTransmission] = useState("Petrol");
+      const {carState, dispatch} = useCar();
+      
+      function onCangeCarDetails (value) {
+        dispatch({
+          type: 'UPDATE_FIELD',
+          section: 'carDetails',
+          field: 'condition',
+          value,
+        });
+      };
 
     return (
         <MainLayout title="Condition"
         subtitle="Pick Your Car Condition"
         buttonText="Back"
-        onClick={() => navigate("/car-mileage")}>
+        onClick={() => navigate("../horse-power")}>
             <Box width="100%" >
                
 
@@ -26,7 +36,7 @@ const CarConditionPage = () => {
                         mt={3}
                         sx={{ fontFamily: "Inter", fontSize: 30 }}
                     >
-                        Step <span style={{ color: colors.buttoncolor }}>13</span> of 14
+                        Step <span style={{ color: colors.buttoncolor }}>12</span> of 14
                     </Typography>
 
                     <Box
@@ -47,10 +57,10 @@ const CarConditionPage = () => {
                         </Typography>
 
                         <RadioGroup 
-                            value={transmission} 
-                            onChange={(e) => setTransmission(e.target.value)}
+                            value={carState.carDetails.condition} 
+                            onChange={(e) => onCangeCarDetails(e.target.value)}
                         >
-                            {["Poor", "Fail", "Good", "Execellent"].map((type) => (
+                            {['Poor', 'Fair', 'Good', 'Excellent'].map((type) => (
                                 <FormControlLabel
                                     key={type}
                                     value={type}
@@ -71,7 +81,7 @@ const CarConditionPage = () => {
                                     fontFamily: "Inter",
                                     backgroundColor: colors.buttoncolor,
                                 }}
-                                onClick={() => navigate("/car-color")}
+                                onClick={() => navigate("../accident")}
                             >
                                 Next Step
                             </Button>

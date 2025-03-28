@@ -7,13 +7,12 @@ const getAllYears = () => {
   return Array.from({ length: currentYear - 1899 + 2 }, (_, i) => 1900 + i);
 };
 
-const YearSelectionBox = ({ onNext }) => {
+const YearSelectionBox = ({ onNext, value, onChange}) => {
   const years = getAllYears().reverse();
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    centerYear(selectedYear);
+    centerYear(value);
   }, []);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const YearSelectionBox = ({ onNext }) => {
         }
 
         if (closest) {
-          setSelectedYear(Number(closest.textContent));
+          onChange(Number(closest.textContent));
         }
       }
     };
@@ -61,7 +60,7 @@ const YearSelectionBox = ({ onNext }) => {
 
   // Handle year click
   const handleYearClick = (year) => {
-    setSelectedYear(year);
+    onChange(year);
     centerYear(year);
   };
 
@@ -100,9 +99,9 @@ const YearSelectionBox = ({ onNext }) => {
               onClick={() => handleYearClick(year)}
               sx={{
                 fontFamily: "Inter",
-                fontWeight: selectedYear === year ? 600 : 300,
-                fontSize: selectedYear === year ? 40 : 20,
-                color: selectedYear === year ? colors.buttoncolor : "rgba(0, 0, 0, 0.4)",
+                fontWeight: value === year ? 600 : 300,
+                fontSize: value === year ? 40 : 20,
+                color: value === year ? colors.buttoncolor : "rgba(0, 0, 0, 0.4)",
                 transition: "all 0.3s ease-in-out",
                 cursor: "pointer",
                 padding: "10px 0",

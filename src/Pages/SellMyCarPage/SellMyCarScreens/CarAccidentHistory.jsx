@@ -2,16 +2,29 @@ import { Box, Typography, Button, Stack, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
+import { useCar } from "../../../context/car.context";
 
 const AccidentDescription = () => {
   const navigate = useNavigate();
+
+  const {carState, dispatch} = useCar();
+    
+    function onCangeCarDetails (value) {
+      dispatch({
+        type: 'UPDATE_FIELD',
+        section: 'carDetails',
+        field: 'accidentHistory',
+        value,
+      });
+    };
+  
 
   return (
     <MainLayout
       title="Accident Description"
       subtitle="Enter Accident Description"
       buttonText="Back"
-      onClick={() => navigate("/car-fuel")}
+      onClick={() => navigate("../condition")}
     >
       <Box width="100%" sx={{ my: 10, display: "flex", justifyContent: "center" }}>
         <Stack spacing={2} alignItems="flex-start" justifyContent="center" width="50%">
@@ -24,6 +37,8 @@ const AccidentDescription = () => {
           <TextField
             placeholder="Enter accident history..."
             fullWidth
+            value={carState.carDetails.accidentHistory}
+            onChange={(e) => onCangeCarDetails(e.target.value)}
             multiline
             rows={5} // Increased height
             sx={{
@@ -50,7 +65,7 @@ const AccidentDescription = () => {
                 py: 1,
                 backgroundColor: colors.buttoncolor,
               }}
-              onClick={() => navigate("")}
+              onClick={() => navigate("../title")}
             >
               Next
             </Button>

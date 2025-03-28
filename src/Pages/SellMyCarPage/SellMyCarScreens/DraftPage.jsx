@@ -3,11 +3,18 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 
 import DraftCard from "../../../Components/SellMyCarComponents/DraftCard";
+import { useQuery } from "@tanstack/react-query";
+import { getDrafts } from "../../../api/calls/car";
 
 const Draft = () => {
   const navigate = useNavigate();
 
-  
+  const {data, isLoading} = useQuery({
+    queryKey: ["drafts"],
+    queryFn: getDrafts,
+  });
+
+  const drafts = data?.data.drafts;
 
   return (
     <MainLayout
@@ -33,14 +40,10 @@ const Draft = () => {
         justifyContent:{ xs: "center", sm: "flex-start" ,md: "flex-start" },
       }}
     >
-     <DraftCard/>
-     <DraftCard/>
-     <DraftCard/>
-     <DraftCard/>
-     <DraftCard/>
-     <DraftCard/>
-     <DraftCard/>
-     <DraftCard/>
+    {drafts?.map((draft, index) => (
+      <DraftCard key={index} draft={draft}/>
+    ))}
+     
     </Box>
 
     </MainLayout>

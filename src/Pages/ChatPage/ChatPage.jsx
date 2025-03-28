@@ -2,14 +2,34 @@ import { Box } from "@mui/material";
 import MainLayout from "../../Layouts/MainLayout";
 import ChatList from "../../Components/ChatPageComponents/Chatlist";
 import ChatWindow from "../../Components/ChatPageComponents/ChatWindow";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import {useChatSocket} from "../../context/chat.socket";
 
 const ChatPage = () => {
   const [selectedChat, setSelectedChat] = useState(null); 
+  const selectedChatRef = useRef(null);
+  const socket = useChatSocket();
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 0); 
+  // }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0); 
-  }, []);
+    if(socket && selectedChat) {
+      try {
+        socket.emit('join-room', {roomId: selectedChatRef.current._id});
+      }
+      catch(e) {}
+    }
+    return () => {
+      try {socket?.emit('leave-room', {roomId: selectedChatRef.current._id});}
+      catch(e) {
+
+      }
+    };
+  }, [socket, selectedChat]);
+ 
 
   return (
     <MainLayout 
@@ -41,7 +61,7 @@ const ChatPage = () => {
             display: { xs: selectedChat ? "none" : "block", sm: "block" },
           }}
         >
-          <ChatList onSelectChat={(chat) => setSelectedChat(chat)} />
+          <ChatList onSelectChat={(chat) =>{ setSelectedChat(chat); selectedChatRef.current=chat;}} />
         </Box>
 
         <Box

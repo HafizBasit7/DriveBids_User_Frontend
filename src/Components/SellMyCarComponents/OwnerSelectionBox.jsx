@@ -7,13 +7,12 @@ const getNumbering = () => {
   return Array.from({ length: totalNumbers }, (_, i) => i + 1);
 };
 
-const OwnerSelectionBox = ({ onNext }) => {
+const OwnerSelectionBox = ({ onNext, value, onChange }) => {
   const numbers = getNumbering();  // Removed reverse here
-  const [selectedNumber, setSelectedNumber] = useState(numbers[0]);
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    centerNumber(selectedNumber);
+    centerNumber(value);
   }, []);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const OwnerSelectionBox = ({ onNext }) => {
         }
 
         if (closest) {
-          setSelectedNumber(Number(closest.textContent));
+          onChange(Number(closest.textContent));
         }
       }
     };
@@ -60,7 +59,7 @@ const OwnerSelectionBox = ({ onNext }) => {
   };
 
   const handleNumberClick = (number) => {
-    setSelectedNumber(number);
+    onChange(parseInt(number));
     centerNumber(number);
   };
 
@@ -99,9 +98,9 @@ const OwnerSelectionBox = ({ onNext }) => {
               onClick={() => handleNumberClick(num)}
               sx={{
                 fontFamily: "Inter",
-                fontWeight: selectedNumber === num ? 600 : 300,
-                fontSize: selectedNumber === num ? 40 : 20,
-                color: selectedNumber === num ? colors.buttoncolor : "rgba(0, 0, 0, 0.4)",
+                fontWeight: value === num ? 600 : 300,
+                fontSize: value === num ? 40 : 20,
+                color: value === num ? colors.buttoncolor : "rgba(0, 0, 0, 0.4)",
                 transition: "all 0.3s ease-in-out",
                 cursor: "pointer",
                 padding: "10px 0",

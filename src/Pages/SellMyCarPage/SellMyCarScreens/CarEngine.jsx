@@ -3,26 +3,37 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import colors from "../../../Style/color";
+import { useCar } from "../../../context/car.context";
 
 const marks = [
-  { value: 10000, label: "10K" },
-  { value: 60000, label: "60K" },
-  { value: 120000, label: "120K" },
-  { value: 180000, label: "180K" },
-  { value: 240000, label: "240K" },
-  { value: 320000, label: "320K" },
+  { value: 800, label: "800CC" },
+  { value: 1500, label: "1500CC" },
+  { value: 2000, label: "2000CC" },
+  { value: 2500, label: "2500CC" },
+  { value: 3000, label: "3000CC" },
+  { value: 8000, label: "8000CC" },
 ];
 
 const CarEnginePage = () => {
   const navigate = useNavigate();
-  const [mileage, setMileage] = useState(50000); 
+
+  const {carState, dispatch} = useCar();
+    
+    function onCangeCarDetails (value) {
+      dispatch({
+        type: 'UPDATE_FIELD',
+        section: 'carDetails',
+        field: 'engineSize',
+        value,
+      });
+    };
 
   return (
     <MainLayout
     title="Car Engine"
     subtitle="Pick The Engine Size Of Your Car"
     buttonText="Back "
-    onClick={() => navigate("/car-color")}>
+    onClick={() => navigate("../color")}>
 
       <Box width="100%" >
         
@@ -37,7 +48,7 @@ const CarEnginePage = () => {
             mt={3}
             sx={{ fontFamily: "Inter", fontSize: 30 }}
           >
-            Step <span style={{ color: colors.buttoncolor }}>8</span> of 10
+            Step <span style={{ color: colors.buttoncolor }}>8</span> of 14
           </Typography>
 
           <Box
@@ -60,14 +71,14 @@ const CarEnginePage = () => {
                 Engine Size (CCs)
               </Typography>
               <Typography textAlign="center" mb={3} fontWeight={600} color={colors.buttoncolor}>
-                {mileage.toLocaleString()} KM
+                {carState.carDetails.engineSize} KM
               </Typography>
               <Slider
-                value={mileage}
-                onChange={(_, newValue) => setMileage(newValue)}
-                step={1000}
-                min={10000}
-                max={320000}
+                value={carState.carDetails.engineSize}
+                onChange={(_, newValue) => onCangeCarDetails(parseInt(newValue))}
+                step={100}
+                min={800}
+                max={8000}
                 marks={marks}
                 sx={{
                   color: colors.buttoncolor,
@@ -97,7 +108,7 @@ const CarEnginePage = () => {
                   fontFamily: "Inter",
                   backgroundColor: colors.buttoncolor,
                 }}
-                onClick={() => navigate("/car-transmission")}
+                onClick={() => navigate("../transmission")}
               >
                 Next Step
               </Button>

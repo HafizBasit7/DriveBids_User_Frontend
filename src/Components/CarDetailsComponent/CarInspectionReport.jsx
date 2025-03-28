@@ -20,7 +20,7 @@ import { useState } from "react";
 const images = [CarReport1, CarReport2, CarReport3, CarReport4];
 const views = ["Front View", "Back View", "Right Side View", "Left Side View"];
 
-const CarInspectionReport = () => {
+const CarInspectionReport = ({car}) => {
   const [open, setOpen] = useState(false);
   const [openDamage, setOpenDamage] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,13 +55,13 @@ const CarInspectionReport = () => {
       <Box sx={{ p: 1, borderRadius: 2, border: "1px solid #ddd", display: "flex", justifyContent: "space-between", alignItems: "center", pl: 2 }}>
         <Box>
           <Typography sx={{ fontWeight: 500, fontFamily: "Inter", textTransform: "uppercase", fontSize: 18 }}>
-            Adam Williams
+            {car.user.name}
           </Typography>
           <Typography sx={{ fontWeight: 500, fontFamily: "Inter", fontSize: 14, color: "#6F6F6F" }}>
-            Private Seller
+            {car.user.type === 'individual' ? 'Private Seller' : 'Trader'}
           </Typography>
           <Link
-            href="#"
+            href={`/car/${car.user._id}/owner`}
             underline="hover"
             sx={{
               fontSize: 13,
@@ -74,12 +74,12 @@ const CarInspectionReport = () => {
               fontFamily: "Inter",
               mt: 1,
             }}
-            onClick={() => setOpen(true)}
+            // onClick={() => setOpen(true)}
           >
             View All Car
           </Link>
         </Box>
-        <Box component="img" src={img} alt="Seller" sx={{ width: 80, height: 80, borderRadius: 2, objectFit: "cover" }} />
+        <Box component="img" src={car.user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} alt="Seller" sx={{ width: 80, height: 80, borderRadius: 2, objectFit: "cover" }} />
       </Box>
 
       {/* Car Inspection Report */}
@@ -223,7 +223,7 @@ const CarInspectionReport = () => {
       </Box>
 
       {/* Modals */}
-      <CarInspectionModal open={open} onClose={() => setOpen(false)} />
+      <CarInspectionModal car={car._id} open={open} onClose={() => setOpen(false)} />
       <DamageModal open={openDamage} onClose={() => setOpenDamage(false)} />
     </Box>
   );

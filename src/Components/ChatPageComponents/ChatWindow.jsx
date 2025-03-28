@@ -4,31 +4,49 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import colors from "../../Style/color";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import AdBanner from "./AdBanner";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getChatCarHead, getChatMessages, sendMessage } from "../../api/calls/chat";
+import { timeAgo } from "../../utils/utils";
+import { useAuth } from "../../context/auth.context";
 
 const ChatWindow = ({ chat, onBack }) => {
   const messagesEndRef = useRef(null);
+  const chatId = chat._id;
+  const [newMessage, setNewMessage] = useState('');
+  const newMessageRef = useRef('');
 
-  const messages = [
-    { id: 1, text: "omg, this is amazing", sender: "Bryan", avatar: "/images/bryan.jpg", type: "left" , time: "4:36 PM"},
-    { id: 2, text: "perfect ✅", sender: "Bryan", avatar: "/images/bryan.jpg", type: "left" , time: "4:36 PM"},
-    { id: 3, text: "How are you?", sender: "Me", avatar: "/images/me.jpg", type: "right", time: "4:36 PM" },
-    { id: 4, text: "perfect ✅", sender: "Bryan", avatar: "/images/bryan.jpg", type: "left", time: "4:36 PM" },
-    { id: 5, text: "How are you?", sender: "Me", avatar: "/images/me.jpg", type: "right" , time: "4:36 PM"},
-    { id: 6, text: "perfect ✅", sender: "Bryan", avatar: "/images/bryan.jpg", type: "left" , time: "4:36 PM"},
-    { id: 7, text: "How are you?", sender: "Me", avatar: "/images/me.jpg", type: "right", time: "4:36 PM" },
-    { id: 8, text: "ada ada adsfdf", sender: "Me", avatar: "/images/me.jpg", type: "right" , time: "4:36 PM"},
-    { id: 4, text: "perfect ✅", sender: "Bryan", avatar: "/images/bryan.jpg", type: "left", time: "4:36 PM" },
-    { id: 5, text: "How are you?", sender: "Me", avatar: "/images/me.jpg", type: "right" , time: "4:36 PM"},
-    { id: 6, text: "perfect ✅", sender: "Bryan", avatar: "/images/bryan.jpg", type: "left" , time: "4:36 PM"},
-    { id: 7, text: "How are you?", sender: "Me", avatar: "/images/me.jpg", type: "right", time: "4:36 PM" },
-    { id: 8, text: "ada ada adsfdf", sender: "Me", avatar: "/images/me.jpg", type: "right" , time: "4:36 PM"},
-  ];
+  const {authState} = useAuth();
+  const user = authState.user;
+
+  const {data: chatHeadData, isLoadingChatHead} = useQuery({
+    queryKey: ['chatCarHead', chatId],
+    queryFn: () => getChatCarHead(chatId)
+  });
+  const chatHeadDataReal = chatHeadData?.data.chatHead;
+
+  const {data: messagesTmp, isLoading: messagesLoading} = useQuery({
+    queryKey: ['messages', chatId],
+    queryFn: () => getChatMessages(chatId, 1, 30),
+  });
+
+  const mutation = useMutation({
+    mutationFn: () => sendMessage(chatId, newMessage),
+  });
+
+  const messages = messagesTmp?.data.messages;
+  
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const sendMessageClick = async () => {
+     await mutation.mutateAsync();
+    setNewMessage('');
+    newMessageRef.current = '';
+  };
 
   return (
     <Box
@@ -54,11 +72,11 @@ const ChatWindow = ({ chat, onBack }) => {
         }}
       >
     
-        <Avatar src="/images/bryan.jpg" sx={{ width: 45, height: 45 }} />
+        <Avatar src={chatHeadDataReal?.user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} sx={{ width: 45, height: 45 }} />
         <Box>
-          <Typography sx={{ fontSize: 18, fontFamily: "Inter" }}>Bryan</Typography>
+          <Typography sx={{ fontSize: 18, fontFamily: "Inter" }}>{chatHeadDataReal?.user.name}</Typography>
           <Typography sx={{ fontSize: 14, fontFamily: "Inter" }} color="green">
-            Online
+            {chatHeadDataReal?.user.type === 'individual' ? 'Private Seller' : 'Trader'}
           </Typography>
         </Box>
         <IconButton
@@ -74,7 +92,7 @@ const ChatWindow = ({ chat, onBack }) => {
         </IconButton>
       </Box>
 
-      <AdBanner />
+      <AdBanner chatHeadDataReal={chatHeadDataReal} />
 
       <Box
         sx={{
@@ -86,20 +104,20 @@ const ChatWindow = ({ chat, onBack }) => {
           gap: 2,
         }}
       >
-        {messages.length === 0 ? (
+        {!messages ? (
           <Typography sx={{ textAlign: "center", color: "#aaa" }}>No messages yet</Typography>
         ) : (
-          messages.map((msg) => (
+          [...messages].reverse().map((msg) => (
             <Box
-              key={msg.id}
+              key={msg._id}
               sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: msg.type === "right" ? "flex-end" : "flex-start",
+                justifyContent:msg.sender === user._id ? "flex-end" : "flex-start",
                 gap: 1,
               }}
             >
-              {msg.type === "left" && (
+              {msg.sender !== user._id && (
                 <>
                   <Avatar src={msg.avatar} sx={{ width: 34, height: 34 }} />
                   <Box
@@ -111,15 +129,15 @@ const ChatWindow = ({ chat, onBack }) => {
                       maxWidth: "70%",
                     }}
                   >
-                    <Typography sx={{}}>{msg.text}</Typography>
+                    <Typography sx={{}}>{msg.message}</Typography>
                   </Box>
-                  <Typography sx={{ fontSize: 12, color: '#888', minWidth: '50px' }}>{msg.time}</Typography>
+                  <Typography sx={{ fontSize: 12, color: '#888', minWidth: '50px' }}>{timeAgo(msg.createdAt)}</Typography>
                 </>
               )}
 
-              {msg.type === "right" && (
+              {msg.sender === user._id && (
                 <>
-                  <Typography sx={{ fontSize: 12, color: '#888', minWidth: '50px', textAlign: 'right' }}>{msg.time}</Typography>
+                  <Typography sx={{ fontSize: 12, color: '#888', minWidth: '50px', textAlign: 'right' }}>{timeAgo(msg.createdAt)}</Typography>
                   <Box
                     sx={{
                       bgcolor: "#007bff",
@@ -130,9 +148,9 @@ const ChatWindow = ({ chat, onBack }) => {
                       maxWidth: "70%",
                     }}
                   >
-                    <Typography>{msg.text}</Typography>
+                    <Typography>{msg.message}</Typography>
                   </Box>
-                  <Avatar src={msg.avatar} sx={{ width: 34, height: 34 }} />
+                  {/* <Avatar src={msg.avatar} sx={{ width: 34, height: 34 }} /> */}
                 </>
               )}
             </Box>
@@ -151,12 +169,14 @@ const ChatWindow = ({ chat, onBack }) => {
         }}
       >
         <IconButton sx={{ color: "black", mr: 1 }}>
-          <AttachFileIcon fontSize="medium" />
+          {/* <AttachFileIcon fontSize="medium" /> */}
         </IconButton>
 
         <Box sx={{ position: "relative", flexGrow: 1 }}>
           <TextField
             fullWidth
+            value={newMessage}
+            onChange={(e) => {setNewMessage(e.target.value); newMessageRef.current = e.target.value; }}
             placeholder="Type a message"
             size="small"
             sx={{
@@ -177,6 +197,7 @@ const ChatWindow = ({ chat, onBack }) => {
             }}
           />
           <IconButton
+          onClick={sendMessageClick}
             color="primary"
             sx={{
               position: "absolute",

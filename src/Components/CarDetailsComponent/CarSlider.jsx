@@ -5,11 +5,23 @@ import Carimg from "../../assets/Png/cardetailimg.png";
 import Carimgg from "../../assets/Png/sellcarimage.png";
 import colors from "../../Style/color";
 import BidModal from "../Modals/BidModal";
+import { formatAmount } from "../../utils/utils";
+import { useMutation } from "@tanstack/react-query";
+import {placeBidOnCar, buyNowCar} from "../../api/calls/bid";
+import toast from "react-hot-toast";
 
 const CarSlider = ({car}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [open, setOpen] = useState(false);
   const thumbnailRef = useRef();
+
+  const mutation = useMutation({
+    mutationFn: placeBidOnCar,
+  });
+
+  const buyNowMutation = useMutation({
+    mutationFn: buyNowCar,
+  });
 
   const images = Object.values(car.images).flat().map(val => val.url);
 
@@ -146,8 +158,17 @@ const CarSlider = ({car}) => {
       >
         <Button
           variant="outlined"
+          onClick={async () => {
+            if(buyNowMutation.isPending) return;
+            toast.promise(buyNowMutation.mutateAsync(car._id), {
+              loading: 'Buying the car',
+              error: (error) => error.message,
+              success: 'Car is yours now.'
+            })
+          }}
           sx={{
             flex: 1,
+            
             minWidth: "30%",
             color: "#6F6F6F",
             fontWeight: "bold",
@@ -164,7 +185,7 @@ const CarSlider = ({car}) => {
         >
           BUY IT NOW
           <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 12 }, fontWeight: 700, fontFamily: "Inter" }}>
-            $28000
+            AED {formatAmount(car.buyNowPrice)}
           </Box>
         </Button>
 
@@ -189,6 +210,17 @@ const CarSlider = ({car}) => {
         </Button>
 
         <Button
+        onClick={async () => {
+          if(mutation.isPending) return;
+          toast.promise(mutation.mutateAsync({
+            carId: car._id,
+            bidAmount: parseInt(car.highestBid ? car.highestBid + 1 : car.staringBidPrice)
+          }), {
+            loading: 'Placing bid',
+            error: (error) => error.message,
+            success: 'Bid placed'
+          })
+        }}
           variant="outlined"
           sx={{
             flex: 1,
@@ -206,10 +238,12 @@ const CarSlider = ({car}) => {
             height:50,
           }}
         >
-          QUICK BID
-          <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-            $28100
+          {mutation.isPending ? 'Placing bid' : 'QUICK BID'}
+          {!mutation.isPending && (
+            <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+            AED {formatAmount(car.highestBid > 0 ? car.highestBid + 1 : car.staringBidPrice + 1)}
           </Box>
+          )}
         </Button>
       </Box>
 
@@ -237,7 +271,7 @@ const CarSlider = ({car}) => {
         <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} />
       </Box>
 
-      <BidModal open={open} onClose={() => setOpen(false)} />
+      <BidModal car={car} open={open} onClose={() => setOpen(false)} />
     </Box>
   );
 };

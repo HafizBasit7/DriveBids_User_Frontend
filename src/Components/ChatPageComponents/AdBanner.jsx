@@ -2,7 +2,7 @@ import { Box, Typography, IconButton } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import img from "../../assets/Png/prseller.png"
 
-const AdBanner = () => {
+const AdBanner = ({chatHeadDataReal}) => {
   return (
     <Box
       sx={{
@@ -17,7 +17,7 @@ const AdBanner = () => {
     >
       <Box
         component="img"
-        src={img}
+        src={chatHeadDataReal?.car.images.exterior[0].url}
         alt="Car"
         sx={{
           width: 50,
@@ -29,9 +29,9 @@ const AdBanner = () => {
       />
 
       <Box sx={{ flexGrow: 1,fontFamily:"Inter" }}>
-        <Typography fontWeight="bold">Reliable 2015 Honda Accord</Typography>
+        <Typography fontWeight="bold">{chatHeadDataReal?.car.title}</Typography>
         <Typography color="black">
-          Highest Bid: <strong>$25,000</strong>
+          Highest Bid: <strong>AED {chatHeadDataReal?.car.highestBid}</strong>
         </Typography>
       </Box>
       

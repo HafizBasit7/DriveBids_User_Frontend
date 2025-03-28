@@ -3,9 +3,21 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
+import { useCar } from "../../../context/car.context";
 
 const CityPage = () => {
   const navigate = useNavigate();
+  const {carState, dispatch} = useCar();
+  
+  function onCangeCarDetails (value) {
+    dispatch({
+      type: 'UPDATE_FIELD',
+      section: 'carDetails',
+      field: 'city',
+      value,
+    });
+  };
+
 
   const carBrands = [
     "Karachi",
@@ -25,7 +37,7 @@ const CityPage = () => {
     title="Location"
             subtitle="Pick Your City"
             buttonText="Back"
-            onClick={() => navigate("/car-modal")}
+            onClick={() => navigate("../model")}
   >
       <Box width="100%" >
         
@@ -41,7 +53,7 @@ const CityPage = () => {
             mt={3}
             sx={{ fontFamily: "Inter", fontSize: 30 }}
           >
-            Step <span style={{ color: colors.buttoncolor }}>4</span> of 10
+            Step <span style={{ color: colors.buttoncolor }}>4</span> of 14
           </Typography>
 
           <Box
@@ -52,10 +64,12 @@ const CityPage = () => {
             zIndex={2}
           >
             <CarSelectionBox
+              value={carState.carDetails.city}
+              onChange={onCangeCarDetails}
               isLocation={true}
               searchPlaceholder="Search City"
               carBrands={carBrands}
-              onNext={() => navigate("/car-mileage")}
+              onNext={() => navigate("../mileage")}
             />
           </Box>
         </Box>

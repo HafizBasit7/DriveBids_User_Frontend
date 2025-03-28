@@ -11,12 +11,33 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import colors from "../../Style/color";
 import cardimg from "../../assets/Png/cardimg.png";
+import { useCar } from "../../context/car.context";
+import { loadDraft } from "../../api/calls/car";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-const DraftCard = () => {
-  const [isFavorited, setIsFavorited] = useState(false);
+const DraftCard = ({draft}) => {
 
-  const handleFavoriteClick = () => {
-    setIsFavorited(!isFavorited);
+  const {dispatch} = useCar();
+  const navigate = useNavigate();
+
+  const loadDraftCar = () => {
+    toast.promise(handleLoadDraft(), {
+      loading: 'Loading draft',
+      error: (error) => error.message,
+      success: 'Draft loaded'
+    })
+  };
+
+  const handleLoadDraft = async () => {
+    try {
+      const Loadeddraft = await loadDraft(draft._id);
+      dispatch({type: 'SET_DRAFT', payload: Loadeddraft.data.draft});
+      navigate('/ad/post/vehicle-register')
+    }
+    catch(e) {
+      throw e;
+    }
   };
 
   const steps = [
@@ -89,15 +110,16 @@ const DraftCard = () => {
           fontFamily: "Inter",
         }}
       >
-        Reg No: J 12345
+        Reg No: {draft.regNo}
       </Typography>
 
       {/* Steps */}
-      <Box>{renderStepRows()}</Box>
+      {/* <Box>{renderStepRows()}</Box> */}
 
       {/* Complete Registration Button */}
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2, mb: 2 }}>
         <Button
+          onClick={loadDraftCar}
           variant="contained"
           sx={{
             borderRadius: 3,
@@ -112,7 +134,7 @@ const DraftCard = () => {
             fontFamily: "Inter",
           }}
         >
-          Complete Registration
+          Continue
         </Button>
       </Box>
     </Box>

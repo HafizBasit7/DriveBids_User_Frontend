@@ -3,16 +3,27 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
+import { useCar } from "../../../context/car.context";
 
 const CarFuelPage = () => {
     const navigate = useNavigate();
     const [transmission, setTransmission] = useState("Petrol");
+    const {carState, dispatch} = useCar();
+      
+    function onCangeCarDetails (value) {
+    dispatch({
+        type: 'UPDATE_FIELD',
+        section: 'carDetails',
+        field: 'fuel',
+        value,
+    });
+    };
 
     return (
         <MainLayout title="Fuel"
         subtitle="Pick Your Car Fuel Type"
         buttonText="Back"
-        onClick={() => navigate("/car-mileage")}>
+        onClick={() => navigate("../mileage")}>
             <Box width="100%" >
                
 
@@ -26,7 +37,7 @@ const CarFuelPage = () => {
                         mt={3}
                         sx={{ fontFamily: "Inter", fontSize: 30 }}
                     >
-                        Step <span style={{ color: colors.buttoncolor }}>6</span> of 10
+                        Step <span style={{ color: colors.buttoncolor }}>6</span> of 14
                     </Typography>
 
                     <Box
@@ -47,10 +58,10 @@ const CarFuelPage = () => {
                         </Typography>
 
                         <RadioGroup 
-                            value={transmission} 
-                            onChange={(e) => setTransmission(e.target.value)}
+                            value={carState.carDetails.fuel} 
+                            onChange={(e) => onCangeCarDetails(e.target.value)}
                         >
-                            {["Petrol", "Diesel", "High Octane", "Electricity"].map((type) => (
+                            {['Petrol', 'Diesel', 'HI-Octane', 'Electric', 'Hybrid'].map((type) => (
                                 <FormControlLabel
                                     key={type}
                                     value={type}
@@ -71,7 +82,7 @@ const CarFuelPage = () => {
                                     fontFamily: "Inter",
                                     backgroundColor: colors.buttoncolor,
                                 }}
-                                onClick={() => navigate("/car-color")}
+                                onClick={() => navigate("../color")}
                             >
                                 Next Step
                             </Button>

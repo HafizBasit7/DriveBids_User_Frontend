@@ -3,10 +3,9 @@ import colors from "../../Style/color";
 
 const AdTitleDescription = ({
   onFinish,
-  adTitle,
-  setAdTitle,
-  adDescription,
-  setAdDescription,
+  onChange,
+  title,
+  description,
   onNext,
 }) => {
   return (
@@ -31,8 +30,8 @@ const AdTitleDescription = ({
         <TextField
           fullWidth
           placeholder="Enter Short Title"
-          value={adTitle}
-          onChange={(e) => setAdTitle(e.target.value)}
+          value={title}
+          onChange={(e) => onChange('title', e.target.value)}
           sx={{
             fontFamily: "Inter",
             "& .MuiOutlinedInput-root": {
@@ -59,8 +58,8 @@ const AdTitleDescription = ({
           multiline
           rows={3}
           placeholder="Enter car description"
-          value={adDescription}
-          onChange={(e) => setAdDescription(e.target.value)}
+          value={description}
+          onChange={(e) => onChange('description', e.target.value)}
           sx={{
             fontFamily: "Inter",
             "& .MuiOutlinedInput-root": {
@@ -87,7 +86,7 @@ const AdTitleDescription = ({
             backgroundColor: colors.buttoncolor,
             fontFamily: "Inter",
           }}
-          onClick={onNext}
+          onClick={onFinish}
         >
           Finish
         </Button>

@@ -6,48 +6,81 @@ import Rattntion from "../../assets/SVG/Rattention.svg";
 import Nottested from "../../assets/SVG/Nottested.svg";
 import Rimmediate from "../../assets/SVG/Requireimmediat.svg";
 import CloseIcon from "@mui/icons-material/Close";
+import { useQuery } from "@tanstack/react-query";
+import { getCarInspectionReport } from "../../api/calls/car";
 
+//Dynamic operations
+const dynamicOperations = [
+  {name: "Break Efficiency", target: "breakEfficiency"},
+  {name: "Hand Brake Test", target: "handBrakeTest"},
+  {name: "Static Gear Selection", target: "staticGearSelection"},
+  {name: "Reverse Clutch Slip", target: "reverseClutchSlip"},
+  {name: "Steering Noise", target: "steeringNoise"},
+  {name: "Suspension Ride Height", target: "suspensionRideHeight"},
+  {name: "Air Conditioning Power", target: "airconPower"},
+  {name: "Sat Nav Power", target: "satNavPower"},
+  {name: "Ice Power", target: "icePower"},
+  {name: "Central Locking", target: "centralLocking"},
+  {name: "Converitble Sunroof Electics", target: "convertibleSunroofElectrics"},
+  {name: "Horn", target: "horn"}
+];
 
-const CarInspectionModal = ({ open, onClose }) => {
+const essentialsChecks = [
+  {name: "Head lights", target: "headLight"},
+  {name: "Brake lights", target: "brakeLight"},
+  {name: "Side Lights", target: "sideLight"},
+  {name: "Fog lights", target: "fogLight"},
+  {name: "Indicators", target: "indicators"},
+  {name: "Electric Windows", target: "electricWindows"},
+  {name: "Electric Mirrors", target: "electricMirrors"},
+  {name: "Wipers", target: "wipers"},
+];
+
+const interiorChecks = [
+  {name: "Engine Management Light", target: "engineManagementLight"},
+  {name: "Brake Wear Indicator Light", target: "breakWearIndicatorLight"},
+  {name: "Abs Warning Light", target: "absWarningLight"},
+  {name: "Oil Warning Light", target: "oilWarningLight"},
+  {name: "Airbag warning light", target: "airbagWarningLight"},
+  {name: "Glow plug light", target: "glowPlugLight"},
+];
+
+const CarInspectionModal = ({ open, onClose, car }) => {
+
+  const {data, isLoading} = useQuery({
+    queryKey: ['inspectionReport', car],
+    queryFn: () => getCarInspectionReport(car),
+  })
+
+  const inspectionReport = data?.data?.inspectionReport;
+
   const indicators = [
-    { icon: Ok, label: "Ok" },
+    { icon: Ok, label: "OK" },
     { icon: Rattntion, label: "Requires Some Attention" },
     { icon: Nottested, label: "Not Tested" },
     { icon: Rimmediate, label: "Requires Immediate Attention" },
   ];
 
+
   const sections = [
-    { title: "Dynamic Operations", items: [
-      { icon: Ok, label: "Brake Efficiency Test" },
-      { icon: Ok, label: "Sat Nav Power" },
-      { icon: Ok, label: "Hand Brake Test" },
-      { icon: Ok, label: "Reverse Clutch Slip Test" },
-      { icon: Nottested, label: "Sat Nav Power" },
-      { icon: Rattntion, label: "Ice Power" },
-      { icon: Rattntion, label: "Suspension Ride Height" },
-      { icon: Rimmediate, label: "Aircon Power" },
-    ]},
-    { title: "Essential Checks", items: [
-      { icon: Ok, label: "Head Lights" },
-      { icon: Ok, label: "Brake Lights" },
-      { icon: Ok, label: "Fog Lights" },
-      { icon: Nottested, label: "Wiper" },
-      { icon: Nottested, label: "Brake Lights" },
-      { icon: Rattntion, label: "Indicators" },
-      { icon: Rimmediate, label: "Electric Windows" },
-      { icon: Rimmediate, label: "Electric Mirrors" },
-    ]},
-    { title: "Interior Checks", items: [
-      { icon: Ok, label: "Engine Management Light" },
-      { icon: Ok, label: "ABS Warning Light" },
-      { icon: Ok, label: "Brake Wear Indicator Light" },
-      { icon: Rattntion, label: "Oil Warning Light" },
-      { icon: Nottested, label: "Airbag Warning Light" },
-      { icon: Rimmediate, label: "Glow Plug Light" },
-      { icon: Rimmediate, label: "Floor Mats" },
-      { icon: Ok, label: "Sun Visor" },
-    ]},
+    { title: "Dynamic Operations", items: Object.keys(inspectionReport?.dynamicOperations || []).map((val) => {
+      const report = dynamicOperations.find(val2 => val2.target === val);
+      const icon = indicators.find(val3 => val3.label === inspectionReport.dynamicOperations[val])
+      return {icon: icon.icon, label: report.name};
+    })},
+    { title: "Essential Checks", items: Object.keys(inspectionReport?.essentialChecks || []).map((val) => {
+      const report = essentialsChecks.find(val2 => val2.target === val);
+      const icon = indicators.find(val3 => val3.label === inspectionReport.essentialChecks[val])
+      return {icon: icon.icon, label: report.name};
+    })},
+    { title: "Interior Checks", items: Object.keys(inspectionReport?.interiorChecks || []).map((val) => {
+      const report = interiorChecks.find(val2 => val2.target === val);
+      const icon = indicators.find(val3 => val3.label === inspectionReport.interiorChecks[val])
+      return {icon: icon.icon, label: report.name};
+    })},
   ];
+
+
   
   return (
    <Modal open={open} onClose={onClose}>

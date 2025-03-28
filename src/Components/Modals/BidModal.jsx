@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Modal, Box, Typography, Button, TextField, useMediaQuery } from "@mui/material";
 import DealsBanner from "../HomePageComponents/DealBanner";
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { useMutation } from "@tanstack/react-query";
+import { placeBidOnCar } from "../../api/calls/bid";
+import toast from "react-hot-toast";
 
 const colors = {
   buttoncolor: "#0052CC",
@@ -9,10 +12,14 @@ const colors = {
   borderColor: "#ddd",
 };
 
-const BidModal = ({ open, onClose }) => {
-  const [bid, setBid] = useState(28000);
-  const minBid = 30100; // Minimum bid required
-  const suggestedBids = [31000, 30500, 32000];
+const BidModal = ({ open, onClose, car }) => {
+  const [bid, setBid] = useState(0);
+  const minBid = car.highestBid ? car.highestBid + 1 : car.staringBidPrice; // Minimum bid required
+  const suggestedBids = [minBid + 100, minBid + 200, minBid + 300];
+
+  const mutation = useMutation({
+    mutationFn: placeBidOnCar,
+  });
 
   // Check screen size for responsiveness
   const isSmallScreen = useMediaQuery("(max-width:600px)");
@@ -37,7 +44,13 @@ const BidModal = ({ open, onClose }) => {
         <Box sx={{ width: "100%" }}>
           <DealsBanner title="Max Bid" subtitle="" buttonText="Place Bid" showClose 
                     onClose={onClose}
-                    icon={<AttachMoneyIcon sx={{ cursor: 'pointer' }} onClick={onClose} />}  />
+                    icon={<AttachMoneyIcon sx={{ cursor: 'pointer' }} onClick={async () => {
+                      toast.promise(mutation.mutateAsync({carId: car._id, bidAmount: parseInt(bid)}), {
+                        loading: 'Placing bid',
+                        error: error => error.message,
+                        success: 'Bid placed'
+                      })
+                    }} />}  />
         </Box>
 
         {/* Bid Description */}
@@ -60,7 +73,7 @@ const BidModal = ({ open, onClose }) => {
             width: isSmallScreen ? "90%" : 400, // Adjust width for small screens
           }}
         >
-          <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>$</Typography>
+          <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>AED</Typography>
           <TextField
             variant="standard"
             inputProps={{
@@ -81,7 +94,7 @@ const BidModal = ({ open, onClose }) => {
         {/* Warning Message */}
         {bid < minBid && (
           <Typography sx={{ color: "#B7342C", mt: 1, fontSize: 15 }}>
-            Please bid ${minBid} or higher.
+            Please bid AED {minBid} or higher.
           </Typography>
         )}
 
@@ -109,7 +122,7 @@ const BidModal = ({ open, onClose }) => {
               }}
               onClick={() => setBid(amount)}
             >
-              ${amount.toLocaleString()}
+              AED {amount.toLocaleString()}
             </Button>
           ))}
         </Box>

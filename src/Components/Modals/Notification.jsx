@@ -9,26 +9,27 @@ import {
 } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-const notificationsData = [
-  { id: 1, name: "Edward Curr", message: "Sent you a message.", time: "17 min ago", unread: true },
-  { id: 2, name: "Maria Hill", message: "Placed a new bid for your ad.", time: "45 min ago", unread: true },
-  { id: 3, name: "Edward Curr", message: "Sent you a message.", time: "1 day ago", unread: false },
-  { id: 4, name: "Maria Hill", message: "Requested to buy now.", time: "2 days ago", unread: false },
-  { id: 5, name: "Alex Carpena", message: "Sent you a message.", time: "3 days ago", unread: false },
-];
+import { useQuery } from "@tanstack/react-query";
+import { getMyNotifications } from "../../api/calls/auth";
+import { timeAgo } from "../../utils/utils";
 
 const Notifications = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [notifications, setNotifications] = useState(notificationsData);
 
   const handleOpen = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
-  const unreadCount = notifications.filter((n) => n.unread).length;
+  const {data, isLoading} = useQuery({
+    queryKey: ['notifications'],
+    queryFn: () => getMyNotifications(1, 8),
+  });
+
+  const notifications = data?.data.notifications;
+
+  const unreadCount = 0;
 
   const markAllAsRead = () => {
-    setNotifications(notifications.map((n) => ({ ...n, unread: false })));
+    //setNotifications(notifications.map((n) => ({ ...n, unread: false })));
   };
 
   return (
@@ -53,17 +54,17 @@ const Notifications = () => {
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 2, py: 1 }}>
             <Typography variant="h6" sx={{ fontFamily: "Inter, sans-serif" }}>Notifications</Typography>
             <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={markAllAsRead}>
-              <Typography sx={{ fontSize: 12, color: "#0056D2", fontFamily: "Inter, sans-serif" }}>
+              {/* <Typography sx={{ fontSize: 12, color: "#0056D2", fontFamily: "Inter, sans-serif" }}>
                 Mark all as read
-              </Typography>
-              <MoreVertIcon fontSize="small" sx={{ color: "black", ml: 0.5 }} />
+              </Typography> */}
+              {/* <MoreVertIcon fontSize="small" sx={{ color: "black", ml: 0.5 }} /> */}
             </Box>
           </Box>
 
           {/* Notification List */}
-          {notifications.map((notification) => (
+          {notifications?.map((notification) => (
             <Box
-              key={notification.id}
+              key={notification._id}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -76,16 +77,16 @@ const Notifications = () => {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-              <Avatar sx={{ width: 40, height: 40, mr: 1,alignSelf:"flex-start" }} />
+              <Avatar src={notification.user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} sx={{ width: 40, height: 40, mr: 1,alignSelf:"flex-start" }} />
               <Box sx={{ flex: 1 }}>
                 <Typography  fontWeight="bold" sx={{ fontFamily: "Inter, sans-serif" , fontSize:14}}>
-                  {notification.name}
+                  {notification.user.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ fontFamily: "Inter, sans-serif",fontSize:12 }}>
-                  {notification.message}
+                  {notification.body}
                 </Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ fontFamily: "Inter, sans-serif",fontSize:12 }}>
-                  {notification.time}
+                  {timeAgo(notification.createdAt)}
                 </Typography>
               </Box>
             </Box>

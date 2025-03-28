@@ -26,8 +26,8 @@ import {useAuth} from "../../context/auth.context";
     const menuItems = [
       { icon: <PlaylistAddIcon/>, label: 'My Ads', route: '/my-ads' },
       { icon: <DriveEtaIcon />, label: 'Sell My Car', route: '/sell-car' },
-      { icon: <PersonOutlineIcon />, label: 'Message', route: '/chat-page' },
-      { icon: <SortIcon />, label: 'Browse Deals', route: '/filter' },
+      { icon: <PersonOutlineIcon />, label: 'Message', route: '/chat' },
+      { icon: <SortIcon />, label: 'Browse Deals', route: '/search' },
     ];
 
     const {logoutUser} = useAuth();

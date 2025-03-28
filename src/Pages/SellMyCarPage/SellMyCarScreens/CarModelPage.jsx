@@ -7,7 +7,17 @@ import { useCar } from "../../../context/car.context";
 
 const CarModelPage = () => {
   const navigate = useNavigate();
+  
   const {carState, dispatch} = useCar();
+
+  function onChangeCarModel (value) {
+    dispatch({
+      type: 'UPDATE_FIELD',
+      section: 'carDetails',
+      field: 'model',
+      value,
+    });
+  };
 
   return (
     <MainLayout
@@ -20,8 +30,6 @@ const CarModelPage = () => {
        
 
         <Box  zIndex={2}>
-         
-
           <Typography
             fontWeight={600}
             textAlign="center"
@@ -32,7 +40,7 @@ const CarModelPage = () => {
           </Typography>
 
           <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3} position="relative" zIndex={2}>
-            <YearSelectionBox onNext={() => navigate("../city")} />
+            <YearSelectionBox value={carState.carDetails.model} onChange={onChangeCarModel} onNext={() => navigate("../city")} />
           </Box>
         </Box>
       </Box>

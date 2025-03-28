@@ -3,26 +3,36 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import colors from "../../../Style/color";
+import { useCar } from "../../../context/car.context";
 
 
 const marks = [
-  { value: 10000, label: "10K" },
-  { value: 60000, label: "60K" },
-  { value: 120000, label: "120K" },
-  { value: 180000, label: "180K" },
-  { value: 240000, label: "240K" },
-  { value: 320000, label: "320K" },
+  { value: 20, label: "20" },
+  { value: 40, label: "40" },
+  { value: 60, label: "60" },
+  { value: 80, label: "80" },
+  { value: 100, label: "100" },
 ];
 
 const CarMileagePage = () => {
   const navigate = useNavigate();
-  const [mileage, setMileage] = useState(50000);
+
+  const {carState, dispatch} = useCar();
+    
+  function onCangeCarDetails (value) {
+    dispatch({
+      type: 'UPDATE_FIELD',
+      section: 'carDetails',
+      field: 'mileage',
+      value,
+    });
+  };
 
   return (
     <MainLayout  title="Car Mileage"
     subtitle="Select the Mileage of Your Car"
     buttonText="Back"
-    onClick={() => navigate("/city")}>
+    onClick={() => navigate("../city")}>
       <Box width="100%">
 
        
@@ -37,7 +47,7 @@ const CarMileagePage = () => {
             mt={3}
             sx={{ fontFamily: "Inter", fontSize: 30 }}
           >
-            Step <span style={{ color: colors.buttoncolor }}>5</span> of 10
+            Step <span style={{ color: colors.buttoncolor }}>5</span> of 14
           </Typography>
 
           {/* Mileage Box */}
@@ -78,15 +88,15 @@ const CarMileagePage = () => {
                 fontWeight={600}
                 color={colors.buttoncolor}
               >
-                {mileage.toLocaleString()} KM
+                {carState.carDetails.mileage} KM
               </Typography>
 
               <Slider
-                value={mileage}
-                onChange={(_, newValue) => setMileage(newValue)}
-                step={1000}
-                min={10000}
-                max={320000}
+                value={carState.carDetails.mileage}
+                onChange={(_, newValue) => onCangeCarDetails(parseInt(newValue))}
+                step={1}
+                min={10}
+                max={100}
                 marks={marks}
                 sx={{
                   color: colors.buttoncolor,
@@ -117,7 +127,7 @@ const CarMileagePage = () => {
                   fontFamily: "Inter",
                   backgroundColor: colors.buttoncolor,
                 }}
-                onClick={() => navigate("/car-fuel")}
+                onClick={() => navigate("../fuel")}
               >
                 Next Step
               </Button>

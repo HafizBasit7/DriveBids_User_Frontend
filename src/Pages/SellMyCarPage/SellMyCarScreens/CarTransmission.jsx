@@ -3,18 +3,28 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import colors from "../../../Style/color";
+import { useCar } from "../../../context/car.context";
 
-const transmissionTypes = ["AGS", "Manual", "CVT", "DCT"];
+const transmissionTypes = ['AGS', 'Manual', 'CVT', 'DCT', 'AMT', 'EV Single-Speed'];
 
 const CarTransmissionPage = () => {
   const navigate = useNavigate();
-  const [transmission, setTransmission] = useState("AGS");
+  const {carState, dispatch} = useCar();
+    
+    function onCangeCarDetails (value) {
+      dispatch({
+        type: 'UPDATE_FIELD',
+        section: 'carDetails',
+        field: 'transmission',
+        value,
+      });
+    };
 
   return (
     <MainLayout  title="Transmission"
     subtitle="Pick The Transmission Type Of Your Car"
     buttonText="Back"
-    onClick={() => navigate("/car-engine")}>
+    onClick={() => navigate("../engine")}>
       <Box width="100%" >
       
 
@@ -28,7 +38,7 @@ const CarTransmissionPage = () => {
             mt={3}
             sx={{ fontFamily: "Inter", fontSize: 30 }}
           >
-            Step <span style={{ color: colors.buttoncolor }}>9</span> of 10
+            Step <span style={{ color: colors.buttoncolor }}>9</span> of 14
           </Typography>
 
           {/* Transmission Form */}
@@ -48,8 +58,8 @@ const CarTransmissionPage = () => {
             </Typography>
 
             <RadioGroup
-              value={transmission}
-              onChange={(e) => setTransmission(e.target.value)}
+              value={carState.carDetails.transmission}
+              onChange={(e) => onCangeCarDetails(e.target.value)}
             >
               {transmissionTypes.map((type) => (
                 <FormControlLabel
@@ -87,7 +97,7 @@ const CarTransmissionPage = () => {
                     backgroundColor: colors.buttoncolor,
                   },
                 }}
-                onClick={() => navigate("/car-addtitle")}
+                onClick={() => navigate("../owner")}
               >
                 Next Step
               </Button>

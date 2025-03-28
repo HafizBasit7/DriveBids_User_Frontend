@@ -9,21 +9,73 @@ import CarInspectionReport from "../../Components/CarDetailsComponent/CarInspect
 import { useNavigate, useParams } from "react-router-dom";
 import ChatIcon from "@mui/icons-material/Chat";
 import { useQuery } from "@tanstack/react-query";
-import { getCar } from "../../api/calls/car";
+import { getCar, getSimilarCars } from "../../api/calls/car";
 import { useAuth } from "../../context/auth.context";
 import { timeAgo } from "../../utils/utils";
 import DealsBanner from "../../Components/HomePageComponents/DealBanner";
+import { getCarsIdInWatchList } from "../../api/calls/watchlist";
+import CarCard from "../../Components/HomePageComponents/CarCard";
+import { useBidSocket } from "../../context/bid.socket";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { getChatId } from "../../api/calls/chat";
+
+const SimilarCars = ({make}) => {
+  const {data, isLoading} = useQuery({
+    queryKey: ['similarCars'],
+    queryFn: () => getSimilarCars(1, 10, make),
+  });
+
+  const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
+    queryKey: ['carsInWatchList'],
+    queryFn: getCarsIdInWatchList,
+    enabled: false,
+});
+
+
+if(isLoading) {
+  return null;
+}
+
+const cars = data?.data.cars;
+
+  return (
+    <>
+      <Box sx={{ width: "100%", mt: 3 }}> 
+              <DealsBanner title="Similar Cars"  buttonText={make} />
+            </Box>
+            <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
+        {cars.map((car, index) => (
+           <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
+        ))}
+      </Box>
+    </>
+  );
+};
 
 const CarDetailsPage = () => {
   const navigate = useNavigate();
   const {carId} = useParams();
 
   const {authState} = useAuth();
+  const socket = useBidSocket();
+
+  useEffect(() => {
+    if(socket) {
+      socket.emit('join-room', {roomId: carId});
+    }
+
+    return () => {
+      socket.emit('leave-room', {roomId: carId});
+    };
+  }, [socket]);
   
   const {data, isLoading} = useQuery({
     queryKey: ['car', carId],
     queryFn: () => getCar(carId),
   });
+
+
 
   if(isLoading) {
     return null;
@@ -32,11 +84,22 @@ const CarDetailsPage = () => {
   //Calculations
   const isMyCar = car.user._id === authState.user._id;
 
+  const messageOwnerHandle = async () => {
+    toast.promise(async () => {
+      await getChatId(car.user._id, car._id);
+      navigate('/chat')
+    }, {
+      loading: 'please wait',
+      success: 'Redirecting...',
+      error: error => error.message,
+    })
+  };
+
   return (
     <MainLayout  title={car.title}
       subtitle={`Posted ${timeAgo(car.createdAt)}`}
       buttonText="Message Owner"
-      onClick={() => navigate("/chat-page")}
+      onClick={messageOwnerHandle}
       isnotSellMyCar ={true}
       icon={<ChatIcon sx={{ cursor: "pointer" }} />}>
    
@@ -71,7 +134,7 @@ const CarDetailsPage = () => {
             alignItems: "center",
           }}
         >
-          <CarInspectionReport />
+          <CarInspectionReport car={car} />
         </Box>
       </Box>
 
@@ -105,7 +168,7 @@ const CarDetailsPage = () => {
             alignItems: "center",
           }}
         >
-          <CarFeaturesComponent />
+          <CarFeaturesComponent car={car}/>
         </Box>
       </Box>
 
@@ -141,14 +204,7 @@ const CarDetailsPage = () => {
           <BidsHistory car={car?._id}/>
         </Box>
       </Box>
-      <Box sx={{ width: "100%", mt: 3 }}> 
-              <DealsBanner title="Similar Cars" subtitle="3000 Cars Available" buttonText=" Viewall" />
-            </Box>
-            <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {/* {data?.data.cars.map((car, index) => (
-           <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
-        ))} */}
-      </Box>
+      <SimilarCars make={car.make}/>
       
            
     </MainLayout>

@@ -36,6 +36,7 @@ const FilterPage = () => {
               padding: 1,
             }
           }}>
+            {/* <CarCard />
             <CarCard />
             <CarCard />
             <CarCard />
@@ -46,8 +47,7 @@ const FilterPage = () => {
             <CarCard />
             <CarCard />
             <CarCard />
-            <CarCard />
-            <CarCard />
+            <CarCard /> */}
           </Box>
 
           <Box
