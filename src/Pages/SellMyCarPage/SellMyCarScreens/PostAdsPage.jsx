@@ -11,27 +11,44 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
+import {useCar} from "../../../context/car.context";
+import { carDamageReportValidation, carDetailsValidation, carFeaturesValidation, carInspectionReportValidation, carPricingValidation, imagesValidation } from "../../../validations/car.validation";
 
-const steps = [
-  { title: "Car Details", status: "Complete", steps: 10, icon: <ArticleIcon fontSize="large" /> },
-  { title: "Car Features", status: "Incomplete", steps: 3, icon: <DirectionsCarIcon fontSize="large" /> },
-  { title: "Car Images", status: "Incomplete", steps: 4, icon: <ImageIcon fontSize="large" /> },
-  { title: "Inspection Report", status: "Incomplete", steps: 3, icon: <GppGoodIcon fontSize="large" /> },
-  { title: "Damage Report", status: "Incomplete", steps: 4, icon: <ReportIcon fontSize="large" /> },
-  { title: "Car Pricing", status: "Incomplete", steps: 4, icon: <MonetizationOnIcon fontSize="large" /> },
-];
+
 
 const routes = [
   "company",
-  "/car-features1",
-  "/car-images",
-  "/inspection-report1",
-  "/damage-report1",
-  "/pricing1",
+  "feature-1",
+  "images",
+  "inspection-1",
+  "damage-1",
+  "pricing-1",
 ];
 
 const PostAds = () => {
   const navigate = useNavigate();
+
+
+  const {carState, carPostAd} = useCar();
+  const carPricingCompletion = carPricingValidation.safeParse(carState.carPricing);
+  const carInspectionReportCompletion = carInspectionReportValidation.safeParse(carState.carInspectionReport);
+  const carDetailsCompletion = carDetailsValidation.safeParse(carState.carDetails);
+  const imageCompletion = imagesValidation.safeParse(carState.images);
+  const carDamageReportComplection = carDamageReportValidation.safeParse(carState.carDamageReport);
+  const carFeaturesCompletion = carFeaturesValidation.safeParse(carState.features);
+
+  const postAdAllow = (carPricingCompletion.success && carInspectionReportCompletion.success && carDetailsCompletion.success && imageCompletion.success
+    && carDamageReportComplection.success && carFeaturesCompletion.success
+  );
+
+  const steps = [
+    { title: "Car Details", status: carDetailsCompletion.success, steps: 14, icon: <ArticleIcon fontSize="large" /> },
+    { title: "Car Features", status: carFeaturesCompletion.success, steps: 2, icon: <DirectionsCarIcon fontSize="large" /> },
+    { title: "Car Images", status: imageCompletion.success, steps: 4, icon: <ImageIcon fontSize="large" /> },
+    { title: "Inspection Report", status: carInspectionReportCompletion.success, steps: 3, icon: <GppGoodIcon fontSize="large" /> },
+    { title: "Damage Report", status: carDamageReportComplection.success, steps: 4, icon: <ReportIcon fontSize="large" /> },
+    { title: "Car Pricing", status: carPricingCompletion.success, steps: 4, icon: <MonetizationOnIcon fontSize="large" /> },
+  ];
 
 
   if(location.pathname.endsWith('/post') || location.pathname.endsWith('/post/'))
@@ -40,14 +57,11 @@ const PostAds = () => {
       <MainLayout
       title="Post Ad"
       subtitle="Complete 6 Easy Steps"
-      buttonText="Back to Home"
-      onClick={() => navigate("/ad")}
+      buttonText="Back"
+      onClick={() => navigate("vehicle-register")}
     >
         <Box width="100%" sx={{ mt: 2,  }}>
           
-  
-        
-  
           <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={4} sx={{ position: "relative", zIndex: 1 }}>
             <Stack spacing={2}>
               {steps.map((item, index) => (
@@ -73,8 +87,8 @@ const PostAds = () => {
                       sx={{
                         minWidth: 50,
                         minHeight: 55,
-                        backgroundColor: item.status === "Complete" ? colors.buttoncolor : "#F2EFF2",
-                        color: item.status === "Complete" ? "white" : "#6F6F6F",
+                        backgroundColor: item.status ? colors.buttoncolor : "#F2EFF2",
+                        color: item.status ? "white" : "#6F6F6F",
                         borderRadius: 1,
                         display: "flex",
                         alignItems: "center",
@@ -90,17 +104,17 @@ const PostAds = () => {
                       </Typography>
                      
                       <Box display="flex" alignItems="center" gap={0.3} mt={0.5}>
-                        {item.status === "Complete" ? (
+                        {item.status ? (
                           <CheckCircleIcon sx={{ color: "#2F61BF", fontSize: 16 }} /> 
                         ) : (
                           <CancelIcon sx={{ color: "#6F6F6F", fontSize: 16 }} /> 
                         )}
                         <Typography
                           variant="body2"
-                          color={item.status === "Complete" ? "#2F61BF" : "#6F6F6F"}
+                          color={item.status ? "#2F61BF" : "#6F6F6F"}
                           sx={{ fontFamily: "Inter" }}
                         >
-                          {item.status}
+                          {item.status ? 'Complete' : 'In-Complete'}
                         </Typography>
                       </Box>
                     </Box>
@@ -118,20 +132,22 @@ const PostAds = () => {
             </Stack>
   
            
-            <Box display="flex" justifyContent="flex-end" mt={3}>
-              <Button
-                variant="contained"
-                sx={{
-                  fontFamily: "Inter",
-                  borderRadius: 1.5,
-                  width: 150,
-                  py: 1,
-                  backgroundColor: colors.buttoncolor,
-                }}
-              >
-                Post Ad
-              </Button>
-            </Box>
+            {postAdAllow && (
+              <Box display="flex" justifyContent="flex-end" mt={3}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    fontFamily: "Inter",
+                    borderRadius: 1.5,
+                    width: 150,
+                    py: 1,
+                    backgroundColor: colors.buttoncolor,
+                  }}
+                >
+                  Post Ad
+                </Button>
+              </Box>
+            )}
           </Box>
         </Box>
       </MainLayout>

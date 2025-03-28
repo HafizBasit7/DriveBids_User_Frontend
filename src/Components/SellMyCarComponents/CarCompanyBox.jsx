@@ -16,11 +16,12 @@ import colors from "../../Style/color";
 const CarSelectionBox = ({
   carBrands = [],
   onNext,
-  isLocation ,
+  value,
+  onChange,
+  isLocation,
   searchPlaceholder ,
   customPlaceholder 
 }) => {
-  const [selectedBrand, setSelectedBrand] = useState("");
   const [customBrand, setCustomBrand] = useState("");
 
   return (
@@ -102,8 +103,8 @@ const CarSelectionBox = ({
                 fullWidth
                 variant="outlined"
                 placeholder={customPlaceholder}
-                value={customBrand}
-                onChange={(e) => setCustomBrand(e.target.value)}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -134,8 +135,8 @@ const CarSelectionBox = ({
 
       {/* Car Brands Selection */}
       <RadioGroup
-        value={selectedBrand}
-        onChange={(e) => setSelectedBrand(e.target.value)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       >
         <Grid container spacing={2}>
           {carBrands.map((brand, index) => (

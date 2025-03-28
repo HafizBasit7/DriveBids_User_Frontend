@@ -3,9 +3,21 @@ import { useNavigate } from "react-router-dom";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
+import { useCar } from "../../../context/car.context";
 
 const CarCompanyPage = () => {
   const navigate = useNavigate();
+
+  const {carState, dispatch} = useCar();
+
+  function onChangeCarMake (value) {
+    dispatch({
+      type: 'UPDATE_FIELD',
+      section: 'carDetails',
+      field: 'make',
+      value,
+    });
+  };
 
   const carBrands = [
     "Suzuki",
@@ -24,7 +36,7 @@ const CarCompanyPage = () => {
       title="Car Company"
       subtitle="Pick The Company of Your Car"
       buttonText="Back"
-      onClick={() => navigate("/post-ad")}
+      onClick={() => navigate("..")}
     >
       
       <Typography
@@ -33,7 +45,7 @@ const CarCompanyPage = () => {
         mt={3}
         sx={{ fontFamily: "Inter", fontSize: 30 }}
       >
-        Step <span style={{ color: colors.buttoncolor }}>1</span> of 10
+        Step <span style={{ color: colors.buttoncolor }}>1</span> of 14
       </Typography>
 
       <Box
@@ -45,9 +57,11 @@ const CarCompanyPage = () => {
       >
         <CarSelectionBox
           carBrands={carBrands}
-          onNext={() => navigate("variant")}
+          value={carState.carDetails.make}
+          onChange={onChangeCarMake}
+          onNext={() => navigate("../variant")}
           searchPlaceholder ={"search for company"}
-  customPlaceholder ={"enter custom company"}
+          customPlaceholder ={"enter custom company"}
         />
       </Box>
     </MainLayout>

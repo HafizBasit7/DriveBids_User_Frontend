@@ -3,27 +3,38 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
+import { useCar } from "../../../context/car.context";
 
 const CarVarient = () => {
   const navigate = useNavigate();
+  const {carState, dispatch} = useCar();
 
   const carBrands = [
-    "Suzuki",
-    "Toyota",
-    "Honda",
-    "Hyundai",
-    "Ford",
-    "Porsche",
-    "Tesla",
-    "Lamborghini",
-    "Bentley",
+    "Mehran",
+    "Corolla",
+    "Civic",
+    "Alto",
+    "City",
+    "Passo",
+    "Yaris",
+    "V8",
+    "Nissan Patrol",
   ];
+
+  function onChangeCarVariant (value) {
+    dispatch({
+      type: 'UPDATE_FIELD',
+      section: 'carDetails',
+      field: 'variant',
+      value,
+    });
+  };
 
   return (
     <MainLayout title="Car Variant"
     subtitle="Pick The Variant of Your Car"
     buttonText="Back"
-    onClick={() => navigate("/car-company")}>
+    onClick={() => navigate("../company")}>
 
       <Box width="100%"  >
         
@@ -39,7 +50,7 @@ const CarVarient = () => {
             mt={3}
             sx={{ fontFamily: "Inter", fontSize: 30 }}
           >
-            Step <span style={{ color: colors.buttoncolor }}>2</span> of 10
+            Step <span style={{ color: colors.buttoncolor }}>2</span> of 14
           </Typography>
 
           <Box
@@ -51,7 +62,9 @@ const CarVarient = () => {
           >
             <CarSelectionBox
               carBrands={carBrands}
-              onNext={() => navigate("/car-modal")}
+              value={carState.carDetails.variant}
+              onChange={onChangeCarVariant}
+              onNext={() => navigate("../model")}
             />
           </Box>
         </Box>

@@ -130,13 +130,8 @@ const createRouter = (authState) => createBrowserRouter([
                             {path: 'horse-power', element: <CarHorsePower/>},
                             {path: 'condition', element: <CarConditionPage/>},
                             {path: 'notfound', element: <Page404/>},
-                            
-
-                            
                             {path: 'title', element: <AdsDescription/>},
                             {path: 'accident', element: <AccidentDescription/>},
-
-                            
                             {path: 'feature-1', element: <CarFeaturesPage1/>},
                             {path: 'feature-2', element: <CarFeaturesPage2/>},
                             {
