@@ -150,7 +150,7 @@ const CarDetailsPage = () => {
       >
         <Box
           sx={{
-            width: { xs: "100%", md: "40%" },
+            width: { xs: "100%", md: "35%" },
             backgroundColor: "",
             display: "flex",
             justifyContent: "center",
@@ -161,7 +161,7 @@ const CarDetailsPage = () => {
         </Box>
         <Box
           sx={{
-            width: { xs: "100%", md: "60%" },
+            width: { xs: "100%", md: "65%" },
             backgroundColor: "",
             display: "flex",
             justifyContent: "center",

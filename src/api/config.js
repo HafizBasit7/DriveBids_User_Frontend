@@ -1,5 +1,5 @@
 export default {
-    baseUrl: 'http://localhost:3000',
-    bidBaseUrl: 'http://localhost:3002',
-    chatBaseUrl: 'http://localhost:3001',
+    baseUrl: 'http://192.168.1.6:3000',
+    bidBaseUrl: 'http://192.168.1.6:3002',
+    chatBaseUrl: 'http://192.168.1.6:3001',
 };

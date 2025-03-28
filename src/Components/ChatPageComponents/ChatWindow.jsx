@@ -13,6 +13,8 @@ import { useAuth } from "../../context/auth.context";
 
 const ChatWindow = ({ chat, onBack }) => {
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
+
   const chatId = chat._id;
   const [newMessage, setNewMessage] = useState('');
   const newMessageRef = useRef('');
@@ -39,14 +41,22 @@ const ChatWindow = ({ chat, onBack }) => {
   
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+
+
 
   const sendMessageClick = async () => {
      await mutation.mutateAsync();
     setNewMessage('');
     newMessageRef.current = '';
+
+  //   if (messagesContainerRef.current) {
+  //   messagesContainerRef.current.scrollTop = 0;
+  // }
   };
+  
 
   return (
     <Box
@@ -95,6 +105,7 @@ const ChatWindow = ({ chat, onBack }) => {
       <AdBanner chatHeadDataReal={chatHeadDataReal} />
 
       <Box
+        ref={messagesContainerRef} 
         sx={{
           flexGrow: 1,
           p: 2,
@@ -177,6 +188,12 @@ const ChatWindow = ({ chat, onBack }) => {
             fullWidth
             value={newMessage}
             onChange={(e) => {setNewMessage(e.target.value); newMessageRef.current = e.target.value; }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {  // Prevent Shift+Enter from sending
+                e.preventDefault();  // Stop new line creation
+                sendMessageClick();  // Send message
+              }
+            }}
             placeholder="Type a message"
             size="small"
             sx={{

@@ -178,7 +178,7 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid }) => {
       <CardContent sx={{ textAlign: "center" }}>
 
         {/* Chip based on Status */}
-        {isFromMyBids && (<Chip label={winning} sx={{ mt: 1, ...getChipStyles(), borderRadius:2, p:1, mb: 1 }} />)}
+        {isFromMyBids && (<Chip label={winning} sx={{ mt: 0.1, ...getChipStyles(), borderRadius:2, p:0.5, mb: 1,height:28,fontWeight:600 }} />)}
 
         <Typography variant="h5" fontWeight={600} sx={{ fontFamily: "Inter" }}>
           {ad.title}

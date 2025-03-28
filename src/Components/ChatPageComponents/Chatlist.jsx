@@ -79,7 +79,7 @@ const ChatList = ({ onSelectChat }) => {
       </Box>
 
       {/* Search Bar & Chat List Box */}
-      <Box sx={{ border: "1px solid #ccc", borderRadius: "12px", p: 2, bgcolor: "white" }}>
+      <Box sx={{ border: "1px solid #ccc", borderRadius: "12px", p: 2, bgcolor: "white" ,minHeight:600}}>
         {/* Search Bar */}
         <Box 
       sx={{ 

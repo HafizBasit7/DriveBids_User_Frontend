@@ -5,7 +5,6 @@ import DraftsIcon from "@mui/icons-material/Drafts";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import MainLayout from "../../../Layouts/Mainlayout";
 
-
 const SellMyCar = () => {
   const navigate = useNavigate();
 
@@ -13,62 +12,60 @@ const SellMyCar = () => {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    borderRadius: "12px",
-    padding: "16px",
+    borderRadius: "16px", // Increased radius for a softer look
+    padding: "20px", // Increased padding for better spacing
     backgroundColor: "white",
     cursor: "pointer",
     transition: "all 0.3s",
-   
+    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", // Light shadow for depth
     zIndex: 1, 
   };
 
   return (
     <MainLayout
-    title="Sell My Car"
-    subtitle="Sell Your Car Hassle-Free!"
-    buttonText="Back to Home"
-    onClick={() => navigate("/home")}
-  >
-      <Box width="100%"  >
+      title="Sell My Car"
+      subtitle="Sell Your Car Hassle-Free!"
+      buttonText="Back to Home"
+      onClick={() => navigate("/home")}
+    >
+      <Box width="100%" sx={{ flex: 1, my: 10 }}>
         <Box
           sx={{
             width: "85%",
-        
             mx: "auto",
-            mt: { xs: 6, md: 15 },
-            px: { xs: 2, sm: 4 },
-            
+            mt: { xs: 8, md: 12 },
+            px: { xs: 3, sm: 5 },
           }}
         >
-          <Stack spacing={8}  >
+          <Stack spacing={10}>
             <Paper sx={cardStyle} onClick={() => navigate("post/vehicle-register")}>
-              <Box display="flex" alignItems="center" gap={2}>
-                <DirectionsCarIcon sx={{ fontSize: 24, color: "black" }} />
+              <Box display="flex" alignItems="center" gap={3}>
+                <DirectionsCarIcon sx={{ fontSize: 36, color: "black" }} />
                 <Box>
-                  <Typography fontWeight={600} sx={{ fontFamily: "Inter" }}>
+                  <Typography fontWeight={700} fontSize={20} sx={{ fontFamily: "Inter" }}>
                     Post a new ad
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ fontFamily: "Inter" }}>
+                  <Typography variant="body1" color="text.secondary" sx={{ fontFamily: "Inter", fontSize: 16 }}>
                     Complete six easy steps to sell your car.
                   </Typography>
                 </Box>
               </Box>
-              <ArrowForwardIosIcon fontSize="small" color="action" />
+              <ArrowForwardIosIcon sx={{ fontSize: 22 }} color="action" />
             </Paper>
 
             <Paper sx={cardStyle} onClick={() => navigate("drafts")}>
-              <Box display="flex" alignItems="center" gap={2}>
-                <DraftsIcon sx={{ fontSize: 24, color: "black" }} />
+              <Box display="flex" alignItems="center" gap={3}>
+                <DraftsIcon sx={{ fontSize: 36, color: "black" }} />
                 <Box>
-                  <Typography fontWeight={600} sx={{ fontFamily: "Inter" }}>
+                  <Typography fontWeight={700} fontSize={20} sx={{ fontFamily: "Inter" }}>
                     Drafts
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ fontFamily: "Inter" }}>
+                  <Typography variant="body1" color="text.secondary" sx={{ fontFamily: "Inter", fontSize: 16 }}>
                     Clear your drafts and complete your ad today.
                   </Typography>
                 </Box>
               </Box>
-              <ArrowForwardIosIcon fontSize="small" color="action" />
+              <ArrowForwardIosIcon sx={{ fontSize: 22 }} color="action" />
             </Paper>
           </Stack>
         </Box>

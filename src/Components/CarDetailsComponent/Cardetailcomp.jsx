@@ -33,12 +33,14 @@ const CarDetailsComponent = ({car}) => {
   const carDetails = [
     { icon: <DirectionsCarIcon />, label: "MAKE", value: car.make },
     { icon: <SportsCarIcon />, label: "VARIANT", value: car.variant },
-    { icon: <DriveEtaIcon />, label: "Registration No", value: car.regNo },
+    
     { icon: <SpeedIcon />, label: "MILEAGE", value: `${car.mileage} KM` },
     { icon: <ColorLensIcon />, label: "COLOUR", value: car.color },
     { icon: <DateRangeIcon />, label: "MODEL", value: car.model },
     { icon: <BuildIcon />, label: "ENGINE", value: car.engineSize },
     { icon: <LocalGasStationIcon />, label: "FUEL", value: car.fuel },
+   
+    { icon: <DriveEtaIcon />, label: "Reg No", value: car.regNo },
     { icon: <SettingsIcon />, label: "TRANSMISSION", value: car.transmission },
   ];
 
@@ -65,7 +67,7 @@ const CarDetailsComponent = ({car}) => {
           backgroundColor: "#E8F0FE",
           color: "#2F61BF",
           margin: "auto",
-          my: 2,
+          my: 1,
         }}
       >
         {item.icon}
@@ -74,11 +76,11 @@ const CarDetailsComponent = ({car}) => {
         variant="caption"
         color="#6F6F6F"
         fontWeight={600}
-        sx={{ fontFamily: "Inter",fontSize: 13 }}
+        sx={{ fontFamily: "Inter",fontSize: 12 }}
       >
         {item.label}
       </Typography>
-      <Typography fontWeight={600} sx={{ fontFamily: "Inter", fontSize: 11 }}>
+      <Typography fontWeight={600} sx={{ fontFamily: "Inter", fontSize: 12 }}>
         {item.value}
       </Typography>
     </Box>

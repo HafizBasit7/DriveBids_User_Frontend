@@ -1,12 +1,10 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-
-const CarFeaturesComponent = ({car}) => {
+const CarFeaturesComponent = ({ car }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  
   const features = Object.values(car.features).flat();
 
   return (
@@ -18,6 +16,8 @@ const CarFeaturesComponent = ({car}) => {
         backgroundColor: "white",
         fontFamily: "Inter",
         minHeight: 340,
+        width: "100%",
+        overflow: "hidden", // Ensures content stays within box
       }}
     >
       <Typography
@@ -31,7 +31,9 @@ const CarFeaturesComponent = ({car}) => {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: isSmallScreen ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+          gridTemplateColumns: isSmallScreen
+            ? "repeat(auto-fit, minmax(120px, 1fr))"
+            : "repeat(auto-fit, minmax(150px, 1fr))",
           gap: 2.5,
           paddingX: 1.5,
         }}
@@ -43,11 +45,17 @@ const CarFeaturesComponent = ({car}) => {
               display: "flex",
               alignItems: "center",
               gap: 1,
-              whiteSpace: "nowrap",
+              wordBreak: "break-word", // Ensures text breaks properly
+              overflowWrap: "break-word", // Allows wrapping on long words
             }}
           >
-            <CheckCircleIcon sx={{ color: "#2F61BF", fontSize: isSmallScreen ? 20 : 26 }} />
-            <Typography variant={isSmallScreen ? "body2" : "body1"} fontWeight={500}>
+            <CheckCircleIcon
+              sx={{ color: "#2F61BF", fontSize: isSmallScreen ? 18 : 24 }}
+            />
+            <Typography
+              sx={{ fontSize: isSmallScreen ? 14 : 14 }}
+              fontWeight={500}
+            >
               {feature}
             </Typography>
           </Box>

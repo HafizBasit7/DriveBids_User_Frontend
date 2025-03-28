@@ -52,35 +52,106 @@ const CarInspectionReport = ({car}) => {
       }}
     >
       {/* Seller Info */}
-      <Box sx={{ p: 1, borderRadius: 2, border: "1px solid #ddd", display: "flex", justifyContent: "space-between", alignItems: "center", pl: 2 }}>
-        <Box>
-          <Typography sx={{ fontWeight: 500, fontFamily: "Inter", textTransform: "uppercase", fontSize: 18 }}>
+      <Box
+  sx={{
+    p: 0.5,
+    borderRadius: 2,
+    border: "1px solid #ddd",
+    display: "flex",
+    flexDirection: "column", // Stack items vertically
+    alignItems: "flex-end", // Align items to the end (right side)
+    pl: 2,
+  }}
+>
+<Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 1 }}>
+      {/* First Row: Profile Info & Image */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        {/* Seller Info */}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 0.2 }}>
+          <Typography
+            sx={{
+              fontWeight: 500,
+              fontFamily: "Inter",
+              textTransform: "uppercase",
+              fontSize: 18,
+            }}
+          >
             {car.user.name}
           </Typography>
-          <Typography sx={{ fontWeight: 500, fontFamily: "Inter", fontSize: 14, color: "#6F6F6F" }}>
-            {car.user.type === 'individual' ? 'Private Seller' : 'Trader'}
-          </Typography>
-          <Link
-            href={`/car/${car.user._id}/owner`}
-            underline="hover"
+          <Typography
             sx={{
-              fontSize: 13,
-              display: "flex",
-              alignItems: "center",
-              gap: 0.5,
-              color: "#0056D2",
               fontWeight: 500,
-              textDecoration: "underline",
               fontFamily: "Inter",
-              mt: 1,
+              fontSize: 14,
+              color: "#6F6F6F",
             }}
-            // onClick={() => setOpen(true)}
           >
-            View All Car
-          </Link>
+            {car.user.type === "individual" ? "Private Seller" : "Trader"}
+          </Typography>
         </Box>
-        <Box component="img" src={car.user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} alt="Seller" sx={{ width: 80, height: 80, borderRadius: 2, objectFit: "cover" }} />
+
+        {/* Profile Image */}
+        <Box
+          component="img"
+          src={
+            car.user.imgUrl ||
+            "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+          }
+          alt="Seller"
+          sx={{ width: 45, height: 45, borderRadius: 2, objectFit: "cover" }}
+        />
       </Box>
+
+      {/* Second Row: View All Report & Accept Bid */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        {/* View All Report */}
+        <Link
+          href={`/car/${car.user._id}/owner`}
+          underline="hover"
+          sx={{
+            fontSize: 13,
+            color: "#0056D2",
+            fontWeight: 500,
+            textDecoration: "underline",
+            fontFamily: "Inter",
+          }}
+        >
+          View All Report
+        </Link>
+
+        {/* Accept Bid Button */}
+        <Button
+          variant="contained"
+          size="small"
+          sx={{
+            backgroundColor: colors.buttoncolor,
+            borderRadius: 2,
+            fontWeight: 400,
+            fontFamily: "Inter",
+            fontSize: 10,
+          }}
+          onClick={() => setOpenDamage(true)}
+        >
+          Accept Bid
+        </Button>
+      </Box>
+    </Box>
+    </Box>
+
 
       {/* Car Inspection Report */}
       <Box sx={{ p: 2, borderRadius: 2, border: "1px solid #ddd" }}>
