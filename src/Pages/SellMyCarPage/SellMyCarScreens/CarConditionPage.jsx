@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
 
-const CarFuelPage = () => {
+const CarConditionPage = () => {
     const navigate = useNavigate();
     const [transmission, setTransmission] = useState("Petrol");
 
     return (
-        <MainLayout title="Fuel"
-        subtitle="Pick Your Car Fuel Type"
+        <MainLayout title="Condition"
+        subtitle="Pick Your Car Condition"
         buttonText="Back"
         onClick={() => navigate("/car-mileage")}>
             <Box width="100%" >
@@ -26,7 +26,7 @@ const CarFuelPage = () => {
                         mt={3}
                         sx={{ fontFamily: "Inter", fontSize: 30 }}
                     >
-                        Step <span style={{ color: colors.buttoncolor }}>6</span> of 10
+                        Step <span style={{ color: colors.buttoncolor }}>13</span> of 14
                     </Typography>
 
                     <Box
@@ -43,14 +43,14 @@ const CarFuelPage = () => {
                         }}
                     >
                         <Typography fontWeight={600} sx={{ fontSize: 18, mb: 3, fontFamily: "Inter" }}>
-                            Fuel type the car runs on?
+                            Condition of your Car?
                         </Typography>
 
                         <RadioGroup 
                             value={transmission} 
                             onChange={(e) => setTransmission(e.target.value)}
                         >
-                            {["Petrol", "Diesel", "High Octane", "Electricity"].map((type) => (
+                            {["Poor", "Fail", "Good", "Execellent"].map((type) => (
                                 <FormControlLabel
                                     key={type}
                                     value={type}
@@ -83,4 +83,4 @@ const CarFuelPage = () => {
     );
 };
 
-export default CarFuelPage;
+export default CarConditionPage;

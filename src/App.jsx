@@ -21,26 +21,3 @@ export default function App() {
     </QueryClientProvider>
   );
 }
-
-function App1() {
-  return (
-    <Router>
-      
-      <Routes>
-        
-        <Route path="/chat-page" element={<ChatPage/>} />
-        {/* //sell a car TODO: */}
-        {/* <Route path="/car-features3" element={< CarFeaturesPage3/>} /> */}
-
-        <Route path="/my-ads" element={<MyAdsPage  />} />
-        <Route path="/my-bids" element={<MyBidsPage />} />
-        <Route path="/my-watchlist" element={<MyWatchPage />} />
-
-              
-        <Route path="/edit-profile" element={<EditProfilePage />} />
-        <Route path="/change-password" element={<ChangePasswordPage />} />
-
-      </Routes>
-    </Router>
-  );
-}

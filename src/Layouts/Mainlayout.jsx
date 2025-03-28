@@ -28,6 +28,7 @@ const MainLayout = ({
             height: "100%",
             position: "relative",
             zIndex: 2,
+            minHeight: "100vh", // Ensure full height of viewport
           }}
         >
           {!isnotSellMyCar && (
@@ -61,12 +62,12 @@ const MainLayout = ({
             />
           </Box>    )}
 
-          <Box sx={{ width: "100%", zIndex: 2 }}>
+          <Box sx={{ width: "100%", zIndex: 2, }}>
             {children}
           </Box>
         </Box>
 
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", }}>
           <Footer />
         </Box>
       </Box>

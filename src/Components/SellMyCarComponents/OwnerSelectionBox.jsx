@@ -2,18 +2,18 @@ import { useState, useRef, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import colors from "../../Style/color";
 
-const getAllYears = () => {
-  const currentYear = new Date().getFullYear();
-  return Array.from({ length: currentYear - 1899 + 2 }, (_, i) => 1900 + i);
+const getNumbering = () => {
+  const totalNumbers = new Date().getFullYear() - 1899 + 2; 
+  return Array.from({ length: totalNumbers }, (_, i) => i + 1);
 };
 
-const YearSelectionBox = ({ onNext }) => {
-  const years = getAllYears().reverse();
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+const OwnerSelectionBox = ({ onNext }) => {
+  const numbers = getNumbering();  // Removed reverse here
+  const [selectedNumber, setSelectedNumber] = useState(numbers[0]);
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    centerYear(selectedYear);
+    centerNumber(selectedNumber);
   }, []);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const YearSelectionBox = ({ onNext }) => {
         }
 
         if (closest) {
-          setSelectedYear(Number(closest.textContent));
+          setSelectedNumber(Number(closest.textContent));
         }
       }
     };
@@ -49,20 +49,19 @@ const YearSelectionBox = ({ onNext }) => {
     }
   }, []);
 
-  const centerYear = (year) => {
+  const centerNumber = (number) => {
     const container = scrollRef.current;
     if (container) {
-      const index = years.indexOf(year);
-      const itemHeight = container.scrollHeight / years.length;
+      const index = numbers.indexOf(number);
+      const itemHeight = container.scrollHeight / numbers.length;
       const scrollPosition = itemHeight * index - container.clientHeight / 2 + itemHeight / 2;
       container.scrollTo({ top: scrollPosition, behavior: "smooth" });
     }
   };
 
-  // Handle year click
-  const handleYearClick = (year) => {
-    setSelectedYear(year);
-    centerYear(year);
+  const handleNumberClick = (number) => {
+    setSelectedNumber(number);
+    centerNumber(number);
   };
 
   return (
@@ -93,23 +92,23 @@ const YearSelectionBox = ({ onNext }) => {
             scrollSnapType: "y mandatory",
           }}
         >
-          {years.map((year) => (
+          {numbers.map((num) => (
             <Typography
-              key={year}
+              key={num}
               variant="h5"
-              onClick={() => handleYearClick(year)}
+              onClick={() => handleNumberClick(num)}
               sx={{
                 fontFamily: "Inter",
-                fontWeight: selectedYear === year ? 600 : 300,
-                fontSize: selectedYear === year ? 40 : 20,
-                color: selectedYear === year ? colors.buttoncolor : "rgba(0, 0, 0, 0.4)",
+                fontWeight: selectedNumber === num ? 600 : 300,
+                fontSize: selectedNumber === num ? 40 : 20,
+                color: selectedNumber === num ? colors.buttoncolor : "rgba(0, 0, 0, 0.4)",
                 transition: "all 0.3s ease-in-out",
                 cursor: "pointer",
                 padding: "10px 0",
                 scrollSnapAlign: "center",
               }}
             >
-              {year}
+              {num}
             </Typography>
           ))}
         </Box>
@@ -134,4 +133,4 @@ const YearSelectionBox = ({ onNext }) => {
   );
 };
 
-export default YearSelectionBox;
+export default OwnerSelectionBox;

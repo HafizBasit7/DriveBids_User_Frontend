@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCar } from "../../api/calls/car";
 import { useAuth } from "../../context/auth.context";
 import { timeAgo } from "../../utils/utils";
+import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 
 const CarDetailsPage = () => {
   const navigate = useNavigate();
@@ -137,9 +138,19 @@ const CarDetailsPage = () => {
             alignItems: "center",
           }}
         >
-          <BidsHistory car={car._id}/>
+          <BidsHistory car={car?._id}/>
         </Box>
       </Box>
+      <Box sx={{ width: "100%", mt: 3 }}> 
+              <DealsBanner title="Similar Cars" subtitle="3000 Cars Available" buttonText=" Viewall" />
+            </Box>
+            <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
+        {/* {data?.data.cars.map((car, index) => (
+           <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
+        ))} */}
+      </Box>
+      
+           
     </MainLayout>
   );
 };

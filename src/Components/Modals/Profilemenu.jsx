@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -22,6 +22,7 @@ import { useAuth } from "../../context/auth.context";
 const ProfileMenu = () => {
   const {authState} = useAuth();
   const user = authState.user;
+  
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -41,7 +42,7 @@ const ProfileMenu = () => {
     navigate(path);
     handleClose();
   };
-
+ 
   return (
     <Box>
       <IconButton onClick={handleClick}>
@@ -52,6 +53,8 @@ const ProfileMenu = () => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        
+
         PaperProps={{
           elevation: 4,
           sx: {
@@ -75,7 +78,6 @@ const ProfileMenu = () => {
 
         <Divider />
 
-        {/* Menu Items */}
         <MenuItem
           onClick={() => handleNavigate("/profile/edit")}
           sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}

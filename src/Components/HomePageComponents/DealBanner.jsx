@@ -105,6 +105,7 @@ const DealsBanner = ({ title, subtitle, buttonText, onClick, icon }) => {
       textTransform: "uppercase",
       fontFamily: "Inter",
       whiteSpace: "nowrap", // Prevents text from breaking
+      
     }}
   >
     {buttonText}

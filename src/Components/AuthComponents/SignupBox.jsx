@@ -73,13 +73,13 @@ const Signup = () => {
         p: 5,
         width: "100%",
         maxWidth: 450,
-        py: {sm:10,md:10},
+        py: {sm:1,md:1},
         borderRadius: 1,
         boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)", 
         zIndex: 1,
       }}
     >
-     <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
   <ToggleButtonGroup
     value={role}
     exclusive
@@ -90,21 +90,21 @@ const Signup = () => {
       width: "80%",
       display: "flex",
       justifyContent: "center",
-     
+      mt: 1,
     }}
   >
     <ToggleButton
       value="Individual"
       sx={{
         flex: 1,
-        fontSize: 12,
+        width: "100%", // Ensures full width for better clicking
+        fontSize: 14,
         textTransform: "none",
-        borderRadius:2,
-        px: 0.5,
-        py: 1.5,
-        my:1,
+        borderRadius: 2,
+        px: 2, // Increased padding for a larger click area
+        py: 1.5, // More height for better UI
         bgcolor: "#fff",
-        fontFamily:"Inter",
+        fontFamily: "Inter",
         color: "#000",
         "&.Mui-selected": {
           bgcolor: colors.buttoncolor,
@@ -117,17 +117,18 @@ const Signup = () => {
     >
       Individual
     </ToggleButton>
+
     <ToggleButton
       value="Trader"
       sx={{
         flex: 1,
-        fontSize: 12,
+        width: "100%", // Same as above
+        fontSize: 14,
         textTransform: "none",
         borderRadius: 2,
-        fontFamily:"Inter",
-        px: 0.5,
-        py: 1.5,
-        m:1,
+        fontFamily: "Inter",
+        px: 2, // Increased padding
+        py: 1.5, // Better click target
         bgcolor: "#fff",
         color: "#000",
         "&.Mui-selected": {
@@ -144,10 +145,11 @@ const Signup = () => {
   </ToggleButtonGroup>
 </Box>
 
-      <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 30, textAlign: "start" }}>
+
+      <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 27, textAlign: "start" }}>
         Create An Account
       </Typography>
-      <Typography color="textSecondary" sx={{ mb: 4, fontFamily: "Inter", fontSize: 12, fontWeight: 350, textAlign: "start" }}>
+      <Typography color="textSecondary" sx={{ mb: 2, fontFamily: "Inter", fontSize: 11, fontWeight: 350, textAlign: "start" }}>
         Sign up to enjoy the features of DriveBidz
       </Typography>
       
@@ -320,7 +322,8 @@ const Signup = () => {
           backgroundColor: colors.buttoncolor,
           fontFamily: "Inter",
           borderRadius: 2,
-          mb:3,
+          fontSize:15,
+          mb:1,
           "&:hover": { backgroundColor: colors.buttoncolor },
         }}
       >
@@ -330,7 +333,7 @@ const Signup = () => {
       <Typography
         sx={{
           textAlign: "center",
-          mt: 2,
+          mt:1,
           cursor: "pointer",
           fontWeight: 450,
           fontFamily: "Inter",

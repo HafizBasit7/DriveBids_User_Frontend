@@ -9,7 +9,8 @@ const DescriptionBox = ({description}) => {
         
         backgroundColor: "white",
         border:"1px solid #D9D9D9",
-        minHeight:"100%"
+        minHeight:"100%",
+        minWidth:"100%"
       }}
     >
       <Typography  sx={{ fontWeight: 500, mb: 1.5,fontFamily:"Inter",fontSize:22 }}>

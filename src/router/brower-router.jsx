@@ -67,6 +67,12 @@ import MyBidsPage from "../Pages/MybidsPage/MyBidsPage";
 import MyWatchPage from "../Pages/MyWatchlistPage/MywatchlistPage";
 import EditProfilePage from "../Pages/MyProfilePage/EditProfilePage";
 import ChangePasswordPage from "../Pages/MyProfilePage/ChangePasswordPage";
+import VehicleRegistration from "../Pages/SellMyCarPage/SellMyCarScreens/VehicleRegistration";
+import CarOwnerPage from "../Pages/SellMyCarPage/SellMyCarScreens/CarOwnerPage";
+import CarHorsePower from "../Pages/SellMyCarPage/SellMyCarScreens/CarHorsePower";
+import AccidentDescription from "../Pages/SellMyCarPage/SellMyCarScreens/CarAccidentHistory";
+import CarConditionPage from "../Pages/SellMyCarPage/SellMyCarScreens/CarConditionPage";
+import Page404 from "../Pages/NotFounf404Page";
 
 const createRouter = (authState) => createBrowserRouter([
     {path: '/', element: <LandingPage/>},
@@ -110,6 +116,7 @@ const createRouter = (authState) => createBrowserRouter([
                         path: 'post', 
                         element: <PostAds/>,
                         children: [
+                            {path: 'vehicle-register', element: <VehicleRegistration/>},
                             {path: 'company', element: <CarCompanyPage/>},
                             {path: 'variant', element: <CarVarient/>},
                             {path: 'model', element: <CarModelPage/>},
@@ -119,7 +126,17 @@ const createRouter = (authState) => createBrowserRouter([
                             {path: 'fuel', element: <CarFuelPage/>},
                             {path: 'engine', element: <CarEnginePage/>},
                             {path: 'transmission', element: <CarTransmissionPage/>},
+                            {path: 'owner', element: <CarOwnerPage/>},
+                            {path: 'horse-power', element: <CarHorsePower/>},
+                            {path: 'condition', element: <CarConditionPage/>},
+                            {path: 'notfound', element: <Page404/>},
+                            
+
+                            
                             {path: 'title', element: <AdsDescription/>},
+                            {path: 'accident', element: <AccidentDescription/>},
+
+                            
                             {path: 'feature-1', element: <CarFeaturesPage1/>},
                             {path: 'feature-2', element: <CarFeaturesPage2/>},
                             {

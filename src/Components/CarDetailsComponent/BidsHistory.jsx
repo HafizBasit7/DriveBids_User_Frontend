@@ -32,7 +32,7 @@ const BidsHistory = ({car}) => {
         Bids History
       </Typography>
 
-      {bids.map((bid, index) => (
+      {bids?.map((bid, index) => (
         <Box key={index} sx={{ mb: index !== bids.length - 1 ? 2 : 0 }}>
           {/* Highest Bid Chip */}
           {index === 0 && (

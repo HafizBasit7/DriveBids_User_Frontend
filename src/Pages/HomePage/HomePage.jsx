@@ -53,12 +53,12 @@ const HomePage = () => {
         <SellCarCard />
       </Box>
 
-      <Box sx={{ width: "100%" ,mt: 2}}>
+      <Box sx={{ width: "100%" ,mt: 3}}>
         <DealsBanner title="Spotlight Deals" subtitle="3000 Cars Available" buttonText="View All"             onClick={() => navigate("/filter")} 
       />
       </Box>
 
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
+      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
         {carsByBidCount?.data.cars.map((car, index) => (
            <CarCard key={index} carsInWatchList={carsInWatchList} ad={car.car} />
         ))}
@@ -74,7 +74,7 @@ const HomePage = () => {
         ))}
       </Box>
 
-      <Box sx={{ width: "100%", mt: 5 }}> 
+      <Box sx={{ width: "100%", mt: 3 }}> 
         <DealsBanner title="Newly Listed" subtitle="3000 Cars Available" buttonText="View All" />
       </Box>
 

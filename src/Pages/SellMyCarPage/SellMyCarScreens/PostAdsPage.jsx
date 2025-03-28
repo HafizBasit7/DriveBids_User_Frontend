@@ -1,6 +1,5 @@
 import { Box, Typography, Stack, Button } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
-import MainLayout from "../../../Layouts/MainLayout";
 import ArticleIcon from '@mui/icons-material/Article';
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import ImageIcon from "@mui/icons-material/Image";
@@ -11,6 +10,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import colors from "../../../Style/color";
+import MainLayout from "../../../Layouts/Mainlayout";
 
 const steps = [
   { title: "Car Details", status: "Complete", steps: 10, icon: <ArticleIcon fontSize="large" /> },
@@ -22,7 +22,7 @@ const steps = [
 ];
 
 const routes = [
-  "/car-company",
+  "company",
   "/car-features1",
   "/car-images",
   "/inspection-report1",
@@ -41,7 +41,7 @@ const PostAds = () => {
       title="Post Ad"
       subtitle="Complete 6 Easy Steps"
       buttonText="Back to Home"
-      onClick={() => navigate("/sellmycar")}
+      onClick={() => navigate("/ad")}
     >
         <Box width="100%" sx={{ mt: 2,  }}>
           

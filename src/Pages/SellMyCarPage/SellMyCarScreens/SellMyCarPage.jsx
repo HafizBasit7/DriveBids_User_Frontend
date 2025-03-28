@@ -1,9 +1,9 @@
 import { Box, Typography, Stack, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../../../Layouts/MainLayout";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import MainLayout from "../../../Layouts/Mainlayout";
 
 
 const SellMyCar = () => {
@@ -29,19 +29,19 @@ const SellMyCar = () => {
     buttonText="Back to Home"
     onClick={() => navigate("/home")}
   >
-      <Box width="100%" >
+      <Box width="100%"  >
         <Box
           sx={{
             width: "85%",
         
             mx: "auto",
-            my: { xs: 6, md: 12 },
+            mt: { xs: 6, md: 15 },
             px: { xs: 2, sm: 4 },
             
           }}
         >
-          <Stack spacing={7}  >
-            <Paper sx={cardStyle} onClick={() => navigate("post")}>
+          <Stack spacing={8}  >
+            <Paper sx={cardStyle} onClick={() => navigate("post/vehicle-register")}>
               <Box display="flex" alignItems="center" gap={2}>
                 <DirectionsCarIcon sx={{ fontSize: 24, color: "black" }} />
                 <Box>

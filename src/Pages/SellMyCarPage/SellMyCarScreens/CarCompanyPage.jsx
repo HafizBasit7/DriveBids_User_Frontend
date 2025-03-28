@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../../../Layouts/MainLayout";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
+import MainLayout from "../../../Layouts/Mainlayout";
 
 const CarCompanyPage = () => {
   const navigate = useNavigate();
@@ -45,7 +45,9 @@ const CarCompanyPage = () => {
       >
         <CarSelectionBox
           carBrands={carBrands}
-          onNext={() => navigate("/car-varient")}
+          onNext={() => navigate("variant")}
+          searchPlaceholder ={"search for company"}
+  customPlaceholder ={"enter custom company"}
         />
       </Box>
     </MainLayout>

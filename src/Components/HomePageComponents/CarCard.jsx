@@ -239,7 +239,7 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid }) => {
         )}
 
         {isCarSold && (
-          <Chip label={'Sold'} sx={{ mt: 1, fontWeight: 'bold', borderRadius:2, p:1, mb: 1 }} />
+          <Chip label={'Sold'} sx={{  fontWeight: 900, borderRadius:2, p:0.5,fontSize:12,height:25,mt:0.4,px:1  }} />
         )}
 
         {/* Timer */}
@@ -251,7 +251,6 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid }) => {
           </Typography>
         )}
 
-        {/* View Ad Button */}
         <Button
           variant="contained"
           sx={{
