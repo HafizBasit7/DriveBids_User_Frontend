@@ -10,6 +10,7 @@ import EnterOtpPage from "../Pages/Auth/EnterOtpPage";
 import dashboardLoader from "./loaders/dashboard.loader";
 import HomePage from "../Pages/HomePage/HomePage";
 import FilterPage from "../Pages/FiltersPage/FilterPage";
+import ViewAllCars from "../Pages/FiltersPage/ViewAllCars";
 import CarDetailsPage from "../Pages/CarDetailsPage/CarDeatilsPage";
 import CarListingPage from "../Pages/CarListingPage/CarListingPage";
 import ContactPage from "../Pages/ContactPage/ContactPage";
@@ -98,6 +99,7 @@ const createRouter = (authState) => createBrowserRouter([
         children: [
             {path: 'home', element: <HomePage/>},
             {path: 'search', element: <FilterPage/>},
+            {path: 'all/:type', element: <ViewAllCars/>},
             {path: 'chat', element: <ChatPage/>},
             {path: 'car/:carId', element: <CarDetailsPage/>},
             {path: 'car/:carId/owner', element: <CarListingPage/>},

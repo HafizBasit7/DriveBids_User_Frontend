@@ -4,13 +4,13 @@ import SellCarCard from "../../Components/LandingPageComponents/SellCarCard";
 import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import CarCard from "../../Components/HomePageComponents/CarCard";
 import Footer from "../../Components/Footer/Footer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import { listCars, listCarsByBidCount } from "../../api/calls/car";
 
 const HomePage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {data, isLoading} = useQuery({
     queryKey: ['cars'],
@@ -54,7 +54,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%" ,mt: 3}}>
-        <DealsBanner title="Spotlight Deals" subtitle="3000 Cars Available" buttonText="View All"             onClick={() => navigate("/filter")} 
+        <DealsBanner title="Spotlight Deals" subtitle="3000 Cars Available" buttonText="View All" onClick={() => navigate("/all/bid")} 
       />
       </Box>
 
@@ -65,7 +65,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", mt: 3 }}> 
-        <DealsBanner title="Ending Soonest" subtitle="3000 Cars Available" buttonText="View All" />
+        <DealsBanner title="Ending Soonest" subtitle="3000 Cars Available" buttonText="View All" onClick={() => navigate("/all/ending")} />
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
@@ -75,7 +75,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", mt: 3 }}> 
-        <DealsBanner title="Newly Listed" subtitle="3000 Cars Available" buttonText="View All" />
+        <DealsBanner title="Newly Listed" subtitle="3000 Cars Available" buttonText="View All" onClick={() => navigate("/all/recent")} />
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>

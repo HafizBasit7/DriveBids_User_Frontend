@@ -15,6 +15,9 @@ import EditIcon from '@mui/icons-material/Edit';
 const CarFeatureBox = ({
   carBrands = [],
   onNext,
+  value,
+  buttonText = 'NEXT STEP',
+  onChange,
   title = "Select Car Brands",
   searchPlaceholder = "Search brands...",
 }) => {
@@ -84,8 +87,8 @@ const CarFeatureBox = ({
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={selectedBrands.includes(brand)}
-                    onChange={() => handleCheckboxChange(brand)}
+                    checked={value.includes(brand)}
+                    onChange={() => onChange(brand)}
                     sx={{ borderRadius: "4px" }} // Square-ish checkbox
                   />
                 }
@@ -109,7 +112,7 @@ const CarFeatureBox = ({
           }}
           onClick={onNext}
         >
-          Next Step
+          {buttonText}
         </Button>
       </Box>
     </Box>

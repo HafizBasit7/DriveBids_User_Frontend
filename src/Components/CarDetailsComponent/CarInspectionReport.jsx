@@ -133,21 +133,6 @@ const CarInspectionReport = ({car}) => {
           View All Report
         </Link>
 
-        {/* Accept Bid Button */}
-        <Button
-          variant="contained"
-          size="small"
-          sx={{
-            backgroundColor: colors.buttoncolor,
-            borderRadius: 2,
-            fontWeight: 400,
-            fontFamily: "Inter",
-            fontSize: 10,
-          }}
-          onClick={() => setOpenDamage(true)}
-        >
-          Accept Bid
-        </Button>
       </Box>
     </Box>
     </Box>

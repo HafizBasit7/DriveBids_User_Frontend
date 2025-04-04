@@ -63,7 +63,7 @@ const InspectionReportPage3 = () => {
     <MainLayout   title="Inspection Report"
     subtitle="Key Features & Condition"
     buttonText="Back"
-    onClick={() => navigate("/inspection-report2")}>
+    onClick={() => navigate("../inspection-2")}>
      
 
       <Typography fontWeight={600} textAlign="center" mt={3} sx={{ fontSize: 30 }}>

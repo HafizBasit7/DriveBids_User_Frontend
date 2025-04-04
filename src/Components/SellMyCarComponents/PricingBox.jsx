@@ -3,8 +3,7 @@ import { useState } from "react";
 import colors from "../../Style/color";
 import Dollar from "../../assets/SVG/dollar.svg"
 
-const PricingBidBox = ({ text,onNext }) => {
-  const [price, setPrice] = useState("28000");
+const PricingBidBox = ({ text,onNext, value, onChange }) => {
 
   return (
     <Box
@@ -40,17 +39,20 @@ const PricingBidBox = ({ text,onNext }) => {
         }}
       >
         <TextField
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
+       placeholder="0"
+       
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
           variant="outlined"
           type="number"
           sx={{
-            minWidth: 280,
-            width: `${price.length * 18 + 80}px`, // Dynamic width based on input
+            minWidth: 250,
+           
+            // width: `${value?.toString().length * 18 + 80}px`, // Dynamic width based on input
             transition: "width 0.3s ease",
             "& .MuiOutlinedInput-root": {
               pl: 0,
-              py: 3, // ✅ Increased padding Y for better vertical centering
+              py: 3, 
               borderRadius:4,
              
               alignItems: "center",
@@ -69,14 +71,19 @@ const PricingBidBox = ({ text,onNext }) => {
           InputProps={{
             startAdornment: (
               <InputAdornment
+              
                 position="start"
                 sx={{
-                  mx: 3,
+                  mx: 1,
+                  ml:2,
                   display: "flex",
-                  alignItems: "center",
+                 
+              
                 }}
               >
-                <img src={Dollar} alt="currency" style={{ width: 28, height: 28 }} />
+
+                {/* <img src={Dollar} alt="currency" style={{ width: 28, height: 28 }} /> */}
+                <span style={{fontSize:20,fontWeight:900,color:"#000" }} >AED</span>
               </InputAdornment>
             ),
           }}

@@ -28,7 +28,7 @@ const SellMyCar = () => {
       buttonText="Back to Home"
       onClick={() => navigate("/home")}
     >
-      <Box width="100%" sx={{ flex: 1, my: 10 }}>
+      <Box width="100%" sx={{ flex: 1, my: 19 }}>
         <Box
           sx={{
             width: "85%",

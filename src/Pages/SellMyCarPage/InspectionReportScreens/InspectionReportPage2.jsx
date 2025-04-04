@@ -63,7 +63,7 @@ const InspectionReportPage2 = () => {
     <MainLayout  title="Inspection Report"
     subtitle="Key Features & Condition"
     buttonText="Back"
-    onClick={() => navigate("/inspection-report1")}>
+    onClick={() => navigate("../inspection-1")}>
   
 
       <Typography fontWeight={600} textAlign="center" mt={3} sx={{ fontSize: 30 }}>
@@ -77,7 +77,7 @@ const InspectionReportPage2 = () => {
         tests={testList}
         selectedValues={selected}
         onChange={handleSelection}
-        onNext={() => navigate("/inspection-report3")}
+        onNext={() => navigate("../inspection-3")}
       />
     </MainLayout>
   );

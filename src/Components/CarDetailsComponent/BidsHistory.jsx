@@ -1,7 +1,9 @@
-import { Box, Typography, Divider, Chip } from "@mui/material";
+import { Box, Typography, Divider, Chip, Button } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { getCarBiddingHistory } from "../../api/calls/car";
 import { formatAmount, formatDateTime } from "../../utils/utils";
+import colors from "../../Style/color";
+import { useAuth } from "../../context/auth.context";
 
 const bids = [
   { amount: "$30,000", bidOrder: "4th Bid", date: "12 December", time: "12:00PM", highest: true },
@@ -9,7 +11,13 @@ const bids = [
   { amount: "$22,000", bidOrder: "2nd Bid", date: "12 December", time: "12:00PM" },
 ];
 
-const BidsHistory = ({car}) => {
+const BidsHistory = ({car, owner}) => {
+
+  const {authState} = useAuth();
+  const user = authState.user;
+
+  console.log(user);
+  console.log(owner);
 
   const {data, isLoading} = useQuery({
     queryKey: ['biddingHistory', car],
@@ -31,6 +39,8 @@ const BidsHistory = ({car}) => {
       <Typography variant="h6" mb={2} sx={{ fontFamily: "Inter", fontWeight: 500 }}>
         Bids History
       </Typography>
+      
+   
 
       {bids?.map((bid, index) => (
         <Box key={index} sx={{ mb: index !== bids.length - 1 ? 2 : 0 }}>
@@ -40,7 +50,7 @@ const BidsHistory = ({car}) => {
               label="Highest Bid"
               size="small"
               sx={{
-                mb: 1,
+                mb: 1.5,
                 fontSize: 12,
                 fontFamily: "Inter, sans-serif",
                 backgroundColor: "#DEF6EE",
@@ -59,7 +69,26 @@ const BidsHistory = ({car}) => {
             <Typography variant="caption" color="gray" sx={{ fontFamily: "Inter, sans-serif" }}>
               Bid At {formatDateTime(bid.createdAt)}
             </Typography>
+                 {/* Accept Bid Button */}
+
           </Box>
+         {user._id === owner && (
+           <Button
+           variant="contained"
+           size="small"
+           sx={{
+             backgroundColor: colors.buttoncolor,
+             borderRadius: 2,
+             fontWeight: 400,
+             fontFamily: "Inter",
+             fontSize: 10,
+             mt:0.5
+           }}
+           onClick={() => setOpenDamage(true)}
+         >
+           Accept
+         </Button>
+         )}
 {/* todo: ok  */}
           {/* Bid Order & Time (Second Row) */}
           {/* <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
