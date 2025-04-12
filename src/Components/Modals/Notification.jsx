@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { useQuery } from "@tanstack/react-query";
-import { getMyNotifications } from "../../api/calls/auth";
+import { getMyNotifications, getNotificationCount } from "../../api/calls/auth";
 import { timeAgo } from "../../utils/utils";
 
 const Notifications = () => {
@@ -19,14 +19,21 @@ const Notifications = () => {
   const handleOpen = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
+  //Notifications query
   const { data } = useQuery({
     queryKey: ['notifications'],
-    queryFn: () => getMyNotifications(1, 8),
+    queryFn: () => getMyNotifications(1, 5),
   });
 
+  //Count of notifications
+  const {data: count, isLoading} = useQuery({
+    queryKey: ['notificationCount'],
+    queryFn: getNotificationCount,
+  });
+  const unreadCount = count?.data.count;
   const notifications = data?.data.notifications;
-  const unreadCount = 0;
 
+  //Close on scroll
   useEffect(() => {
     const handleScroll = () => {
       if (open) {
@@ -69,7 +76,7 @@ const Notifications = () => {
                 alignItems: "center",
                 px: 1,
                 py: 1,
-                bgcolor: notification.unread ? "#E9F2FF" : "white",
+                bgcolor: !notification.isRead ? "#E9F2FF" : "white",
                 borderBottom: "1px solid #f0f0f0",
                 cursor: "pointer",
                 "&:hover": { bgcolor: "#f5f5f5" },
