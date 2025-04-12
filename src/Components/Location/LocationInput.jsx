@@ -3,7 +3,7 @@ import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
 import { TextField } from "@mui/material";
 import colors from "../../Style/color";
 
-export default function LocationInput ({loading, value, handleChange, placeholder}) {
+export default function LocationInput ({loading, value, handleChange, placeholder, children}) {
     const inputRef = useRef();
     
 
@@ -30,23 +30,25 @@ export default function LocationInput ({loading, value, handleChange, placeholde
                 onLoad={ref => (inputRef.current = ref)}
                 onPlacesChanged={handlePlaceChanged}
             >
-                <TextField
-                    disabled={loading}
-                    fullWidth
-                    label='Location'
-                    placeholder={value || placeholder || 'Location'}
-                    sx={{
-                    "& .MuiOutlinedInput-root": {
-                        height: 50,
-                        borderRadius: 2,
-                        "& fieldset": { borderColor: "#ccc" },
-                        "&:hover fieldset": { borderColor: "#2F61BF" },
-                        "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
-                    },
-                    "& .MuiInputLabel-root": { color: "#888" }, 
-                    "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
-                    }}
-                />
+                {children ? children : (
+                    <TextField
+                        disabled={loading}
+                        fullWidth
+                        label='Location'
+                        placeholder={value || placeholder || 'Location'}
+                        sx={{
+                        "& .MuiOutlinedInput-root": {
+                            height: 50,
+                            borderRadius: 2,
+                            "& fieldset": { borderColor: "#ccc" },
+                            "&:hover fieldset": { borderColor: "#2F61BF" },
+                            "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+                        },
+                        "& .MuiInputLabel-root": { color: "#888" }, 
+                        "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+                        }}
+                    />
+                )}
             </StandaloneSearchBox>
         </LoadScript>
     );

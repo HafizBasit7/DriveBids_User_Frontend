@@ -76,6 +76,8 @@ import AccidentDescription from "../Pages/SellMyCarPage/SellMyCarScreens/CarAcci
 import CarConditionPage from "../Pages/SellMyCarPage/SellMyCarScreens/CarConditionPage";
 import Page404 from "../Pages/NotFounf404Page";
 import ChatPage from "../Pages/ChatPage/ChatPage";
+import CompletedDeals from "../Pages/CompletedDeals/CompletedDeals";
+import NotificationSettings from "../Pages/NotificationSettings/NotificationSettings";
 
 const createRouter = (authState) => createBrowserRouter([
     {path: '/', element: <LandingPage/>},
@@ -108,6 +110,8 @@ const createRouter = (authState) => createBrowserRouter([
             //User
             {path: 'my-ads', element: <MyAdsPage/>},
             {path: 'my-bids', element: <MyBidsPage/>},
+            {path: 'completed-deals', element: <CompletedDeals/>},
+            {path: 'notification-settings', element: <NotificationSettings/>},
             {path: 'watchlist', element: <MyWatchPage/>},
             {path: 'profile/edit', element: <EditProfilePage/>},
             {path: 'profile/change-password', element: <ChangePasswordPage/>},

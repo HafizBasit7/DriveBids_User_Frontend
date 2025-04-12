@@ -2,25 +2,25 @@ import { Box, Typography, Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
-import BidsCard from "../../Components/ProfilePageComponents/BidsCard";
 import { useQuery } from "@tanstack/react-query";
-import { listMyBids } from "../../api/calls/car";
+import { getCompletedDeals } from "../../api/calls/car";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import CarCard from "../../Components/HomePageComponents/CarCard";
 import PaginationComponent from "../../Components/Common/PaginationComponent";
 
 const LIMIT = 10;
 
-const MyBidsPage = () => {
+const CompletedDeals = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState("active");
+  const [activeTab, setActiveTab] = useState("Bought");
   const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
 
-  const type = activeTab === 'active' ? 'open' : activeTab;
+  const type = activeTab === 'Bought' ? 'buy' : 'sell';
+
   const {data, isLoading} = useQuery({
-    queryKey: ['myBids', type, page],
-    queryFn: () => listMyBids(page, LIMIT, type),
+    queryKey: ['myCompletedDeals', type, page],
+    queryFn: () => getCompletedDeals(page, LIMIT, type),
   });
 
   const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
@@ -28,7 +28,7 @@ const MyBidsPage = () => {
     queryFn: getCarsIdInWatchList,
   });
 
-  const bids = data?.data?.bids;
+  const completedDeals = data?.data?.completedDeals;
   const count = data?.meta?.count;
   const pages = data?.meta?.pages;
   
@@ -39,14 +39,14 @@ const MyBidsPage = () => {
 
   return (
     <MainLayout
-      title="My Bids"
-      subtitle={`${count || 0} ${activeTab === 'active' ? 'Bids In Progress' : `Bids ${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`}`}
+      title="Completed Deals"
+      subtitle={`${count || 0} ${activeTab === 'Bought' ? 'Cars Bought' : `Cars Sold`}`}
       buttonText="Back"
       onClick={() => navigate("/home")}
       isnotSellMyCar={true}
     >
       <Box display="flex" justifyContent="center" my={4}>
-        {["active", "won", "lost"].map((tab) => (
+        {["Bought", "Sold"].map((tab) => (
           <Button
             key={tab}
             onClick={() => handleTabChange(tab)}
@@ -58,7 +58,7 @@ const MyBidsPage = () => {
               mx: 2,
             }}
           >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            {tab}
           </Button>
         ))}
       </Box>
@@ -70,23 +70,22 @@ const MyBidsPage = () => {
         gap: 4, 
         justifyContent: { xs: "center", lg: "start" } 
       }}>
-        {bids?.map((bid, index) => (
+        {completedDeals?.map((deal, index) => (
           <CarCard 
             key={index} 
             carsInWatchList={carsInWatchList} 
-            ad={bid.car} 
-            isFromMyBids={true} 
-            bid={bid}
+            ad={deal.car} 
+            isFromCompletedDeals={true}
           />
         ))}
-        {bids?.length === 0 && (
+        {completedDeals?.length === 0 && (
           <Typography textAlign="center" width="100%">
-            No bids found for this status.
+            No deals found for this status.
           </Typography>
         )}
       </Box>
 
-      {bids?.length > 0 && (
+      {completedDeals?.length > 0 && (
         <PaginationComponent 
           page={page} 
           pages={pages} 
@@ -99,4 +98,4 @@ const MyBidsPage = () => {
   );
 };
 
-export default MyBidsPage;
+export default CompletedDeals;

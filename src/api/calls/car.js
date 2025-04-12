@@ -101,9 +101,9 @@ export const postAd = async (carId) => {
     }
 };
 
-export const listCars = async (page = 1, limit = 10, type = 'recent') => {
+export const listCars = async (page = 1, limit = 10, type = 'recent', lng, lat) => {
     try {
-        const result = await apiClient.get(`/car/list?page=${page}&limit=${limit}&type=${type}`);
+        const result = await apiClient.get(`/car/list?page=${page}&limit=${limit}&type=${type}&lng=${lng}&lat=${lat}`);
         const resultData = result.data;
 
         if(!resultData.status) {
@@ -251,9 +251,9 @@ export const getMyCarBiddingHistory = async (carId) => {
     }
 };
 
-export const listCarsByBidCount = async (page = 1, limit = 10) => {
+export const listCarsByBidCount = async (page = 1, limit = 10, lng, lat) => {
     try {
-        const result = await apiClient.get(`/car/listByBidCount?page=${page}&limit=${limit}`);
+        const result = await apiClient.get(`/car/listByBidCount?page=${page}&limit=${limit}&lng=${lng}&lat=${lat}`);
         const resultData = result.data;
 
         if(!resultData.status) {
@@ -396,6 +396,31 @@ export const searchCars = async (params = {}, page = 1, limit = 10) => {
                 name: 'app',
                 ...e.response.data,
             };
+        }
+        throw e;
+    }
+};
+
+export const getCompletedDeals = async (page = 1, limit = 10, type = 'buy') => {
+    try {
+        const result = await apiClient.get(`/car/completedDeals?page=${page}&limit=${limit}&type=${type}`);
+        const resultData = result.data;
+
+        if(!resultData.status) {
+            throw {
+                name: 'app',
+                message: resultData.message,
+            };
+        }
+
+        return resultData; 
+    }
+    catch(e) {
+        if(e.response?.data) {
+            throw {
+                name: 'app',
+                ...e.response.data,
+            }
         }
         throw e;
     }

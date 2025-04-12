@@ -47,3 +47,16 @@ export const traderSignupValidation = zod.object({
     required_error: "Please enter your complete business address.",
   }),
 });
+
+export const changePasswordValidation = zod.object({
+  oldPassword: zod
+    .string({
+      required_error: "Enter current password",
+    })
+    .regex(/^.{6,}$/, "Password must have minimum 6 characters"),
+    newPassword: zod
+    .string({
+      required_error: "Enter new password",
+    })
+    .regex(/^.{6,}$/, "Password must have minimum 6 characters"),
+});

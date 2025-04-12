@@ -7,6 +7,8 @@ import { useAuth } from "../../context/auth.context";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { updatePassword } from "../../api/calls/auth";
+import { validateForm } from "../../utils/utils";
+import { changePasswordValidation } from "../../validations/auth.validation";
 
 const PasswordInput = ({ label, placeholder, disabled, setPassword, password }) => (
   <Box mb={2}>
@@ -48,8 +50,8 @@ const ChangePasswordPage = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState();
+  const [newPassword, setNewPassword] = useState();
 
   const handlePasswordChangeClick = () => {
     toast.promise(handlePasswordChange(), {
@@ -62,6 +64,9 @@ const ChangePasswordPage = () => {
   const handlePasswordChange = async () => {
     setLoading(true);
     try {
+      //Validate
+      validateForm([changePasswordValidation], {oldPassword, newPassword});
+
       await updatePassword({oldPassword, newPassword});
       setNewPassword('');
       setOldPassword('');

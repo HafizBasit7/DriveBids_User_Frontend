@@ -18,6 +18,7 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import GavelIcon from "@mui/icons-material/Gavel";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useAuth } from "../../context/auth.context";
+import { DirectionsCar, Settings } from "@mui/icons-material";
 
 const ProfileMenu = () => {
   const { authState } = useAuth();
@@ -107,9 +108,23 @@ const ProfileMenu = () => {
           <ChevronRightIcon fontSize="small" />
         </MenuItem>
 
+        <MenuItem onClick={() => handleNavigate("/completed-deals")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <ListItemIcon><DirectionsCar fontSize="small" /></ListItemIcon> Completed Deals
+          </Box>
+          <ChevronRightIcon fontSize="small" />
+        </MenuItem>
+
         <MenuItem onClick={() => handleNavigate("/watchlist")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <ListItemIcon><FavoriteBorderIcon fontSize="small" /></ListItemIcon> Watchlist
+          </Box>
+          <ChevronRightIcon fontSize="small" />
+        </MenuItem>
+
+        <MenuItem onClick={() => handleNavigate("/notification-settings")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <ListItemIcon><Settings fontSize="small" /></ListItemIcon> Notification Settings
           </Box>
           <ChevronRightIcon fontSize="small" />
         </MenuItem>

@@ -27,7 +27,7 @@ import { toggleWatchList } from "../../api/calls/watchlist";
 import {calculateTimeLeft, formatAmount} from "../../utils/utils";
 import { LocalGasStation, PaletteOutlined, PrecisionManufacturing } from "@mui/icons-material";
 
-const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid }) => {
+const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals = false }) => {
   // const [isFavorited, setIsFavorited] = useState(false);
   // const [openDelete, setOpenDelete] = useState(false);
 
@@ -73,7 +73,7 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid }) => {
   const isCarSold = ad.status === 'sold';
   let winning = false;
   if(isFromMyBids) {
-    winning = bid.bidAmount === ad.highestBid ? isCarSold ? 'Bid Won' : 'Winning' : isCarSold ? 'Bid Lost' : 'Losing';
+    winning = bid.status === 'won' ? isCarSold ? 'Bid Won' : 'Winning' : isCarSold ? 'Bid Lost' : 'Losing';
   }
   const getChipStyles = () => {
     if (winning === "Winning") {
@@ -228,9 +228,11 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid }) => {
 
 
         {/* Top Bid */}
-        <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter"  }}>
-          Top Bid: AED {formatAmount(ad.highestBid)}
-        </Typography>
+        {!isFromCompletedDeals && (
+          <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter"  }}>
+            Top Bid: AED {formatAmount(ad.highestBid)}
+          </Typography>
+        )}
 
         {isFromMyBids && (
           <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter"  }}>

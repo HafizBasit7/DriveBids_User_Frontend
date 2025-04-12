@@ -7,6 +7,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { updateProfile } from "../../api/calls/auth";
 import { countryCodes } from "../../utils/coutrycode";
+import LocationInput from "../../Components/Location/LocationInput"
 
 const CustomInput = ({ label, placeholder, value, setValue, disabled }) => (
   <Box>
@@ -34,6 +35,7 @@ const CustomInput = ({ label, placeholder, value, setValue, disabled }) => (
 );
 
 const EditProfilePage = () => {
+
   const navigate = useNavigate();
   const {authState, dispatch} = useAuth();
   const user = authState.user;
@@ -41,10 +43,11 @@ const EditProfilePage = () => {
   const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState(user.name);
-  const [phone, setPhone] = useState(user.phoneNumber);
-  const [city, setCity] = useState(user.city);
-  const [country, setCountry] = useState(user.country);
+  const [location, setLocation] = useState(user.location);
 
+  const [country, setCountry] = useState(`+${user.phoneNumber.countryCode}`);
+  const [phone, setPhone] = useState(user.phoneNumber.phoneNo.toString());
+  
   //Trader
   const [businessAddress, setBusinessAddress] = useState(user.businessAddress);
 
@@ -59,7 +62,21 @@ const EditProfilePage = () => {
   const handleSave = async () => {
     setLoading(true);
     try {
-      const data = await updateProfile({name, city, country, phoneNumber: phone, businessAddress});
+      const body = {
+        name,
+        location,
+        phoneNumber:  {
+          phoneNo: Number(phone),
+          countryCode: Number(country.replace("+", "")),
+        },
+        businessAddress,
+      };
+
+      if(user.type !== 'trader') {
+        delete body['businessAddress'];
+      }
+
+      const data = await updateProfile(body);
       dispatch({type: 'setUser', payload: data.data.user});
     } catch(e) {
       throw e;
@@ -154,7 +171,7 @@ const EditProfilePage = () => {
         }}
       >
         {countryCodes.map((item) => (
-          <MenuItem key={item.code} value={item.code}>
+          <MenuItem key={item.code} value={item.dial_code}>
             {`${item.code} (${item.dial_code})`}
           </MenuItem>
         ))}
@@ -181,15 +198,21 @@ const EditProfilePage = () => {
   </Box>
 </Grid>
 
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <CustomInput disabled={loading} value={city} setValue={setCity} label="City" placeholder="Enter city" />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={6}>
-            <CustomInput disabled={loading} value={country} setValue={setCountry} label="Country" placeholder="Your Country" />
+            <LocationInput 
+              value={location?.name} 
+              handleChange={(location) => setLocation(location)}
+            >
+              <CustomInput disabled={loading} setValue={() => {}} placeholder={location?.name} label="Location" />
+            </LocationInput>
           </Grid>
+
           {user.type == 'trader' && (
             <Grid item xs={12} sm={6}>
-              <CustomInput disabled={loading} value={businessAddress} setValue={setBusinessAddress} label="Language" placeholder="Your Language" />
+              <CustomInput disabled={loading} value={businessAddress} setValue={setBusinessAddress} label="Business Address" placeholder="Business Address" />
             </Grid>
           )}
           {/* <Grid item xs={12} sm={6}>
