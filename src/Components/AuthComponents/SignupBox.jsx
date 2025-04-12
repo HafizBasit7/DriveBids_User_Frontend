@@ -16,6 +16,7 @@ import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { signupUser } from "../../api/calls/auth";
+import LocationInput from "../Location/LocationInput";
 
 
 const Signup = () => {
@@ -248,7 +249,8 @@ const Signup = () => {
       </Box>
 
       <Box sx={{ mb: 2 }}>
-        <TextField
+        <LocationInput/>
+        {/* <TextField
           label="City"
           disabled={loading}
           fullWidth
@@ -265,10 +267,10 @@ const Signup = () => {
             "& .MuiInputLabel-root": { color: "#888" }, 
             "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
           }}
-        />
+        /> */}
       </Box>
 
-      <Box sx={{ mb: 2 }}>
+      {/* <Box sx={{ mb: 2 }}>
         <TextField
           label="Country"
           disabled={loading}
@@ -287,7 +289,7 @@ const Signup = () => {
             "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
           }}
         />
-      </Box>
+      </Box> */}
 
        {role === "Trader" && (
         <Box sx={{ mb: 2 }}>

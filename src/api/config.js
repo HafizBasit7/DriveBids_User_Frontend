@@ -1,5 +1,5 @@
 export default {
-    baseUrl: 'http://192.168.1.6:3000',
-    bidBaseUrl: 'http://192.168.1.6:3002',
-    chatBaseUrl: 'http://192.168.1.6:3001',
+    baseUrl: 'https://drivebids-backend-v2.onrender.com',
+    bidBaseUrl: 'https://drivebids-bidding-webserver-v2.onrender.com',
+    chatBaseUrl: 'https://drivebids-messageserver-web-v2.onrender.com',
 };
