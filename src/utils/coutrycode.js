@@ -1,0 +1,21 @@
+export const countryCodes = [
+    { code: "PK", name: "Pakistan", dial_code: "+92" },
+    { code: "IN", name: "India", dial_code: "+91" },
+    { code: "AUS", name: "Australia", dial_code: "+61" },
+    { code: "UK", name: "United Kingdom", dial_code: "+44" },
+    { code: "UAE", name: "United Arab Emirates", dial_code: "+971" },
+      { code: "PK", name: "Pakistan", dial_code: "+92" },
+  { code: "IN", name: "India", dial_code: "+91" },
+  { code: "AUS", name: "Australia", dial_code: "+61" },
+  { code: "UK", name: "United Kingdom", dial_code: "+44" },
+  { code: "UAE", name: "United Arab Emirates", dial_code: "+971" },
+  { code: "AUS", name: "Australia", dial_code: "+61" },
+    { code: "UK", name: "United Kingdom", dial_code: "+44" },
+    { code: "UAE", name: "United Arab Emirates", dial_code: "+971" },
+      { code: "PK", name: "Pakistan", dial_code: "+92" },
+  { code: "IN", name: "India", dial_code: "+91" },
+  { code: "AUS", name: "Australia", dial_code: "+61" },
+  { code: "UK", name: "United Kingdom", dial_code: "+44" },
+  { code: "UAE", name: "United Arab Emirates", dial_code: "+971" },
+    // add more or import from a larger list
+  ];

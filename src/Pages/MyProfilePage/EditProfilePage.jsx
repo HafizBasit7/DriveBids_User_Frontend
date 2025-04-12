@@ -1,4 +1,4 @@
-import { Box, Typography, Avatar, Button, Grid } from "@mui/material";
+import { Box, Typography, Avatar, Button, Grid, Select, FormControl, InputLabel, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
 import colors from "../../Style/color";
@@ -6,6 +6,7 @@ import { useAuth } from "../../context/auth.context";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { updateProfile } from "../../api/calls/auth";
+import { countryCodes } from "../../utils/coutrycode";
 
 const CustomInput = ({ label, placeholder, value, setValue, disabled }) => (
   <Box>
@@ -19,13 +20,13 @@ const CustomInput = ({ label, placeholder, value, setValue, disabled }) => (
       component="input"
       placeholder={placeholder}
       sx={{
-        width: "100%",
+        width:300,
         p: 1.5,
         borderRadius: "8px",
         backgroundColor: "#FAFAFA",
         fontSize: 14,
         outline: "none",
-        border: "none",
+        border: "1px solid #ccc",
         "&::placeholder": { color: "#A0A0A0" },
       }}
     />
@@ -109,8 +110,77 @@ const EditProfilePage = () => {
             <CustomInput disabled={loading} value={name} setValue={setName} label="Full Name" placeholder="Your First Name" />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <CustomInput disabled={loading} value={phone} setValue={setPhone} label="Phone Number" placeholder="Your Phone Number" />
-          </Grid>
+  <Typography fontWeight={600} mb={0.5} fontSize={14}>
+    Phone Number
+  </Typography>
+  <Box sx={{ display: "flex", gap: 1 }}>
+    <FormControl sx={{ minWidth: 80, width: "auto" }}>
+      {/* <InputLabel
+        id="country-code-label"
+      
+        sx={{
+          color: "#888",
+          "&.Mui-focused": { color: colors.buttoncolor },
+        }}
+      >
+        {countryCodes.find((item) => item.code === country)?.dial_code || "+971"}
+      </InputLabel> */}
+      <Select
+        labelId="country-code-label"
+        value={country}
+        disabled={loading}
+        onChange={(e) => setCountry(e.target.value)}
+        renderValue={(selected) =>
+          countryCodes.find((item) => item.code === selected)?.dial_code || selected
+        }
+        sx={{
+          height: 40,
+          borderRadius: 2,
+          backgroundColor: "#FAFAFA",
+
+          "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ccc" },
+          "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
+        }}
+        MenuProps={{
+          PaperProps: {
+            sx: {
+              maxHeight: 5 * 38,
+              overflowY: "auto",
+              "&::-webkit-scrollbar": { width: 0 },
+              "&::-webkit-scrollbar-thumb": { backgroundColor: "transparent" },
+            },
+          },
+        }}
+      >
+        {countryCodes.map((item) => (
+          <MenuItem key={item.code} value={item.code}>
+            {`${item.code} (${item.dial_code})`}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+
+    <Box
+      disabled={loading}
+      component="input"
+      value={phone}
+      onChange={(e) => setPhone(e.target.value)}
+      placeholder="Your Phone Number"
+      sx={{
+        flex: 1,
+        p: 1.5,
+        borderRadius: "8px",
+        backgroundColor: "#FAFAFA",
+        fontSize: 14,
+        outline: "none",
+        border: "1px solid #ccc",
+        "&::placeholder": { color: "#A0A0A0" },
+      }}
+    />
+  </Box>
+</Grid>
+
           <Grid item xs={12} sm={6}>
             <CustomInput disabled={loading} value={city} setValue={setCity} label="City" placeholder="Enter city" />
           </Grid>
@@ -127,44 +197,7 @@ const EditProfilePage = () => {
           </Grid> */}
         </Grid>
 
-        {/* TODO: OK  */}
-        {/* <Box mt={4}>
-          <Typography fontWeight={600} mb={1} sx={{ fontSize: 16 }}>
-            My Email Address
-          </Typography>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            bgcolor="#F9F9F9"
-            p={2}
-            borderRadius={2}
-          >
-            <Box display="flex" alignItems="center" gap={1}>
-              <Avatar sx={{ width: 24, height: 24, bgcolor: "#1976D2" }}>
-                📧
-              </Avatar>
-              <Box>
-                <Typography fontSize={14}>Adriana123@gmail.com</Typography>
-                <Typography fontSize={12} color="text.secondary">
-                  1 month ago
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-
-          <Button
-            sx={{
-              mt: 2,
-              textTransform: "none",
-              color: colors.buttoncolor,
-              border: "1px solid #2F61BF",
-              backgroundColor: "#EAEFF9",
-            }}
-          >
-            + Add Email Address
-          </Button>
-        </Box> */}
+       
 
 
         <Box display="flex" justifyContent="flex-end" mt={2}>

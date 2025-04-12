@@ -8,7 +8,11 @@ import {
   InputAdornment,
   IconButton,
   ToggleButton,
-  ToggleButtonGroup
+  ToggleButtonGroup,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from "@mui/material";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -17,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { signupUser } from "../../api/calls/auth";
 import LocationInput from "../Location/LocationInput";
+import { countryCodes } from "../../utils/coutrycode";
 
 
 const Signup = () => {
@@ -227,26 +232,73 @@ const Signup = () => {
         />
       </Box>
 
-      <Box sx={{ mb: 2 }}>
-        <TextField
-          label="Phone Number"
-          disabled={loading}
-          fullWidth
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              height: 50,
-              borderRadius: 2,
-              "& fieldset": { borderColor: "#ccc" },
-              "&:hover fieldset": { borderColor: "#2F61BF" },
-              "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
-            },
-            "& .MuiInputLabel-root": { color: "#888" }, 
-            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
-          }}
-        />
-      </Box>
+      <Box sx={{ mb: 2, display: "flex", gap: 1 }}>
+  <FormControl sx={{ minWidth: 80, width: "auto" }}>
+    <InputLabel
+      id="country-code-label"
+      sx={{
+        color: "#888",
+        "&.Mui-focused": { color: colors.buttoncolor },
+      }}
+    >
+      {
+        countryCodes.find((item) => item.code === country)?.dial_code || "+971"
+      }
+    </InputLabel>
+
+    <Select
+      labelId="country-code-label"
+      id="country-code-select"
+      value={country}
+      disabled={loading}
+      onChange={(e) => setCountry(e.target.value)}
+      label="Code"
+      renderValue={(selected) => selected} // Show only country code like PK, AUS, etc.
+      sx={{
+        height: 50,
+        borderRadius: 2,
+        "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ccc" },
+        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
+      }}
+      MenuProps={{
+        PaperProps: {
+          sx: {
+            maxHeight: 5 * 38,
+            overflowY: "auto",
+            "&::-webkit-scrollbar": { width: 0 },
+            "&::-webkit-scrollbar-thumb": { backgroundColor: "transparent" },
+          },
+        },
+      }}
+    >
+      {countryCodes.map((item) => (
+        <MenuItem key={item.code} value={item.code}>
+          {item.code} ({item.dial_code})
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+
+  <TextField
+    label="Phone Number"
+    disabled={loading}
+    fullWidth
+    value={phone}
+    onChange={(e) => setPhone(e.target.value)}
+    sx={{
+      "& .MuiOutlinedInput-root": {
+        height: 50,
+        borderRadius: 2,
+        "& fieldset": { borderColor: "#ccc" },
+        "&:hover fieldset": { borderColor: "#2F61BF" },
+        "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+      },
+      "& .MuiInputLabel-root": { color: "#888" },
+      "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor },
+    }}
+  />
+</Box>
 
       <Box sx={{ mb: 2 }}>
         <LocationInput/>

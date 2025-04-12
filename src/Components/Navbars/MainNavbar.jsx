@@ -2,13 +2,15 @@ import { useState } from "react";
 import {
   Box,
   Button,
-  InputBase,
   IconButton,
   useTheme,
   useMediaQuery,
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
+import LocationOnIcon from "@mui/icons-material/Search";
+import EditLocationIcon from '@mui/icons-material/EditLocation';
+
 import Notifications from "../Modals/Notification";
 import ProfileMenu from "../Modals/Profilemenu";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
@@ -110,51 +112,52 @@ const MainNavbar = () => {
             ))}
 
           {!isMobile && (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                border: "1px solid #ccc",
-                borderRadius: 2,
-                px: 0.5,
-                py: 0.5,
-                backgroundColor: "white",
-                width: 170,
-              }}
-            >
-              <SearchIcon sx={{ color: "#666", fontSize: 20 }} />
-              <InputBase
-                placeholder="Find cars"
-                sx={{ ml: 1, fontSize: "14px", color: "black" }}
-              />
-            </Box>
+           <Box
+           sx={{
+             display: "flex",
+             alignItems: "center",
+             border: "1px solid #ccc",
+             borderRadius: 2,
+             px: 1,
+             py: 0.5,
+             backgroundColor: "white",
+             width: "auto",
+             cursor: "pointer",
+           }}
+         >
+           <LocationOnIcon sx={{ color: "#666", fontSize: 20, mr: 0.5 }} />
+           <Typography sx={{ fontSize: "14px", color: "#000" }}>
+             Dubai
+           </Typography>
+         </Box>
           )}
 
           {isMobile && !showSearch && (
             <IconButton onClick={() => setShowSearch(true)}>
-              <SearchIcon sx={{ color: "black" }} />
+              <EditLocationIcon sx={{ color: "black" }} />
             </IconButton>
           )}
 
           {isMobile && showSearch && (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                border: "1px solid #ccc",
-                borderRadius: 2,
-                px: 0.5,
-                py: 0.5,
-                backgroundColor: "white",
-                width: "100px",
-              }}
-            >
-              <SearchIcon sx={{ color: "#666", fontSize: 20 }} />
-              <InputBase
-                placeholder="Find cars"
-                sx={{ ml: 1, fontSize: "14px", color: "black" }}
-              />
-            </Box>
+           <Box
+           sx={{
+             display: "flex",
+             alignItems: "center",
+             border: "1px solid #ccc",
+             borderRadius: 2,
+             px: 1,
+             py: 0.5,
+             backgroundColor: "white",
+             width: "auto",
+             cursor: "pointer",
+           }}
+         >
+           <EditLocationIcon sx={{ color: "#666", fontSize: 20, mr: 0.5 }} />
+           <Typography sx={{ fontSize: "14px", color: "#000" }}>
+             {user.city || "Your Location"}
+           </Typography>
+         </Box>
+         
           )}
 
           {!isMobile && (
