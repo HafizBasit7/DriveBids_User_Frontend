@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import Logosvg from "../../assets/SVG/Mainlogo.svg";
 import colors from "../../Style/color";
 import MobileSidebar from "./Mobilesidebar";
+import { useAuth } from "../../context/auth.context";
 
 const MainNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -25,6 +26,9 @@ const MainNavbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
+  const {authState} = useAuth();
+  const currentSelectedLocation = (authState.selectedLocation || authState.user.location) || {"coordinates": [73.1128313, 33.5255503]};
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -127,7 +131,7 @@ const MainNavbar = () => {
          >
            <LocationOnIcon sx={{ color: "#666", fontSize: 20, mr: 0.5 }} />
            <Typography sx={{ fontSize: "14px", color: "#000" }}>
-             Dubai
+             {currentSelectedLocation?.name}
            </Typography>
          </Box>
           )}

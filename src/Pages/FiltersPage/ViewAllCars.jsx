@@ -1,37 +1,49 @@
-import { Box, Pagination, useMediaQuery, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import MainLayout from "../../Layouts/MainLayout";
-import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import CarCard from "../../Components/HomePageComponents/CarCard";
-import FilterSidebar from "../../Components/FilterPageComponent/FilterSideBar.jsx";
-import colors from "../../Style/color.js";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { listCars, listCarsByBidCount } from "../../api/calls/car.js";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist.js";
+import { useAuth } from "../../context/auth.context";
+import PaginationComponent from "../../Components/Common/PaginationComponent.jsx";
+
+const LIMIT = 10;
 
 const ViewAllFilters = () => {
   const navigate = useNavigate()
-  const theme = useTheme();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
+  
+  const {authState} = useAuth();
+  const currentSelectedLocation = (authState.selectedLocation || authState.user.location) || {"coordinates": [73.1128313, 33.5255503]};
 
   const {type} = useParams();
 
-  const {data, isLoading} = useQuery({
-    queryKey: ['cars'],
-    queryFn: () => listCars(1, 10, 'recent'),
-    enabled: type === 'recent',
-  });
+  const getQueryKey = (type) => {
+    switch (type) {
+      case 'recent':
+        return ['carsAll', page];
+      case 'ending':
+        return ['carsEndingAll', page];
+      default:
+        return ['carsByBidCountAll', page];
+    }
+  };
 
-  const {data: endingCarList, isLoading: endingCarListLoading} = useQuery({
-    queryKey: ['carsEnding'],
-    queryFn: () => listCars(1, 10, 'ending'),
-    enabled: type === 'ending',
-  });
+  const getQueryFn = (type) => {
+    return () => {
+      switch (type) {
+        case 'recent':
+          return listCars(page, LIMIT, 'recent', currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]);
+        case 'ending':
+          return listCars(page, LIMIT, 'ending', currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]);
+        default:
+          return listCarsByBidCount(page, LIMIT, currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]);
+      }
+    };
+  };
 
-  const {data: carsByBidCount, isLoading: carsByBidCountLoading} = useQuery({
-    queryKey: ['carsByBidCount'],
-    queryFn: () => listCarsByBidCount(1, 10),
-    enabled: type === 'bid',
-  });
 
   //Watchlist
   const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
@@ -39,25 +51,18 @@ const ViewAllFilters = () => {
     queryFn: getCarsIdInWatchList,
   });
 
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const {data, isLoading} = useQuery({
+    queryKey: getQueryKey(type),
+    queryFn: getQueryFn(type)
+  });
 
-  if(carsByBidCountLoading || endingCarListLoading || isLoading) {
-    return <p>Loading</p>;
-  }
-
-  let cars;
-  if(type === 'ending') {
-    cars = endingCarList.data.cars;
-  } else if(type === 'recent') {
-    cars = data.data.cars;
-  } else if(type === 'bid') {
-    cars = carsByBidCount.data.cars;
-  }
-
+  const cars = data?.data.cars;
+  const pages = data?.meta.pages;
+  const count = data?.meta.count;
 
   return (
-    <MainLayout title="Super Odd Deals"
-      subtitle="3000 Cars Available"
+    <MainLayout title={type === 'bid' ? 'Featured Adds' : type === 'ending' ? 'Ending Soonest' : 'Newly Listed'}
+      subtitle={`${count || 0} Cars Available`}
       buttonText="Back"
       onClick={() => navigate("/home")}
       isnotSellMyCar={true}>
@@ -82,74 +87,16 @@ const ViewAllFilters = () => {
             }
           }}>
 
-          {cars.map((car, index) => <CarCard ad={type === 'bid' ? car.car : car}/>)}
-
-            {/* <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard /> */}
+          {!isLoading && (
+            cars.map((car, index) => <CarCard key={index} ad={type === 'bid' ? car.car : car} carsInWatchList={carsInWatchList}/>)
+          )}
           </Box>
-{/* todo: page */}
-          {/* <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              mt: 4,
-            }}
-          >
-            <Pagination
-              count={isSmallScreen ? 3 : 5}
-              shape="rounded"
-              sx={{
-                "& .MuiPaginationItem-root": {
-                  fontSize: "1.3rem",
-                  padding: "20px 16px",
-                  mt: 3,
-                  backgroundColor: "white",
-                  color: "black",
-                  mx: 1.5,
-                  border: "1px solid #6F6F6F",
-                  borderRadius: "8px",
-                },
-                "& .MuiPaginationItem-root.Mui-selected": {
-                  backgroundColor: colors.buttoncolor,
-                  color: "white",
-                  border: `1px solid ${colors.buttoncolor}`,
-                },
-                "& .MuiPaginationItem-previousNext": {
-                  backgroundColor: "white",
-                  color: "black",
-                  borderRadius: "8px",
-                  border: "1px solid #6F6F6F",
-                  mx: 1.5,
-                },
-                "& .MuiPaginationItem-ellipsis": {
-                  fontSize: "1.3rem",
-                  padding: "5px 16px",
-                  mt: 3,
-                  backgroundColor: "white",
-                  color: "black",
-                  mx: 1.5,
-                  border: "1px solid #6F6F6F",
-                  borderRadius: "8px",
-                },
-              }}
-            /> */}
-
-          {/* </Box> */}
         </Box>
-
+        
+          
        
       </Box>
+      <PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>
     </MainLayout>
   );
 };

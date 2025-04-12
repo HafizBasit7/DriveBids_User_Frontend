@@ -64,7 +64,7 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals 
     },
     onSettled: () => {
       // queryClient.invalidateQueries(["carsInWatchList"]);
-      queryClient.invalidateQueries(["watchlist"]);
+      queryClient.invalidateQueries({queryKey: ["watchlist"]});
     },
   });
 

@@ -1,26 +1,33 @@
 import { Box, Pagination, useMediaQuery, useTheme } from "@mui/material";
 import MainLayout from "../../Layouts/MainLayout";
 import FilterSidebar from "../../Components/FilterPageComponent/FilterSideBar.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { searchCars } from "../../api/calls/car.js";
 import CarCard from "../../Components/HomePageComponents/CarCard";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist.js";
+import { useAuth } from "../../context/auth.context.jsx";
+import PaginationComponent from "../../Components/Common/PaginationComponent.jsx";
 
+const LIMIT = 10;
 
 const FilterPage = () => {
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
+
+  const {authState} = useAuth();
+  const currentSelectedLocation = (authState.selectedLocation || authState.user.location) || {"coordinates": [73.1128313, 33.5255503]};
+  
 
   // State for filters
   const [filters, setFilters] = useState({});
 
   // Fetch cars based on filters using useQuery
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["search"],
-    queryFn: () => searchCars(filters, 1, 10),
+    queryKey: ["search", filters, page],
+    queryFn: () => searchCars(filters, page, LIMIT, currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
   });
 
   const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
@@ -35,7 +42,7 @@ const FilterPage = () => {
   return (
     <MainLayout
       title="Filters"
-      subtitle={`${data?.data.pagination.totalCars} Cars Available`}
+      subtitle={`${data?.meta.count || 0} Cars Available`}
       buttonText="View All"
       onClick={() => navigate("/car-detail")}
       isnotSellMyCar={true}
@@ -95,6 +102,7 @@ const FilterPage = () => {
           <FilterSidebar filters={filters} setFilters={setFilters} />
         </Box>
       </Box>
+      <PaginationComponent page={page} pages={data?.meta.pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>
     </MainLayout>
   );
 };
