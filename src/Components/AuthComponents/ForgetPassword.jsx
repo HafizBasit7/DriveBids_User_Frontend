@@ -16,6 +16,8 @@ import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
 import {sendResetOtp} from "../../api/calls/reset";
 import toast from "react-hot-toast";
+import { validateForm } from "../../utils/utils";
+import { resetPasswordValidation } from "../../validations/auth.validation";
 
 const ForgetPassword = () => {
     const [email, setEmail] = useState("");
@@ -36,9 +38,10 @@ const ForgetPassword = () => {
     const sendCode = async () => {
         setLoading(true);
         try {
+            validateForm([resetPasswordValidation], {email: email ? email.trim() : email})
             await sendResetOtp({email});
             setTimeout(() => {
-                navigate('/otp')
+                navigate(`/otp?email=${email}`)
             }, 2000);
         }
         catch(e) {

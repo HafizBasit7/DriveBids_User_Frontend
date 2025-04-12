@@ -2,6 +2,7 @@ import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
 import { useAuth } from "../context/auth.context";
 import LandingPage from "../Pages/LandingPage/LandingPage";
 import authLoader from "./loaders/auth.loader";
+import otpLoader from "./loaders/otp.loader";
 import LoginPage from "../Pages/Auth/LoginPage";
 import SignupPage from "../Pages/Auth/SIgnupPage";
 import ForgetPasswordPage from "../Pages/Auth/ForgetPassword";
@@ -87,7 +88,7 @@ const createRouter = (authState) => createBrowserRouter([
             {path: 'login', element: <LoginPage/>},
             {path: 'signup', element: <SignupPage/>},
             {path: 'reset-pass', element: <ForgetPasswordPage/>},
-            {path: 'otp', element: <EnterOtpPage/>},
+            {path: 'otp', loader: otpLoader, element: <EnterOtpPage/>},
             {path: 'confirm-reset-pass', loader: resetLoader, element: <ResetPasswordPage/>},
         ]
     },

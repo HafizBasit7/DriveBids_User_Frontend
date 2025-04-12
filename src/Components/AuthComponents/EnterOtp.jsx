@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Paper,
   Button,
@@ -8,12 +8,45 @@ import {
 } from "@mui/material";
 import OtpInput from "react-otp-input";
 import colors from "../../Style/color";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import {formatSeconds} from "../../utils/utils";
+import toast from "react-hot-toast";
+import { sendResetOtp } from "../../api/calls/reset";
 
 const Enteropt = () => {
   const [otp, setOtp] = useState("");
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get('email');
+  const [timeLeft, setTimeLeft] = useState(300);
+
+  useEffect(() => {
+    const currentInterval = setInterval(() => {
+      setTimeLeft(prevVal => {
+        if(prevVal > 0) {
+          return (prevVal - 1);
+        } else {
+          return 0;
+        }
+      })
+    }, 1000);
+
+    return () => clearInterval(currentInterval);
+  }, []);
 
   const navigate = useNavigate();
+
+  const handleResend = () => {
+    if(timeLeft < 1) {
+      toast.promise(async () => {
+         await sendResetOtp({email});
+      }, {
+        loading: 'Requesting OTP...',
+        error: (error) => error.message,
+        success: 'You will receive OTP, if relevant account exists. Redirecting...'
+      });
+      setTimeLeft(300);
+    }
+  };
 
   return (
     <Paper
@@ -94,13 +127,14 @@ const Enteropt = () => {
         color="textSecondary"
         sx={{ mb: 2, fontSize: 12, display: "flex", justifyContent: "start", ml:1 }}
       >
-        00:00{" "}
+        {formatSeconds(timeLeft)}{" "}
         <Link
           href="#"
+          onClick={handleResend} 
           sx={{
             ml: 1,
             fontWeight: "bold",
-            color: colors.buttoncolor,
+            color: timeLeft > 0 ? 'grey' : colors.buttoncolor, 
             textDecoration: "none",
           }}
         >

@@ -22,16 +22,20 @@ import toast from "react-hot-toast";
 import { signupUser } from "../../api/calls/auth";
 import LocationInput from "../Location/LocationInput";
 import { countryCodes } from "../../utils/coutrycode";
+import {validateForm} from "../../utils/utils";
+import { loginValidation, signupValidation, traderSignupValidation } from "../../validations/auth.validation";
 
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [businessAddress, setBusinessAddress] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [name, setName] = useState();
+
+  const [country, setCountry] = useState("+92");
+  const [phone, setPhone] = useState();
+
+  const [location, setLocation] = useState();
+  const [businessAddress, setBusinessAddress] = useState();
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -51,16 +55,27 @@ const Signup = () => {
   const handleSignupUser = async () => {
     setLoading(true);
     try {
-      await signupUser({
-        email, 
+      const body = {
+        email: email ? email.trim() : email, 
         password, 
         type: role === 'Individual' ? 'individual' : 'trader',
-        city, 
-        country, 
-        name, 
-        phoneNumber: phone,
+        name,
+        location, 
+        phoneNumber: {
+          phoneNo: Number(phone),
+          countryCode: Number(country.replace("+", "")), 
+        },
         businessAddress 
-      });
+      };
+
+      //Validations
+      validateForm([signupValidation, loginValidation], body);
+      const currentSignupType = role === 'Individual' ? 'individual' : 'trader';
+      if(currentSignupType === 'trader') {
+        validateForm([traderSignupValidation], body);
+      }
+
+      await signupUser(body);
 
       setTimeout(() => {
         navigate('/login')
@@ -273,7 +288,7 @@ const Signup = () => {
       }}
     >
       {countryCodes.map((item) => (
-        <MenuItem key={item.code} value={item.code}>
+        <MenuItem key={item.code} value={item.dial_code}>
           {item.code} ({item.dial_code})
         </MenuItem>
       ))}
@@ -301,7 +316,7 @@ const Signup = () => {
 </Box>
 
       <Box sx={{ mb: 2 }}>
-        <LocationInput/>
+        <LocationInput value={location?.name} handleChange={(location) => setLocation(location)}/>
         {/* <TextField
           label="City"
           disabled={loading}

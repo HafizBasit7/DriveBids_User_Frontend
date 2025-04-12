@@ -59,3 +59,21 @@ export const calculateTimeLeft = (targetDate) => {
 
   return `${days}d:${hours}hr:${minutes}m:${seconds}s`
 };
+
+export const validateForm = (validations, data) => {
+  for(const validation of validations) {
+      const result = validation.safeParse(data);
+      if(!result.success) {
+          throw {
+              name: 'app',
+              message: result.error.errors[0].message,
+          }
+      }
+  }
+};
+
+export function formatSeconds(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}

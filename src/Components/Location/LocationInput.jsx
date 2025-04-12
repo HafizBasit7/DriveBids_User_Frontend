@@ -17,10 +17,8 @@ export default function LocationInput ({loading, value, handleChange, placeholde
                     place.geometry.location.lat()
                 ],
             };
-            console.log(location);
             handleChange(location);
         }
-        
     };
 
     return (
@@ -35,7 +33,8 @@ export default function LocationInput ({loading, value, handleChange, placeholde
                 <TextField
                     disabled={loading}
                     fullWidth
-                    label={value || placeholder || 'Location'}
+                    label='Location'
+                    placeholder={value || placeholder || 'Location'}
                     sx={{
                     "& .MuiOutlinedInput-root": {
                         height: 50,

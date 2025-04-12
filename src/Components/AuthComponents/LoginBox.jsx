@@ -16,6 +16,8 @@ import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
 import {useAuth} from "../../context/auth.context.jsx";
 import toast from "react-hot-toast";
+import { validateForm } from "../../utils/utils.js";
+import { loginValidation } from "../../validations/auth.validation.js";
 
 const LoginBox = () => {
   const [email, setEmail] = useState("");
@@ -38,6 +40,8 @@ const LoginBox = () => {
   const loginUser = async () => {
     setLoading(true);
     try {
+      //Validations
+      validateForm([loginValidation], {email: email ? email.trim() : email, password});
       await login({email, password});
     }
     catch(e) {
