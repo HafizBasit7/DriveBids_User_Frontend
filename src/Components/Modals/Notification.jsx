@@ -23,12 +23,14 @@ const Notifications = () => {
   const { data } = useQuery({
     queryKey: ['notifications'],
     queryFn: () => getMyNotifications(1, 5),
+    staleTime: 1000 * 30,
   });
 
   //Count of notifications
   const {data: count, isLoading} = useQuery({
     queryKey: ['notificationCount'],
     queryFn: getNotificationCount,
+    staleTime: 1000 * 30,
   });
   const unreadCount = count?.data.count;
   const notifications = data?.data.notifications;

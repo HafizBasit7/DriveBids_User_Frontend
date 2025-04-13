@@ -1,29 +1,38 @@
 import { Box, Typography, Divider, Chip, Button } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getCarBiddingHistory } from "../../api/calls/car";
 import { formatAmount, formatDateTime } from "../../utils/utils";
 import colors from "../../Style/color";
 import { useAuth } from "../../context/auth.context";
-
-const bids = [
-  { amount: "$30,000", bidOrder: "4th Bid", date: "12 December", time: "12:00PM", highest: true },
-  { amount: "$24,000", bidOrder: "3rd Bid", date: "12 December", time: "12:00PM" },
-  { amount: "$22,000", bidOrder: "2nd Bid", date: "12 December", time: "12:00PM" },
-];
+import toast from "react-hot-toast";
+import {acceptBid as acceptBidOnCar} from "../../api/calls/bid";
 
 const BidsHistory = ({car, owner}) => {
 
   const {authState} = useAuth();
   const user = authState.user;
 
-  console.log(user);
-  console.log(owner);
+  const mutation = useMutation({
+    mutationFn: acceptBidOnCar,
+  })
 
   const {data, isLoading} = useQuery({
     queryKey: ['biddingHistory', car],
     queryFn: () => getCarBiddingHistory(car),
   });
   const bids = data?.data?.bids;
+
+  const acceptBid = (bidId) => {
+    if(mutation.isPending) return;
+
+    toast.promise(async () => {
+      await mutation.mutateAsync({carId: car, bidId});
+    }, {
+      loading: 'Accepting bid...',
+      error: (e) => e.message,
+      success: 'Bid Accepted, Car sold!',
+    })
+  }
 
   return (
     <Box
@@ -84,21 +93,11 @@ const BidsHistory = ({car, owner}) => {
              fontSize: 10,
              mt:0.5
            }}
-           onClick={() => setOpenDamage(true)}
+           onClick={() => acceptBid(bid._id)}
          >
            Accept
          </Button>
          )}
-{/* todo: ok  */}
-          {/* Bid Order & Time (Second Row) */}
-          {/* <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="body2" color="black" sx={{ fontFamily: "Inter" }}>
-              {bid.bidOrder}
-            </Typography>
-            <Typography variant="caption" color="gray" sx={{ fontFamily: "Inter, sans-serif" }}>
-              {bid.time}
-            </Typography>
-          </Box> */}
 
           {/* Divider */}
           {index !== bids.length - 1 && <Divider sx={{ mt: 2 }} />}

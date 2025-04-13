@@ -1,4 +1,4 @@
-import { Box, Pagination, useMediaQuery, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import MainLayout from "../../Layouts/MainLayout";
 import FilterSidebar from "../../Components/FilterPageComponent/FilterSideBar.jsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -36,7 +36,9 @@ const FilterPage = () => {
     });
 
     useEffect(() => {
-      refetch();
+      if(Object.keys(filters).length > 0) {
+        refetch();
+      }
     }, [filters])
 
   return (

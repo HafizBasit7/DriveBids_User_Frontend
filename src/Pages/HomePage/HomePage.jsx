@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import { listCars, listCarsByBidCount } from "../../api/calls/car";
 import { useAuth } from "../../context/auth.context";
+import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ const HomePage = () => {
   const {data, isLoading} = useQuery({
     queryKey: ['cars'],
     queryFn: () => listCars(1, 10, 'recent', currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
-    staleTime: 1000 * 30,
   });
 
   const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
@@ -30,13 +30,11 @@ const HomePage = () => {
   const {data: endingCarList, isLoading: endingCarListLoading} = useQuery({
     queryKey: ['carsEnding'],
     queryFn: () => listCars(1, 10, 'ending', currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
-    staleTime: 1000 * 30,
   });
 
   const {data: carsByBidCount, isLoading: carsByBidCountLoading} = useQuery({
     queryKey: ['carsByBidCount'],
     queryFn: () => listCarsByBidCount(1, 10, currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
-    staleTime: 1000 * 30,
   });
 
 
@@ -66,7 +64,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {carsByBidCount?.data.cars.map((car, index) => (
+        {carsByBidCountLoading ? <SkeletonLoader count={3}/> : carsByBidCount?.data.cars.map((car, index) => (
            <CarCard key={index} carsInWatchList={carsInWatchList} ad={car.car} />
         ))}
       </Box>
@@ -76,7 +74,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {endingCarList?.data.cars.map((car, index) => (
+        {endingCarListLoading ? <SkeletonLoader count={3}/> : endingCarList?.data.cars.map((car, index) => (
            <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
         ))}
       </Box>
@@ -86,7 +84,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {data?.data.cars.map((car, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : data?.data.cars.map((car, index) => (
            <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
         ))}
       </Box>

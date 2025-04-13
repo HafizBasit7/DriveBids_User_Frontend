@@ -50,6 +50,7 @@ const CarInspectionModal = ({ open, onClose, car }) => {
   const {data, isLoading} = useQuery({
     queryKey: ['inspectionReport', car],
     queryFn: () => getCarInspectionReport(car),
+    refetchOnMount: false,
   })
 
   const inspectionReport = data?.data?.inspectionReport;

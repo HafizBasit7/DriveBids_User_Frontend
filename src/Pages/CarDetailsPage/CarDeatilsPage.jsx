@@ -15,12 +15,15 @@ import { timeAgo } from "../../utils/utils";
 import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import CarCard from "../../Components/HomePageComponents/CarCard";
-import { useBidSocket } from "../../context/bid.socket";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { getChatId } from "../../api/calls/chat";
+import CarLoader from "../../Components/Loader/CarLoader";
+import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
+import NotFound from "../../Pages/NotFounf404Page";
+import { useSocket } from "../../context/socket.context";
 
-const SimilarCars = ({make}) => {
+const SimilarCars = ({make, carId}) => {
   const {data, isLoading} = useQuery({
     queryKey: ['similarCars'],
     queryFn: () => getSimilarCars(1, 10, make),
@@ -29,15 +32,10 @@ const SimilarCars = ({make}) => {
   const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
     queryKey: ['carsInWatchList'],
     queryFn: getCarsIdInWatchList,
-    enabled: false,
 });
 
-
-if(isLoading) {
-  return null;
-}
-
 const cars = data?.data.cars;
+
 
   return (
     <>
@@ -45,9 +43,12 @@ const cars = data?.data.cars;
               <DealsBanner title="Similar Cars"  buttonText={make} />
             </Box>
             <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {cars.map((car, index) => (
-           <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
-        ))}
+        {isLoading ?  <SkeletonLoader count={3}/> : cars.map((car, index) => {
+          if(car._id === carId) {
+            return <></>
+          }
+          return <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
+        })}
       </Box>
     </>
   );
@@ -58,31 +59,33 @@ const CarDetailsPage = () => {
   const {carId} = useParams();
 
   const {authState} = useAuth();
-  const socket = useBidSocket();
+  const {bidSocket: socket} = useSocket();
 
   useEffect(() => {
     if(socket) {
       socket.emit('join-room', {roomId: carId});
     }
-
     return () => {
-      socket.emit('leave-room', {roomId: carId});
+      if(socket) {
+        socket.emit('leave-room', {roomId: carId});
+      }
     };
   }, [socket]);
   
-  const {data, isLoading} = useQuery({
+  const {data, isLoading, error} = useQuery({
     queryKey: ['car', carId],
     queryFn: () => getCar(carId),
   });
 
-
-
   if(isLoading) {
-    return null;
+    return <CarLoader/>;
   }
+
+  if(error?.statusCode === 404) {
+    return <NotFound/>
+  }
+
   const car = data.data.car;
-  //Calculations
-  const isMyCar = car.user._id === authState.user._id;
 
   const messageOwnerHandle = async () => {
     toast.promise(async () => {
@@ -204,7 +207,7 @@ const CarDetailsPage = () => {
           <BidsHistory car={car?._id} owner={car?.user._id}/>
         </Box>
       </Box>
-      <SimilarCars make={car.make}/>
+      <SimilarCars make={car.make} carId={car?._id}/>
       
            
     </MainLayout>

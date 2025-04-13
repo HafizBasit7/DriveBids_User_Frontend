@@ -78,13 +78,14 @@ import Page404 from "../Pages/NotFounf404Page";
 import ChatPage from "../Pages/ChatPage/ChatPage";
 import CompletedDeals from "../Pages/CompletedDeals/CompletedDeals";
 import NotificationSettings from "../Pages/NotificationSettings/NotificationSettings";
+import InitialLoadingPage from "../Pages/Service/InitialLoadingPage";
 
 const createRouter = (authState) => createBrowserRouter([
     {path: '/', element: <LandingPage/>},
     //Auth Stack
     {
         path: '/', 
-        element: <Outlet/>,
+        element: <InitialLoadingPage/>,
         loader: () => authLoader(authState),
         children: [
             {path: 'login', element: <LoginPage/>},
@@ -97,7 +98,7 @@ const createRouter = (authState) => createBrowserRouter([
     //Dashboard stack
     {
         path: '/',
-        element: <Outlet/>,
+        element:  <InitialLoadingPage/>,
         loader: () => dashboardLoader(authState),
         children: [
             {path: 'home', element: <HomePage/>},
@@ -105,7 +106,7 @@ const createRouter = (authState) => createBrowserRouter([
             {path: 'all/:type', element: <ViewAllCars/>},
             {path: 'chat', element: <ChatPage/>},
             {path: 'car/:carId', element: <CarDetailsPage/>},
-            {path: 'car/:carId/owner', element: <CarListingPage/>},
+            {path: 'cars/:userId', element: <CarListingPage/>},
             {path: 'contact', element: <ContactPage/>},
             //User
             {path: 'my-ads', element: <MyAdsPage/>},
@@ -138,7 +139,6 @@ const createRouter = (authState) => createBrowserRouter([
                             {path: 'owner', element: <CarOwnerPage/>},
                             {path: 'horse-power', element: <CarHorsePower/>},
                             {path: 'condition', element: <CarConditionPage/>},
-                            {path: 'notfound', element: <Page404/>},
                             {path: 'title', element: <AdsDescription/>},
                             {path: 'accident', element: <AccidentDescription/>},
                             {path: 'feature-1', element: <CarFeaturesPage1/>},
@@ -186,7 +186,8 @@ const createRouter = (authState) => createBrowserRouter([
                 ],
             }
         ],
-    }
+    },
+    {path: "*", element: <Page404/>}
 ]);;
 
 export default function AppBrowserRouter() {

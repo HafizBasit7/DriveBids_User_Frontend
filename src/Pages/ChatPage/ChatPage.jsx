@@ -3,41 +3,21 @@ import MainLayout from "../../Layouts/MainLayout";
 import ChatList from "../../Components/ChatPageComponents/Chatlist";
 import ChatWindow from "../../Components/ChatPageComponents/ChatWindow";
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import {useChatSocket} from "../../context/chat.socket";
+import {useSocket} from "../../context/socket.context";
+import { useSearchParams } from "react-router-dom";
 
 const ChatPage = () => {
-  const [selectedChat, setSelectedChat] = useState(null); 
-  const selectedChatRef = useRef(null);
-  const socket = useChatSocket();
-
-  // useEffect(() => {
-  //   window.scrollTo(0, 0); 
-  // }, []);
+  const [searchParams] = useSearchParams();
+  const chatId = searchParams.get('chatId');
 
   useEffect(() => {
-    if(socket && selectedChat) {
-      try {
-        socket.emit('join-room', {roomId: selectedChatRef.current._id});
-      }
-      catch(e) {}
-    }
-    return () => {
-      try {socket?.emit('leave-room', {roomId: selectedChatRef.current._id});}
-      catch(e) {
+    window.scrollTo(0, 0); 
+  }, []);
 
-      }
-    };
-  }, [socket, selectedChat]);
- 
-
+  
   return (
     <MainLayout 
-
     ischatScreen={true}
-   
-   
-   
     isnotSellMyCar ={true}
     >
       <Box
@@ -52,39 +32,36 @@ const ChatPage = () => {
         <Box
           sx={{
             width: {
-              xs: selectedChat ? "0%" : "100%", 
+              xs: chatId ? "0%" : "100%", 
               sm: "35%",
               md: "30%",
             },
             overflowY: "auto",
             minHeight: "100vh",
-            display: { xs: selectedChat ? "none" : "block", sm: "block" },
+            display: { xs: chatId ? "none" : "block", sm: "block" },
           }}
         >
-          <ChatList onSelectChat={(chat) =>{ setSelectedChat(chat); selectedChatRef.current=chat;}} />
+          <ChatList/>
         </Box>
 
         <Box
           sx={{
             width: {
-              xs: selectedChat ? "100%" : "0%",
+              xs: chatId ? "100%" : "0%",
               sm: "65%",
               md: "70%",
             },
             display: {
-              xs: selectedChat ? "block" : "none",
+              xs: chatId ? "block" : "none",
               sm: "block",
             },
             height: "100%",
           }}
         >
-          {selectedChat && (
-            <ChatWindow
-              chat={selectedChat}
-              onBack={() => setSelectedChat(null)} 
-            />
+          {chatId && (
+            <ChatWindow/>
           )}
-          {!selectedChat && (
+          {!chatId && (
             <Box
               sx={{
                 display: { xs: "none", sm: "flex" },

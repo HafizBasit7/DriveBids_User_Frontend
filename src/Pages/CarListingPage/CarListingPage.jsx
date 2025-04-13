@@ -1,5 +1,5 @@
 import { Box, Typography, Stack, Paper } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import MainLayout from "../../Layouts/MainLayout";
 import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 
@@ -7,10 +7,16 @@ import CarCard from "../../Components/HomePageComponents/CarCard";
 import { useQuery } from "@tanstack/react-query";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import { getCarOwnerCars } from "../../api/calls/car";
+import SkeletonLoading from "../../Components/Loader/SkeletonLoader";
+import PaginationComponent from "../../Components/Common/PaginationComponent";
+
+const LIMIT = 10;
 
 const CarListingPage = () => {
   const navigate = useNavigate();
-  const {carId} = useParams();
+  const {userId} = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
 
   const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
     queryKey: ['carsInWatchList'],
@@ -18,28 +24,17 @@ const CarListingPage = () => {
   });
 
   const {data, isLoading} = useQuery({
-    queryKey: ['carOwnerCars', carId],
-    queryFn: () => getCarOwnerCars(1, 10, carId),
+    queryKey: ['carOwnerCars', userId, page],
+    queryFn: () => getCarOwnerCars(page, LIMIT, userId),
   });
 
-  const cars = data?.data?.cars;
-  const user = data?.data;
-
-  if(isLoading) {
-    return null;
-  }
+  const cars = data?.data?.cars.cars;
+  const user = data?.data.user;
+  const count = data?.meta.count;
+  const pages = data?.meta.pages;
 
   return (
-    <MainLayout>
-      <Box width="100%" sx={{ mt: 2 }}>
-        <DealsBanner
-          title={user.name}
-          subtitle={user.type === 'individual' ? 'Private Seller' : 'Trader'}
-          buttonText="Back to Home"
-          onClick={() => navigate("/home")}
-        />
-      </Box>
-
+    <MainLayout title={user?.name} onClick={() => navigate("/home")} buttonText="Back to Home" subtitle={user?.type === 'individual' ? 'Private Seller' : 'Trader'}>
       <Box
         sx={{
           width: "100%",
@@ -54,13 +49,14 @@ const CarListingPage = () => {
           justifyContent: { xs: "center", sm: "flex-start" },
         }}
       >
-        {cars?.map((car, index) => (
+        {isLoading ? <SkeletonLoading count={4}/> : cars?.map((car, index) => (
             <CarCard carsInWatchList={carsInWatchList} ad={car}/>
         ))}
 
         {/* <CarCard /> */}
         
       </Box>
+      <PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>
     </MainLayout>
   );
 };

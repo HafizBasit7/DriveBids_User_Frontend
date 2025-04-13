@@ -73,7 +73,7 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals 
   const isCarSold = ad.status === 'sold';
   let winning = false;
   if(isFromMyBids) {
-    winning = bid.status === 'won' ? isCarSold ? 'Bid Won' : 'Winning' : isCarSold ? 'Bid Lost' : 'Losing';
+    winning = isCarSold ? bid.status === 'won' ? 'Bid Won' : 'Bid Lost' : ad.highestBid === bid.bidAmount ? 'Winning' : 'Losing';
   }
   const getChipStyles = () => {
     if (winning === "Winning") {

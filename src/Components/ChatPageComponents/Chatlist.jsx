@@ -1,22 +1,132 @@
 import { Box, Typography, TextField, List, ListItem, ListItemAvatar, ListItemText, Avatar, Badge, IconButton } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import colors from "../../Style/color";
 import SearchIcon from "@mui/icons-material/Search";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getChats } from "../../api/calls/chat";
 import { timeAgo } from "../../utils/utils";
+import { useAuth } from "../../context/auth.context";
+import { useSocket } from "../../context/socket.context";
+import { useSearchParams } from "react-router-dom";
 
-const ChatList = ({ onSelectChat }) => {
+const LIMIT = 10;
+
+const ChatList = () => {
   const [tabValue, setTabValue] = useState(0);
-  const [activeChat, setActiveChat] = useState(2);
 
-  const {data, isLoading} = useQuery({
-    queryKey: ['chats', tabValue === 0 ?  'buying' : 'selling'],
-    queryFn: () => getChats(1, 10, tabValue === 0 ?  'buying' : 'selling'),
+  const [searchParams, setSearchParams] = useSearchParams();
+  const chatId = searchParams.get('chatId');
+
+  const loaderRef = useRef(null);
+
+  const {authState} = useAuth();
+  const {chatSocket: socket} = useSocket();
+  const queryClient = useQueryClient();
+  const type = tabValue === 0 ?  'buying' : 'selling';
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['chats', type],
+    queryFn: ({pageParam = 1}) => getChats(pageParam, LIMIT, type),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage?.data?.chats?.length === LIMIT
+        ? allPages.length + 1
+        : undefined;
+    },
   });
-  const chats = data?.data.chats;
+  const chats = data?.pages.flatMap((page) => page?.data?.chats) || [];
 
+  useEffect(() => {
+    if(socket) {
+      socket.emit('join-room', {roomId: authState.user._id});
+      socket.on('new-message-chat', handleNewMessageUpdate);
+      socket.on('new-chat', handleNewChat);
+    }
 
+    return () => {
+      if(socket) {
+        socket?.emit('leave-room', {roomId: authState.user._id});
+        socket?.off('new-message-chat');
+        socket?.off('new-chat');
+      }
+    };
+  }, [socket]);
+
+  //Socket updates
+  const handleNewChat = (chat) => {
+    chat.updatedAt = new Date();
+    queryClient.setQueryData(['chats', chat.type], (oldData) => {
+      const newData = {...oldData};
+      const newPagesData = [
+        {
+          ...newData.pages[0],
+          data: {
+            chats: [
+              chat,
+              ...newData.pages[0].data.chats,
+            ]
+          }
+        },
+        ...newData.pages.slice(1),
+      ]
+      newData.pages = newPagesData;
+      return newData;
+    });
+  };
+
+  const handleNewMessageUpdate = (message) => {
+    const cacheData = queryClient.getQueryData(['chats', message.type]);
+    const oldPagesData = [...cacheData.pages];
+    let chatToUpdate;
+    let newPagesData = oldPagesData.map(page => {
+    const newPageChats = [...page.data?.chats.filter(chat => {
+        if(chat._id === message.chat) {
+          chatToUpdate = {...chat, lastMessage: message.message, updatedAt: new Date()};
+          return false;
+        }
+        return true;
+      })]
+      return {...page, data: {chats: newPageChats}};
+    });
+    newPagesData = [
+      {
+        data: {
+          chats: [
+            chatToUpdate,
+            ...newPagesData[0].data.chats
+          ],
+        }
+      },
+      ...newPagesData.slice(1)
+    ];
+    queryClient.setQueryData(['chats', message.type], {pageParams: cacheData.pageParams, pages: newPagesData});
+  };
+  //
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        if (hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      }
+    });
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [hasNextPage, isFetchingNextPage]);
 
   return (
     <Box sx={{ fontFamily: "Inter, sans-serif", p: 2, borderRadius: "12px" }}>
@@ -119,12 +229,12 @@ const ChatList = ({ onSelectChat }) => {
 
         {/* Chat List */}
         <List>
-          {chats?.map((chat) => (
+          {chats?.length > 0 && chats?.map((chat, index) => (
             <ListItem
-              key={chat._id}
-              button
+              key={index}
+              button="true"
              
-              onClick={() => onSelectChat(chat)}
+              onClick={() => setSearchParams({chatId: chat._id})}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -132,7 +242,7 @@ const ChatList = ({ onSelectChat }) => {
                 borderRadius: "12px",
                 mb: 1,
                 p: 1.5,
-                bgcolor: activeChat === chat._id ? "#E8F0FE" : "transparent", // Highlight active chat
+                bgcolor: chat._id === chatId ? "#E8F0FE" : "transparent", // Highlight active chat
                 transition: "background 0.3s",
               }}
             >
@@ -174,6 +284,7 @@ const ChatList = ({ onSelectChat }) => {
               </Box>
             </ListItem>
           ))}
+          {hasNextPage && (<Typography ref={loaderRef}>Loading More...</Typography>)}
         </List>
       </Box>
     </Box>

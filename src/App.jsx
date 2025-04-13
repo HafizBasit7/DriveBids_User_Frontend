@@ -3,20 +3,23 @@ import  "./App.css"
 import AuthContextProvider from "./context/auth.context";
 import AppBrowserRouter from "./router/brower-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import BidSocket from "./context/bid.socket";
-import ChatSocket from "./context/chat.socket";
+import SocketContextProvider from "./context/socket.context";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    }, 
+  }
+});
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-        <BidSocket>
-          <ChatSocket>
+        <SocketContextProvider>
             <AppBrowserRouter/>
-          </ChatSocket>
-        </BidSocket>
+        </SocketContextProvider>
       </AuthContextProvider>
     </QueryClientProvider>
   );

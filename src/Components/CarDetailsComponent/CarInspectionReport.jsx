@@ -1,4 +1,4 @@
-import { Box, Typography, Link, Button, IconButton } from "@mui/material";
+import { Box, Typography, Button, IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -16,6 +16,10 @@ import CarReport3 from "../../assets/SVG/exteriorimg2.svg";
 import CarReport4 from "../../assets/SVG/exteriorimg3.svg";
 
 import { useState } from "react";
+import { useAuth } from "../../context/auth.context";
+import { useQuery } from "@tanstack/react-query";
+import { getCarDamageReport } from "../../api/calls/car";
+import { Link } from "react-router-dom";
 
 const images = [CarReport1, CarReport2, CarReport3, CarReport4];
 const views = ["Front View", "Back View", "Right Side View", "Left Side View"];
@@ -24,6 +28,17 @@ const CarInspectionReport = ({car}) => {
   const [open, setOpen] = useState(false);
   const [openDamage, setOpenDamage] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const {authState} = useAuth();
+
+  const {data, isLoading} = useQuery({
+    queryKey: ['damageReport', car._id],
+    queryFn: () => getCarDamageReport(car._id),
+    refetchOnMount: false,
+  });
+  
+  const damageReport = data?.data.damageReport.damageReport;
+  
+  const isMyCar = car.user._id === authState.user._id;
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) =>
@@ -52,7 +67,7 @@ const CarInspectionReport = ({car}) => {
       }}
     >
       {/* Seller Info */}
-      <Box
+     {!isMyCar && ( <Box
   sx={{
     p: 0.5,
     borderRadius: 2,
@@ -120,7 +135,7 @@ const CarInspectionReport = ({car}) => {
       >
         {/* View All Report */}
         <Link
-          href={`/car/${car.user._id}/owner`}
+          to={`/cars/${car.user._id}`}
           underline="hover"
           sx={{
             fontSize: 13,
@@ -135,7 +150,7 @@ const CarInspectionReport = ({car}) => {
 
       </Box>
     </Box>
-    </Box>
+    </Box>)}
 
 
       {/* Car Inspection Report */}
@@ -143,8 +158,8 @@ const CarInspectionReport = ({car}) => {
         <Typography variant="h6" sx={{ fontWeight: 500, fontFamily: "Inter" }}>
           Car Inspection Report
         </Typography>
-        <Link
-          href="#"
+        <Box
+          
           underline="hover"
           sx={{
             fontSize: 14,
@@ -152,6 +167,7 @@ const CarInspectionReport = ({car}) => {
             alignItems: "center",
             gap: 0.5,
             color: "#0056D2",
+            cursor: 'pointer',
             fontWeight: 500,
             textDecoration: "underline",
             fontFamily: "Inter",
@@ -161,7 +177,7 @@ const CarInspectionReport = ({car}) => {
         >
           <VisibilityIcon fontSize="small" />
           View Detailed Report
-        </Link>
+        </Box>
       </Box>
 
       {/* Damage Report */}
@@ -280,7 +296,7 @@ const CarInspectionReport = ({car}) => {
 
       {/* Modals */}
       <CarInspectionModal car={car._id} open={open} onClose={() => setOpen(false)} />
-      <DamageModal open={openDamage} onClose={() => setOpenDamage(false)} />
+      <DamageModal car={car._id} open={openDamage} onClose={() => setOpenDamage(false)} />
     </Box>
   );
 };

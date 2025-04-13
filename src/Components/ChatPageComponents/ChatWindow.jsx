@@ -6,55 +6,136 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import colors from "../../Style/color";
 import { useEffect, useRef, useState } from "react";
 import AdBanner from "./AdBanner";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getChatCarHead, getChatMessages, sendMessage } from "../../api/calls/chat";
 import { timeAgo } from "../../utils/utils";
 import { useAuth } from "../../context/auth.context";
+import { useSearchParams } from "react-router-dom";
+import { useSocket } from "../../context/socket.context";
 
-const ChatWindow = ({ chat, onBack }) => {
-  const messagesEndRef = useRef(null);
+const LIMIT = 10;
+
+const ChatWindow = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const chatId = searchParams.get('chatId');
   const messagesContainerRef = useRef(null);
-
-  const chatId = chat._id;
-  const [newMessage, setNewMessage] = useState('');
-  const newMessageRef = useRef('');
-
   const {authState} = useAuth();
+  const [newMessage, setNewMessage] = useState('');
+  const {chatSocket: socket} = useSocket();
+  const queryClient = useQueryClient();
+  const loaderRef = useRef(null);
+  const firstVisit = useRef(true);
+
   const user = authState.user;
 
+  //Chat Head
   const {data: chatHeadData, isLoadingChatHead} = useQuery({
     queryKey: ['chatCarHead', chatId],
     queryFn: () => getChatCarHead(chatId)
   });
   const chatHeadDataReal = chatHeadData?.data.chatHead;
 
-  const {data: messagesTmp, isLoading: messagesLoading} = useQuery({
+  //Messages
+  const {
+    data: messagesTmp,
+    isLoading: messagesLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ['messages', chatId],
-    queryFn: () => getChatMessages(chatId, 1, 30),
+    queryFn: ({pageParam = 1}) => getChatMessages(chatId, pageParam, LIMIT),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage?.data?.messages?.length === LIMIT
+        ? allPages.length + 1
+        : undefined;
+    },
   });
-
-  const mutation = useMutation({
-    mutationFn: () => sendMessage(chatId, newMessage),
-  });
-
-  const messages = messagesTmp?.data.messages;
+  const messages = messagesTmp?.pages.flatMap((page) => page?.data?.messages) || [];
   
+  //Send Message mutation
+  const mutation = useMutation({
+    mutationFn: sendMessage,
+  });
 
   useEffect(() => {
-    // messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if(!messagesLoading && messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTo({
+          top: messagesContainerRef.current.scrollHeight,
+          behavior: 'smooth',
+        });
+    }
+  }, [messagesLoading]);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        if (hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      }
+    });
 
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [hasNextPage, isFetchingNextPage]);
+
+  //Socket
+  useEffect(() => {
+    if(socket) {
+      socket.emit('join-room', {roomId: chatId});
+      socket.on('new-message', handleNewMessageUpdate);
+    }
+
+    return () => {
+      if(socket) {
+        socket?.emit('leave-room', {roomId: chatId});
+        socket?.off('new-message');
+      }
+    };
+  }, [socket]);
+  const handleNewMessageUpdate = (message) => {
+    //Update messages list
+    queryClient.setQueryData(['messages', chatId], (pages) => {
+      const newPages = {...pages};
+      newPages.pages = [
+        {
+          ...pages.pages[0],
+          data: {
+            messages: [
+              message,
+              ...pages.pages[0].data.messages,
+            ],
+          }
+        },
+        ...pages.pages.slice(1),
+      ];
+      return newPages;
+    });
+  };
+  //
 
 
   const sendMessageClick = async () => {
-     await mutation.mutateAsync();
+    mutation.mutateAsync({chatId, message: newMessage}).then(() => {
+      //Scroll
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTo({
+          top: messagesContainerRef.current.scrollHeight,
+          behavior: 'smooth',
+        });
+      }
+      //
+    });
     setNewMessage('');
-    newMessageRef.current = '';
-
-  //   if (messagesContainerRef.current) {
-  //   messagesContainerRef.current.scrollTop = 0;
-  // }
   };
   
 
@@ -90,7 +171,7 @@ const ChatWindow = ({ chat, onBack }) => {
           </Typography>
         </Box>
         <IconButton
-          onClick={onBack}
+          onClick={() => setSearchParams(null)}
           sx={{
             display: { xs: "block", sm: "none" },
             position: "absolute",
@@ -115,6 +196,7 @@ const ChatWindow = ({ chat, onBack }) => {
           gap: 2,
         }}
       >
+        {hasNextPage && (<Typography ref={loaderRef}>Loading More...</Typography>)}
         {!messages ? (
           <Typography sx={{ textAlign: "center", color: "#aaa" }}>No messages yet</Typography>
         ) : (
@@ -167,7 +249,6 @@ const ChatWindow = ({ chat, onBack }) => {
             </Box>
           ))
         )}
-        <div ref={messagesEndRef} />
       </Box>
 
       <Box
@@ -187,7 +268,7 @@ const ChatWindow = ({ chat, onBack }) => {
           <TextField
             fullWidth
             value={newMessage}
-            onChange={(e) => {setNewMessage(e.target.value); newMessageRef.current = e.target.value; }}
+            onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {  // Prevent Shift+Enter from sending
                 e.preventDefault();  // Stop new line creation

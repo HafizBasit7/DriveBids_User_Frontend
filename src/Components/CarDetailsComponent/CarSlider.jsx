@@ -9,11 +9,15 @@ import { formatAmount } from "../../utils/utils";
 import { useMutation } from "@tanstack/react-query";
 import {placeBidOnCar, buyNowCar} from "../../api/calls/bid";
 import toast from "react-hot-toast";
+import { useAuth } from "../../context/auth.context";
 
 const CarSlider = ({car}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [open, setOpen] = useState(false);
   const thumbnailRef = useRef();
+  const {authState} = useAuth();
+
+  const isMyCar = car.user._id === authState.user._id;
 
   const mutation = useMutation({
     mutationFn: placeBidOnCar,
@@ -146,7 +150,8 @@ const CarSlider = ({car}) => {
         </Box>
       </Box>
 
-      <Box
+      {!isMyCar && car.status !== 'sold' && (
+        <Box
         sx={{
           display: "flex",
           flexWrap: "wrap",
@@ -246,16 +251,18 @@ const CarSlider = ({car}) => {
           )}
         </Button>
       </Box>
+      )}
 
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", mt: 5 }}>
-        <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} />
+        <Box sx={{ flex: 1, height: 3, backgroundColor: car.status === 'sold' ? 'red' : car.reserveMet ? '#32CD32' : colors.buttoncolor }} />
         <Box
           sx={{
             padding: "10px 20px",
             border: "1px solid #D9D9D9",
             borderRadius: 2,
-            color: "#2F61BF",
+            color: car.status === 'sold' ? '#fff' : car.reserveMet ? '#fff' : "#2F61BF",
             fontWeight: 600,
+            backgroundColor: car.status === 'sold' ? 'red' : car.reserveMet ? '#32CD32' : null,
             fontFamily: "Inter",
             fontSize: { xs: 12, sm: 14 },
             width: "33.33%",
@@ -266,9 +273,9 @@ const CarSlider = ({car}) => {
             py: 2.3,
           }}
         >
-          RESERVE NOT MET
+          {car.status === 'sold' ? 'CAR SOLD' : car.reserveMet ? 'RESERVE MET' : 'RESERVE NOT MET'}
         </Box>
-        <Box sx={{ flex: 1, height: 3, backgroundColor: colors.buttoncolor }} />
+        <Box sx={{ flex: 1, height: 3, backgroundColor: car.status === 'sold' ? 'red' : car.reserveMet ? '#32CD32' : colors.buttoncolor }} />
       </Box>
 
       <BidModal car={car} open={open} onClose={() => setOpen(false)} />

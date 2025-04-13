@@ -1,7 +1,5 @@
 import { chatApiClient } from "../client";
 
-
-
 export const getChats = async (page = 1, limit = 10, type = 'buying') => {
     try {
         const result = await chatApiClient.get(`/chat/chats?page=${page}&limit=${limit}&type=${type}`);
@@ -76,10 +74,9 @@ export const getChatMessages = async (chatId, page = 1, limit = 10) => {
     }
 };
 
-export const sendMessage = async (chatId, message) => {
+export const sendMessage = async ({chatId, message, attachments}) => {
     try {
-        console.log({ chatId, message });
-        const result = await chatApiClient.post(`/chat/sendMessage`, { chatId, message });
+        const result = await chatApiClient.post(`/chat/sendMessage`, { chatId, message, attachments });
         const resultData = result.data;
 
         if (!resultData.status) {
@@ -101,7 +98,7 @@ export const sendMessage = async (chatId, message) => {
     }
 };
 
-export const getChatId = async (userId, carId) => {
+export const getChatId = async ({userId, carId}) => {
     try {
         const result = await chatApiClient.post(`/chat/getChatId`, { userId, carId });
         const resultData = result.data;
@@ -125,3 +122,27 @@ export const getChatId = async (userId, carId) => {
     }
 };
 
+export const hasUnreadMessages = async () => {
+    try {
+        const result = await chatApiClient.get('/chat/haveUnreadMessages');
+        const resultData = result.data;
+
+        if(!resultData.status) {
+            throw {
+                name: 'app',
+                message: resultData.message,
+            };
+        }
+
+        return resultData; 
+    }
+    catch(e) {
+        if(e.response?.data) {
+            throw {
+                name: 'app',
+                ...e.response.data,
+            }
+        }
+        throw e;
+    }
+};
