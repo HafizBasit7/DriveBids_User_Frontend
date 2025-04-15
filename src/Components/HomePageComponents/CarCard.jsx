@@ -206,15 +206,26 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals 
             <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{ad.transmission}</Typography>
           </Box>
 
-          <Box sx={{ display: "flex", alignItems: "center", width: "29%",pl:1}}>
-            <LocalGasStation sx={{ fontSize: 18, mr: 0.5 }} />
-            <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{ad.fuel}</Typography>
-          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", width: "29%", pl: 1 }}>
+  <LocalGasStation sx={{ fontSize: 18, mr: 0.5 }} />
+  <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>
+    {ad.fuel?.toString().length > 4
+      ? `${ad.fuel.toString().slice(0, 5)}..`
+      : ad.fuel}
+  </Typography>
+</Box>
 
-          <Box sx={{ display: "flex", alignItems: "center", width: "32%",}}>
-            <SpeedIcon sx={{ fontSize: 18, mr: 0.5 }} />
-            <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{ad.mileage} KM</Typography>
-          </Box>
+
+<Box sx={{ display: "flex", alignItems: "center", width: "32%" }}>
+  <SpeedIcon sx={{ fontSize: 18, mr: 0.5 }} />
+  <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>
+    {ad.mileage?.toString().length > 3
+      ? `${ad.mileage.toString().slice(0, 3)}.. KM`
+      : `${ad.mileage} KM`}
+  </Typography>
+</Box>
+
+
 
           <Box sx={{ display: "flex", alignItems: "center", width: "31%",pl:2}}>
             <PaletteOutlined sx={{ fontSize: 18, mr: 0.5 }} />
