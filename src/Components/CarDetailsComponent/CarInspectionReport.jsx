@@ -153,7 +153,7 @@ const CarInspectionReport = ({car}) => {
           underline="hover"
           sx={{
             fontSize: 13,
-            color: "#0056D2",
+            color: colors.buttoncolor,
             fontWeight: 500,
             textDecoration: "underline",
             fontFamily: "Inter",

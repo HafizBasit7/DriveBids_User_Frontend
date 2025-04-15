@@ -14,10 +14,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import SpeedIcon from "@mui/icons-material/Speed";
 import SettingsIcon from "@mui/icons-material/Settings";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import GavelIcon from "@mui/icons-material/Gavel";
-import DeleteIcon from "@mui/icons-material/Delete";
-import cardimg from "../../assets/Png/cardimg.png";
+
 import cardarrow from "../../assets/SVG/cardarrow.SVG";
 import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";

@@ -5,6 +5,8 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useMutation } from "@tanstack/react-query";
 import { placeBidOnCar } from "../../api/calls/bid";
 import toast from "react-hot-toast";
+import CloseIcon from "@mui/icons-material/Close";
+
 
 const colors = {
   buttoncolor: "#0052CC",
@@ -42,15 +44,9 @@ const BidModal = ({ open, onClose, car }) => {
       >
         {/* Header Banner */}
         <Box sx={{ width: "100%" }}>
-          <DealsBanner title="Max Bid" subtitle="" buttonText="Place Bid" showClose 
+          <DealsBanner title="Max Bid" subtitle="" buttonText="Close" showClose 
                     onClose={onClose}
-                    icon={<AttachMoneyIcon sx={{ cursor: 'pointer' }} onClick={async () => {
-                      toast.promise(mutation.mutateAsync({carId: car._id, bidAmount: parseInt(bid)}), {
-                        loading: 'Placing bid',
-                        error: error => error.message,
-                        success: 'Bid placed'
-                      })
-                    }} />}  />
+   icon={<CloseIcon sx={{ cursor: 'pointer' }} onClick={onClose} />}                     />
         </Box>
 
         {/* Bid Description */}
@@ -92,11 +88,37 @@ const BidModal = ({ open, onClose, car }) => {
         </Box>
 
         {/* Warning Message */}
-        {bid < minBid && (
+        {bid < minBid ? (
           <Typography sx={{ color: "#B7342C", mt: 1, fontSize: 15 }}>
-            Please bid AED {minBid.toLocaleString()} or higher.
+            Please bid AED {minBid.toLocaleString()} or higheeer.
           </Typography>
-        )}
+        ):(  <Button
+          onClick={async () => {
+            toast.promise(mutation.mutateAsync({carId: car._id, bidAmount: parseInt(bid)}), {
+              loading: 'Placing bid',
+              error: error => error.message,
+              success: 'Bid placed'
+            })
+          }} 
+          
+          variant="outlined"
+          sx={{
+            borderRadius: 2,
+            borderColor: "#2F61BF",
+            color: "#fff",
+            width: "100%", // Full width
+            border: "1px solid #2F61BF",
+            py: 1,
+            width:"33%",
+            my:1,
+            mt:2,
+            backgroundColor:"#2F61BF",
+            fontWeight:600,
+            fontSize:14
+          }}
+        >
+          Place Bid
+        </Button>)}
 
         {/* Suggested Bids - Responsive Layout */}
         <Box
