@@ -1,4 +1,4 @@
-import { Box, Typography, Slider, Button } from "@mui/material";
+import { Box, Typography, Slider, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
@@ -70,32 +70,29 @@ const CarEnginePage = () => {
               <Typography fontWeight={500} textAlign="start" mb={3} sx={{ fontSize: 18, fontFamily: "Inter" }}>
                 Engine Size (CCs)
               </Typography>
-              <Typography textAlign="center" mb={3} fontWeight={600} color={colors.buttoncolor}>
-                {carState.carDetails.engineSize} KM
-              </Typography>
-              <Slider
-                value={carState.carDetails.engineSize}
-                onChange={(_, newValue) => onCangeCarDetails(parseInt(newValue))}
-                step={100}
-                min={800}
-                max={8000}
-                marks={marks}
-                sx={{
-                  color: colors.buttoncolor,
-                  "& .MuiSlider-thumb": {
-                    backgroundColor: colors.buttoncolor,
-                    "&:hover, &.Mui-focusVisible": {
-                      boxShadow: `0px 0px 10px ${colors.buttoncolor}80`,
+              <Box mb={3}>
+                <TextField
+                  fullWidth
+                  placeholder="Enter your car engine size in CC"
+                  value={(carState.carDetails.engineSize || 0).toString()}
+                  onChange={(e) => onCangeCarDetails(parseInt(e.target.value))}
+                  sx={{
+                    fontFamily: "Inter",
+                    "& .MuiOutlinedInput-root": {
+                      height: 40, // reduced height
+                      fontSize: 14,
+                      "& input": {
+                        padding:2,
+                        fontFamily: "Inter",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: colors.buttoncolor,
+                      },
                     },
-                  },
-                  "& .MuiSlider-track": {
-                    backgroundColor: colors.buttoncolor,
-                  },
-                  "& .MuiSlider-rail": {
-                    backgroundColor: `${colors.buttoncolor}40`,
-                  },
-                }}
-              />
+                  }}
+                />
+              </Box>
+             
             </Box>
 
             <Box display="flex" justifyContent="flex-end" mt={3}>

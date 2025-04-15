@@ -1,4 +1,4 @@
-import { Box, Typography, Slider, Button } from "@mui/material";
+import { Box, Typography, Slider, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
@@ -30,7 +30,7 @@ const CarMileagePage = () => {
 
   return (
     <MainLayout  title="Car Mileage"
-    subtitle="Select the Mileage of Your Car"
+    subtitle="Enter the Mileage of Your Car"
     buttonText="Back"
     onClick={() => navigate("../city")}>
       <Box width="100%">
@@ -81,17 +81,39 @@ const CarMileagePage = () => {
               >
                 Mileage in KMs
               </Typography>
+              <Box mb={3}>
+                <TextField
+                  fullWidth
+                  placeholder="Enter your car mileage"
+                  value={(carState.carDetails.mileage || 0).toString()}
+                  onChange={(e) => onCangeCarDetails(parseInt(e.target.value))}
+                  sx={{
+                    fontFamily: "Inter",
+                    "& .MuiOutlinedInput-root": {
+                      height: 40, // reduced height
+                      fontSize: 14,
+                      "& input": {
+                        padding:2,
+                        fontFamily: "Inter",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: colors.buttoncolor,
+                      },
+                    },
+                  }}
+                />
+              </Box>
 
-              <Typography
+              {/* <Typography
                 textAlign="center"
                 mb={3}
                 fontWeight={600}
                 color={colors.buttoncolor}
               >
                 {carState.carDetails.mileage} KM
-              </Typography>
+              </Typography> */}
 
-              <Slider
+              {/* <Slider
                 value={carState.carDetails.mileage}
                 onChange={(_, newValue) => onCangeCarDetails(parseInt(newValue))}
                 step={1}
@@ -113,7 +135,7 @@ const CarMileagePage = () => {
                     backgroundColor: `${colors.buttoncolor}40`,
                   },
                 }}
-              />
+              /> */}
             </Box>
 
           
