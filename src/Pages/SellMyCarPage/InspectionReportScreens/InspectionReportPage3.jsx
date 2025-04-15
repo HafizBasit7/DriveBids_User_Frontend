@@ -1,63 +1,35 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import InspectionReportComponent from "../../../Components/SellMyCarComponents/InspectionReportComponent";
-import Ok from "../../../assets/SVG/ok.svg";
-import Rattention from "../../../assets/SVG/Rattention.svg";
-import Nottested from "../../../assets/SVG/Nottested.svg";
-import Rimmediate from "../../../assets/SVG/Requireimmediat.svg";
+import { useCar } from "../../../context/car.context";
+import { interiorChecks } from "../../../utils/constants";
+import toast from "react-hot-toast";
 
 const InspectionReportPage3 = () => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState({
-    break_efficiency: "",
-    hand_brake_test: "",
-    static_gear_selection: "",
-  });
+  const {carState, dispatch, draftSave} = useCar();
 
-  const handleSelection = (key, value) => {
-    setSelected((prev) => ({ ...prev, [key]: value }));
+  function handleSelectTest (field, value) {
+    dispatch({
+      type: "UPDATE_FIELD",
+      section: 'carInspectionReport',
+      subSection: 'interiorChecks',
+      field: field,
+      value,
+    });
   };
 
-  const indicatorList = [
-    { icon:Ok, label: "Ok" },
-    { icon: Rattention , label: "Not Tested" },
-    { icon: Nottested, label: "Requires Some Attention" },
-    { icon: Rimmediate , label: "Requires Immediate Attention" },
-  ];
-
-  const testList = [
-    {
-      label: "Engine Management Light",
-      key: "engine management light",
-      options: [
-        { label: "Ok", value: "ok" },
-        { label: "Not Tested", value: "not_tested" },
-        { label: "Needs Some Attention", value: "needs_attention" },
-        { label: "Needs Immediate Attention", value: "immediate_attention" },
-      ],
-    },
-    {
-      label: "Brake Wear Indicator Light",
-      key: "brake wear indicator light",
-      options: [
-        { label: "Ok", value: "ok" },
-        { label: "Not Tested", value: "not_tested" },
-        { label: "Needs Some Attention", value: "needs_attention" },
-        { label: "Needs Immediate Attention", value: "immediate_attention" },
-      ],
-    },
-    {
-      label: "Abs Warning Light",
-      key: "abs warning light",
-      options: [
-        { label: "Ok", value: "ok" },
-        { label: "Not Tested", value: "not_tested" },
-      ],
-    },
-  ];
+   function handleOnSave() {
+    toast.promise(async () => {
+      await draftSave('carInspectionReport')
+      navigate("/ad/post")
+    }, {
+      loading: 'Saving draft',
+      error: (error) => error.message,
+      success: 'Draft is saved',
+    })
+  }
 
   return (
     <MainLayout   title="Inspection Report"
@@ -73,11 +45,11 @@ const InspectionReportPage3 = () => {
       <InspectionReportComponent
         title="Interior Checks"
         subtitle="The functionality of  your car’s headlights, fog lights, and side lights to ensure safety."
-        indicators={indicatorList}
-        tests={testList}
-        selectedValues={selected}
-        onChange={handleSelection}
-        onNext={() => navigate("/post-ad")}
+        tests={interiorChecks}
+        selectedValues={(carState.carInspectionReport?.interiorChecks ?? {})}
+        onChange={handleSelectTest}
+        onNext={handleOnSave}
+        save={true}
       />
     </MainLayout>
   );

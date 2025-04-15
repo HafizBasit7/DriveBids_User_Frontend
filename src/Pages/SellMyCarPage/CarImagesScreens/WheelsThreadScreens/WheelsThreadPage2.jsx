@@ -12,8 +12,8 @@ const WheelsThreadPage2 = () => {
   return (
     <MainLayout title="Wheel Treads"
     subtitle="Pick these 4 images"
-    buttonText="Back to Home"
-    onClick={() => navigate("/car-tyrethread1")}>
+    buttonText="Back"
+    onClick={() => navigate("../tread-1")}>
      
 
       <Typography
@@ -29,7 +29,9 @@ const WheelsThreadPage2 = () => {
         title="Back Passenger Tyre Treads"
         description="Take a picture of your car’s back passenger tyre treads as shown below"
         imgSketch={imgsketch1}
-        onNext={() => navigate("/car-tyrethread3")}
+        type='tyreTreads'
+        index={1}
+        onNext={() => navigate("../tread-3")}
       />
     </MainLayout>
   );

@@ -89,8 +89,8 @@ const CarDetailsPage = () => {
 
   const messageOwnerHandle = async () => {
     toast.promise(async () => {
-      await getChatId(car.user._id, car._id);
-      navigate('/chat')
+      const result = await getChatId({userId: car.user._id, carId: carId});
+      navigate(`/chat?chatId=${result.data.chatId}`)
     }, {
       loading: 'please wait',
       success: 'Redirecting...',

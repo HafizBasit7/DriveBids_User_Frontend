@@ -19,6 +19,8 @@ import Logosvg from "../../assets/SVG/Mainlogo.svg";
 import colors from "../../Style/color";
 import MobileSidebar from "./Mobilesidebar";
 import { useAuth } from "../../context/auth.context";
+import LocationInput from "../../Components/Location/LocationInput"
+import { useQueryClient } from "@tanstack/react-query";
 
 const MainNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -26,9 +28,9 @@ const MainNavbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
-  const {authState} = useAuth();
+  const {authState, dispatch} = useAuth();
   const currentSelectedLocation = (authState.selectedLocation || authState.user.location) || {"coordinates": [73.1128313, 33.5255503]};
-
+  const queryClient = useQueryClient();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -116,24 +118,35 @@ const MainNavbar = () => {
             ))}
 
           {!isMobile && (
-           <Box
-           sx={{
-             display: "flex",
-             alignItems: "center",
-             border: "1px solid #ccc",
-             borderRadius: 2,
-             px: 1,
-             py: 0.5,
-             backgroundColor: "white",
-             width: "auto",
-             cursor: "pointer",
-           }}
-         >
-           <LocationOnIcon sx={{ color: "#666", fontSize: 20, mr: 0.5 }} />
-           <Typography sx={{ fontSize: "14px", color: "#000" }}>
-             {currentSelectedLocation?.name}
-           </Typography>
-         </Box>
+           <LocationInput handleChange={(location) => {
+            dispatch({type: 'updateLocation', payload: location});
+            setTimeout(() => {
+              queryClient.invalidateQueries({queryKey: ['cars']});
+              queryClient.invalidateQueries({queryKey: ['carsEnding']});
+              queryClient.invalidateQueries({queryKey: ['carsByBidCount']});
+              queryClient.invalidateQueries({queryKey: ['carsAll']});
+              queryClient.invalidateQueries({queryKey: ['carsEndingAll']});
+              queryClient.invalidateQueries({queryKey: ['carsByBidCountAll']});
+            }, 200);
+           }}>
+            <Box
+              placeholder={currentSelectedLocation?.name}
+              component="input"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                border: "1px solid #ccc",
+                borderRadius: 2,
+                px: 1,
+                py: 0.5,
+                backgroundColor: "white",
+                width: "auto",
+                cursor: "pointer",
+                maxWidth:180
+              }}
+            />
+           </LocationInput>
+        
           )}
 
           {isMobile && !showSearch && (

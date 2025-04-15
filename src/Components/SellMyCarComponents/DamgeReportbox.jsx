@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Box, Typography, Button, TextField, Link } from "@mui/material";
 import colors from "../../Style/color";
 import greyDent from "../../assets/SVG/greyDent.svg";
@@ -7,44 +7,99 @@ import greyScratch from "../../assets/SVG/greyscratch.svg";
 import Dent from "../../assets/SVG/dentsvg.svg";
 import Rust from "../../assets/SVG/rust.svg";
 import Scratch from "../../assets/SVG/ScratchSvg.svg";
+import imgsketch1 from "../../assets/SVG/frontdamage.svg";
+import imgsketch2 from "../../assets/SVG/backdamage.svg";
+import imgsketch3 from "../../assets/SVG/leftdamage.svg";
+import imgsketch4 from "../../assets/SVG/rightdamage.svg";
+import {useCar} from "../../context/car.context";
+import toast from "react-hot-toast";
+import {uploadImage} from "../../utils/upload";
 
-const DamageReportBox = ({ title, description, imgSketch, onNext }) => {
-  const [showDamageForm, setShowDamageForm] = useState(false);
-  const [damageDescription, setDamageDescription] = useState("");
+const images = [
+  imgsketch1,
+  imgsketch2,
+  imgsketch3,
+  imgsketch4
+];
+
+const DamageReportBox = ({ title, description, carFacing, onNext, save = false }) => {
   const [selected, setSelected] = useState(null);
-  const [clickedPosition, setClickedPosition] = useState(null);
+  const [damageDescription, setDamageDescription] = useState();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const {carState, dispatch, draftSave} = useCar();
+
+  const currentDamageReport = (carState.carDamageReport?.damageReport || []).filter(val => val.imageIndex === carFacing);
 
 
-
+  const [showDamageForm, setShowDamageForm] = useState(false);
+  const clickedPosition = useRef();
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log("File uploaded:", file);
+      setSelectedImage(file);
     }
   };
   const handleSketchClick = (e) => {
     const rect = e.target.getBoundingClientRect();  
     const x = e.clientX - rect.left;  
     const y = e.clientY - rect.top;   
-  
-    console.log("Clicked Coordinates:", { x, y });
-    setClickedPosition({ x, y });
+
+    clickedPosition.current = { x, y };
     setShowDamageForm(true); 
   };
   
   const damages = [
-    { name: "Scratch", grey: greyScratch, colored: Scratch },
-    { name: "Dent", grey: greyDent, colored: Dent },
+    { name: "Scratches", grey: greyScratch, colored: Scratch },
+    { name: "Dents/Cracks", grey: greyDent, colored: Dent },
     { name: "Rust", grey: greyRust, colored: Rust },
   ];
 
-
- 
+  const resetState = () => {
+    setSelectedImage(null);
+    setDamageDescription();
+    setSelected();
+  };
 
   const handleSave = () => {
-    console.log("Saved Description:", damageDescription);
+    if(!selectedImage || !selected || !damageDescription) {
+      return null;
+    }
+
     setShowDamageForm(false);
+
+    //Save image and insert damage with imgurl
+    toast.promise(async () => {
+      const imgUrl = await uploadImage(selectedImage);
+      //Save new damage report
+      dispatch({
+        type: 'INSERT_DAMAGE',
+        value: {
+          imageIndex: carFacing,
+          x: clickedPosition.current.x,
+          y: clickedPosition.current.y,
+          imageUrl: imgUrl,
+          damageType: selected,
+          description: damageDescription,
+        },
+      });
+
+      resetState();
+    }, {
+      loading: 'Uploading image',
+      error: e => e.message,
+      success: 'Damage report added.'
+    })
+  };
+
+  const saveDamageRpeort =  () => {
+    toast.promise(async () => {
+      await draftSave('carDamageReport');
+    }, {
+      loading: 'Saving draft',
+      error: e => e.message,
+      success: 'Draft saved',
+    })
   };
 
   return (
@@ -137,14 +192,26 @@ const DamageReportBox = ({ title, description, imgSketch, onNext }) => {
               alignItems: "center",
               cursor: "pointer",
             }}
-            onClick={handleSketchClick}
+            // onClick={handleSketchClick}
           >
-            <img
-              src={imgSketch}
-              alt="Car Sketch"
-              style={{ maxWidth: "100%", margin: "auto" }}
-              onClick={handleSketchClick}
-            />
+            <Box sx={{position: 'relative'}}>
+              <img
+                src={images[carFacing]}
+                alt="Car Sketch"
+                style={{ maxWidth: "100%", margin: "auto" }}
+                onClick={handleSketchClick}
+              />
+              {currentDamageReport.map(val => {
+                const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
+                return (
+                  <img
+                    src={iconSrc}
+                    style={{ width: 30, height: 30, position: 'absolute', left: val.x, top: val.y, }}
+                  />
+                )
+              })}
+            </Box>
+            
             
             <Typography
               sx={{
@@ -199,22 +266,22 @@ const DamageReportBox = ({ title, description, imgSketch, onNext }) => {
             </Button>
 
             <TextField
-  multiline
-  minRows={4}
-  placeholder="Provide a description of the damage."
-  value={damageDescription}
-  onChange={(e) => setDamageDescription(e.target.value)}
-  fullWidth
-  sx={{
-    backgroundColor: "#fff",
-    borderRadius: 1,
-    "& .MuiOutlinedInput-root": { border: "none" },
-    "& .MuiInputBase-input::placeholder": { 
-      fontSize: 14, 
-      color: "gray", 
-    },
-  }}
-/>
+              multiline
+              minRows={4}
+              placeholder="Provide a description of the damage."
+              value={damageDescription}
+              onChange={(e) => setDamageDescription(e.target.value)}
+              fullWidth
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: 1,
+                "& .MuiOutlinedInput-root": { border: "none" },
+                "& .MuiInputBase-input::placeholder": { 
+                  fontSize: 14,   
+                  color: "gray", 
+                },
+              }}
+            />
 
 
 <Typography>
@@ -228,7 +295,7 @@ const DamageReportBox = ({ title, description, imgSketch, onNext }) => {
       cursor: "pointer" 
     }}
   >
-    Upload an image
+    Upload an image {selectedImage ? `(${selectedImage.name})` : ''}
   </label> 
   {" "}<br />
  
@@ -284,9 +351,9 @@ fontSize:12,
             mr: 4,
             backgroundColor: colors.buttoncolor,
           }}
-          onClick={onNext}
+          onClick={!save ? onNext : saveDamageRpeort}
         >
-          Next Step
+          {save ? 'SAVE' : 'Next Step'}
         </Button>
       </Box>
     </Box>

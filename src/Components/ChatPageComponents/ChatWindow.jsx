@@ -24,12 +24,11 @@ const ChatWindow = () => {
   const {chatSocket: socket} = useSocket();
   const queryClient = useQueryClient();
   const loaderRef = useRef(null);
-  const firstVisit = useRef(true);
 
   const user = authState.user;
 
   //Chat Head
-  const {data: chatHeadData, isLoadingChatHead} = useQuery({
+  const {data: chatHeadData, isError} = useQuery({
     queryKey: ['chatCarHead', chatId],
     queryFn: () => getChatCarHead(chatId)
   });
@@ -57,6 +56,12 @@ const ChatWindow = () => {
   const mutation = useMutation({
     mutationFn: sendMessage,
   });
+
+  useEffect(() => {
+    if(isError) {
+      setSearchParams({});
+    }
+  }, [isError])
 
   useEffect(() => {
     if(!messagesLoading && messagesContainerRef.current) {
@@ -101,7 +106,7 @@ const ChatWindow = () => {
         socket?.off('new-message');
       }
     };
-  }, [socket]);
+  }, [socket, chatId]);
   const handleNewMessageUpdate = (message) => {
     //Update messages list
     queryClient.setQueryData(['messages', chatId], (pages) => {
@@ -171,7 +176,7 @@ const ChatWindow = () => {
           </Typography>
         </Box>
         <IconButton
-          onClick={() => setSearchParams(null)}
+          onClick={() => setSearchParams({})}
           sx={{
             display: { xs: "block", sm: "none" },
             position: "absolute",

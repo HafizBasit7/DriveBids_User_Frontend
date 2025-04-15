@@ -9,14 +9,14 @@ const AdsSuccessScreen = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout>
+    <MainLayout
+      title="Ad Posted"
+      subtitle="Congrats on Posting Your Ad"
+      buttonText="Back"
+      onClick={() => navigate("/home")}
+    >
       <Box width="100%">
-        <DealsBanner
-          title="Ad Posted"
-          subtitle="Congrats on Posting Your Ad"
-          buttonText="Back"
-          onClick={() => navigate("/home")}
-        />
+        
       </Box>
 
       <Box
@@ -108,7 +108,7 @@ const AdsSuccessScreen = () => {
                 backgroundColor: colors.buttoncolor,
               },
             }}
-            onClick={() => navigate("/post-ad")}
+            onClick={() => navigate("/home")}
           >
             Go to Ad Page →
           </Button>

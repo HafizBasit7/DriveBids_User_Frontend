@@ -8,47 +8,59 @@ import ImageIcon from "@mui/icons-material/Image";
 import ShieldIcon from "@mui/icons-material/Shield";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import colors from "../../../Style/color";
+import {useCar} from "../../../context/car.context";
+import {exteriorImageValidation, interiorImageValidation, wheelsImageValidation, tyreTreadsValidation} from "../../../validations/car.validation";
 
 const steps = [
   {
     title: "Exterior Images",
-    status: "Complete",
+    status: "exteriorImageCompletion",
     steps: 6,
     icon: <InsertDriveFileIcon fontSize="large" />,
-    route: "/car-exteriorimg1",
+    route: "exterior-1",
   },
   {
     title: "Interior Images",
-    status: "Incomplete",
+    status: "interiorImageCompletion",
     steps: 5,
     icon: <DirectionsCarIcon fontSize="large" />,
-    route: "/car-interiorimg1",
+    route: "interior-1",
   },
   {
     title: "Wheels",
-    status: "Incomplete",
+    status: "wheelsImageCompletion",
     steps: 4,
     icon: <ImageIcon fontSize="large" />,
-    route: "/car-wheelimg1",
+    route: "wheel-1",
   },
   {
     title: "Tyre Thread",
-    status: "Incomplete",
+    status: "tyreTreadsImageCompletion",
     steps: 4,
     icon: <ShieldIcon fontSize="large" />,
-    route: "/car-tyrethread1",
+    route: "tread-1",
   },
 ];
 
 const CarImages = () => {
   const navigate = useNavigate();
+  const {carState} = useCar();
+
+
 
   if(location.pathname.endsWith('/images') || location.pathname.endsWith('/images/')) {
+    const validations = {
+      exteriorImageCompletion : exteriorImageValidation.safeParse(carState.images.exterior),
+      interiorImageCompletion : interiorImageValidation.safeParse(carState.images.interior),
+      wheelsImageCompletion : wheelsImageValidation.safeParse(carState.images.wheels),
+      tyreTreadsImageCompletion : tyreTreadsValidation.safeParse(carState.images.tyreTreads)
+    };
+
     return (
       <MainLayout  title="Car Images"
       subtitle="Complete 4 Easy Steps"
       buttonText="Back "
-      onClick={() => navigate("/post-ad")}>
+      onClick={() => navigate("../")}>
       
 
         <Box width={{ xs: "95%", sm: "80%", md: "85%" }} mx="auto" mt={4}>
@@ -71,7 +83,7 @@ const CarImages = () => {
                 }}
               >
                 <Box display="flex" alignItems="center" gap={2}>
-                  <Box color={item.status === "Complete" ? colors.buttoncolor : "#6F6F6F"} sx={{ fontSize: 40 }}>
+                  <Box color={validations[item.status].success ? colors.buttoncolor : "#6F6F6F"} sx={{ fontSize: 40 }}>
                     {item.icon}
                   </Box>
                   <Box>
@@ -80,10 +92,10 @@ const CarImages = () => {
                     </Typography>
                     <Typography
                       variant="body2"
-                      color={item.status === "Complete" ? "primary" : "#6F6F6F"}
+                      color={validations[item.status].success ? "primary" : "#6F6F6F"}
                       sx={{ fontFamily: "Inter" }}
                     >
-                      ● {item.status}
+                      ● {validations[item.status].success ? 'Completed' : 'In-Complete'}
                     </Typography>
                   </Box>
                 </Box>

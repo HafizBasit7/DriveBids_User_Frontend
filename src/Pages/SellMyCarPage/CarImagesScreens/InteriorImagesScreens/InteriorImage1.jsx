@@ -11,8 +11,8 @@ const InteriorImagesPage1 = () => {
   return (
     <MainLayout  title="Interior Images"
     subtitle="Pick these 5 images"
-    buttonText="Back to Home"
-    onClick={() => navigate("/car-images")}>
+    buttonText="Back"
+    onClick={() => navigate("../")}>
       
 
       <Typography
@@ -28,7 +28,9 @@ const InteriorImagesPage1 = () => {
         title="Font Seats"
         description="Take a picture of your car from the  front seats as shown below"
         imgSketch={imgsketch1}
-        onNext={() => navigate("/car-interiorimg2")}
+        type='interior'
+        index={0}
+        onNext={() => navigate("../interior-2")}
       />
     </MainLayout>
   );

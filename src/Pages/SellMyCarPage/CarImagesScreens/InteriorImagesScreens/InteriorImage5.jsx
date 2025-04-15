@@ -12,7 +12,7 @@ const InteriorImagesPage5 = () => {
     <MainLayout  title="Interior Images"
     subtitle="Pick these 5 images"
     buttonText="Back"
-    onClick={() => navigate("/car-interiorimg4")}>
+    onClick={() => navigate("../interior-4")}>
       
 
       <Typography
@@ -28,7 +28,10 @@ const InteriorImagesPage5 = () => {
         title="Trunk"
         description="Take a picture of your car’s open trunk as shown below"
         imgSketch={imgsketch5}
-        onNext={() => navigate("/car-images")}
+        type='interior'
+        index={4}
+        save={true}
+        onNext={() => {}}
       />
     </MainLayout>
   );

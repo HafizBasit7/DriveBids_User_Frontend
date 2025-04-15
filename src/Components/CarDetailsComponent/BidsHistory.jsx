@@ -69,6 +69,22 @@ const BidsHistory = ({car, owner}) => {
               }}
             />
           )}
+          {bid.user === user._id && (
+            <Chip
+            label="My Bid"
+            size="small"
+            sx={{
+              mb: 1.5,
+              ml: 1,
+              fontSize: 12,
+              fontFamily: "Inter, sans-serif",
+              backgroundColor: "#8e5f7f",
+              color: "#fff",
+              fontWeight: 500,
+              borderRadius: 2,
+            }}
+          />
+          )}
 
           {/* Amount & Date (First Row) */}
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

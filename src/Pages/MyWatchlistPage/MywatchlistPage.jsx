@@ -5,6 +5,7 @@ import CarCard from "../../Components/HomePageComponents/CarCard";
 import { useQuery } from "@tanstack/react-query";
 import { getWatchList } from "../../api/calls/watchlist";
 import PaginationComponent from "../../Components/Common/PaginationComponent";
+import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
 
 const LIMIT = 10;
 
@@ -44,7 +45,7 @@ const MyWatchPage = () => {
         flexWrap: "wrap",
         justifyContent: { xs: "center", lg: "start" } 
       }}>
-        {watchList?.map((item, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : watchList?.map((item, index) => (
           <CarCard 
             key={index} 
             carsInWatchList={carsInWatchList} 

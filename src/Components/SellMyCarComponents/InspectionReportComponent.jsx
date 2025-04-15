@@ -10,14 +10,14 @@ import NottestedGrey from "../../assets/SVG/nottestedGrey.svg";
 import NITGrey from "../../assets/SVG/NIAGrey.svg";
 import colors from "../../Style/color";
 
-const InspectionReportComponent = ({ title, subtitle, indicators, tests, selectedValues, onChange, onNext }) => {
+const InspectionReportComponent = ({ title, subtitle, tests, selectedValues, onChange, onNext,save = false }) => {
   // Icon mapping based on option value
-  const iconMap = {
-    ok: { selected: Ok, grey: OkGrey },
-    not_tested: { selected: Nottested, grey: NTGrey },
-    needs_attention: { selected: Rattention, grey: NottestedGrey },
-    immediate_attention: { selected: Rimmediate, grey: NITGrey },
-  };
+  const iconMap = [
+    { icon: Ok, label: "OK", notSelected: OkGrey },
+    { icon: Rattention , label: "Not Tested", notSelected: NTGrey },
+    { icon: Nottested, label: "Requires Some Attention", notSelected: NottestedGrey },
+    { icon: Rimmediate , label: "Requires Immediate Attention", notSelected: NITGrey },
+  ];
 
   return (
     <Box
@@ -47,7 +47,7 @@ const InspectionReportComponent = ({ title, subtitle, indicators, tests, selecte
         </Typography>
 
         <Stack direction="column" gap={3} mt={3} >
-          {indicators.map((item, index) => (
+          {iconMap.map((item, index) => (
             <Stack direction="row" alignItems="center" gap={1} key={index}>
               <img src={item.icon} alt={item.label} width={24} />
               <Typography sx={{ fontFamily: 'Outfit', fontWeight: 600 }}>{item.label}</Typography>
@@ -89,14 +89,12 @@ const InspectionReportComponent = ({ title, subtitle, indicators, tests, selecte
     {tests.map((test, index) => (
       <Box key={index} mb={2}>
         <Typography fontWeight={600} mb={1}>
-          {test.label}
+          {test.name}
         </Typography>
         <Stack direction="column" spacing={0.1}>
-          {test.options.map((option, idx) => {
-            const isSelected = selectedValues[test.key] === option.value;
-            const iconSrc = isSelected
-              ? iconMap[option.value]?.selected
-              : iconMap[option.value]?.grey;
+          {iconMap.map((option, idx) => {
+            const isSelected = selectedValues[test.target] === option.label;
+            const iconSrc = isSelected ? option.icon : option.notSelected;
 
             return (
               <Stack
@@ -104,7 +102,7 @@ const InspectionReportComponent = ({ title, subtitle, indicators, tests, selecte
                 alignItems="center"
                 gap={1}
                 key={idx}
-                onClick={() => onChange(test.key, option.value)}
+                onClick={() => onChange(test.target, option.label)}
                 sx={{
                   cursor: 'pointer',
                   borderRadius: 2,
@@ -142,7 +140,7 @@ const InspectionReportComponent = ({ title, subtitle, indicators, tests, selecte
             onClick={onNext}
             sx={{ fontFamily: 'Outfit', backgroundColor: colors.buttoncolor, fontWeight: 400 }}
           >
-            Next Step
+            {save ? 'SAVE' : 'Next Step'}
           </Button>
         </Box>
       </Box>

@@ -4,9 +4,11 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import MainLayout from "../../../Layouts/Mainlayout";
+import { useCar } from "../../../context/car.context";
 
 const SellMyCar = () => {
   const navigate = useNavigate();
+  const {resetDraftState} = useCar();
 
   const cardStyle = {
     display: "flex",
@@ -38,7 +40,7 @@ const SellMyCar = () => {
           }}
         >
           <Stack spacing={10}>
-            <Paper sx={cardStyle} onClick={() => navigate("post/vehicle-register")}>
+            <Paper sx={cardStyle} onClick={() => {navigate("post/vehicle-register"); resetDraftState()}}>
               <Box display="flex" alignItems="center" gap={3}>
                 <DirectionsCarIcon sx={{ fontSize: 36, color: "black" }} />
                 <Box>

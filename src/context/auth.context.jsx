@@ -4,9 +4,15 @@ import { removeAuthToken, setAuthToken } from "../api/client";
 
 
 //State
-const intialState = {isLoading: true, isAuthenticated: false, user: null};
+const intialState = {isLoading: true, isAuthenticated: false, user: null, selectedLocation: null};
 const authReducerFunction = (state, action) => {
     switch(action.type) {
+        case 'updateLocation': {
+            return {
+                ...state,
+                selectedLocation: action.payload,
+            };
+        }
         case 'toggleLoading': {
             return {
                 ...state,

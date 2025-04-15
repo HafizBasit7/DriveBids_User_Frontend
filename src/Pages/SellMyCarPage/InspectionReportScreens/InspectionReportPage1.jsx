@@ -1,64 +1,27 @@
-import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import InspectionReportComponent from "../../../Components/SellMyCarComponents/InspectionReportComponent";
-import Ok from "../../../assets/SVG/ok.svg";
-import Rattention from "../../../assets/SVG/Rattention.svg";
-import Nottested from "../../../assets/SVG/Nottested.svg";
-import Rimmediate from "../../../assets/SVG/Requireimmediat.svg";
+import {dynamicOperations} from "../../../utils/constants";
+import {useCar} from "../../../context/car.context";
 
 const InspectionReportPage1 = () => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState({
-    break_efficiency: "",
-    hand_brake_test: "",
-    static_gear_selection: "",
-  });
+  const {carState, dispatch} = useCar();
 
-  const handleSelection = (key, value) => {
-    setSelected((prev) => ({ ...prev, [key]: value }));
+
+  function handleSelectTest (field, value) {
+    dispatch({
+      type: "UPDATE_FIELD",
+      section: 'carInspectionReport',
+      subSection: 'dynamicOperations',
+      field: field,
+      value,
+    });
   };
 
-  const indicatorList = [
-    { icon:Ok, label: "Ok" },
-    { icon: Rattention , label: "Not Tested" },
-    { icon: Nottested, label: "Requires Some Attention" },
-    { icon: Rimmediate , label: "Requires Immediate Attention" },
-  ];
-
-  const testList = [
-    {
-      label: "Break Efficiency",
-      key: "break_efficiency",
-      options: [
-        { label: "Ok", value: "ok" },
-        { label: "Not Tested", value: "not_tested" },
-        { label: "Needs Some Attention", value: "needs_attention" },
-        { label: "Needs Immediate Attention", value: "immediate_attention" },
-      ],
-    },
-    {
-      label: "Hand Brake Test",
-      key: "hand_brake_test",
-      options: [
-        { label: "Ok", value: "ok" },
-        { label: "Not Tested", value: "not_tested" },
-        { label: "Needs Some Attention", value: "needs_attention" },
-        { label: "Needs Immediate Attention", value: "immediate_attention" },
-      ],
-    },
-    {
-      label: "Static Gear Selection",
-      key: "static_gear_selection",
-      options: [
-        { label: "Ok", value: "ok" },
-        { label: "Not Tested", value: "not_tested" },
-      ],
-    },
-  ];
-
+  
   return (
     <MainLayout  title="Inspection Report"
     subtitle="Key Features & Condition"
@@ -73,10 +36,9 @@ const InspectionReportPage1 = () => {
       <InspectionReportComponent
         title="Dynamic Operations"
         subtitle="Your car’s acceleration, braking efficiency, steering precision, and overall handling stability"
-        indicators={indicatorList}
-        tests={testList}
-        selectedValues={selected}
-        onChange={handleSelection}
+        tests={dynamicOperations}
+        selectedValues={(carState.carInspectionReport?.dynamicOperations ?? {})}
+        onChange={handleSelectTest}
         onNext={() => navigate("../inspection-2")}
       />
     </MainLayout>

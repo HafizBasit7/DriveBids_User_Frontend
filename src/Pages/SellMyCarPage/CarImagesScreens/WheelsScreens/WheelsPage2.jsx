@@ -12,8 +12,8 @@ const WheelsImagesPage2 = () => {
   return (
     <MainLayout title="Wheels"
     subtitle="Pick these 4 images"
-    buttonText="Back to Home"
-    onClick={() => navigate("/car-wheelimg1")}>
+    buttonText="Back"
+    onClick={() => navigate("../wheel-1")}>
       
 
       <Typography
@@ -29,7 +29,9 @@ const WheelsImagesPage2 = () => {
         title="Back Driver Wheel"
         description="Take a picture of your car’s back driver wheel as shown below"
         imgSketch={imgsketch2}
-        onNext={() => navigate("/car-wheelimg3")}
+        type='wheels'
+        index={1}
+        onNext={() => navigate("../wheel-3")}
       />
     </MainLayout>
   );

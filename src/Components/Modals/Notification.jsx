@@ -11,10 +11,12 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { useQuery } from "@tanstack/react-query";
 import { getMyNotifications, getNotificationCount } from "../../api/calls/auth";
 import { timeAgo } from "../../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 const Notifications = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
 
   const handleOpen = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -49,6 +51,14 @@ const Notifications = () => {
     };
   }, [open]);
 
+  const handleNotiClick = (notification) => {
+    if (notification.notificationType === "car") {
+      navigate(`/car/${notification.metaData.car}`);
+    } else if(notification.notificationType === 'message') {
+      navigate(`/chat?chatId=${notification.metaData.chat}`);
+    }
+  };
+
   return (
     <Box>
       <IconButton onClick={handleOpen}>
@@ -72,6 +82,7 @@ const Notifications = () => {
 
           {notifications?.map((notification) => (
             <Box
+              onClick={() => handleNotiClick(notification)}
               key={notification._id}
               sx={{
                 display: "flex",

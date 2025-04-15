@@ -9,6 +9,7 @@ import CarCard from "../../Components/HomePageComponents/CarCard";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist.js";
 import { useAuth } from "../../context/auth.context.jsx";
 import PaginationComponent from "../../Components/Common/PaginationComponent.jsx";
+import SkeletonLoader from "../../Components/Loader/SkeletonLoader.jsx";
 
 const LIMIT = 10;
 
@@ -37,6 +38,7 @@ const FilterPage = () => {
 
     useEffect(() => {
       if(Object.keys(filters).length > 0) {
+        setSearchParams({page: 1});
         refetch();
       }
     }, [filters])
@@ -45,8 +47,8 @@ const FilterPage = () => {
     <MainLayout
       title="Filters"
       subtitle={`${data?.meta.count || 0} Cars Available`}
-      buttonText="View All"
-      onClick={() => navigate("/car-detail")}
+      buttonText="Home"
+      onClick={() => navigate("/home")}
       isnotSellMyCar={true}
     >
       <Box
@@ -74,7 +76,7 @@ const FilterPage = () => {
             }}
           >
             {isLoading ? (
-              <p>Loading cars...</p>
+              <SkeletonLoader count={3}/> 
             ) : error ? (
               <p>Error fetching cars</p>
             ) : data?.data.cars.length > 0 ? (

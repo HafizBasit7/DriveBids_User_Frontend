@@ -7,6 +7,7 @@ import { getCompletedDeals } from "../../api/calls/car";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import CarCard from "../../Components/HomePageComponents/CarCard";
 import PaginationComponent from "../../Components/Common/PaginationComponent";
+import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
 
 const LIMIT = 10;
 
@@ -70,7 +71,7 @@ const CompletedDeals = () => {
         gap: 4, 
         justifyContent: { xs: "center", lg: "start" } 
       }}>
-        {completedDeals?.map((deal, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : completedDeals?.map((deal, index) => (
           <CarCard 
             key={index} 
             carsInWatchList={carsInWatchList} 

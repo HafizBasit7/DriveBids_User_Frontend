@@ -1,8 +1,15 @@
 import { Box, Typography, IconButton } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import img from "../../assets/Png/prseller.png"
+import { useNavigate } from "react-router-dom";
 
 const AdBanner = ({chatHeadDataReal}) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/car/${chatHeadDataReal.car._id}`);
+  };
+
   return (
     <Box
       sx={{
@@ -36,7 +43,7 @@ const AdBanner = ({chatHeadDataReal}) => {
       </Box>
       
       <IconButton sx={{color:"black"}}>
-      <ArrowForwardIosIcon sx={{ fontSize: 18 }} />
+      <ArrowForwardIosIcon sx={{ fontSize: 18 }} onClick={handleClick} />
 
       </IconButton>
     </Box>

@@ -7,12 +7,12 @@ import UploadBox from "../../../../Components/SellMyCarComponents/UploadSection"
 
 const ExteriorImages1 = () => {
   const navigate = useNavigate();
-
+  
   return (
     <MainLayout title="Exterior Images"
     subtitle="Pick these 6 images"
-    buttonText="Back to Home"
-    onClick={() => navigate("/car-images")}>
+    buttonText="Back"
+    onClick={() => navigate("../")}>
       
 
       <Typography
@@ -28,7 +28,9 @@ const ExteriorImages1 = () => {
         title="Right Front View"
         description="Take a picture of your car from the right front as shown below"
         imgSketch={imgsketch1}
-        onNext={() => navigate("/car-exteriorimg2")}
+        type='exterior'
+        index={0}
+        onNext={() => navigate("../exterior-2")}
       />
     </MainLayout>
   );

@@ -13,15 +13,15 @@ const initialState = {
         title: null,
         description: null,
         make: null,
-        model: null,
+        model: 2020,
         variant: null,
-        city: null,
+        location: null,
         mileage: null,
         fuel: null,
         color: null,
         engineSize: null,
         transmission: null,
-        noOfOwners: null,
+        noOfOwners: 1,
         horsePower: null,
         accidentHistory: null,
         condition: null,
@@ -207,11 +207,17 @@ export default function CarContextProvider({children}) {
 
     const draftSave = async (section, subSection) => {
         if(subSection) {
-            const cleanedSubSection = (carState[section][subSection] || []).filter(item => item !== null);
+            const cleanedSubSection = {};
+            for(const sub in carState[section]) {
+                if(carState[section][sub] && carState[section][sub].length > 0) {
+                    cleanedSubSection[sub] = carState[section][sub];
+                }
+            }
+            
             const result = await saveDraft({
                 [section]: {
-                    ...carState[section],
-                    [subSection]: cleanedSubSection,
+                    ...cleanedSubSection,
+                    // [subSection]: carState[section][subSection],
                 },
                 draftId: carState.draftId,
                 regNo: carState.regNo,
@@ -220,11 +226,24 @@ export default function CarContextProvider({children}) {
             const resultData = result.data;
             dispatch({type: 'DRAFT_ID', payload: resultData.draftId});
         } else {
-            const result = await saveDraft({
-                [section]: carState[section],
+            const body = {
                 draftId: carState.draftId,
                 regNo: carState.regNo,
-            });
+            }
+            if(section === 'carDamageReport' && carState[section]) {
+                if(carState[section].damageReport.length > 0) {
+                    body[section] = carState[section];
+                } else {
+                    dispatch({type: 'SET_DRAFT', payload: {
+                        ...carState,
+                        carDamageReport: null,
+                    }})
+                }
+            } else if(carState[section]) {
+                body[section] = carState[section];
+            }
+
+            const result = await saveDraft(body);
             const resultData = result.data;
             dispatch({type: 'DRAFT_ID', payload: resultData.draftId});
         }

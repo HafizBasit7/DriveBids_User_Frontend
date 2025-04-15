@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../Style/color";
-import imgsketch4 from "../../../assets/SVG/rightdamage.svg";
+
 import DamageReportBox from "../../../Components/SellMyCarComponents/DamgeReportbox";
 const DamgeReportPage4 = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const DamgeReportPage4 = () => {
     <MainLayout   title="Damage Report"
     subtitle="Place Pointers Accurately"
     buttonText="Back"
-    onClick={() => navigate("/damage-report3")}>
+    onClick={() => navigate("../damage-3")}>
       
 
       <Typography
@@ -27,8 +27,8 @@ const DamgeReportPage4 = () => {
       <DamageReportBox
         title="Right Side View"
         description="Please pick the damage label and place it on the right part of the car that is damaged"
-        imgSketch={imgsketch4}
-        onNext={() => navigate("/post-ad")}
+        carFacing={3}
+        save={true}
       />
     </MainLayout>
   );

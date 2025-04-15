@@ -12,7 +12,7 @@ const ExteriorImages5 = () => {
     <MainLayout title="Exterior Images"
     subtitle="Pick these 6 images"
     buttonText="Back"
-    onClick={() => navigate("/car-exteriorimg4")}>
+    onClick={() => navigate("../exterior-4")}>
       
 
       <Typography
@@ -28,7 +28,9 @@ const ExteriorImages5 = () => {
         title="Front View"
         description="Take a picture of your car from the Front as shown below"
         imgSketch={imgsketch5}
-        onNext={() => navigate("/car-exteriorimg6")}
+        type='exterior'
+        index={4}
+        onNext={() => navigate("../exterior-6")}
       />
     </MainLayout>
   );

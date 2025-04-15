@@ -1,7 +1,6 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../../Layouts/MainLayout";
-import DealsBanner from "../../../../Components/HomePageComponents/DealBanner";
 import colors from "../../../../Style/color";
 import imgsketch1 from "../../../../assets/SVG/wheelthreadimg1.svg";
 import UploadBox from "../../../../Components/SellMyCarComponents/UploadSection";
@@ -12,8 +11,8 @@ const WheelsThreadPage1 = () => {
   return (
     <MainLayout  title="Wheel Treads"
     subtitle="Pick these 4 images"
-    buttonText="Back to Home"
-    onClick={() => navigate("/car-images")}>
+    buttonText="Back"
+    onClick={() => navigate("../")}>
      
 
       <Typography
@@ -29,7 +28,9 @@ const WheelsThreadPage1 = () => {
         title="Back Driver Tyre Treads"
         description="Take a picture of your car’s back driver tyre treads as shown below"
         imgSketch={imgsketch1}
-        onNext={() => navigate("/car-tyrethread2")}
+        type='tyreTreads'
+        index={0}
+        onNext={() => navigate("../tread-2")}
       />
     </MainLayout>
   );

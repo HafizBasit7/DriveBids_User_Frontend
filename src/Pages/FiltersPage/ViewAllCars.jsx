@@ -7,6 +7,7 @@ import { listCars, listCarsByBidCount } from "../../api/calls/car.js";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist.js";
 import { useAuth } from "../../context/auth.context";
 import PaginationComponent from "../../Components/Common/PaginationComponent.jsx";
+import SkeletonLoader from "../../Components/Loader/SkeletonLoader.jsx";
 
 const LIMIT = 10;
 
@@ -87,7 +88,7 @@ const ViewAllFilters = () => {
             }
           }}>
 
-          {!isLoading && (
+          {isLoading ? <SkeletonLoader count={3}/> :  (
             cars.map((car, index) => <CarCard key={index} ad={type === 'bid' ? car.car : car} carsInWatchList={carsInWatchList}/>)
           )}
           </Box>

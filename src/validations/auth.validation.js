@@ -4,19 +4,10 @@ export const resetPasswordValidation = zod.object({
   email: zod.string({required_error: "Provide email address"}).email("Please provide a valid email address")
 });
 
-export const phoneNumberValidation = zod.object(
-  {
-    countryCode: zod.number({
-      required_error: "country code is missing",
-      message: "select country code",
-    }),
-    phoneNo: zod.number({
-      required_error: "phone number is missing",
-      message: "enter phone no",
-    }),
-  },
-  { message: "invalid phone number" }
-);
+export const phoneNumberValidation = zod.object({
+  countryCode: zod.number({required_error: 'country code is missing', message: 'select country code'}),
+  phoneNo: zod.number({required_error: 'phone number is missing', message: 'enter phone no'}),
+}, {message: 'invalid phone number'});
 
 const locationValidation = zod.object({
     name: zod.string({message: 'Location name is not correct'}),

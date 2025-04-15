@@ -5,7 +5,7 @@ import ScratchImage from "../../assets/Png/scratch.png";
 import CloseIcon from "@mui/icons-material/Close";
 
 
-const DamageModal = ({ open, onClose }) => {
+const DamageModal = ({ open, onClose, damage }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -49,7 +49,7 @@ const DamageModal = ({ open, onClose }) => {
             textTransform:"none"
           }}
         >
-          Damage Description
+          {damage?.damageType}
         </Button>
         <Typography
           sx={{
@@ -60,11 +60,11 @@ const DamageModal = ({ open, onClose }) => {
             p: { xs: 1, sm: 2 },
             borderRadius: 2,
             fontFamily:"Inter",
-            textAlign: "start",   // ✅ Ensures text starts from the left
+            textAlign: "center",   // ✅ Ensures text starts from the left
 
           }}
         >
-         There is a noticeable 6-inch scratch on the front passenger-side door, running horizontally near the center of the panel. The scratch has penetrated the clear coat, exposing the paint layer beneath. While it is not deep enough to reach the primer, the exposed area is clearly visible and may be vulnerable to further damage over time, especially due to exposure to moisture, dirt, and environmental elements. If left untreated, the affected area could deteriorate, potentially leading to paint chipping or oxidation.
+          {damage?.description}
         </Typography>
 
         {/* Photos Section */}
@@ -91,14 +91,13 @@ const DamageModal = ({ open, onClose }) => {
             flexWrap: "wrap",
           }}
         >
-          {[1, 2, 3].map((_, index) => (
+          
             <img
-              key={index}
-              src={ScratchImage}
+              src={damage?.imageUrl}
               alt="Scratch"
               style={{ width: "100%", maxWidth: 250, borderRadius: 4 }}
             />
-          ))}
+         
         </Box>
       </Box>
     </Modal>

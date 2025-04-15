@@ -13,6 +13,7 @@ import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
 import {useCar} from "../../../context/car.context";
 import { carDamageReportValidation, carDetailsValidation, carFeaturesValidation, carInspectionReportValidation, carPricingValidation, imagesValidation } from "../../../validations/car.validation";
+import toast from "react-hot-toast";
 
 
 
@@ -34,7 +35,7 @@ const PostAds = () => {
   const carInspectionReportCompletion = carInspectionReportValidation.safeParse(carState.carInspectionReport);
   const carDetailsCompletion = carDetailsValidation.safeParse(carState.carDetails);
   const imageCompletion = imagesValidation.safeParse(carState.images);
-  const carDamageReportComplection = carDamageReportValidation.safeParse(carState.carDamageReport);
+  const carDamageReportComplection = carDamageReportValidation.safeParse(carState.carDamageReport || undefined);
   const carFeaturesCompletion = carFeaturesValidation.safeParse(carState.features);
 
   const postAdAllow = (carPricingCompletion.success && carInspectionReportCompletion.success && carDetailsCompletion.success && imageCompletion.success
@@ -49,6 +50,17 @@ const PostAds = () => {
     { title: "Damage Report", status: carDamageReportComplection.success, steps: 4, icon: <ReportIcon fontSize="large" /> },
     { title: "Car Pricing", status: carPricingCompletion.success, steps: 4, icon: <MonetizationOnIcon fontSize="large" /> },
   ];
+
+  const handlePostAd = () => {
+    toast.promise(async () => {
+      await carPostAd();
+      navigate('/ad/post/success');
+    }, {
+      loading: 'Posting ad',
+      error: e => e.message,
+      success: 'Ad Successfully posted',
+    })
+  };
 
 
   if(location.pathname.endsWith('/post') || location.pathname.endsWith('/post/'))
@@ -143,6 +155,7 @@ const PostAds = () => {
                     py: 1,
                     backgroundColor: colors.buttoncolor,
                   }}
+                  onClick={handlePostAd}
                 >
                   Post Ad
                 </Button>

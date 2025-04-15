@@ -10,18 +10,23 @@ import img from "../../assets/Png/prseller.png";
 import CarInspectionModal from "../Modals/CarinspectionReport";
 import DamageModal from "../Modals/DamageModal";
 
-import CarReport1 from "../../assets/SVG/carreportsvg.svg";
-import CarReport2 from "../../assets/SVG/exteriorimg6.svg";
-import CarReport3 from "../../assets/SVG/exteriorimg2.svg";
-import CarReport4 from "../../assets/SVG/exteriorimg3.svg";
+import imgsketch1 from "../../assets/SVG/frontdamage.svg";
+import imgsketch2 from "../../assets/SVG/backdamage.svg";
+import imgsketch3 from "../../assets/SVG/leftdamage.svg";
+import imgsketch4 from "../../assets/SVG/rightdamage.svg";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "../../context/auth.context";
 import { useQuery } from "@tanstack/react-query";
 import { getCarDamageReport } from "../../api/calls/car";
 import { Link } from "react-router-dom";
 
-const images = [CarReport1, CarReport2, CarReport3, CarReport4];
+const images = [
+  imgsketch1,
+  imgsketch2,
+  imgsketch3,
+  imgsketch4
+];
 const views = ["Front View", "Back View", "Right Side View", "Left Side View"];
 
 const CarInspectionReport = ({car}) => {
@@ -30,6 +35,8 @@ const CarInspectionReport = ({car}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const {authState} = useAuth();
 
+  const selectedDamage = useRef();
+
   const {data, isLoading} = useQuery({
     queryKey: ['damageReport', car._id],
     queryFn: () => getCarDamageReport(car._id),
@@ -37,6 +44,7 @@ const CarInspectionReport = ({car}) => {
   });
   
   const damageReport = data?.data.damageReport.damageReport;
+  const currentDamageReport = (damageReport || []).filter(val => val.imageIndex === currentIndex);
   
   const isMyCar = car.user._id === authState.user._id;
 
@@ -51,6 +59,12 @@ const CarInspectionReport = ({car}) => {
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   };
+
+  const damages = [
+    { name: "Scratches", colored: Scratch },
+    { name: "Dents/Cracks", colored: Dent },
+    { name: "Rust", colored: Rust },
+  ];
 
   return (
     <Box
@@ -199,7 +213,7 @@ const CarInspectionReport = ({car}) => {
             p: 1,
             mt: 1,
           }}
-          onClick={() => setOpenDamage(true)}
+          // onClick={() => setOpenDamage(true)}
         >
           Damage Labels
         </Button>
@@ -268,8 +282,18 @@ const CarInspectionReport = ({car}) => {
               <ArrowBackIosNewIcon fontSize="small" />
             </IconButton>
 
-            <Box sx={{ width: "200px", height: "auto" }}>
-              <img src={images[currentIndex]} alt="Car View" width="100%" />
+            <Box sx={{ width: "200px", height: "auto", position: 'relative' }}>
+              <img src={images[currentIndex]} alt="Car View" width="100%"/>
+              {currentDamageReport.map(val => {
+                const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
+                return (
+                  <img
+                    onClick={() => {selectedDamage.current = val; setOpenDamage(true)}}
+                    src={iconSrc}
+                    style={{ width: 30, height: 30, position: 'absolute', left: val.x, top: val.y, }}
+                  />
+                )
+              })}
             </Box>
 
             <IconButton sx={{ color: "#2F61BF", fontSize: 28 }} onClick={handleNext}>
@@ -296,7 +320,7 @@ const CarInspectionReport = ({car}) => {
 
       {/* Modals */}
       <CarInspectionModal car={car._id} open={open} onClose={() => setOpen(false)} />
-      <DamageModal car={car._id} open={openDamage} onClose={() => setOpenDamage(false)} />
+      <DamageModal damage={selectedDamage.current} open={openDamage} onClose={() => setOpenDamage(false)} />
     </Box>
   );
 };

@@ -40,41 +40,41 @@ const DraftCard = ({draft}) => {
     }
   };
 
-  const steps = [
-    { label: "Car Images", completed: true },
-    { label: "Car Features", completed: true },
-    { label: "Car Pricing", completed: false },
-    { label: "Damage Report", completed: false },
-    { label: "Car Detail", completed: false },
-    { label: "Inspection Report", completed: false },
-  ];
+  // const steps = [
+  //   { label: "Car Images", completed: true },
+  //   { label: "Car Features", completed: true },
+  //   { label: "Car Pricing", completed: false },
+  //   { label: "Damage Report", completed: false },
+  //   { label: "Car Detail", completed: false },
+  //   { label: "Inspection Report", completed: false },
+  // ];
 
-  const renderStepRows = () => {
-    const rows = [];
-    for (let i = 0; i < steps.length; i += 2) {
-      rows.push(
-        <Box
-          key={i}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 0.5, 
-            mb: 1,
-          }}
-        >
-          <StepItem label={steps[i].label} completed={steps[i].completed} />
-          {steps[i + 1] && (
-            <StepItem
-              label={steps[i + 1].label}
-              completed={steps[i + 1].completed}
-            />
-          )}
-        </Box>
-      );
-    }
-    return rows;
-  };
+  // const renderStepRows = () => {
+  //   const rows = [];
+  //   for (let i = 0; i < steps.length; i += 2) {
+  //     rows.push(
+  //       <Box
+  //         key={i}
+  //         sx={{
+  //           display: "flex",
+  //           justifyContent: "center",
+  //           alignItems: "center",
+  //           gap: 0.5, 
+  //           mb: 1,
+  //         }}
+  //       >
+  //         <StepItem label={steps[i].label} completed={steps[i].completed} />
+  //         {steps[i + 1] && (
+  //           <StepItem
+  //             label={steps[i + 1].label}
+  //             completed={steps[i + 1].completed}
+  //           />
+  //         )}
+  //       </Box>
+  //     );
+  //   }
+  //   return rows;
+  // };
 
   return (
     <Box
