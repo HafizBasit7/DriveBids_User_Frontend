@@ -77,13 +77,18 @@ export default function AuthContextProvider ({children}) {
 
     //Initially Load user
     const initialLoad = async () => {
-        const token = localStorage.getItem('token');
-        if(token) {
-            await loadUser(token);
+        try {
+            const token = localStorage.getItem('token');
+            if(token) {
+                await loadUser(token);
+            }
         }
-
-        //Toggle Loading
-        dispatch({type: 'toggleLoading', payload: false});
+        catch(e) {
+            console.log(e.toString());
+        } finally {
+            //Toggle Loading
+            dispatch({type: 'toggleLoading', payload: false});
+        }
     };
 
     return (
