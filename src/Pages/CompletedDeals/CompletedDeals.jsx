@@ -5,9 +5,9 @@ import MainLayout from "../../Layouts/MainLayout";
 import { useQuery } from "@tanstack/react-query";
 import { getCompletedDeals } from "../../api/calls/car";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist";
-import CarCard from "../../Components/HomePageComponents/CarCard";
 import PaginationComponent from "../../Components/Common/PaginationComponent";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
+import CompletedDealsCard from "../../Components/HomePageComponents/CompletedDealsCard";
 
 const LIMIT = 10;
 
@@ -72,7 +72,7 @@ const CompletedDeals = () => {
         justifyContent: { xs: "center", lg: "start" } 
       }}>
         {isLoading ? <SkeletonLoader count={3}/> : completedDeals?.map((deal, index) => (
-          <CarCard 
+          <CompletedDealsCard 
             key={index} 
             carsInWatchList={carsInWatchList} 
             ad={deal.car} 

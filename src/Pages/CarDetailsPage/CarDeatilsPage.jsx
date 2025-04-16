@@ -135,6 +135,8 @@ const CarDetailsPage = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            py:1
+            
           }}
         >
           <CarInspectionReport car={car} />

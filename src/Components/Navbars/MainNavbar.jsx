@@ -118,6 +118,7 @@ const MainNavbar = () => {
             ))}
 
           {!isMobile && (
+            
            <LocationInput handleChange={(location) => {
             dispatch({type: 'updateLocation', payload: location});
             setTimeout(() => {
@@ -129,6 +130,7 @@ const MainNavbar = () => {
               queryClient.invalidateQueries({queryKey: ['carsByBidCountAll']});
             }, 200);
            }}>
+            
             <Box
               placeholder={currentSelectedLocation?.name}
               component="input"
@@ -145,6 +147,7 @@ const MainNavbar = () => {
                 maxWidth:180
               }}
             />
+            
            </LocationInput>
         
           )}
