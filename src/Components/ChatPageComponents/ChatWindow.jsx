@@ -24,6 +24,7 @@ const ChatWindow = () => {
   const {chatSocket: socket} = useSocket();
   const queryClient = useQueryClient();
   const loaderRef = useRef(null);
+  const newMessageIncoming = useRef(false);
 
   const user = authState.user;
 
@@ -61,16 +62,30 @@ const ChatWindow = () => {
     if(isError) {
       setSearchParams({});
     }
-  }, [isError])
+  }, [isError]);
 
   useEffect(() => {
-    if(!messagesLoading && messagesContainerRef.current) {
+    if(!messagesLoading) {
+      if (messagesContainerRef.current) {
         messagesContainerRef.current.scrollTo({
           top: messagesContainerRef.current.scrollHeight,
           behavior: 'smooth',
         });
+      }
     }
   }, [messagesLoading]);
+
+  useEffect(() => {
+    //Scroll
+    if (messagesContainerRef.current && newMessageIncoming.current === true) {
+      newMessageIncoming.current = false;
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+    //
+  }, [messages]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -108,6 +123,7 @@ const ChatWindow = () => {
     };
   }, [socket, chatId]);
   const handleNewMessageUpdate = (message) => {
+    newMessageIncoming.current = true;
     //Update messages list
     queryClient.setQueryData(['messages', chatId], (pages) => {
       const newPages = {...pages};
@@ -130,16 +146,7 @@ const ChatWindow = () => {
 
 
   const sendMessageClick = async () => {
-    mutation.mutateAsync({chatId, message: newMessage}).then(() => {
-      //Scroll
-      if (messagesContainerRef.current) {
-        messagesContainerRef.current.scrollTo({
-          top: messagesContainerRef.current.scrollHeight,
-          behavior: 'smooth',
-        });
-      }
-      //
-    });
+    mutation.mutate({chatId, message: newMessage});
     setNewMessage('');
   };
   
