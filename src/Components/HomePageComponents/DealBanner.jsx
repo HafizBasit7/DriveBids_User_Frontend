@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import colors from "../../Style/color";
 
-const DealsBanner = ({ title, subtitle, buttonText, onClick, icon }) => {
+const DealsBanner = ({ title, subtitle, buttonText, onClick, onClose, icon }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); 
 
@@ -83,7 +83,7 @@ const DealsBanner = ({ title, subtitle, buttonText, onClick, icon }) => {
     mt: isSmallScreen ? 2 : 0,
     gap: 0.5,  // 0.1 might be too small; 0.5 keeps it tighter but balanced
   }}
-  onClick={onClick}
+  onClick={() => {try {onClick();} catch(e) {onClose();}}}
 >
   {icon && (
     <Box

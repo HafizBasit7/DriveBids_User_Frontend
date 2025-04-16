@@ -17,9 +17,9 @@ import {uploadImage} from "../../utils/upload";
 
 const images = [
   imgsketch1,
-  imgsketch2,
+  imgsketch4,
   imgsketch3,
-  imgsketch4
+  imgsketch2
 ];
 
 const DamageReportBox = ({ title, description, carFacing, onNext, save = false }) => {

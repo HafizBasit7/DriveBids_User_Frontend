@@ -23,11 +23,11 @@ import { Link } from "react-router-dom";
 
 const images = [
   imgsketch1,
-  imgsketch2,
+  imgsketch4,
   imgsketch3,
-  imgsketch4
+  imgsketch2
 ];
-const views = ["Front View", "Back View", "Right Side View", "Left Side View"];
+const views = ["Front View", "Right View", "Left Side View", "Back View"];
 
 const CarInspectionReport = ({car}) => {
   const [open, setOpen] = useState(false);
@@ -200,7 +200,7 @@ const CarInspectionReport = ({car}) => {
           Damage Report
         </Typography>
 
-        <Button
+        {/* <Button
           variant="contained"
           size="small"
           sx={{
@@ -216,10 +216,10 @@ const CarInspectionReport = ({car}) => {
           // onClick={() => setOpenDamage(true)}
         >
           Damage Labels
-        </Button>
+        </Button> */}
 
         {/* Damage Types */}
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 2, alignItems: "flex-start" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 2, mt: 2, alignItems: "flex-start" }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <img src={Scratch} alt="Scratch" width={25} />
             <Typography variant="body2">Scratches</Typography>

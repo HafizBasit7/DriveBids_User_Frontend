@@ -83,7 +83,7 @@ const BidModal = ({ open, onClose, car }) => {
               },
             }}
             value={bid}
-            onChange={(e) => setBid(Number(e.target.value))}
+            onChange={(e) => setBid(parseInt(e.target.value) || 0)}
           />
         </Box>
 

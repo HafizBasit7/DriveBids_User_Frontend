@@ -377,7 +377,8 @@ const thumbnailScrollStyles = {
         </Button>
         {bid && (
           <>
-            <Button
+            <Box
+              
               variant="outlined"
               sx={{
                 flex: 1,
@@ -403,8 +404,8 @@ const thumbnailScrollStyles = {
                 AED {bid.bidAmount.toLocaleString()}
               </Box>
               
-            </Button>
-            <Button
+            </Box>
+            <Box
             
               variant="outlined"
               sx={{
@@ -432,7 +433,7 @@ const thumbnailScrollStyles = {
                 AED {bid.maxBudget.toLocaleString()}
               </Box>
               
-            </Button>
+            </Box>
           </>
         )}
       </Box>

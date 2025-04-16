@@ -40,7 +40,6 @@ const CarListingPage = () => {
       <Box
         sx={{
           width: "100%",
-
           mx: "auto",
           mt: { xs: 4, md: 2 },
           mb: { xs: 5, md: 7 },
@@ -58,7 +57,7 @@ const CarListingPage = () => {
         {/* <CarCard /> */}
         
       </Box>
-      {cars.length > 0 && (<PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>)}
+      {cars?.length > 0 && (<PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>)}
     </MainLayout>
   );
 };
