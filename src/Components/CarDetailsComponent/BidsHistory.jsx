@@ -6,6 +6,7 @@ import colors from "../../Style/color";
 import { useAuth } from "../../context/auth.context";
 import toast from "react-hot-toast";
 import {acceptBid as acceptBidOnCar} from "../../api/calls/bid";
+import Emptyplaceholder from "../../Components/Loader/Empytplaceholder"
 
 const BidsHistory = ({car, owner}) => {
 
@@ -51,7 +52,7 @@ const BidsHistory = ({car, owner}) => {
       
    
 
-      {bids?.map((bid, index) => (
+      {bids?.length < 1 ? <Emptyplaceholder/> : bids?.map((bid, index) => (
         <Box key={index} sx={{ mb: index !== bids.length - 1 ? 2 : 0 }}>
           {/* Highest Bid Chip */}
           {index === 0 && (

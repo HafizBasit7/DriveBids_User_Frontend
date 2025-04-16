@@ -4,11 +4,23 @@ import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyB
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
 import { useCar } from "../../../context/car.context";
+import { useQuery } from "@tanstack/react-query";
+import apiClient from "../../../api/client";
 
 const CarCompanyPage = () => {
   const navigate = useNavigate();
 
   const {carState, dispatch} = useCar();
+
+  const {data, isLoading} = useQuery({
+    queryKey: ['make'],
+    queryFn: async () => {
+      const result = await apiClient.get('/makes');
+      return result.data;
+    },
+    refetchOnMount: false,
+  });
+  const makes = data?.Makes;
 
   function onChangeCarMake (value) {
     dispatch({
@@ -17,19 +29,13 @@ const CarCompanyPage = () => {
       field: 'make',
       value,
     });
+    dispatch({
+      type: 'UPDATE_FIELD',
+      section: 'carDetails',
+      field: 'variant',
+      value: null,
+    });
   };
-
-  const carBrands = [
-    "Suzuki",
-    "Toyota",
-    "Honda",
-    "Hyundai",
-    "Ford",
-    "Porsche",
-    "Tesla",
-    "Lamborghini",
-    "Bentley",
-  ];
 
   return (
     <MainLayout
@@ -56,7 +62,7 @@ const CarCompanyPage = () => {
         zIndex={2}
       >
         <CarSelectionBox
-          carBrands={carBrands}
+          carBrands={makes}
           value={carState.carDetails.make}
           onChange={onChangeCarMake}
           onNext={() => navigate("../variant")}

@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getWatchList } from "../../api/calls/watchlist";
 import PaginationComponent from "../../Components/Common/PaginationComponent";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
+import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
+
 
 const LIMIT = 10;
 
@@ -45,7 +47,7 @@ const MyWatchPage = () => {
         flexWrap: "wrap",
         justifyContent: { xs: "center", lg: "start" } 
       }}>
-        {isLoading ? <SkeletonLoader count={3}/> : watchList?.map((item, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : watchList?.length < 1 ? <EmptyPlaceHolder/> : watchList?.map((item, index) => (
           <CarCard 
             key={index} 
             carsInWatchList={carsInWatchList} 
@@ -54,13 +56,15 @@ const MyWatchPage = () => {
         ))}
       </Box>
 
-      <PaginationComponent 
+     {watchList?.length > 0 && (
+       <PaginationComponent 
         page={page} 
         pages={pages} 
         handleChange={(event, value) => {
           setSearchParams({ page: value });
         }} 
       />
+     )}
     </MainLayout>
   );
 };

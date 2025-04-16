@@ -8,6 +8,8 @@ import { getCarsIdInWatchList } from "../../api/calls/watchlist.js";
 import { useAuth } from "../../context/auth.context";
 import PaginationComponent from "../../Components/Common/PaginationComponent.jsx";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader.jsx";
+import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
+
 
 const LIMIT = 10;
 
@@ -88,7 +90,7 @@ const ViewAllFilters = () => {
             }
           }}>
 
-          {isLoading ? <SkeletonLoader count={3}/> :  (
+          {isLoading ? <SkeletonLoader count={3}/> : cars.length < 1 ? <EmptyPlaceHolder/> : (
             cars.map((car, index) => <CarCard key={index} ad={type === 'bid' ? car.car : car} carsInWatchList={carsInWatchList}/>)
           )}
           </Box>
@@ -97,7 +99,7 @@ const ViewAllFilters = () => {
           
        
       </Box>
-      <PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>
+      {cars?.length > 0 && (<PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>)}
     </MainLayout>
   );
 };

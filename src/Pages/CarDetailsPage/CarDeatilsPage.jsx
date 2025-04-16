@@ -20,6 +20,8 @@ import toast from "react-hot-toast";
 import { getChatId } from "../../api/calls/chat";
 import CarLoader from "../../Components/Loader/CarLoader";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
+import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
+
 import NotFound from "../../Pages/NotFounf404Page";
 import { useSocket } from "../../context/socket.context";
 
@@ -35,7 +37,7 @@ const SimilarCars = ({make, carId}) => {
 });
 
 const cars = data?.data.cars;
-
+const filteredCars = cars?.filter(car => car._id !== carId);
 
   return (
     <>
@@ -43,7 +45,7 @@ const cars = data?.data.cars;
               <DealsBanner title="Similar Cars"  buttonText={make} />
             </Box>
             <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {isLoading ?  <SkeletonLoader count={3}/> : cars.map((car, index) => {
+        {isLoading ?  <SkeletonLoader count={3}/> : filteredCars.length < 1 ? <EmptyPlaceHolder/> : filteredCars.map((car, index) => {
           if(car._id === carId) {
             return <></>
           }
@@ -100,7 +102,7 @@ const CarDetailsPage = () => {
 
   return (
     <MainLayout  title={car.title}
-      subtitle={`Posted ${timeAgo(car.createdAt)}`}
+      subtitle={`Posted ${timeAgo(car.postedOn || car.createdAt)}`}
       buttonText="Message Owner"
       onClick={messageOwnerHandle}
       isnotSellMyCar ={true}

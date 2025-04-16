@@ -20,20 +20,6 @@ const CityPage = () => {
     });
   };
 
-
-  const carBrands = [
-    "Karachi",
-    "Lahore",
-    "Islamabad",
-    "Rawalpindi",
-    "Faisalabad",
-    "Multan",
-    "Peshawar",
-    "Quetta",
-    "Sialkot",
-    "Gujranwala",
-  ];
-
   return (
     <MainLayout
     title="Location"

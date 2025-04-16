@@ -9,6 +9,8 @@ import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import CarCard from "../../Components/HomePageComponents/CarCard";
 import PaginationComponent from "../../Components/Common/PaginationComponent";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
+import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
+
 
 const LIMIT = 10;
 
@@ -80,10 +82,8 @@ const MyBidsPage = () => {
             bid={bid}
           />
         ))}
-        {bids?.length === 0 && (
-          <Typography textAlign="center" width="100%">
-            No bids found for this status.
-          </Typography>
+        {bids?.length < 1 && (
+          <EmptyPlaceHolder/>
         )}
       </Box>
 
