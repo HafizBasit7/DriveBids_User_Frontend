@@ -26,11 +26,6 @@ const CompletedDeals = () => {
     queryFn: () => getCompletedDeals(page, LIMIT, type),
   });
 
-  const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
-    queryKey: ['carsInWatchList'],
-    queryFn: getCarsIdInWatchList,
-  });
-
   const completedDeals = data?.data?.completedDeals;
   const count = data?.meta?.count;
   const pages = data?.meta?.pages;
@@ -76,8 +71,8 @@ const CompletedDeals = () => {
         {isLoading ? <SkeletonLoader count={3}/> : completedDeals?.length < 1 ? <EmptyPlaceHolder/> : completedDeals?.map((deal, index) => (
           <CompletedDealsCard 
             key={index} 
-            carsInWatchList={carsInWatchList} 
-            ad={deal.car} 
+            ad={deal.car}
+            item={deal} 
             isFromCompletedDeals={true}
           />
         ))}

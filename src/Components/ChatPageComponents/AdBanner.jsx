@@ -2,9 +2,11 @@ import { Box, Typography, IconButton } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"; // Dot icon
 import { useNavigate } from "react-router-dom";
+import {useSocket} from "../../context/socket.context";
 
 const AdBanner = ({ chatHeadDataReal }) => {
   const navigate = useNavigate();
+  const {chatSocket} = useSocket();
 
   const handleClick = () => {
     navigate(`/car/${chatHeadDataReal.car._id}`);
@@ -43,13 +45,13 @@ const AdBanner = ({ chatHeadDataReal }) => {
         <Box sx={{ display: "flex", alignItems: "center", mt: 0.1 }}>
           <FiberManualRecordIcon
             sx={{
-              color: chatHeadDataReal?.isConnected ? "green" : "red",
+              color: chatSocket ? "green" : "red",
               fontSize: 12,
               mr: 0.5,
             }}
           />
           <Typography sx={{ fontSize:14, color: "#333" }}>
-            {chatHeadDataReal?.isConnected ? "Connected" : "Disconnected"}
+            {chatSocket ? "Connected" : "Disconnected"}
           </Typography>
         </Box>
       </Box>

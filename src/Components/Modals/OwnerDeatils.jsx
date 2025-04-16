@@ -2,7 +2,7 @@ import { Modal, Box, Typography, Stack } from "@mui/material";
 import DealsBanner from "../HomePageComponents/DealBanner";
 import CloseIcon from "@mui/icons-material/Close";
 
-const OwnerDeatils = ({ open, onClose, car }) => {
+const OwnerDeatils = ({ open, onClose, item, isOwner }) => {
   return (
     <Modal open={open} onClose={onClose} disableScrollLock={false}>
       <Box
@@ -21,7 +21,7 @@ const OwnerDeatils = ({ open, onClose, car }) => {
         }}
       >
         <DealsBanner
-          title="Owner Detail"
+          title={isOwner ? 'Buyer Details' : 'Owner Details'}
           subtitle=""
           buttonText="Close"
           showClose
@@ -32,13 +32,13 @@ const OwnerDeatils = ({ open, onClose, car }) => {
         {/* Owner Info Section */}
         <Stack spacing={2} mt={3}>
           <Typography variant="h6" fontWeight={600}>
-            Name: <Typography component="span" fontWeight={400}>{car?.ownerName || 'N/A'}</Typography>
+            Name: <Typography component="span" fontWeight={400}>{item?.name || 'N/A'}</Typography>
           </Typography>
           <Typography variant="h6" fontWeight={600}>
-            Email: <Typography component="span" fontWeight={400}>{car?.ownerEmail || 'N/A'}</Typography>
+            Email: <Typography component="span" fontWeight={400}>{item?.email || 'N/A'}</Typography>
           </Typography>
           <Typography variant="h6" fontWeight={600}>
-            Phone: <Typography component="span" fontWeight={400}>{car?.ownerPhone || 'N/A'}</Typography>
+            Phone: <Typography component="span" fontWeight={400}>+{item.phoneNumber?.countryCode} {item.phoneNumber?.phoneNo}</Typography>
           </Typography>
         </Stack>
       </Box>

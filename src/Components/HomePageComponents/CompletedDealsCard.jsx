@@ -17,60 +17,34 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import cardarrow from "../../assets/SVG/cardarrow.SVG";
 import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toggleWatchList } from "../../api/calls/watchlist";
 import { calculateTimeLeft, formatAmount } from "../../utils/utils";
 import { LocalGasStation, PaletteOutlined, PrecisionManufacturing } from "@mui/icons-material";
 import OwnerDeatils from "../Modals/OwnerDeatils";
+import { useAuth } from "../../context/auth.context";
+import { useMutation } from "@tanstack/react-query";
+import {getChatId} from "../../api/calls/chat";
+import toast from "react-hot-toast";
 
-const CompletedDealsCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals = false }) => {
+const CompletedDealsCard = ({ ad, item}) => {
     // const [isFavorited, setIsFavorited] = useState(false);
     // const [openDelete, setOpenDelete] = useState(false);
+    const [openOwnerDetails, setOpenOwnerDetails] = useState(false);
+    const {authState} = useAuth();
 
     const navigate = useNavigate();
 
-    const queryClient = useQueryClient();
-    const toggleWatchListMutation = useMutation({
-        mutationFn: toggleWatchList,
-        onMutate: async (carId) => {
-            //For Car ids in watchlist
-            await queryClient.cancelQueries(["carsInWatchList"]);
-            const previousWatchlist = queryClient.getQueryData(["carsInWatchList"]);
-
-            queryClient.setQueryData(["carsInWatchList"], (oldData) => {
-                if (!oldData) return { data: { carsInWatchList: [{ car: carId }] }, status: true, statusCode: 200 };
-                const isAlreadyInWatchlist = oldData.data.carsInWatchList.some((item) => item.car === carId);
-                return {
-                    ...oldData,
-                    data: {
-                        ...oldData.data,
-                        carsInWatchList: isAlreadyInWatchlist
-                            ? oldData.data.carsInWatchList.filter((item) => item.car !== carId)
-                            : [...oldData.data.carsInWatchList, { car: carId }],
-                    },
-                };
-            });
-
-            return { previousWatchlist };
-        },
-        onError: (_error, _newMessage, context) => {
-            if (context?.previousWatchlist) {
-                queryClient.setQueryData(["carsInWatchList"], context.previousWatchlist);
-            }
-        },
-        onSettled: () => {
-            // queryClient.invalidateQueries(["carsInWatchList"]);
-            queryClient.invalidateQueries({ queryKey: ["watchlist"] });
-        },
+    const chatNowMutation = useMutation({
+        mutationFn: getChatId,
     });
 
+    const handleChat = () => {
+        toast.promise(async () => {
+            const result = await chatNowMutation.mutateAsync({userId: item.user._id, carId: ad._id});
+            navigate(`/chat?chatId=${result.data.chatId}`);
+        }, {loading: 'Please wait...', error: e => e.message, success: 'Opening Chat'});
+    };
+
     //Calculations
-    const isCarInWatchList = (carsInWatchList?.data.carsInWatchList.findIndex(val => val.car === ad._id) !== -1);
-    const isCarSold = ad.status === 'sold';
-    let winning = false;
-    if (isFromMyBids) {
-        winning = isCarSold ? bid.status === 'won' ? 'Bid Won' : 'Bid Lost' : ad.highestBid === bid.bidAmount ? 'Winning' : 'Losing';
-    }
     const getChipStyles = () => {
         if (winning === "Winning") {
             return { bgcolor: "#DEF6EE", color: "#008B27", };
@@ -84,21 +58,6 @@ const CompletedDealsCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromComp
             return {};
         }
     };
-
-    const countdownInterval = useRef();
-    const [timeLeft, setTimeLeft] = useState('0hr:0m:0s');
-
-    useEffect(() => {
-        if (isCarSold) return;
-        countdownInterval.current = setInterval(() => {
-            setTimeLeft(calculateTimeLeft(ad.duration));
-        }, 1000);
-
-        return () => {
-            if (!countdownInterval.current) return;
-            clearInterval(countdownInterval.current);
-        };
-    }, [isCarSold]);
 
     return (
         <Box
@@ -120,32 +79,12 @@ const CompletedDealsCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromComp
                     alt={ad.title}
                     sx={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
                 />
-
-                <IconButton
-                    onClick={() => toggleWatchListMutation.mutate(ad._id)}
-                    sx={{
-                        position: "absolute",
-                        top: 10,
-                        right: 10,
-                        backgroundColor: "#363D2D",
-                        color: "#FFFFFF",
-                        width: 34,
-                        height: 34,
-                        borderRadius: 2,
-                    }}
-                >
-                    {isCarInWatchList ? (
-                        <FavoriteIcon sx={{ color: "white" }} />
-                    ) : (
-                        <FavoriteBorderIcon />
-                    )}
-                </IconButton>
             </Box>
 
             <CardContent sx={{ textAlign: "center" }}>
 
                 {/* Chip based on Status */}
-                {isFromMyBids && (<Chip label={winning} sx={{ mt: 0.1, ...getChipStyles(), borderRadius: 2, p: 0.5, mb: 1, height: 28, fontWeight: 600 }} />)}
+                {/* {isFromMyBids && (<Chip label={'Ok'} sx={{ mt: 0.1, ...getChipStyles(), borderRadius: 2, p: 0.5, mb: 1, height: 28, fontWeight: 600 }} />)} */}
 
                 <Typography variant="h5" fontWeight={600} sx={{ fontFamily: "Inter" }}>
                     {ad.title}
@@ -202,43 +141,17 @@ const CompletedDealsCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromComp
                         <Typography sx={{ fontFamily: "Inter", fontSize: 14 }}>{ad.color}</Typography>
                     </Box>
                 </Box>
-
-
-
-                {/* Top Bid */}
-                {!isFromCompletedDeals && (
-                    <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19, fontFamily: "Inter" }}>
-                        Top Bid: AED {formatAmount(ad.highestBid)}
-                    </Typography>
-                )}
-
-                {isFromMyBids && (
-                    <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19, fontFamily: "Inter" }}>
-                        My Bid: AED {formatAmount(bid.bidAmount)}
-                    </Typography>
-                )}
-
-                {isCarSold && (
-                    <Chip label={'Sold'} sx={{ fontWeight: 900, borderRadius: 2, p: 0.5, fontSize: 12, height: 25, mt: 1, px: 1 }} />
-                )}
-
-                {/* Timer */}
-                {!isCarSold && (
-                    <Typography
-                        sx={{ color: "#B3261E", mt: 0.5, fontSize: 16, fontWeight: 500, fontFamily: "Inter" }}
-                    >
-                        {timeLeft}
-                    </Typography>
-                )}
+                <Chip label={item.bid ? 'Win Bid' : 'Bought'} sx={{ fontWeight: 900, borderRadius: 2, p: 0.5, fontSize: 12, height: 25, mt: 1, px: 1 }} />
+              
 
                {/* Static Winning Price */}
 <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 14, fontFamily: "Inter" }}>
-  Winning Price: AED 200000
+  Winning Price: AED {item.buyingAmount.toLocaleString()}
 </Typography>
-<Typography sx={{ fontWeight: 600, mt: 0.2, fontSize: 14, fontFamily: "Inter" ,textDecoration:"underline"}} >
+<Button onClick={() => setOpenOwnerDetails(true)} sx={{ fontWeight: 600, mt: 0.2, fontSize: 14, fontFamily: "Inter" ,textDecoration:"underline", color: 'black'}} >
   View Orders Deatils 
-</Typography>
-<OwnerDeatils />
+</Button>
+<OwnerDeatils item={item.user} open={openOwnerDetails} onClose={() => setOpenOwnerDetails(false)} isOwner={item.seller === authState.user._id}/>
 
 {/* Buttons Row */}
 <Box
@@ -283,7 +196,7 @@ const CompletedDealsCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromComp
       px: 1.5,
       py: 1,
     }}
-    onClick={() => handleChat(ad._id)}
+    onClick={handleChat}
   >
     Chat Now
   </Button>

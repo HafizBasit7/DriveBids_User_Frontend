@@ -6,11 +6,12 @@ import Carimgg from "../../assets/Png/sellcarimage.png";
 import colors from "../../Style/color";
 import BidModal from "../Modals/BidModal";
 import { formatAmount } from "../../utils/utils";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {placeBidOnCar, buyNowCar} from "../../api/calls/bid";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/auth.context";
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import { getCarBiddingHistory } from "../../api/calls/car";
 
 const CarSlider = ({car}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,6 +23,13 @@ const CarSlider = ({car}) => {
 
   const dialogThumbRefs = useRef([]);
   const {authState} = useAuth();
+
+  const {data, isLoading} = useQuery({
+    queryKey: ['biddingHistory', car._id],
+    queryFn: () => getCarBiddingHistory(car._id),
+  });
+  const bids = data?.data?.bids;
+  const bid = bids?.find(c => c.user === authState.user._id);
 
   useEffect(() => {
     scrollThumbnailIntoView(mainThumbRefs);
@@ -367,63 +375,66 @@ const thumbnailScrollStyles = {
           </Box>
           )}
         </Button>
-        <Button
-       
-          variant="outlined"
-          sx={{
-            flex: 1,
-            minWidth: "30%",
-            color: "#6F6F6F",
-            borderRadius: 2,
-            py: 1,
-            border: "1px solid #D9D9D9",
-            fontSize: { xs: 12, sm: 14, md: 12 },
-            fontWeight: 700,
-            fontFamily: "Inter",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            height:50,
-          }}
-        >
-         
-         <Box sx={{ color: "#6F6F6F", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-            Current Bid
-          </Box>
-            <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-            AED
-          </Box>
-          
-        </Button>
-        <Button
-       
-          variant="outlined"
-          sx={{
-            flex: 1,
-            minWidth: "30%",
-            color: "#6F6F6F",
-            borderRadius: 2,
-            py: 1,
-            border: "1px solid #D9D9D9",
-            fontSize: { xs: 12, sm: 14, md: 12 },
-            fontWeight: 700,
-            fontFamily: "Inter",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            height:50,
-          }}
-        >
-         
-        
-            <Box sx={{ color: "#6F6F6F", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-            Max Budget
-          </Box>
-          <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-            AED
-          </Box>
-          
-        </Button>
+        {bid && (
+          <>
+            <Button
+              variant="outlined"
+              sx={{
+                flex: 1,
+                minWidth: "30%",
+                color: "#6F6F6F",
+                borderRadius: 2,
+                py: 1,
+                border: "1px solid #D9D9D9",
+                fontSize: { xs: 12, sm: 14, md: 12 },
+                fontWeight: 700,
+                fontFamily: "Inter",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                height:50,
+              }}
+            >
+              
+              <Box sx={{ color: "#6F6F6F", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+                Current Bid
+              </Box>
+                <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+                AED {bid.bidAmount.toLocaleString()}
+              </Box>
+              
+            </Button>
+            <Button
+            
+              variant="outlined"
+              sx={{
+                flex: 1,
+                minWidth: "30%",
+                color: "#6F6F6F",
+                borderRadius: 2,
+                py: 1,
+                border: "1px solid #D9D9D9",
+                fontSize: { xs: 12, sm: 14, md: 12 },
+                fontWeight: 700,
+                fontFamily: "Inter",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                height:50,
+              }}
+            >
+              
+            
+                <Box sx={{ color: "#6F6F6F", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+                Max Budget
+              </Box>
+              <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+                AED {bid.maxBudget.toLocaleString()}
+              </Box>
+              
+            </Button>
+          </>
+        )}
       </Box>
       )}
 
