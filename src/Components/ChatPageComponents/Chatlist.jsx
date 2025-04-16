@@ -191,7 +191,7 @@ const ChatList = () => {
       {/* Search Bar & Chat List Box */}
       <Box sx={{ border: "1px solid #ccc", borderRadius: "12px", p: 2, bgcolor: "white" ,minHeight:600}}>
         {/* Search Bar */}
-        <Box 
+        {/* <Box 
       sx={{ 
         position: "relative", 
         mb: 2, 
@@ -225,16 +225,16 @@ const ChatList = () => {
         }}
       />
     
-    </Box>
+    </Box> */}
 
         {/* Chat List */}
         <List>
           {chats?.length > 0 && chats?.map((chat, index) => (
             <ListItem
+              
               key={index}
               button="true"
-             
-              onClick={() => setSearchParams({chatId: chat._id})}
+              onClick={(e) => {e.preventDefault(); setSearchParams({chatId: chat._id});}}
               sx={{
                 display: "flex",
                 alignItems: "center",

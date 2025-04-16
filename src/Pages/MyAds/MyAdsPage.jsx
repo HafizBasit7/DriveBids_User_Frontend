@@ -8,6 +8,8 @@ import { listMyAds } from "../../api/calls/car";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import PaginationComponent from "../../Components/Common/PaginationComponent";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
+import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
+
 
 const LIMIT = 10;
 
@@ -39,12 +41,12 @@ const MyAdsPage = () => {
     onClick={() => navigate("/home")}
     isnotSellMyCar ={true}>
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {isLoading ? <SkeletonLoader count={3}/> : cars?.map((car, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : cars?.length < 1 ? <EmptyPlaceHolder/> : cars?.map((car, index) => (
            <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
         ))}
       </Box>
 
-     <PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>
+     {cars?.length > 0 && <PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>}
 
      
     </MainLayout>

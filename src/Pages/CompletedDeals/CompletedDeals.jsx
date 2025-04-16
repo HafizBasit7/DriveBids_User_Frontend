@@ -8,6 +8,8 @@ import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import PaginationComponent from "../../Components/Common/PaginationComponent";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
 import CompletedDealsCard from "../../Components/HomePageComponents/CompletedDealsCard";
+import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
+
 
 const LIMIT = 10;
 
@@ -71,7 +73,7 @@ const CompletedDeals = () => {
         gap: 4, 
         justifyContent: { xs: "center", lg: "start" } 
       }}>
-        {isLoading ? <SkeletonLoader count={3}/> : completedDeals?.map((deal, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : completedDeals?.length < 1 ? <EmptyPlaceHolder/> : completedDeals?.map((deal, index) => (
           <CompletedDealsCard 
             key={index} 
             carsInWatchList={carsInWatchList} 
@@ -79,11 +81,6 @@ const CompletedDeals = () => {
             isFromCompletedDeals={true}
           />
         ))}
-        {completedDeals?.length === 0 && (
-          <Typography textAlign="center" width="100%">
-            No deals found for this status.
-          </Typography>
-        )}
       </Box>
 
       {completedDeals?.length > 0 && (

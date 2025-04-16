@@ -10,6 +10,7 @@ import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import { listCars, listCarsByBidCount } from "../../api/calls/car";
 import { useAuth } from "../../context/auth.context";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
+import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {carsByBidCountLoading ? <SkeletonLoader count={3}/> : carsByBidCount?.data.cars.map((car, index) => (
+        {carsByBidCountLoading ? <SkeletonLoader count={3}/> : carsByBidCount?.data.cars.length < 1 ? <EmptyPlaceHolder/> : carsByBidCount?.data.cars.map((car, index) => (
            <CarCard key={index} carsInWatchList={carsInWatchList} ad={car.car} />
         ))}
       </Box>
@@ -74,7 +75,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {endingCarListLoading ? <SkeletonLoader count={3}/> : endingCarList?.data.cars.map((car, index) => (
+        {endingCarListLoading ? <SkeletonLoader count={3}/> : endingCarList?.data.cars?.length < 1 ? <EmptyPlaceHolder/> : endingCarList?.data.cars.map((car, index) => (
            <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
         ))}
       </Box>
@@ -84,7 +85,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {isLoading ? <SkeletonLoader count={3}/> : data?.data.cars.map((car, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : data?.data.cars.length < 1 ? <EmptyPlaceHolder/> : data?.data.cars.map((car, index) => (
            <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
         ))}
       </Box>

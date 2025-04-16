@@ -9,6 +9,8 @@ import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import { getCarOwnerCars } from "../../api/calls/car";
 import SkeletonLoading from "../../Components/Loader/SkeletonLoader";
 import PaginationComponent from "../../Components/Common/PaginationComponent";
+import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
+
 
 const LIMIT = 10;
 
@@ -49,14 +51,14 @@ const CarListingPage = () => {
           justifyContent: { xs: "center", sm: "flex-start" },
         }}
       >
-        {isLoading ? <SkeletonLoading count={4}/> : cars?.map((car, index) => (
+        {isLoading ? <SkeletonLoading count={4}/> : cars?.length < 1 ? <EmptyPlaceHolder/> :  cars?.map((car, index) => (
             <CarCard carsInWatchList={carsInWatchList} ad={car}/>
         ))}
 
         {/* <CarCard /> */}
         
       </Box>
-      <PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>
+      {cars.length > 0 && (<PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>)}
     </MainLayout>
   );
 };

@@ -4,22 +4,27 @@ import MainLayout from "../../../Layouts/MainLayout";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
 import { useCar } from "../../../context/car.context";
+import apiClient from "../../../api/client";
+import { useQuery } from "@tanstack/react-query";
 
 const CarVarient = () => {
   const navigate = useNavigate();
   const {carState, dispatch} = useCar();
+  const make = carState.carDetails.make;
 
-  const carBrands = [
-    "Mehran",
-    "Corolla",
-    "Civic",
-    "Alto",
-    "City",
-    "Passo",
-    "Yaris",
-    "V8",
-    "Nissan Patrol",
-  ];
+  if(!make) {
+    navigate('../company')
+  }
+
+  const {data, isLoading} = useQuery({
+    queryKey: ['variant', make?.toLowerCase()],
+    queryFn: async () => {
+      const result = await apiClient.get(`/models?make=${make?.toLowerCase()}`);
+      return result.data;
+    },
+    refetchOnMount: false,
+  });
+  const variants = data?.Models;
 
   function onChangeCarVariant (value) {
     dispatch({
@@ -61,7 +66,8 @@ const CarVarient = () => {
             zIndex={2}
           >
             <CarSelectionBox
-              carBrands={carBrands}
+              carBrands={variants}
+              isVariant={true}
               value={carState.carDetails.variant}
               onChange={onChangeCarVariant}
               onNext={() => navigate("../model")}

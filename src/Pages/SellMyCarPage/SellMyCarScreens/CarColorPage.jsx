@@ -58,7 +58,8 @@ const CarColorPage = () => {
             <CarSelectionBox 
             value={carState.carDetails.color}
             onChange={onCangeCarDetails}
-              carBrands={carBrands} 
+              carBrands={carBrands}
+              isColor={true} 
               isLocation={false}
               searchPlaceholder="Search Company"
               customPlaceholder="Enter custom company"

@@ -2,8 +2,7 @@ import { Box } from "@mui/material";
 import MainLayout from "../../Layouts/MainLayout";
 import ChatList from "../../Components/ChatPageComponents/Chatlist";
 import ChatWindow from "../../Components/ChatPageComponents/ChatWindow";
-import { useEffect, useRef, useState } from "react";
-import {useSocket} from "../../context/socket.context";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const ChatPage = () => {

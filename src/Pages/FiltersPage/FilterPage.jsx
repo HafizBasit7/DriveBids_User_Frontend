@@ -10,6 +10,8 @@ import { getCarsIdInWatchList } from "../../api/calls/watchlist.js";
 import { useAuth } from "../../context/auth.context.jsx";
 import PaginationComponent from "../../Components/Common/PaginationComponent.jsx";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader.jsx";
+import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
+
 
 const LIMIT = 10;
 
@@ -82,7 +84,7 @@ const FilterPage = () => {
             ) : data?.data.cars.length > 0 ? (
               data.data.cars.map((car) => <CarCard carsInWatchList={carsInWatchList} key={car._id} ad={car} />)
             ) : (
-              <p>No cars found</p>
+              <EmptyPlaceHolder/>
             )}
           </Box>
 
@@ -106,7 +108,7 @@ const FilterPage = () => {
           <FilterSidebar filters={filters} setFilters={setFilters} />
         </Box>
       </Box>
-      <PaginationComponent page={page} pages={data?.meta.pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>
+      {data?.data.cars.length > 0 && (<PaginationComponent page={page} pages={data?.meta.pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>)}
     </MainLayout>
   );
 };

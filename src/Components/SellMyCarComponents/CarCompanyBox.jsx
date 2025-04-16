@@ -10,19 +10,22 @@ import {
   Typography,
   InputAdornment,
 } from "@mui/material";
-import { Search, Business } from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
 import colors from "../../Style/color";
 
 const CarSelectionBox = ({
   carBrands = [],
   onNext,
   value,
+  isVariant = false,
+  isColor = false,
   onChange,
   isLocation,
   searchPlaceholder ,
   customPlaceholder 
 }) => {
-  const [customBrand, setCustomBrand] = useState("");
+  // const [inputValue, setInputValue] = useState();
+  
 
   return (
     <Box
@@ -68,9 +71,11 @@ const CarSelectionBox = ({
         ) : (
           <>
             {/* Both search and custom input side by side */}
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={9}>
               <TextField
                 fullWidth
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
                 variant="outlined"
                 placeholder={searchPlaceholder}
                 InputProps={{
@@ -96,9 +101,9 @@ const CarSelectionBox = ({
                   },
                 }}
               />
-            </Grid>
+            </Grid> */}
 
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 variant="outlined"
@@ -128,7 +133,7 @@ const CarSelectionBox = ({
                   },
                 }}
               />
-            </Grid>
+            </Grid> */}
           </>
         )}
       </Grid>
@@ -139,13 +144,13 @@ const CarSelectionBox = ({
         onChange={(e) => onChange(e.target.value)}
       >
         <Grid container spacing={2}>
-          {carBrands.map((brand, index) => (
+          {carBrands?.length < 1 ? <p>Loading...</p> : carBrands.map((brand, index) => (
             <Grid item xs={12} sm={6} key={index}>
               <FormControlLabel
-                value={brand}
+                value={isVariant ? brand.model_name : isColor ? brand : brand.make_display}
                 control={<Radio />}
                 label={
-                  <Typography sx={{ fontFamily: "Inter" }}>{brand}</Typography>
+                  <Typography sx={{ fontFamily: "Inter" }}>{isVariant ? brand.model_name : isColor ? brand : brand.make_display}</Typography>
                 }
               />
             </Grid>
