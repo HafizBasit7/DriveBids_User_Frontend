@@ -149,7 +149,7 @@ const CompletedDealsCard = ({ ad, item}) => {
   Winning Price: AED {item.buyingAmount.toLocaleString()}
 </Typography>
 <Button onClick={() => setOpenOwnerDetails(true)} sx={{ fontWeight: 600, mt: 0.2, fontSize: 14, fontFamily: "Inter" ,textDecoration:"underline", color: 'black'}} >
-  View Orders Deatils 
+  View {item.seller === authState.user._id ? 'Buyer': 'Seller'} Deatils 
 </Button>
 <OwnerDeatils item={item.user} open={openOwnerDetails} onClose={() => setOpenOwnerDetails(false)} isOwner={item.seller === authState.user._id}/>
 

@@ -21,7 +21,7 @@ const OwnerDeatils = ({ open, onClose, item, isOwner }) => {
         }}
       >
         <DealsBanner
-          title={isOwner ? 'Buyer Details' : 'Owner Details'}
+          title={isOwner ? 'Buyer Details' : 'Seller Details'}
           subtitle=""
           buttonText="Close"
           showClose

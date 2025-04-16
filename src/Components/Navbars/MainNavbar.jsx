@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import LocationOnIcon from "@mui/icons-material/Search";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EditLocationIcon from '@mui/icons-material/EditLocation';
 
 import Notifications from "../Modals/Notification";
@@ -119,37 +119,47 @@ const MainNavbar = () => {
 
           {!isMobile && (
             
-           <LocationInput handleChange={(location) => {
-            dispatch({type: 'updateLocation', payload: location});
-            setTimeout(() => {
-              queryClient.invalidateQueries({queryKey: ['cars']});
-              queryClient.invalidateQueries({queryKey: ['carsEnding']});
-              queryClient.invalidateQueries({queryKey: ['carsByBidCount']});
-              queryClient.invalidateQueries({queryKey: ['carsAll']});
-              queryClient.invalidateQueries({queryKey: ['carsEndingAll']});
-              queryClient.invalidateQueries({queryKey: ['carsByBidCountAll']});
-            }, 200);
-           }}>
-            
-            <Box
-              placeholder={currentSelectedLocation?.name}
-              component="input"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                border: "1px solid #ccc",
-                borderRadius: 2,
-                px: 1,
-                py: 0.5,
-                backgroundColor: "white",
-                width: "auto",
-                cursor: "pointer",
-                maxWidth:180
-              }}
-            />
-            
-           </LocationInput>
-        
+            <LocationInput handleChange={(location) => {
+              dispatch({ type: 'updateLocation', payload: location });
+              setTimeout(() => {
+                queryClient.invalidateQueries({ queryKey: ['cars'] });
+                queryClient.invalidateQueries({ queryKey: ['carsEnding'] });
+                queryClient.invalidateQueries({ queryKey: ['carsByBidCount'] });
+                queryClient.invalidateQueries({ queryKey: ['carsAll'] });
+                queryClient.invalidateQueries({ queryKey: ['carsEndingAll'] });
+                queryClient.invalidateQueries({ queryKey: ['carsByBidCountAll'] });
+              }, 200);
+            }}>
+              <Box
+                component="div"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  border: "1px solid #ccc",
+                  borderRadius: 1,
+                  px: 1,
+                  py: 1.2,
+                  backgroundColor: "white",
+                  width: "auto",
+                  cursor: "pointer",
+                  maxWidth: 220
+                }}
+              >
+                <LocationOnIcon sx={{ color: "black", fontSize: 20, mr: 1, }} />
+                <Box
+                  component="input"
+                  placeholder={currentSelectedLocation?.name}
+                  sx={{
+                    border: "none",
+                    outline: "none",
+                    flex: 1,
+                    minWidth: 0,
+                    fontSize: '0.9rem'
+                  }}
+                />
+              </Box>
+            </LocationInput>
+          
           )}
 
           {isMobile && !showSearch && (
