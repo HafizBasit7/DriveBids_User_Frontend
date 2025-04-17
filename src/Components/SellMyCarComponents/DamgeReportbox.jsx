@@ -14,6 +14,7 @@ import imgsketch4 from "../../assets/SVG/rightdamage.svg";
 import {useCar} from "../../context/car.context";
 import toast from "react-hot-toast";
 import {uploadImage} from "../../utils/upload";
+import { useNavigate } from "react-router-dom";
 
 const images = [
   imgsketch1,
@@ -27,6 +28,8 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
   const [damageDescription, setDamageDescription] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
   const {carState, dispatch, draftSave} = useCar();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const navigate = useNavigate();
   const imageRef = useRef();
 
   const currentDamageReport = (carState.carDamageReport?.damageReport || []).filter(val => val.imageIndex === carFacing);
@@ -101,6 +104,7 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
   const saveDamageRpeort =  () => {
     toast.promise(async () => {
       await draftSave('carDamageReport');
+      navigate('..')
     }, {
       loading: 'Saving draft',
       error: e => e.message,
@@ -220,15 +224,23 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
                 ref={imageRef}
                 src={images[carFacing]}
                 alt="Car Sketch"
+                onLoad={() => {
+                  setImageLoaded(true);
+                }}
+                onAbort={() => {
+                  setImageLoaded(false);
+                }}
                 style={{ maxWidth: "100%", margin: "auto" }}
                 onClick={handleSketchClick}
               />
-              {currentDamageReport.map((val, index) => {
-                const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
-                return (
-                  renderPoint(iconSrc, val, index)
-                )
-              })}
+              {imageLoaded && (
+                currentDamageReport.map((val, index) => {
+                  const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
+                  return (
+                    renderPoint(iconSrc, val, index)
+                  )
+                })
+              )}
             </Box>
             
             

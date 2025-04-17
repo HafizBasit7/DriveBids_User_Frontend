@@ -15,7 +15,7 @@ import imgsketch2 from "../../assets/SVG/backdamage.svg";
 import imgsketch3 from "../../assets/SVG/leftdamage.svg";
 import imgsketch4 from "../../assets/SVG/rightdamage.svg";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../context/auth.context";
 import { useQuery } from "@tanstack/react-query";
 import { getCarDamageReport } from "../../api/calls/car";
@@ -33,6 +33,7 @@ const CarInspectionReport = ({car}) => {
   const [open, setOpen] = useState(false);
   const [openDamage, setOpenDamage] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const {authState} = useAuth();
   const imageRef = useRef();
 
@@ -54,6 +55,10 @@ const CarInspectionReport = ({car}) => {
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
+
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [currentIndex]);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
@@ -291,8 +296,12 @@ const CarInspectionReport = ({car}) => {
             </IconButton>
 
             <Box sx={{ width: "200px", height: "auto", position: 'relative' }}>
-              <img ref={imageRef} src={images[currentIndex]} alt="Car View" width="100%"/>
-              {currentDamageReport.map(val => {
+              <img ref={imageRef} src={images[currentIndex]} alt="Car View" width="100%"
+                onLoad={() => {
+                  setImageLoaded(true);
+                }}
+              />
+              {imageLoaded && currentDamageReport.map(val => {
                 const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
                 return (
                   <img
