@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal, Box, Typography, Button } from "@mui/material";
 import DealsBanner from "../HomePageComponents/DealBanner";
-import ScratchImage from "../../assets/Png/scratch.png"; 
 import CloseIcon from "@mui/icons-material/Close";
 
 
@@ -26,7 +25,7 @@ const DamageModal = ({ open, onClose, damage }) => {
         {/* Header */}
         <Box sx={{ width: "100%" }}>
           <DealsBanner
-            title="Car Inspection Report"
+            title="Damage Report"
             subtitle=""
             buttonText="Close"
             showClose 
@@ -38,15 +37,23 @@ const DamageModal = ({ open, onClose, damage }) => {
 
         {/* Damage Description */}
         <Button
+          disabled
           variant="contained"
           sx={{
             backgroundColor: "#2F61BF",
             borderRadius: 2,
-            m: { xs: 1, sm: 2 }, // Adjust margin for small screens
-            fontSize: { xs: "0.8rem", sm: "1rem" }, // Responsive font size
+            m: { xs: 1, sm: 2 },
+            fontSize: { xs: "0.8rem", sm: "1rem" },
             fontWeight: 600,
-            fontFamily:"Inter",
-            textTransform:"none"
+            fontFamily: "Inter",
+            textTransform: "none",
+            color: "#fff", // ensure text color is visible
+            cursor: "default", // remove pointer cursor
+            "&.Mui-disabled": {
+              backgroundColor: "#2F61BF",
+              color: "#fff",
+              opacity: 1, // keep it fully opaque
+            },
           }}
         >
           {damage?.damageType}
@@ -69,6 +76,7 @@ const DamageModal = ({ open, onClose, damage }) => {
 
         {/* Photos Section */}
         <Button
+          disabled
           variant="contained"
           sx={{
             backgroundColor: "#2F61BF",
@@ -76,8 +84,14 @@ const DamageModal = ({ open, onClose, damage }) => {
             mt: { xs: 1, sm: 2 },
             fontSize: { xs: "0.8rem", sm: "1rem" },
             fontWeight: 600,
-            textTransform:"none"
-
+            textTransform: "none",
+            color: "#fff",
+            cursor: "default",
+            "&.Mui-disabled": {
+              backgroundColor: "#2F61BF",
+              color: "#fff",
+              opacity: 1,
+            },
           }}
         >
           Photos

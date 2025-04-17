@@ -105,7 +105,7 @@ const CarInspectionModal = ({ open, onClose, car }) => {
       }}
     >
       <DealsBanner 
-        title="Damage Report" 
+        title="Car Inspection Report" 
         subtitle="" 
         buttonText="Close" 
         showClose 
