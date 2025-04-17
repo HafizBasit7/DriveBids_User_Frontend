@@ -4,7 +4,7 @@ import LandingPage from "../Pages/LandingPage/LandingPage";
 import authLoader from "./loaders/auth.loader";
 import otpLoader from "./loaders/otp.loader";
 import LoginPage from "../Pages/Auth/LoginPage";
-import SignupPage from "../Pages/Auth/SIgnupPage";
+import SignupPage from "../Pages/Auth/SignupPage";
 import ForgetPasswordPage from "../Pages/Auth/ForgetPassword";
 import ResetPasswordPage from "../Pages/Auth/ResetPassword";
 import EnterOtpPage from "../Pages/Auth/EnterOtpPage";
