@@ -27,6 +27,7 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
   const [damageDescription, setDamageDescription] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
   const {carState, dispatch, draftSave} = useCar();
+  const imageRef = useRef();
 
   const currentDamageReport = (carState.carDamageReport?.damageReport || []).filter(val => val.imageIndex === carFacing);
 
@@ -42,8 +43,8 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
   };
   const handleSketchClick = (e) => {
     const rect = e.target.getBoundingClientRect();  
-    const x = e.clientX - rect.left;  
-    const y = e.clientY - rect.top;   
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
 
     clickedPosition.current = { x, y };
     setShowDamageForm(true); 
@@ -57,8 +58,13 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
 
   const resetState = () => {
     setSelectedImage(null);
-    setDamageDescription();
+    setDamageDescription(null);
     setSelected();
+  };
+
+  const handleCancel = () => {
+    resetState();
+    setShowDamageForm(false);
   };
 
   const handleSave = () => {
@@ -101,6 +107,20 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
       success: 'Draft saved',
     })
   };
+
+  const renderPoint = (iconSrc, val, index) => {
+    const bounds = imageRef.current.getBoundingClientRect();
+    const absoluteX = val.x * bounds.width - 10;
+    const absoluteY = val.y * bounds.height - 10;
+
+    return (
+      <img
+        key={index}
+        src={iconSrc}
+        style={{ width: 30, height: 30, position: 'absolute', left: absoluteX, top: absoluteY, }}
+      />
+    );
+  }
 
   return (
     <Box
@@ -176,9 +196,8 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
         ))}
       </Box>
         </Box>
-
-        {!showDamageForm ? (
-          <Box
+          {/* image  */}
+        <Box
             sx={{
               border: "1px dashed #B4B4B4",
               borderRadius: 2,
@@ -191,23 +210,23 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
               justifyContent: "center",
               alignItems: "center",
               cursor: "pointer",
+              visibility: showDamageForm ? 'hidden' : 'visible',
+              position: showDamageForm ? 'absolute' : null,
             }}
             // onClick={handleSketchClick}
           >
             <Box sx={{position: 'relative'}}>
               <img
+                ref={imageRef}
                 src={images[carFacing]}
                 alt="Car Sketch"
                 style={{ maxWidth: "100%", margin: "auto" }}
                 onClick={handleSketchClick}
               />
-              {currentDamageReport.map(val => {
+              {currentDamageReport.map((val, index) => {
                 const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
                 return (
-                  <img
-                    src={iconSrc}
-                    style={{ width: 30, height: 30, position: 'absolute', left: val.x, top: val.y, }}
-                  />
+                  renderPoint(iconSrc, val, index)
                 )
               })}
             </Box>
@@ -236,107 +255,130 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
               Supports: PNG, JPG, JPEG
             </Typography>
           </Box>
-        ) : (
+{/* form  */}
+        {showDamageForm && (
           <Box
+              
+          sx={{
+            border: "1px solid #2F61BF",
+            borderRadius: 2,
+            textAlign: "center",
+            p: 2,
+            width: { xs: "100%", lg: 380 },
+            display: "flex",
+            flexDirection: "column",
+            
+            gap: 2,
+          }}
+        >
+          <Button
             sx={{
-              border: "1px solid #2F61BF",
-              borderRadius: 2,
-              textAlign: "center",
-              p: 2,
-              width: { xs: "100%", lg: 380 },
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
+              backgroundColor: colors.buttoncolor,
+              color: "white",
+              fontSize: 10,
+              borderRadius: 1,
+              width: "fit-content",
+              alignSelf: "center",
+              px: 2,
+              py: 0.5,
+              fontFamily:"Inter"
             }}
           >
-            <Button
-              sx={{
-                backgroundColor: colors.buttoncolor,
-                color: "white",
-                fontSize: 10,
-                borderRadius: 1,
-                width: "fit-content",
-                alignSelf: "center",
-                px: 2,
-                py: 0.5,
-                fontFamily:"Inter"
-              }}
-            >
-              Damage Description
-            </Button>
+            Damage Description
+          </Button>
 
-            <TextField
-              multiline
-              minRows={4}
-              placeholder="Provide a description of the damage."
-              value={damageDescription}
-              onChange={(e) => setDamageDescription(e.target.value)}
-              fullWidth
-              sx={{
-                backgroundColor: "#fff",
-                borderRadius: 1,
-                "& .MuiOutlinedInput-root": { border: "none" },
-                "& .MuiInputBase-input::placeholder": { 
-                  fontSize: 14,   
-                  color: "gray", 
-                },
-              }}
-            />
+          <TextField
+            multiline
+            minRows={4}
+            placeholder="Provide a description of the damage."
+            value={damageDescription}
+            onChange={(e) => setDamageDescription(e.target.value)}
+            fullWidth
+            sx={{
+              backgroundColor: "#fff",
+              borderRadius: 1,
+              "& .MuiOutlinedInput-root": { border: "none" },
+              "& .MuiInputBase-input::placeholder": { 
+                fontSize: 14,   
+                color: "gray", 
+              },
+            }}
+          />
 
 
 <Typography>
-  <label 
-    htmlFor="image-upload" 
-    style={{ 
-      color: colors.buttoncolor, 
-      fontWeight: 600, 
-      fontSize: 12, 
-      fontFamily: "Inter", 
-      cursor: "pointer" 
-    }}
-  >
-    Upload an image {selectedImage ? `(${selectedImage.name})` : ''}
-  </label> 
-  {" "}<br />
- 
-  <Typography
-              sx={{
-                fontFamily: "Inter",
-                fontSize: 12,
-                mt: 0.2,
-                color: "#000",
-                textAlign: "center",
-              }}
-            >
-              Supports: PNG, JPG, JPEG
-            </Typography>
+<label 
+  htmlFor="image-upload" 
+  style={{ 
+    color: colors.buttoncolor, 
+    fontWeight: 600, 
+    fontSize: 12, 
+    fontFamily: "Inter", 
+    cursor: "pointer" 
+  }}
+>
+  Upload an image {selectedImage ? `(${selectedImage.name})` : ''}
+</label> 
+{" "}<br />
+
+<Typography
+            sx={{
+              fontFamily: "Inter",
+              fontSize: 12,
+              mt: 0.2,
+              color: "#000",
+              textAlign: "center",
+            }}
+          >
+            Supports: PNG, JPG, JPEG
+          </Typography>
 </Typography>
 
 <input 
-  id="image-upload" 
-  type="file" 
-  accept="image/png, image/jpeg, image/jpg" 
-  style={{ display: 'none' }} 
-  onChange={handleImageUpload}
+id="image-upload" 
+type="file" 
+accept="image/png, image/jpeg, image/jpg" 
+style={{ display: 'none' }} 
+onChange={handleImageUpload}
 />
 
 
-            <Button
-              onClick={handleSave}
-              sx={{
-                backgroundColor: colors.buttoncolor,
+          <Box>
+          <Button
+            onClick={handleSave}
+            sx={{
+              backgroundColor: colors.buttoncolor,
 fontSize:12,
-                color: "white",
-                textTransform: "none",
-                width: 80,
-                alignSelf: "center",
-                fontFamily:"Inter"
-              }}
-            >
-              Save
-            </Button>
+              color: "white",
+              textTransform: "none",
+              width: 80,
+              alignSelf: "center",
+              fontFamily:"Inter"
+            }}
+          >
+            Save
+          </Button>
+
+          <Button
+            onClick={handleCancel}
+            sx={{
+              backgroundColor: colors.buttoncolor,
+fontSize:12,
+              color: "white",
+              textTransform: "none",
+              width: 80,
+              marginLeft: 1,
+              alignSelf: "center",
+              fontFamily:"Inter"
+            }}
+          >
+            Cancel
+          </Button>
           </Box>
+
+        </Box>
         )}
+       
       </Box>
 
       {/* NEXT STEP */}

@@ -90,7 +90,7 @@ const BidModal = ({ open, onClose, car }) => {
         {/* Warning Message */}
         {bid < minBid ? (
           <Typography sx={{ color: "#B7342C", mt: 1, fontSize: 15 }}>
-            Please bid AED {minBid.toLocaleString()} or higheeer.
+            Please bid AED {minBid.toLocaleString()} or higher.
           </Typography>
         ):(  <Button
           onClick={async () => {

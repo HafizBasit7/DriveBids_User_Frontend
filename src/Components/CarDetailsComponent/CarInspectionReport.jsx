@@ -34,6 +34,7 @@ const CarInspectionReport = ({car}) => {
   const [openDamage, setOpenDamage] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const {authState} = useAuth();
+  const imageRef = useRef();
 
   const selectedDamage = useRef();
 
@@ -65,6 +66,13 @@ const CarInspectionReport = ({car}) => {
     { name: "Dents/Cracks", colored: Dent },
     { name: "Rust", colored: Rust },
   ];
+
+  const getPoistion = (x, y) => {
+    const bounds = imageRef.current.getBoundingClientRect();
+    const absoluteX = x * bounds.width - 10;
+    const absoluteY = y * bounds.height - 10;
+    return {left: absoluteX, top: absoluteY};
+  };
 
   return (
     <Box
@@ -283,14 +291,14 @@ const CarInspectionReport = ({car}) => {
             </IconButton>
 
             <Box sx={{ width: "200px", height: "auto", position: 'relative' }}>
-              <img src={images[currentIndex]} alt="Car View" width="100%"/>
+              <img ref={imageRef} src={images[currentIndex]} alt="Car View" width="100%"/>
               {currentDamageReport.map(val => {
                 const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
                 return (
                   <img
                     onClick={() => {selectedDamage.current = val; setOpenDamage(true)}}
                     src={iconSrc}
-                    style={{ width: 30, height: 30, position: 'absolute', left: val.x, top: val.y, }}
+                    style={{ width: 30, height: 30, position: 'absolute', ...getPoistion(val.x, val.y), }}
                   />
                 )
               })}
