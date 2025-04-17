@@ -20,7 +20,7 @@ const HomePage = () => {
 
   const {data, isLoading} = useQuery({
     queryKey: ['cars'],
-    queryFn: () => listCars(1, 10, 'recent', currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
+    queryFn: () => listCars(1, 4, 'recent', currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
   });
 
   const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
@@ -30,12 +30,12 @@ const HomePage = () => {
 
   const {data: endingCarList, isLoading: endingCarListLoading} = useQuery({
     queryKey: ['carsEnding'],
-    queryFn: () => listCars(1, 10, 'ending', currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
+    queryFn: () => listCars(1, 4, 'ending', currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
   });
 
   const {data: carsByBidCount, isLoading: carsByBidCountLoading} = useQuery({
     queryKey: ['carsByBidCount'],
-    queryFn: () => listCarsByBidCount(1, 10, currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
+    queryFn: () => listCarsByBidCount(1, 4, currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
   });
 
 

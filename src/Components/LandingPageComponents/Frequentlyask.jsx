@@ -14,13 +14,33 @@ const faqs = [
     answer:
       "You don’t have to have paid off all of the finance already; but subject to your contract, there may be a minimum repayment before you have the right to sell.",
   },
-  { question: "Does Drivebids allow me to sell my car for free?",  answer:
-    "You don’t have to have paid off all of the finance already; but subject to your contract, there may be a minimum repayment before you have the right to sell.",},
-  { question: "What’s the quickest way to sell my car?", answer: "" },
-  { question: "What is the estimated value of my car?", answer: "" },
-  { question: "Who are the potential buyers for my car?", answer: "" },
-  { question: "What documents are required to sell my car?", answer: "" },
+  {
+    question: "Does Drivebids allow me to sell my car for free?",
+    answer:
+      "Yes, listing your car on Drivebids is completely free. There are no hidden fees or charges to create a listing.",
+  },
+  {
+    question: "What’s the quickest way to sell my car?",
+    answer:
+      "The fastest way is to upload clear photos, set a competitive price, and respond quickly to offers from verified buyers on Drivebids.",
+  },
+  {
+    question: "What is the estimated value of my car?",
+    answer:
+      "You can use our built-in valuation tool to get an accurate estimate based on your car’s make, model, year, condition, and mileage.",
+  },
+  {
+    question: "Who are the potential buyers for my car?",
+    answer:
+      "Your car listing will be visible to thousands of verified individual buyers and dealerships actively looking for vehicles like yours.",
+  },
+  {
+    question: "What documents are required to sell my car?",
+    answer:
+      "You’ll typically need the car’s registration document (V5C), a valid ID, service history, and any outstanding finance details if applicable.",
+  },
 ];
+
 const AskQuestions = () => {
     const [expandedIndex, setExpandedIndex] = useState(null);
   

@@ -9,6 +9,7 @@ import {
   Grid,
   Typography,
   InputAdornment,
+  CircularProgress,
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import colors from "../../Style/color";
@@ -144,7 +145,7 @@ const CarSelectionBox = ({
         onChange={(e) => onChange(e.target.value)}
       >
         <Grid container spacing={2}>
-          {carBrands?.length < 1 ? <p>Loading...</p> : carBrands.map((brand, index) => (
+          {carBrands?.length < 1 ? <CircularProgress sx={{mx:'auto', my: 5}} size={24}/> : carBrands.map((brand, index) => (
             <Grid item xs={12} sm={6} key={index}>
               <FormControlLabel
                 value={isVariant ? brand.model_name : isColor ? brand : brand.make_display}

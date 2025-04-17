@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Box,
   Typography,
@@ -6,25 +6,41 @@ import {
   Avatar,
   Popover,
   Badge,
+  CircularProgress,
 } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getMyNotifications, getNotificationCount } from "../../api/calls/auth";
 import { timeAgo } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
+
+const LIMIT = 10;
 
 const Notifications = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  const loaderRef = useRef();
+  const observer = useRef();
 
   const handleOpen = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
   //Notifications query
-  const { data } = useQuery({
+  const { 
+    data,
+    isLoading: messagesLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+   } = useInfiniteQuery({
     queryKey: ['notifications'],
-    queryFn: () => getMyNotifications(1, 5),
+    queryFn: ({pageParam = 1}) => getMyNotifications(pageParam, LIMIT),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage?.data?.notifications?.length === LIMIT
+        ? allPages.length + 1
+        : undefined;
+    },
     staleTime: 1000 * 30,
   });
 
@@ -35,7 +51,35 @@ const Notifications = () => {
     staleTime: 1000 * 30,
   });
   const unreadCount = count?.data.count;
-  const notifications = data?.data.notifications;
+  const notifications = data?.pages.flatMap((page) => page?.data?.notifications) || [];
+
+  useEffect(() => {
+    if (!open) return;
+    let current;
+    const timeout = setTimeout(() => {
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          const target = entries[0];
+          if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+          }
+        },
+      );
+  
+      current = loaderRef.current;
+      if (current) observer.current.observe(current);
+  
+    }, 100);
+  
+    return () => {
+      clearTimeout(timeout);
+      try {
+        observer.current.unobserve(current);
+        observer.current.disconnect();
+      }
+      catch(e) {}
+    };
+  }, [open, hasNextPage, isFetchingNextPage]);
 
   //Close on scroll
   useEffect(() => {
@@ -75,7 +119,14 @@ const Notifications = () => {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         sx={{ mt: 1 }}
       >
-        <Box sx={{ width: 320, bgcolor: "white", borderRadius: 2, boxShadow: 3 }}>
+        <Box sx={{ 
+            width: 320,
+            maxHeight: 400,
+            overflowY: "auto",
+            bgcolor: "white",
+            borderRadius: 2,
+            boxShadow: 3, 
+          }}>
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 2, py: 1 }}>
             <Typography variant="h6">Notifications</Typography>
           </Box>
@@ -103,6 +154,20 @@ const Notifications = () => {
               </Box>
             </Box>
           ))}
+
+          {hasNextPage && open && (
+            <Box
+              ref={loaderRef}
+              sx={{
+                height: 30,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <CircularProgress size={20}/>
+            </Box>
+          )}
         </Box>
       </Popover>
     </Box>

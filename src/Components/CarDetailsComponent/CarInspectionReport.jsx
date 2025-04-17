@@ -164,14 +164,20 @@ const CarInspectionReport = ({car}) => {
         <Link
           to={`/cars/${car.user._id}`}
           underline="hover"
-          sx={{
-            fontSize: 13,
-            color: colors.buttoncolor,
+          style={{
+            fontSize: 14,
+            display: "flex",
+            alignItems: "center",
+            gap: 4,
+            color: "#0056D2",
+            cursor: 'pointer',
             fontWeight: 500,
             textDecoration: "underline",
             fontFamily: "Inter",
+            mt: 1,
           }}
         >
+          <VisibilityIcon fontSize="small" />
           View All Report
         </Link>
 

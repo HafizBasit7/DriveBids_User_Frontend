@@ -57,7 +57,7 @@ const InspectionReportComponent = ({ title, subtitle, tests, selectedValues, onC
       </Box>
 
      {/* Right Section */}
-<Box flex={1.3}>
+<Box flex={1}>
   <Box p={2} border="1px solid #D9D9D9" borderRadius={2} bgcolor="#fff">
     <Box sx={{ mb: 2, width: 300, pb: 2 }}>
       <Button
