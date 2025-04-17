@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import MainLayout from "../../Layouts/MainLayout";
+import MainLayout from "../../Layouts/Mainlayout";
 import CarCard from "../../Components/HomePageComponents/CarCard";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
