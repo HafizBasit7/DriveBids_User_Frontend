@@ -1,5 +1,5 @@
 export default {
-    baseUrl: 'https://drivebids-backend-v2.onrender.com',
-    bidBaseUrl: 'https://drivebids-bidding-webserver-v2.onrender.com',
-    chatBaseUrl: 'https://drivebids-messageserver-web-v2.onrender.com',
+    baseUrl: 'https://srv694651.hstgr.cloud/drivebidapi',
+    chatBaseUrl: 'https://srv694651.hstgr.cloud/socket.io/drivebidmessages',
+    bidBaseUrl: 'https://srv694651.hstgr.cloud/socket.io/drivebidbidding',
 };
