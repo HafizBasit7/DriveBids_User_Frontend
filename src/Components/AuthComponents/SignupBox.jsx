@@ -24,6 +24,7 @@ import LocationInput from "../Location/LocationInput";
 import { countryCodes } from "../../utils/coutrycode";
 import {validateForm} from "../../utils/utils";
 import { loginValidation, signupValidation, traderSignupValidation } from "../../validations/auth.validation";
+import { generateEmailVerificationOtp, verifyEmailOtp } from "../../api/calls/reset";
 
 
 const Signup = () => {
@@ -40,7 +41,11 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const [role, setRole] = useState("Individual"); 
+  const [role, setRole] = useState("Individual");
+  
+  const [token, setToken] = useState();
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState();
 
   const navigate = useNavigate(); 
 
@@ -57,6 +62,7 @@ const Signup = () => {
     try {
       const body = {
         email: email ? email.trim() : email, 
+        token,
         password, 
         type: role === 'Individual' ? 'individual' : 'trader',
         name,
@@ -85,6 +91,39 @@ const Signup = () => {
       setLoading(false);
       throw e;
     }
+  };
+
+  const requestEmailOtp = () => {
+    toast.promise(async () => {
+      await generateEmailVerificationOtp({email});
+      setOtpSent(true);
+    }, {
+      loading: 'Requesting OTP',
+      error: e => {
+        if(e?.message === 'OTP is already generated, please check your email') setOtpSent(true);
+        return e?.message;
+      },
+      success: (e) => "OTP sent to your email!",
+    });
+  };
+
+  const verifyOtpEmail = () => {
+    toast.promise(async () => {
+      try {
+        const result = await verifyEmailOtp({email, otp: parseInt(otp)});
+        setToken(result.data.token);
+        setOtp();
+      }
+      catch(e) {
+        // setOtpSent(false);
+        setToken(null);
+        throw e;
+      } 
+    }, {
+      loading: 'Verifying Email',
+      error: e => e.message,
+      success: 'Email Verified',
+    });
   };
 
   return (
@@ -214,7 +253,86 @@ const Signup = () => {
             "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
           }}
         />
+        {(!otpSent && email) && (
+          <Button
+            onClick={requestEmailOtp}
+            variant="text"
+            sx={{
+              textTransform: 'none',
+              padding: 0,
+              minWidth: 'auto',
+              color: 'primary.main',
+              fontWeight: 500,
+              marginTop: 0.5,
+              marginBottom: 0.3,
+              fontSize: '12px',
+              textDecoration: 'underline',
+              '&:hover': {
+                textDecoration: 'none',
+                backgroundColor: 'transparent',
+              },
+            }}
+          >
+            Request OTP
+          </Button>
+        )}
+        {(token && otpSent) && (
+          <Typography
+            sx={{
+              color: 'success.main',
+              fontWeight: 500,
+              my: 0.5,
+              fontSize: '13px',
+            }}
+          >
+            Email Verified
+          </Typography>
+        )}
       </Box>
+
+      {(!token && otpSent) && (
+        <Box sx={{ mb: 2 }}>
+          <TextField
+            disabled={loading}
+            label="OTP"
+            fullWidth
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                height: 50, 
+                borderRadius: 2,
+                "& fieldset": { borderColor: "#ccc" },
+                "&:hover fieldset": { borderColor: "#2F61BF" },
+                "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+              },
+              "& .MuiInputLabel-root": { color: "#888" }, 
+              "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+            }}
+          />
+          <Button
+            onClick={verifyOtpEmail}
+            variant="text"
+            sx={{
+              textTransform: 'none',
+              padding: 0,
+              minWidth: 'auto',
+              color: 'primary.main',
+              fontWeight: 500,
+              marginTop: 0.5,
+              marginBottom: 0.3,
+              fontSize: '12px',
+              textDecoration: 'underline',
+              '&:hover': {
+                textDecoration: 'none',
+                backgroundColor: 'transparent',
+              },
+            }}
+          >
+            Verify Email
+          </Button>
+        </Box>
+      )}
 
       <Box sx={{ mb: 2 }}>
         <TextField
