@@ -10,6 +10,8 @@ createRoot(document.getElementById('root')).render(
     <Toaster
       toastOptions={{
         style: {
+          fontFamily: 'Inter',
+          // fontFamily: 'Inter, sans-serif',
           background: '#1977cf',
           color: 'white'
         }
