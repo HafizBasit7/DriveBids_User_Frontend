@@ -435,46 +435,10 @@ const Signup = () => {
 
       <Box sx={{ mb: 2 }}>
         <LocationInput value={location?.name} handleChange={(location) => setLocation(location)}/>
-        {/* <TextField
-          label="City"
-          disabled={loading}
-          fullWidth
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              height: 50,
-              borderRadius: 2,
-              "& fieldset": { borderColor: "#ccc" },
-              "&:hover fieldset": { borderColor: "#2F61BF" },
-              "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
-            },
-            "& .MuiInputLabel-root": { color: "#888" }, 
-            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
-          }}
-        /> */}
+       
       </Box>
 
-      {/* <Box sx={{ mb: 2 }}>
-        <TextField
-          label="Country"
-          disabled={loading}
-          fullWidth
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              height: 50,
-              borderRadius: 2,
-              "& fieldset": { borderColor: "#ccc" },
-              "&:hover fieldset": { borderColor: "#2F61BF" },
-              "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
-            },
-            "& .MuiInputLabel-root": { color: "#888" }, 
-            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
-          }}
-        />
-      </Box> */}
+    
 
        {role === "Trader" && (
         <Box sx={{ mb: 2 }}>

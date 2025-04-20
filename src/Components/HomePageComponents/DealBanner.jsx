@@ -69,6 +69,7 @@ const DealsBanner = ({ title, subtitle, buttonText, onClick, onClose, icon }) =>
 <Box
   sx={{
     backgroundColor: colors.buttoncolor,
+    minHeight:50,
     display: "flex",
     alignItems: "center",   // Keeps icon and text vertically aligned
     justifyContent: "center",
@@ -105,6 +106,7 @@ const DealsBanner = ({ title, subtitle, buttonText, onClick, onClose, icon }) =>
       textTransform: "uppercase",
       fontFamily: "Inter",
       whiteSpace: "nowrap", // Prevents text from breaking
+      
       
     }}
   >

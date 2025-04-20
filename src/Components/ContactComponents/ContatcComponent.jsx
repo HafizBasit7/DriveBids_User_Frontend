@@ -5,6 +5,7 @@ import colors from "../../Style/color";
 import animationData from "../../assets/animation.json";
 import Lottie from "lottie-react";
 import { useState } from "react";
+import NewsletterSection from "./Newletter";
 
 const ContactForm = () => {
   const [showName, setShowName] = useState(false);
@@ -96,7 +97,7 @@ const ContactForm = () => {
           borderRadius: "8px",
           p: 3,
           boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.09)",
-          my:5,
+          mt:3,
         }}
       >
       
@@ -136,6 +137,7 @@ const ContactForm = () => {
                   color: "black",
                   py: 2,
                   textAlign: "left",
+                   textDecoration:"underline"
                 }}
                 onClick={() => setShowName(true)}
               >
@@ -172,6 +174,8 @@ const ContactForm = () => {
                   color: "black",
                   py: 2,
                   textAlign: "left",
+                  textDecoration:"underline"
+
                 }}
                 onClick={() => setShowEmail(true)}
               >
@@ -208,6 +212,8 @@ const ContactForm = () => {
                   color: "black",
                   py: 2,
                   textAlign: "left",
+                  textDecoration:"underline"
+
                 }}
                 onClick={() => setShowPhone(true)}
               >
@@ -247,6 +253,8 @@ const ContactForm = () => {
                 color: "black",
                 py: 2,
                 textAlign: "left",
+                textDecoration:"underline"
+
               }}
               onClick={() => setShowMessage(true)}
             >
@@ -274,103 +282,6 @@ const ContactForm = () => {
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          background: colors.buttoncolor,
-          color: "white",
-          position: "absolute",
-          left: 0,
-          right: 0,
-          
-          p: { xs: 2, md: 4 },
-          my: 5,
-          width: "100%",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" }, // Stack on small screens, row on large
-            alignItems: "center", // Center vertically
-            justifyContent: "space-between", // Space out the text and input
-            py: 5,
-            px: 6,
-          }}
-        >
-          {/* Left Section: Text Content */}
-          <Box sx={{ maxWidth: "500px" }}>
-            <Typography
-              fontWeight="bold"
-              sx={{ mb: 1, fontFamily: "Inter", fontSize: 25, fontWeight: 700 }}
-            >
-              Subscribe to our Newsletter
-            </Typography>
-            <Typography
-              sx={{ fontFamily: "Inter", fontSize: 13, fontWeight: 300 }}
-            >
-              Stay informed about the latest investor updates, financial
-              insights, and announcements by subscribing to our newsletter.
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", sm: "column", md: "row" }, // Stack for XS & SM, row for MD+
-              alignItems: "center",
-              borderRadius: "8px",
-              overflow: "hidden",
-              background: "rgba(255, 255, 255, 0.15)", // Light transparent white
-              height: { xs: "auto", md: "48px" }, // Auto height for small screens
-              mt: { xs: 2, md: 0 },
-              width: { xs: "100%", sm: "100%", md: "auto" }, // Full width on small screens
-            }}
-          >
-            <TextField
-              placeholder="Enter your email"
-              variant="outlined"
-              sx={{
-                flex: 1,
-                width: { xs: "100%", md: 350 }, // Full width on small screens, fixed width on large
-                minWidth: { xs: "100%", md: "unset" }, // Prevent shrinking too much
-                background: "transparent",
-                borderRadius: { xs: "8px", md: "8px 0 0 8px" }, // Full rounded on XS
-                "& fieldset": { border: "none" },
-                "& input": {
-                  color: "white",
-                  padding: "12px",
-                  fontSize: { xs: 14, md: 16 },
-                  "::placeholder": {
-                    color: "white",
-                    opacity: 0.8,
-                    fontSize: { xs: 12, md: 14 },
-                  },
-                },
-              }}
-            />
-
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "white",
-                color: colors.buttoncolor,
-                fontWeight: 500,
-                textTransform: "none",
-                borderRadius: { xs: "8px", md: "0 8px 8px 0" }, // Full rounded on XS
-                fontFamily: "Inter",
-                px: { xs: 2, md: 3 }, // Adjust padding for small screens
-                width: { xs: "100%", md: "auto" }, // Full width on small screens
-                height: { xs: "44px", md: "100%" }, // Adjust height for consistency
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.9)",
-                },
-              }}
-            >
-              Subscribe
-            </Button>
-          </Box>
-        </Box>
-      </Box>
     </Box>
   );
 };

@@ -1,8 +1,10 @@
 import { Box } from "@mui/material";
+import { useLocation } from "react-router-dom";
 import MainNavbar from "../Components/Navbars/MainNavbar";
 import Footer from "../Components/Footer/Footer";
 import DealsBanner from "../Components/HomePageComponents/DealBanner";
 import road from "../assets/SVG/roadsvg.svg";
+import NewsletterSection from "../Components/ContactComponents/Newletter";
 
 const MainLayout = ({ 
   children, 
@@ -10,9 +12,13 @@ const MainLayout = ({
   subtitle,
   buttonText,
   onClick,
-  isnotSellMyCar ,
-  icon,ischatScreen
+  isnotSellMyCar,
+  icon,
+  ischatScreen
 }) => {
+  const location = useLocation();
+  const isContactPage = location.pathname === "/contact";
+
   return (
     <>
       <Box width="100%" minHeight="100%">
@@ -28,7 +34,7 @@ const MainLayout = ({
             height: "100%",
             position: "relative",
             zIndex: 2,
-            minHeight: "100vh", // Ensure full height of viewport
+            minHeight: "100vh",
           }}
         >
           {!isnotSellMyCar && (
@@ -52,22 +58,31 @@ const MainLayout = ({
             <MainNavbar />
           </Box>
 
-         {!ischatScreen &&(<Box width="100%" zIndex={2} mt={1}>
-            <DealsBanner
-              title={title}
-              subtitle={subtitle}
-              buttonText={buttonText}
-              onClick={onClick}
-              icon={icon}
-            />
-          </Box>    )}
+          {!ischatScreen && (
+            <Box width="100%" zIndex={2} mt={1}>
+              <DealsBanner
+                title={title}
+                subtitle={subtitle}
+                buttonText={buttonText}
+                onClick={onClick}
+                icon={icon}
+              />
+            </Box>
+          )}
 
-          <Box sx={{ width: "100%", zIndex: 2, }}>
+          <Box sx={{ width: "100%", zIndex: 2 }}>
             {children}
           </Box>
         </Box>
 
-        <Box sx={{ width: "100%", }}>
+        {/* Conditionally show newsletter only on /contact */}
+        {isContactPage && (
+          <Box sx={{ width: "100%" }}>
+            <NewsletterSection />
+          </Box>
+        )}
+
+        <Box sx={{ width: "100%" }}>
           <Footer />
         </Box>
       </Box>

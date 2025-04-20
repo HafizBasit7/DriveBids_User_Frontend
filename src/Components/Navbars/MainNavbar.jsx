@@ -81,7 +81,7 @@ const MainNavbar = () => {
             src={Logosvg}
             alt="DriveBidz Logo"
             style={{ height: isMobile ? 50 : 62, cursor: "pointer" }}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
           />
         </Box>
 
@@ -142,7 +142,7 @@ const MainNavbar = () => {
                   backgroundColor: "white",
                   width: "auto",
                   cursor: "pointer",
-                  maxWidth: 220
+                  maxWidth: 150
                 }}
               >
                 <LocationOnIcon sx={{ color: "black", fontSize: 20, mr: 1, }} />

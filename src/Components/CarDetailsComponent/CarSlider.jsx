@@ -198,11 +198,12 @@ const thumbnailScrollStyles = {
               alt={`Thumbnail ${index}`}
               onClick={() => handleThumbnailClick(index)}
               sx={{
-                width: { xs: 80, sm: 120, md: 180 },
+                minWidth:120,
                 height: { xs: 50, sm: 70, md: 100 },
                 objectFit: "cover",
                 borderRadius: 1,
                 cursor: "pointer",
+                
                 border: currentIndex === index ? "2px solid white" : "2px solid transparent",
                 transition: "0.3s",
                 mx: 0.5,
