@@ -5,6 +5,7 @@ import notFoundAnimation from "../assets/notfound.json";
 import colors from "../Style/color";
 
 const Page404 = () => {
+  document.title = 'Not Found';
   const navigate = useNavigate();
 
   return (

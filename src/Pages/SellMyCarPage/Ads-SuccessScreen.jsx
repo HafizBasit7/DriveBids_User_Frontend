@@ -6,6 +6,7 @@ import bmw from "../../assets/SVG/BMW.svg";
 import colors from "../../Style/color";
 
 const AdsSuccessScreen = () => {
+  document.title = 'Ad Posted';
   const navigate = useNavigate();
 
   return (

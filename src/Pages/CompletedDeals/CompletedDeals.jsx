@@ -14,6 +14,7 @@ import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
 const LIMIT = 10;
 
 const CompletedDeals = () => {
+  document.title = 'Completed Deals';
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState("Bought");

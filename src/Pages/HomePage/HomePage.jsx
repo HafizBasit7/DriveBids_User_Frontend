@@ -13,6 +13,9 @@ import SkeletonLoader from "../../Components/Loader/SkeletonLoader";
 import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
 
 const HomePage = () => {
+
+  document.title = 'Home';
+
   const navigate = useNavigate();
   const {authState} = useAuth();
 

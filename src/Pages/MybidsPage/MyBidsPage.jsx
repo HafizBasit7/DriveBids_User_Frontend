@@ -15,6 +15,7 @@ import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
 const LIMIT = 10;
 
 const MyBidsPage = () => {
+  document.title = 'My Bids';
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState("active");

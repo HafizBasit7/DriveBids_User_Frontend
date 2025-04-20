@@ -27,6 +27,7 @@ const routes = [
 ];
 
 const PostAds = () => {
+  document.title = 'Post Ad';
   const navigate = useNavigate();
 
 

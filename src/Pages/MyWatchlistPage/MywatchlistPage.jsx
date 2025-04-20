@@ -12,6 +12,7 @@ import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
 const LIMIT = 10;
 
 const MyWatchPage = () => {
+  document.title = 'Watchlist';
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;

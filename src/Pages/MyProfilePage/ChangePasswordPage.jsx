@@ -44,6 +44,7 @@ const PasswordInput = ({ label, placeholder, disabled, setPassword, password }) 
 );
 
 const ChangePasswordPage = () => {
+  document.title = 'Change Password';
   const navigate = useNavigate();
   const {authState} = useAuth();
   const user = authState.user;

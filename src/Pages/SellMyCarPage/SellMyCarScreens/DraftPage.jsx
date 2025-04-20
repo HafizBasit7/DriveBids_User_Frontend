@@ -11,6 +11,7 @@ import PaginationComponent from "../../../Components/Common/PaginationComponent"
 const LIMIT = 5
 
 const Draft = () => {
+  document.title = 'Car Drafts';
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
     const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;

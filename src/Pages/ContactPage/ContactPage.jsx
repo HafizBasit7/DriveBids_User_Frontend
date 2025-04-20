@@ -5,6 +5,7 @@ import ContactForm from "../../Components/ContactComponents/ContatcComponent";
 
 const ContactPage = () => {
   const navigate = useNavigate();
+  document.title = 'Contact Us';
 
   return (
     <MainLayout  title="Contact Us"

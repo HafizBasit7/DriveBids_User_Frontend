@@ -23,6 +23,8 @@ const ViewAllFilters = () => {
 
   const {type} = useParams();
 
+  document.title = type === 'recent' ? 'Newly Listed Ads' : type === 'ending' ? 'Ending Soon Ads' : 'Featured Ads';
+
   const getQueryKey = (type) => {
     switch (type) {
       case 'recent':

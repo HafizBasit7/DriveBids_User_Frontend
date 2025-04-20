@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const ChatPage = () => {
+  document.title = 'Chat';
   const [searchParams] = useSearchParams();
   const chatId = searchParams.get('chatId');
 

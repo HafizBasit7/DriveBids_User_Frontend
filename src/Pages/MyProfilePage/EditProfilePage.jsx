@@ -35,7 +35,7 @@ const CustomInput = ({ label, placeholder, value, setValue, disabled }) => (
 );
 
 const EditProfilePage = () => {
-
+  document.title = 'Edit Profile';
   const navigate = useNavigate();
   const {authState, dispatch} = useAuth();
   const user = authState.user;

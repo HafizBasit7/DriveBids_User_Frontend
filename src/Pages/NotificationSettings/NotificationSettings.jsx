@@ -12,6 +12,7 @@ import { getNotificationSettings, updateNotificationSettings } from "../../api/c
 
 const NotificationSettings = () => {
   const navigate = useNavigate();
+  document.title = 'Notification Settings';
 
   const queryClient = useQueryClient();
 

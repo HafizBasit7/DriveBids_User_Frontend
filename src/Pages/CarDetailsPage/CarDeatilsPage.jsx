@@ -89,6 +89,8 @@ const CarDetailsPage = () => {
 
   const car = data.data.car;
 
+  document.title = car.title;
+
   const messageOwnerHandle = async () => {
     toast.promise(async () => {
       const result = await getChatId({userId: car.user._id, carId: carId});

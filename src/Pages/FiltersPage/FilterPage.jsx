@@ -16,6 +16,8 @@ import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
 const LIMIT = 10;
 
 const FilterPage = () => {
+  document.title = 'Search';
+
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;

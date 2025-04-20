@@ -35,6 +35,8 @@ const CarListingPage = () => {
   const count = data?.meta.count;
   const pages = data?.meta.pages;
 
+  document.title = user?.name;
+
   return (
     <MainLayout title={user?.name} onClick={() => navigate("/home")} buttonText="Back to Home" subtitle={user?.type === 'individual' ? 'Private Seller' : 'Trader'}>
       <Box

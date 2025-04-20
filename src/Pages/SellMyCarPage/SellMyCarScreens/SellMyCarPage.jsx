@@ -7,6 +7,7 @@ import MainLayout from "../../../Layouts/Mainlayout";
 import { useCar } from "../../../context/car.context";
 
 const SellMyCar = () => {
+  document.title = 'Sell my car';
   const navigate = useNavigate();
   const {resetDraftState} = useCar();
 
