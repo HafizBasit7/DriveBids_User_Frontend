@@ -33,8 +33,8 @@ const FilterSidebar = ({ filters, setFilters }) => {
     fullWidth
     size="small"
     placeholder="Search services or keywords"
-    value={filters.search || ""}
-    onChange={(e) => handleChange("search", e.target.value)}
+    value={filters.title || ""}
+    onChange={(e) => handleChange("title", e.target.value)}
     sx={{ mb: 2 }}
   />
       {/* Price Range */}

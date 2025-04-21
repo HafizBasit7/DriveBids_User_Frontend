@@ -24,15 +24,15 @@ const FilterPage = () => {
 
   const {authState} = useAuth();
   const currentSelectedLocation = (authState.selectedLocation || authState.user.location) || {"coordinates": [73.1128313, 33.5255503]};
-  
 
   // State for filters
   const [filters, setFilters] = useState({});
+  const cleanedFilters = Object.fromEntries(Object.entries(filters).filter(([_, value]) => value !== null && value !== undefined && value !== ''));
 
   // Fetch cars based on filters using useQuery
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["search", filters, page],
-    queryFn: () => searchCars(filters, page, LIMIT, currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
+    queryKey: ["search", cleanedFilters, page],
+    queryFn: () => searchCars(cleanedFilters, page, LIMIT, currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
   });
 
   const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({

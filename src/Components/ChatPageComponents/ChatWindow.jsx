@@ -14,6 +14,8 @@ import { useSearchParams } from "react-router-dom";
 import { useSocket } from "../../context/socket.context";
 import ImageViewModal from "../Modals/ImageViewerModal";
 import LazyLoad from "react-lazyload";
+import toast from "react-hot-toast";
+import { uploadImage } from "../../utils/upload";
 
 const LIMIT = 10;
 
@@ -27,6 +29,7 @@ const ChatWindow = () => {
   const queryClient = useQueryClient();
   const loaderRef = useRef(null);
   const newMessageIncoming = useRef(false);
+  const fileInputRef = useRef();
 
   const user = authState.user;
 
@@ -136,6 +139,7 @@ const ChatWindow = () => {
       }
     };
   }, [socket, chatId]);
+
   const handleNewMessageUpdate = (message) => {
     newMessageIncoming.current = true;
     //Update messages list
@@ -158,10 +162,23 @@ const ChatWindow = () => {
   };
   //
 
-
   const sendMessageClick = async () => {
     mutation.mutate({chatId, message: newMessage});
     setNewMessage('');
+  };
+
+  const onSelectImage = (e) => {
+    const file = e.target.files[0];
+    if(file) {
+      toast.promise(async () => {
+        const imageResult = await uploadImage(file);
+        mutation.mutate({chatId, attachments: [{type: 'image', url: imageResult}]});
+      }, {
+        loading: 'Uploading image...',
+        error: e => e.message,
+        success: 'Image Uploaded'
+      });
+    }
   };
   
 
@@ -246,7 +263,7 @@ const ChatWindow = () => {
         >
           {/* Avatar on the left if not sender */}
           {!isSender && (
-            <Avatar src={msg.avatar} sx={{ width: 34, height: 34 }} />
+            <Avatar src={chatHeadDataReal?.user?.imgUrl} sx={{ width: 34, height: 34 }} />
           )}
 
           {/* Message content */}
@@ -282,7 +299,7 @@ const ChatWindow = () => {
 
               </Box>
             )}
-            <Typography>{msg.message}</Typography>
+            {!attachment && (<Typography>{msg.message}</Typography>)}
             <Typography
               sx={{
                 fontSize: 9,
@@ -296,7 +313,7 @@ const ChatWindow = () => {
 
          
           {isSender && (
-            <Avatar src={msg.avatar} sx={{ width: 34, height: 34 }} />
+            <Avatar src={user.imgUrl} sx={{ width: 34, height: 34 }} />
           )}
         </Box>
       );
@@ -314,8 +331,15 @@ const ChatWindow = () => {
           borderRadius: 2,
         }}
       >
-        <IconButton sx={{ color: "black", mr: 1 }}>
-          <AttachFileIcon fontSize="medium" />
+        <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={onSelectImage}
+            style={{ display: "none" }}
+          />
+        <IconButton onClick={() => fileInputRef.current.click()} sx={{ color: "black", mr: 1 }}>
+          <AttachFileIcon fontSize="medium"/>
         </IconButton>
 
         <Box sx={{ position: "relative", flexGrow: 1 }}>

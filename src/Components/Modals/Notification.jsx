@@ -9,8 +9,8 @@ import {
   CircularProgress,
 } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getMyNotifications, getNotificationCount } from "../../api/calls/auth";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getMyNotifications, getNotificationCount, setNotificationRead } from "../../api/calls/auth";
 import { timeAgo } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -22,6 +22,7 @@ const Notifications = () => {
   const navigate = useNavigate();
   const loaderRef = useRef();
   const observer = useRef();
+  const queryClient = useQueryClient();
 
   const handleOpen = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -48,7 +49,49 @@ const Notifications = () => {
   const { data: count, isLoading } = useQuery({
     queryKey: ['notificationCount'],
     queryFn: getNotificationCount,
+    // refetchOnMount: false,
     staleTime: 1000 * 30,
+  });
+
+  const notificationMutation = useMutation({
+    mutationFn: setNotificationRead,
+    onMutate: (notificationId) => {
+      queryClient.cancelQueries(['notificationCount']);
+      queryClient.cancelQueries(['notifications']);
+
+      const oldNoti = queryClient.getQueryData(['notifications']);
+      const oldCount = queryClient.getQueryData(['notificationCount']);
+
+      queryClient.setQueryData(['notificationCount'], oldData => {
+        const updated = {...oldData};
+        updated.data.count -= 1;
+        return updated;
+      });
+
+      queryClient.setQueryData(['notifications'], oldData => {
+        if (!oldData) return oldData;
+        let updated = { ...oldData };
+        updated.pages = updated.pages.map((page) => {
+          return {
+            ...page,
+            data: {
+              ...page.data,
+              notifications: page.data.notifications.map((notif) =>
+                notif._id === notificationId ? { ...notif, isRead: true } : notif
+              ),
+            },
+          };
+        });
+      
+        return updated;
+      });
+
+      return {oldCount, oldNoti};
+    },
+    onError: (_error, _variables, context) => {
+      queryClient.setQueryData(['notifications'], context.oldNoti);
+      queryClient.setQueryData(['notificationCount'], context.oldCount);
+    },
   });
 
   const unreadCount = count?.data.count;
@@ -93,6 +136,10 @@ const Notifications = () => {
   }, [open]);
 
   const handleNotiClick = (notification) => {
+    if(!notification.isRead) {
+      notificationMutation.mutate(notification._id);
+    }
+
     if (notification.notificationType === "car") {
       navigate(`/car/${notification.metaData.car}`);
     } else if (notification.notificationType === "message") {
