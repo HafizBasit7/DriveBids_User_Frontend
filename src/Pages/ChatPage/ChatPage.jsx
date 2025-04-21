@@ -1,26 +1,24 @@
 import { Box } from "@mui/material";
-import MainLayout from "../../Layouts/MainLayout";
 import ChatList from "../../Components/ChatPageComponents/Chatlist";
 import ChatWindow from "../../Components/ChatPageComponents/ChatWindow";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
+import MainLayout from "../../Layouts/Mainlayout";
 
 const ChatPage = () => {
   document.title = 'Chat';
   const [searchParams] = useSearchParams();
   const chatId = searchParams.get('chatId');
 
-  useEffect(() => {
-    window.scrollTo(0, 0); 
-  }, []);
+ 
 
-  
   return (
-    <MainLayout 
-    ischatScreen={true}
-    isnotSellMyCar ={true}
-    >
+    // <MainLayout 
+    //   ischatScreen={true}
+    //   isnotSellMyCar={true}
+    // >
       <Box
+     
         sx={{
           display: "flex",
           width: "100%",
@@ -41,7 +39,7 @@ const ChatPage = () => {
             display: { xs: chatId ? "none" : "block", sm: "block" },
           }}
         >
-          <ChatList/>
+          <ChatList  />
         </Box>
 
         <Box
@@ -58,10 +56,9 @@ const ChatPage = () => {
             height: "100%",
           }}
         >
-          {chatId && (
-            <ChatWindow/>
-          )}
-          {!chatId && (
+          {chatId ? (
+            <ChatWindow />
+          ) : (
             <Box
               sx={{
                 display: { xs: "none", sm: "flex" },
@@ -75,7 +72,7 @@ const ChatPage = () => {
           )}
         </Box>
       </Box>
-    </MainLayout>
+    // </MainLayout>
   );
 };
 

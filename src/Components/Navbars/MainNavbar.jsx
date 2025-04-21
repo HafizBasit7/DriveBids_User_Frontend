@@ -110,7 +110,7 @@ const MainNavbar = () => {
             navItems.map((item, index) => (
               <Button
                 key={index}
-                sx={{ color: "black", textTransform: "none" }}
+                sx={{ color: "black", textTransform: "none",fontSize:15,fontFamily:"Inter" }}
                 onClick={() => navigate(item.path)}
               >
                 {item.label}

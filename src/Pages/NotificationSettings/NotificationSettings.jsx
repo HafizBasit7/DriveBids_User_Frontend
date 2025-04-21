@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import {
   Box,
+  CircularProgress,
   FormControlLabel,
   Switch,
   Typography
 } from "@mui/material";
-import MainLayout from "../../Layouts/MainLayout";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getNotificationSettings, updateNotificationSettings } from "../../api/calls/auth";
+import Loader from "../../Components/Loader/Loader";
+import MainLayout from "../../Layouts/Mainlayout";
 
 const NotificationSettings = () => {
   const navigate = useNavigate();
@@ -68,7 +70,7 @@ const NotificationSettings = () => {
           Manage Your Notification Preferences
         </Typography>
 
-        {!isLoading && (
+        {isLoading ? <Box sx={{height:150,display:"flex", justifyContent:"cneter",alignItems:"center",flexDirection:"column",py:15}}><CircularProgress size={40} color="primary"  /></Box> : (
           <Box display="flex" flexDirection="column" gap={2} mt={2}>
           <FormControlLabel
             control={

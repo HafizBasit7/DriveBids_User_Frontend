@@ -75,6 +75,8 @@ const CompletedDealsCard = ({ ad, item}) => {
                 <CardMedia
                     component="img"
                     height="180"
+                    loading="lazy"
+
                     image={ad.images.exterior[0].url}
                     alt={ad.title}
                     sx={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}

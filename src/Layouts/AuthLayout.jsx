@@ -2,10 +2,13 @@ import { Box, useMediaQuery, useTheme } from "@mui/material";
 import Logo from "../assets/SVG/Mainlogo.svg";
 import Carfront from "../assets/SVG/carfrontsvg.svg";
 import colors from "../Style/color";
+import { useNavigate } from "react-router-dom";
+import LazyLoad from "react-lazyload";
 
 const AuthLayout = ({ children }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); 
+  const navigate = useNavigate()
 
   return (
     <Box 
@@ -58,7 +61,8 @@ const AuthLayout = ({ children }) => {
           zIndex: 2,
         }}
       >
-        <img src={Logo} alt="DriveBidz Logo" width={isSmallScreen ? 200 : 180} />
+        <img src={Logo} alt="DriveBidz Logo" width={isSmallScreen ? 200 : 180}             onClick={() => navigate("/")}
+ />
       </Box>
 
       {!isSmallScreen && (
@@ -73,11 +77,15 @@ const AuthLayout = ({ children }) => {
             overflow: "hidden",
           }}
         >
+                  <LazyLoad offset={100} once>
+
           <img 
             src={Carfront} 
             alt="Car Front" 
             style={{ width: "100%", height: "auto", objectFit: "contain" }} 
           />
+                            </LazyLoad>
+
         </Box>
       )}
 

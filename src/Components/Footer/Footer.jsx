@@ -10,8 +10,19 @@ import XIcon from '@mui/icons-material/X';
 import TikTokIcon from "@mui/icons-material/MusicNote";
 import footerimg from "../../assets/Png/footerimg.png";
 import logo from "../../assets/SVG/Mainlogo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const navItems = [
+    { label: "HOME", path: "/home" },
+    { label: "MY ADS", path: "/my-ads" },
+    { label: "MY BIDS", path: "/my-bids" },
+ 
+    { label: "CONTACT US", path: "/contact" },
+    { label: "STARTS SELLING", path: "/start-selling" },
+  ];
   return (
     <Box
       sx={{
@@ -60,30 +71,33 @@ const Footer = () => {
             gap: 2,
             mb: 4,
             width: "100%",
-            ml: 2
+            ml: 2,
+            
+
           }}
         >
-          {[
-            "HOME", "ABOUT US", "HOW IT WORKS", "CONTACT US",
-            "PRIVACY POLICY", "CONTACT US", "HELP CENTER", "FAQS", "HELP CENTER"
-          ].map((item, index) => (
-            <Typography
-              key={index}
-              variant="body2"
-              sx={{
-                cursor: "pointer",
-                width: "210px",
-                textAlign: "start",
-                fontWeight: 500,
-                fontSize: 12,
-                fontFamily: "Inter",
-                zIndex: 1,
-                color: index === 3 || index === 8 ? "white" : "white", 
-              }}
-            >
-              {item}
-            </Typography>
-          ))}
+         {navItems.map((item, index) => (
+        <Typography
+          key={index}
+          variant="body2"
+          onClick={() => navigate(item.path)}
+          sx={{
+            cursor: "pointer",
+            width: "210px",
+            textAlign: "start",
+            fontWeight: 600,
+            fontSize: 12,
+            fontFamily: "Inter",
+            zIndex: 1,
+            color: "white",
+            "&:hover": {
+              textDecoration: "underline",
+            },
+          }}
+        >
+          {item.label}
+        </Typography>
+      ))}
         </Box>
 
         <Box sx={{ width: "95%", height: "1px", backgroundColor: "#545454", mb: 3 }} />
@@ -121,8 +135,7 @@ const Footer = () => {
                 textAlign: { xs: "center", md: "left" },
               }}
             >
-              Lorem ipsum dolor s neque que quis pretium proin aliquam habitant ipsum
-              blandit eleifend vitae.
+             Providing you the best  Real Time Bidding experince and selling your cars.
             </Typography>
           </Box>
 

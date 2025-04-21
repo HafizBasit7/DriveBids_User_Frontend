@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import HeroSection from "../../Components/LandingPageComponents/HeroSection";
 import FeatureSection from "../../Components/LandingPageComponents/FeatureSection";
@@ -15,9 +15,10 @@ import CardCarousel from "../../Components/LandingPageComponents/SellCardSlider"
 import Navbar from "../../Components/Navbars/Navbar";
 
 const LandingPage = () => {
+  const howItWorksRef =useRef()
   return (
     <Box sx={{ width: "100%", overflowX: "hidden" }}>
-      <Navbar />
+      <Navbar howItWorksRef={howItWorksRef} />
       <HeroSection />
 
       <Box
@@ -265,6 +266,7 @@ const LandingPage = () => {
           width: "100%",
           gap: 1,
         }}
+        ref={howItWorksRef}
       >
         <Typography
           variant="h4"
@@ -293,6 +295,7 @@ const LandingPage = () => {
           width: "100%",
           py: 5,
         }}
+       
       >
         <BiddingWork />
       </Box>

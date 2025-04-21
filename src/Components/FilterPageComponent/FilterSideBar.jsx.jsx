@@ -28,6 +28,15 @@ const FilterSidebar = ({ filters, setFilters }) => {
         fontFamily: "Inter", // Set font family
       }}
     >
+
+<TextField
+    fullWidth
+    size="small"
+    placeholder="Search services or keywords"
+    value={filters.search || ""}
+    onChange={(e) => handleChange("search", e.target.value)}
+    sx={{ mb: 2 }}
+  />
       {/* Price Range */}
       <Typography fontWeight="bold" mb={1} fontFamily="Inter">
         Price Range ($)

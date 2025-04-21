@@ -19,7 +19,7 @@ const DamageModal = ({ open, onClose, damage }) => {
           transform: "translate(-50%, -50%)",
           boxShadow: 24,
           textAlign: "center",
-          height:600
+          height:500
         }}
       >
         {/* Header */}

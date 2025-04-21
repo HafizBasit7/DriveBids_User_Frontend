@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import SliderSellCard from "./SliderSellCard";
+import "./CardCarousel.css"; // import the CSS for disabling text selection
 
 const CardCarousel = () => {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Mobile screens
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const [autoPlay, setAutoPlay] = useState(true); // state to control autoplay
 
   const carouselContainerStyle = {
-    maxWidth: isSmallScreen ? "100%" : "70%", // 100% width on mobile, 70% on large screens
+    maxWidth: isSmallScreen ? "100%" : "70%",
     margin: "auto",
     padding: "10px 0",
     position: "relative",
@@ -27,13 +29,13 @@ const CardCarousel = () => {
 
   const nonSelectedSlideStyle = {
     ...slideStyle,
-    opacity: 0.4, // Faded effect for non-selected slides
+    opacity: 0.4,
     transform: "scale(0.9)",
   };
 
   return (
-    <div style={carouselContainerStyle}>
-      {/* Left & Right Internal Opacity Effect */}
+    <div style={carouselContainerStyle} className="disable-select">
+      {/* Gradient overlays on left and right */}
       <div
         style={{
           position: "absolute",
@@ -60,14 +62,15 @@ const CardCarousel = () => {
       <Carousel
         showArrows={true}
         infiniteLoop={true}
-        autoPlay={true} // Enables continuous animation
-        interval={2000} // Adjusts autoplay speed
+        autoPlay={autoPlay}
+        interval={2000}
         showThumbs={false}
         showStatus={false}
-        showIndicators={false} // Removes dots
+        showIndicators={false}
         centerMode={true}
-        centerSlidePercentage={isSmallScreen ? 80 : 50} // Adjusts card size for mobile
+        centerSlidePercentage={isSmallScreen ? 80 : 50}
         emulateTouch={true}
+        onClickItem={() => setAutoPlay(false)} // Stop autoplay on click
         renderItem={(item, props) => (
           <div style={props.isSelected ? selectedSlideStyle : nonSelectedSlideStyle}>
             {item}

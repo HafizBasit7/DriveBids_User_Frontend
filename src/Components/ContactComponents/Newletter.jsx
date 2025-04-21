@@ -7,9 +7,10 @@ const NewsletterSection = () => {
       sx={{
         background: colors.buttoncolor,
         color: "white",
+        height:320,
         width: "100%",
         p: { xs: 2, md: 4 },
-        my: 5,
+     
         
       }}
     >

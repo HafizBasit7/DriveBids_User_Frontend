@@ -25,8 +25,7 @@ import {calculateTimeLeft, formatAmount} from "../../utils/utils";
 import { LocalGasStation, PaletteOutlined, PrecisionManufacturing } from "@mui/icons-material";
 
 const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals = false }) => {
-  // const [isFavorited, setIsFavorited] = useState(false);
-  // const [openDelete, setOpenDelete] = useState(false);
+ 
 
   const navigate = useNavigate();
 
@@ -34,7 +33,6 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals 
   const toggleWatchListMutation = useMutation({
     mutationFn: toggleWatchList,
     onMutate: async (carId) => {
-      //For Car ids in watchlist
       await queryClient.cancelQueries(["carsInWatchList"]);
       const previousWatchlist = queryClient.getQueryData(["carsInWatchList"]);
 
@@ -60,12 +58,10 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals 
       }
     },
     onSettled: () => {
-      // queryClient.invalidateQueries(["carsInWatchList"]);
       queryClient.invalidateQueries({queryKey: ["watchlist"]});
     },
   });
 
-  //Calculations
   const isCarInWatchList = (carsInWatchList?.data.carsInWatchList.findIndex(val => val.car === ad._id) !== -1);
   const isCarSold = ad.status === 'sold';
   let winning = false;
@@ -101,14 +97,7 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals 
     };
   }, [isCarSold]);
 
-  // const handleFavoriteClick = () => {
-  //   setIsFavorited(!isFavorited);
-  // };
 
-  // const handleDelete = () => {
-  //   console.log("Ad Deleted"); 
-  //   setOpenDelete(false);
-  // };
 
   return (
     <Box
@@ -126,6 +115,8 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals 
         <CardMedia
           component="img"
           height="180"
+          loading="lazy"
+
           image={ad.images.exterior[0].url}
           alt={ad.title}
           sx={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}

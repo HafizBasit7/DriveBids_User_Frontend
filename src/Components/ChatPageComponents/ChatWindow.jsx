@@ -1,4 +1,4 @@
-import { Box, Typography, Avatar, TextField, IconButton } from "@mui/material";
+import { Box, Typography, Avatar, TextField, IconButton, Modal } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -12,6 +12,8 @@ import { timeAgo } from "../../utils/utils";
 import { useAuth } from "../../context/auth.context";
 import { useSearchParams } from "react-router-dom";
 import { useSocket } from "../../context/socket.context";
+import ImageViewModal from "../Modals/ImageViewerModal";
+import LazyLoad from "react-lazyload";
 
 const LIMIT = 10;
 
@@ -52,6 +54,7 @@ const ChatWindow = () => {
     },
   });
   const messages = messagesTmp?.pages.flatMap((page) => page?.data?.messages) || [];
+
   
   //Send Message mutation
   const mutation = useMutation({
@@ -74,6 +77,17 @@ const ChatWindow = () => {
       }
     }
   }, [messagesLoading]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setModalOpen(true);
+  };
+  
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   useEffect(() => {
     //Scroll
@@ -198,70 +212,98 @@ const ChatWindow = () => {
       <AdBanner chatHeadDataReal={chatHeadDataReal} />
 
       <Box
-        ref={messagesContainerRef} 
-        sx={{
-          flexGrow: 1,
-          p: 2,
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}
-      >
-        {hasNextPage && (<Typography ref={loaderRef}>Loading More...</Typography>)}
-        {!messages ? (
-          <Typography sx={{ textAlign: "center", color: "#aaa" }}>No messages yet</Typography>
-        ) : (
-          [...messages].reverse().map((msg) => (
-            <Box
-              key={msg._id}
+  ref={messagesContainerRef}
+  sx={{
+    flexGrow: 1,
+    p: 2,
+    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
+    gap: 2,
+  }}
+>
+  {hasNextPage && (
+    <Typography ref={loaderRef}>Loading More...</Typography>
+  )}
+  {!messages ? (
+    <Typography sx={{ textAlign: "center", color: "#aaa" }}>
+      No messages yet
+    </Typography>
+  ) : (
+    [...messages].reverse().map((msg) => {
+      const isSender = msg.sender === user._id;
+      const attachment = msg.attachments ? msg.attachments[0] : null;
+
+      return (
+        <Box
+          key={msg._id}
+          sx={{
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: isSender ? "flex-end" : "flex-start",
+            gap: 1,
+          }}
+        >
+          {/* Avatar on the left if not sender */}
+          {!isSender && (
+            <Avatar src={msg.avatar} sx={{ width: 34, height: 34 }} />
+          )}
+
+          {/* Message content */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: isSender ? "flex-end" : "flex-start",
+              maxWidth: "70%",
+              bgcolor: isSender ? colors.buttoncolor : "#f0f0f0",
+              color: isSender ? "#fff" : "#000",
+              p: { xs: 1, md: 1 },
+              borderRadius: 2,
+            }}
+          >
+            {attachment && attachment.type?.includes("image") && (
+              <Box mb={1}>
+                        <LazyLoad height={200} offset={100} once>
+
+                <img
+                  src={attachment.url}
+                  alt="attachment"
+                  onClick={() => handleImageClick(attachment.url)}
+
+                  style={{
+                    width: 200,
+                    height:150,
+                    objectFit:"cover",
+                    borderRadius: 8,
+                  }}
+                />
+                        </LazyLoad >
+
+              </Box>
+            )}
+            <Typography>{msg.message}</Typography>
+            <Typography
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent:msg.sender === user._id ? "flex-end" : "flex-start",
-                gap: 1,
+                fontSize: 9,
+                color: isSender ? "#ccc" : "#888",
+                mt: 0.5,
               }}
             >
-              {msg.sender !== user._id && (
-                <>
-                  <Avatar src={msg.avatar} sx={{ width: 34, height: 34 }} />
-                  <Box
-                    sx={{
-                      bgcolor: "#f0f0f0",
-                      color: "#000",
-                      p: {xs:1,md:1.5},
-                      borderRadius: 2,
-                      maxWidth: "70%",
-                    }}
-                  >
-                    <Typography sx={{}}>{msg.message}</Typography>
-                  </Box>
-                  <Typography sx={{ fontSize: 12, color: '#888', minWidth: '50px' }}>{timeAgo(msg.createdAt)}</Typography>
-                </>
-              )}
+              {timeAgo(msg.createdAt)}
+            </Typography>
+          </Box>
 
-              {msg.sender === user._id && (
-                <>
-                  <Typography sx={{ fontSize: 12, color: '#888', minWidth: '50px', textAlign: 'right' }}>{timeAgo(msg.createdAt)}</Typography>
-                  <Box
-                    sx={{
-                      bgcolor: "#007bff",
-                      color: "#fff",
-                      p: {xs:1,md:1.5},
+         
+          {isSender && (
+            <Avatar src={msg.avatar} sx={{ width: 34, height: 34 }} />
+          )}
+        </Box>
+      );
+    })
+  )}
+</Box>
 
-                      borderRadius: 2,
-                      maxWidth: "70%",
-                    }}
-                  >
-                    <Typography>{msg.message}</Typography>
-                  </Box>
-                  {/* <Avatar src={msg.avatar} sx={{ width: 34, height: 34 }} /> */}
-                </>
-              )}
-            </Box>
-          ))
-        )}
-      </Box>
 
       <Box
         sx={{
@@ -273,7 +315,7 @@ const ChatWindow = () => {
         }}
       >
         <IconButton sx={{ color: "black", mr: 1 }}>
-          {/* <AttachFileIcon fontSize="medium" /> */}
+          <AttachFileIcon fontSize="medium" />
         </IconButton>
 
         <Box sx={{ position: "relative", flexGrow: 1 }}>
@@ -282,9 +324,9 @@ const ChatWindow = () => {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {  // Prevent Shift+Enter from sending
-                e.preventDefault();  // Stop new line creation
-                sendMessageClick();  // Send message
+              if (e.key === "Enter" && !e.shiftKey) {  
+                e.preventDefault();  
+                sendMessageClick();  
               }
             }}
             placeholder="Type a message"
@@ -320,6 +362,12 @@ const ChatWindow = () => {
           </IconButton>
         </Box>
       </Box>
+      <ImageViewModal 
+        open={modalOpen} 
+        handleClose={handleCloseModal} 
+        imageUrl={selectedImage} 
+      />
+
     </Box>
   );
 };

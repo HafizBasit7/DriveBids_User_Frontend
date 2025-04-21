@@ -4,6 +4,7 @@ import SellCarImage from "../../assets/Png/sellcarimg.png"; // Replace with actu
 import colors from "../../Style/color";
 import rigtharrow from "../../assets/SVG/arrow-right-small.svg"; // Replace with actual image path
 import { useNavigate } from "react-router-dom";
+import LazyLoad from "react-lazyload";
 
 
 const SellCarCard = () => {
@@ -113,13 +114,14 @@ const SellCarCard = () => {
       <Box
   sx={{
     flex: 1,
-    display: { xs: "none", md: "flex" }, // Hide on small screens, show on medium+
+    display: { xs: "none", md: "flex" }, 
     justifyContent: "center",
     alignItems: "center",
     mt: { xs: 3, md: 0 },
     height: "100%", 
   }}
 >
+
   <img
     src={SellCarImage}
     alt="Sell Your Car"
@@ -130,6 +132,7 @@ const SellCarCard = () => {
       zIndex: 1,
     }}
   />
+
 </Box>
 
     </Box>

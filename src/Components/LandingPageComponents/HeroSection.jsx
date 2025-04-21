@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"; // Import navigation hook
 import CarSVG from "../../assets/SVG/Carsvg.svg";
 import CarLight from "../../assets/SVG/carlight.svg";
 import colors from "../../Style/color";
+import LazyLoad from 'react-lazyload';
+
 
 const HeroSection = () => {
   const [showLight, setShowLight] = useState(false);
@@ -118,15 +120,19 @@ const HeroSection = () => {
           position: "relative",
         }}
       >
-        <img src={CarSVG} alt="Car Illustration" style={{ width: "100%" }} />
+                          <LazyLoad offset={100} once>
 
-        {/* Car Light Effect on Hover */}
+        <img src={CarSVG} alt="Car Illustration" style={{ width: "100%" }} />
+        </LazyLoad >
+
+
+
         <img
           src={CarLight}
           alt="Car Light"
           style={{
             position: "absolute",
-            top: "42%", // Adjust to fit the headlights properly
+            top: "42%", 
             left: "24%",
             transform: "translateX(-50%)",
             width: "12%",

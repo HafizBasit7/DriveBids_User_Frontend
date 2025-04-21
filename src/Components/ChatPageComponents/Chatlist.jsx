@@ -8,6 +8,8 @@ import { timeAgo } from "../../utils/utils";
 import { useAuth } from "../../context/auth.context";
 import { useSocket } from "../../context/socket.context";
 import { useSearchParams } from "react-router-dom";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useNavigate } from "react-router-dom";
 
 const LIMIT = 10;
 
@@ -18,6 +20,8 @@ const ChatList = () => {
   const chatId = searchParams.get('chatId');
 
   const loaderRef = useRef(null);
+  const navigate = useNavigate();
+
 
   const {authState} = useAuth();
   const {chatSocket: socket} = useSocket();
@@ -131,11 +135,32 @@ const ChatList = () => {
   return (
     <Box sx={{ fontFamily: "Inter, sans-serif", p: 2, borderRadius: "12px" }}>
       {/* Header Section */}
-      <Box sx={{ bgcolor: colors.yellowbackground, p: 2, borderRadius: "8px", mb: 2, display:"flex", justifyContent:"flex-start", pl:3 }}>
-        <Typography variant="h5" fontWeight="bold">
-          Messages <span style={{ fontWeight: "normal", color: "#000", fontSize:15,fontWeight:700 }}></span>
-        </Typography>
-      </Box>
+      <Box
+      sx={{
+        bgcolor: colors.yellowbackground,
+        p: 2,
+        borderRadius: "8px",
+        mb: 2,
+        display: "flex",
+        alignItems: "center",
+        pl: 1,
+      }}
+    >
+      <IconButton onClick={() => navigate(-1)} sx={{ mr: 1 }}>
+        <ArrowBackIosNewIcon sx={{color:"black"}} />
+      </IconButton>
+      <Typography variant="h5" fontWeight="bold">
+        Messages{" "}
+        <span
+          style={{
+            fontWeight: "normal",
+            color: "#000",
+            fontSize: 15,
+            fontWeight: 700,
+          }}
+        ></span>
+      </Typography>
+    </Box>
 
       {/* Buying & Selling Toggle with Skewed White Strip */}
       <Box sx={{ display: "flex", position: "relative", bgcolor: "#F5F5F5", borderRadius: "8px", mb: 2 }}>
@@ -188,50 +213,13 @@ const ChatList = () => {
         </Box>
       </Box>
 
-      {/* Search Bar & Chat List Box */}
-      <Box sx={{ border: "1px solid #ccc", borderRadius: "12px", p: 2, bgcolor: "white" ,minHeight:600}}>
-        {/* Search Bar */}
-        {/* <Box 
-      sx={{ 
-        position: "relative", 
-        mb: 2, 
-        borderRadius: 2, 
-        overflow: "hidden", 
-        border: "1px solid #ccc",
-        bgcolor: "#fff"
-      }}
-    >
-        <IconButton 
-        sx={{ 
-          position: "absolute", 
-          bottom: 5, 
-          left: 2, 
-          padding: "2px",
-          
-        }}
-      >
-        <SearchIcon />
-      </IconButton>
-      <input
-        type="text"
-        placeholder="Search messages"
-        style={{
-          width: "100%",
-          padding: "12px 10px 9px 30px", 
-          border: "#F3F3F3",
-          outline: "none",
-          fontSize: "16px",
-          background: "#D9D9D9",
-        }}
-      />
-    
-    </Box> */}
+      <Box sx={{ border: "1px solid #ccc", borderRadius: "12px", p: 2, bgcolor: "white" ,minHeight:600}} >
+     
 
-        {/* Chat List */}
+       
         <List>
           {chats?.length > 0 && chats?.map((chat, index) => (
             <ListItem
-              
               key={index}
               button="true"
               onClick={(e) => {e.preventDefault(); setSearchParams({chatId: chat._id});}}
@@ -242,7 +230,7 @@ const ChatList = () => {
                 borderRadius: "12px",
                 mb: 1,
                 p: 1.5,
-                bgcolor: chat._id === chatId ? "#E8F0FE" : "transparent", // Highlight active chat
+                bgcolor: chat._id === chatId ? "#E8F0FE" : "transparent", 
                 transition: "background 0.3s",
               }}
             >
