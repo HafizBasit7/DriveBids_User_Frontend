@@ -8,10 +8,7 @@ import { useState } from "react";
 import NewsletterSection from "./Newletter";
 
 const ContactForm = () => {
-  const [showName, setShowName] = useState(false);
-  const [showEmail, setShowEmail] = useState(false);
-  const [showPhone, setShowPhone] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
+
   return (
     <Box sx={{ p: 3, height: { xs: "190vh", md: "120vh" } }}>
       <Box
@@ -92,195 +89,132 @@ const ContactForm = () => {
       </Box>
 
       <Box
-        sx={{
-          background: "white",
-          borderRadius: "8px",
-          p: 3,
-          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.09)",
-          mt:3,
+  sx={{
+    background: "white",
+    borderRadius: "8px",
+    p: 3,
+    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.09)",
+    mt: 3,
+   
+    
+    height:"40%"
+
+  }}
+>
+  <Box
+    sx={{
+      display: "flex",
+      gap: 2,
+      mb: 2,
+      flexDirection: { xs: "column", sm: "row" },
+    }}
+  >
+    {/* Name */}
+    <Box sx={{ flex: 1 }}>
+      <TextField
+        label="Your Name"
+        fullWidth
+        InputLabelProps={{
+          sx: {
+            color: "black",
+            "&.Mui-focused": { color: colors.buttoncolor },
+          },
         }}
-      >
-      
-        <Box
-          sx={{
-            display: "flex",
-            gap: 2,
-            mb: 2,
-            flexDirection: { xs: "column", sm: "row" }, 
-          }}
-        >
-        
-          <Box sx={{ flex: 1 }}>
-            {showName ? (
-              <TextField
-                label="Your Name"
-                fullWidth
-                autoFocus
-                InputLabelProps={{
-                  sx: {
-                    color: "black",
-                    "&.Mui-focused": { color: colors.buttoncolor },
-                  },
-                }}
-                InputProps={{
-                  sx: {
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: colors.buttoncolor,
-                    },
-                  },
-                }}
-              />
-            ) : (
-              <Typography
-                sx={{
-                  cursor: "pointer",
-                  color: "black",
-                  py: 2,
-                  textAlign: "left",
-                   textDecoration:"underline"
-                }}
-                onClick={() => setShowName(true)}
-              >
-                Your Name
-              </Typography>
-            )}
-          </Box>
+        InputProps={{
+          sx: {
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: colors.buttoncolor,
+            },
+          },
+        }}
+      />
+    </Box>
 
-          {/* Email */}
-          <Box sx={{ flex: 1 }}>
-            {showEmail ? (
-              <TextField
-                label="Email Address"
-                fullWidth
-                autoFocus
-                InputLabelProps={{
-                  sx: {
-                    color: "black",
-                    "&.Mui-focused": { color: colors.buttoncolor },
-                  },
-                }}
-                InputProps={{
-                  sx: {
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: colors.buttoncolor,
-                    },
-                  },
-                }}
-              />
-            ) : (
-              <Typography
-                sx={{
-                  cursor: "pointer",
-                  color: "black",
-                  py: 2,
-                  textAlign: "left",
-                  textDecoration:"underline"
+    {/* Email */}
+    <Box sx={{ flex: 1 }}>
+      <TextField
+        label="Email Address"
+        fullWidth
+        InputLabelProps={{
+          sx: {
+            color: "black",
+            "&.Mui-focused": { color: colors.buttoncolor },
+          },
+        }}
+        InputProps={{
+          sx: {
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: colors.buttoncolor,
+            },
+          },
+        }}
+      />
+    </Box>
 
-                }}
-                onClick={() => setShowEmail(true)}
-              >
-                Email Address
-              </Typography>
-            )}
-          </Box>
+    {/* Phone */}
+    <Box sx={{ flex: 1 }}>
+      <TextField
+        label="Phone Number (optional)"
+        fullWidth
+        InputLabelProps={{
+          sx: {
+            color: "black",
+            "&.Mui-focused": { color: colors.buttoncolor },
+          },
+        }}
+        InputProps={{
+          sx: {
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: colors.buttoncolor,
+            },
+          },
+        }}
+      />
+    </Box>
+  </Box>
 
-          {/* Phone */}
-          <Box sx={{ flex: 1 }}>
-            {showPhone ? (
-              <TextField
-                label="Phone Number (optional)"
-                fullWidth
-                autoFocus
-                InputLabelProps={{
-                  sx: {
-                    color: "black",
-                    "&.Mui-focused": { color: colors.buttoncolor },
-                  },
-                }}
-                InputProps={{
-                  sx: {
-                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: colors.buttoncolor,
-                    },
-                  },
-                }}
-              />
-            ) : (
-              <Typography
-                sx={{
-                  cursor: "pointer",
-                  color: "black",
-                  py: 2,
-                  textAlign: "left",
-                  textDecoration:"underline"
+  {/* Message */}
+  <Box sx={{ mb: 2, display: "flex", justifyContent: "flex-start" }}>
+    <TextField
+      label="Message"
+      multiline
+      rows={4}
+      fullWidth
+      InputLabelProps={{
+        sx: {
+          color: "black",
+          "&.Mui-focused": { color: colors.buttoncolor },
+        },
+      }}
+      InputProps={{
+        sx: {
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: colors.buttoncolor,
+          },
+        },
+      }}
+    />
+  </Box>
 
-                }}
-                onClick={() => setShowPhone(true)}
-              >
-                Phone Number (optional)
-              </Typography>
-            )}
-          </Box>
-        </Box>
+  {/* Submit Button */}
+  <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+    <Button
+      variant="contained"
+      sx={{
+        textTransform: "none",
+        width: "200px",
+        backgroundColor: colors.buttoncolor,
+        "&:hover": {
+          backgroundColor: colors.buttoncolor,
+          opacity: 0.9,
+        },
+      }}
+    >
+      Leave us a Message →
+    </Button>
+  </Box>
+</Box>
 
-        {/* Message */}
-        <Box sx={{ mb: 2, display: "flex", justifyContent: "flex-start" }}>
-          {showMessage ? (
-            <TextField
-              label="Message"
-              multiline
-              rows={4}
-              fullWidth
-              autoFocus
-              InputLabelProps={{
-                sx: {
-                  color: "black",
-                  "&.Mui-focused": { color: colors.buttoncolor },
-                },
-              }}
-              InputProps={{
-                sx: {
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: colors.buttoncolor,
-                  },
-                },
-              }}
-            />
-          ) : (
-            <Typography
-              sx={{
-                cursor: "pointer",
-                color: "black",
-                py: 2,
-                textAlign: "left",
-                textDecoration:"underline"
-
-              }}
-              onClick={() => setShowMessage(true)}
-            >
-              Message
-            </Typography>
-          )}
-        </Box>
-
-        {/* Submit Button */}
-        <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
-          <Button
-            variant="contained"
-            sx={{
-              textTransform: "none",
-              width: "200px",
-              backgroundColor: colors.buttoncolor,
-              "&:hover": {
-                backgroundColor: colors.buttoncolor,
-                opacity: 0.9,
-              },
-            }}
-          >
-            Leave us a Message →
-          </Button>
-        </Box>
-      </Box>
 
     </Box>
   );

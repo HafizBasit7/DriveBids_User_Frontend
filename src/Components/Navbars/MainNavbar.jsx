@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Box,
   Button,
@@ -6,41 +6,99 @@ import {
   useTheme,
   useMediaQuery,
   Typography,
+  ClickAwayListener,
+  Fade,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import EditLocationIcon from '@mui/icons-material/EditLocation';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
 import Notifications from "../Modals/Notification";
 import ProfileMenu from "../Modals/Profilemenu";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { useNavigate } from "react-router-dom";
 import Logosvg from "../../assets/SVG/Mainlogo.svg";
 import colors from "../../Style/color";
 import MobileSidebar from "./Mobilesidebar";
 import { useAuth } from "../../context/auth.context";
-import LocationInput from "../../Components/Location/LocationInput"
+import LocationInput from "../../Components/Location/LocationInput";
 import { useQueryClient } from "@tanstack/react-query";
 
 const MainNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
+  const [showLocationInput, setShowLocationInput] = useState(false);
+  const [showSearchInput, setShowSearchInput] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef(null);
+  const locationInputRef = useRef(null);
+  
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const {authState, dispatch} = useAuth();
-  const currentSelectedLocation = (authState.selectedLocation || authState.user.location) || {"coordinates": [73.1128313, 33.5255503]};
+  const currentSelectedLocation = (authState.selectedLocation || authState.user?.location) || {"coordinates": [73.1128313, 33.5255503]};
   const queryClient = useQueryClient();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLocationClick = () => {
+    setShowLocationInput(true);
+    setShowSearchInput(false);
+  };
+
+  const handleSearchClick = () => {
+    setShowSearchInput(true);
+    setShowLocationInput(false);
+  };
+
+  const closeAllInputs = () => {
+    setShowLocationInput(false);
+    setShowSearchInput(false);
+  };
+
+  const handleLocationChange = (location) => {
+    dispatch({ type: 'updateLocation', payload: location });
+    setTimeout(() => {
+      queryClient.invalidateQueries({ queryKey: ['cars'] });
+      queryClient.invalidateQueries({ queryKey: ['carsEnding'] });
+      queryClient.invalidateQueries({ queryKey: ['carsByBidCount'] });
+      queryClient.invalidateQueries({ queryKey: ['carsAll'] });
+      queryClient.invalidateQueries({ queryKey: ['carsEndingAll'] });
+      queryClient.invalidateQueries({ queryKey: ['carsByBidCountAll'] });
+    }, 200);
+    closeAllInputs();
+  };
+
+  const handleSearchSubmit = (e) => {
+    if (e.key === 'Enter' && searchQuery.trim()) {
+      navigate(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
+      closeAllInputs();
+    }
+  };
+
+  // Focus input when expanded
+  useEffect(() => {
+    if (showSearchInput && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [showSearchInput]);
+
   const navItems = [
     { label: "Home", path: "/home" },
     { label: "Browse Deals", path: "/search" },
     { label: "Contact Us", path: "/contact" },
   ];
+
+  const getLocationDisplayName = () => {
+    if (currentSelectedLocation?.name) {
+      const locationName = currentSelectedLocation.name;
+      return locationName.length > 10 ? locationName.substring(0, 15) + '' : locationName;
+    }
+    return "Location";
+  };
 
   return (
     <>
@@ -73,8 +131,8 @@ const MainNavbar = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            width: isMobile ? "50px" : "200px",
-            px: isMobile ? 0 : 7,
+            width: isMobile ? "50px" : "150px", // Reduced width from 200px to 150px
+            px: isMobile ? 1 : 3, // Reduced padding from 7 to 3
           }}
         >
           <img
@@ -91,7 +149,7 @@ const MainNavbar = () => {
             right: 0,
             top: 0,
             height: "100%",
-            width: { xs: "65%", md: "63%" },
+            width: { xs: "65%", md: "63%" }, // Increased width from 63% to 68%
             display: "flex",
             alignItems: "center",
             gap: isMobile ? 1 : 2,
@@ -110,89 +168,291 @@ const MainNavbar = () => {
             navItems.map((item, index) => (
               <Button
                 key={index}
-                sx={{ color: "black", textTransform: "none",fontSize:15,fontFamily:"Inter" }}
+                sx={{ 
+                  color: "black", 
+                  textTransform: "none", 
+                  fontSize: 15, 
+                  fontFamily: "Inter",
+                  fontWeight: 500,
+                  "&:hover": {
+                    backgroundColor: "rgba(0,0,0,0.04)"
+                  }
+                }}
                 onClick={() => navigate(item.path)}
               >
                 {item.label}
               </Button>
             ))}
 
-          {!isMobile && (
-            
-            <LocationInput handleChange={(location) => {
-              dispatch({ type: 'updateLocation', payload: location });
-              setTimeout(() => {
-                queryClient.invalidateQueries({ queryKey: ['cars'] });
-                queryClient.invalidateQueries({ queryKey: ['carsEnding'] });
-                queryClient.invalidateQueries({ queryKey: ['carsByBidCount'] });
-                queryClient.invalidateQueries({ queryKey: ['carsAll'] });
-                queryClient.invalidateQueries({ queryKey: ['carsEndingAll'] });
-                queryClient.invalidateQueries({ queryKey: ['carsByBidCountAll'] });
-              }, 200);
-            }}>
+          <ClickAwayListener onClickAway={closeAllInputs}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              {/* Compact Location button */}
+              {!isMobile && !showLocationInput && (
+                <Box
+                  onClick={handleLocationClick}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    // border: "1px solid #eaeaea",
+                    borderRadius: 2,
+                    px: 1.5,
+                    py: 0.8,
+                    backgroundColor: "white",
+                    cursor: "pointer",
+                    minWidth: "auto",
+                    maxWidth: 120,
+                    transition: "all 0.2s ease",
+                    // "&:hover": {
+                    //   borderColor: "#ddd",
+                    //   boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+                    // }
+                  }}
+                >
+                  <LocationOnIcon sx={{ color: "#333", fontSize: 20, mr: 0.5,mb:0.5 }} />
+                  <Typography noWrap sx={{ fontSize: "0.95rem", color: "#333",textDecoration:"underline",fontWeight:500 }}>
+                    {getLocationDisplayName()}
+                  </Typography>
+                </Box>
+              )}
+
+              {/* Expanded Location Input */}
+              <Fade in={showLocationInput}>
+                <Box sx={{ position: "relative", display: showLocationInput ? "block" : "none" }}>
+                  <LocationInput handleChange={handleLocationChange}>
+                    <Box
+                      component="div"
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        border: "1px solid #eaeaea",
+                        borderRadius: 2,
+                        px: 1.5,
+                        py: 1,
+                        backgroundColor: "white",
+                        width: 220,
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                      }}
+                      ref={locationInputRef}
+                    >
+                      <LocationOnIcon sx={{ color: "#333", fontSize: 20, mr: 1 }} />
+                      <Box
+                        component="input"
+                        placeholder={getLocationDisplayName()}
+                        sx={{
+                          border: "none",
+                          outline: "none",
+                          flex: 1,
+                          minWidth: 0,
+                          fontSize: '0.9rem'
+                        }}
+                        autoFocus
+                      />
+                      <IconButton 
+                        size="small" 
+                        onClick={closeAllInputs}
+                        sx={{ color: "#999" }}
+                      >
+                        <CloseIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  </LocationInput>
+                </Box>
+              </Fade>
+
+              {/* Compact Search button */}
+              {!isMobile && !showSearchInput && (
+                <IconButton 
+                  onClick={handleSearchClick}
+                  sx={{ 
+                    border: "1px solid #eaeaea",
+                    borderRadius: 2,
+                    backgroundColor: "white",
+                    p: 1,
+                    color: "#333",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                      borderColor: "#ddd",
+                      boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
+                    }
+                  }}
+                >
+                  <SearchIcon sx={{ fontSize: 20 }} />
+                </IconButton>
+              )}
+
+              {/* Expanded Search Input */}
+              <Fade in={showSearchInput}>
+                <Box 
+                  component="div"
+                  sx={{
+                    display: showSearchInput ? "flex" : "none",
+                    alignItems: "center",
+                    border: "1px solid #eaeaea",
+                    borderRadius: 2,
+                    px: 1.5,
+                    py: 0.8,
+                    backgroundColor: "white",
+                    width: 220,
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                  }}
+                >
+                  <SearchIcon sx={{ color: "#333", fontSize: 20, mr: 1 }} />
+                  <Box
+                    component="input"
+                    placeholder="Search cars..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleSearchSubmit}
+                    sx={{
+                      border: "none",
+                      outline: "none",
+                      flex: 1,
+                      minWidth: 0,
+                      fontSize: '0.9rem'
+                    }}
+                    ref={searchInputRef}
+                  />
+                  <IconButton 
+                    size="small" 
+                    onClick={closeAllInputs}
+                    sx={{ color: "#999" }}
+                  >
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+              </Fade>
+            </Box>
+          </ClickAwayListener>
+
+          {/* Mobile location and search handling */}
+          {isMobile && (
+            <>
+              <IconButton 
+                onClick={handleLocationClick}
+                sx={{ color: "#333" }}
+              >
+                <LocationOnIcon />
+              </IconButton>
+              
+              <IconButton 
+                onClick={handleSearchClick}
+                sx={{ color: "#333" }}
+              >
+                <SearchIcon />
+              </IconButton>
+            </>
+          )}
+
+          {/* Mobile expanded inputs */}
+          {isMobile && (showLocationInput || showSearchInput) && (
+            <ClickAwayListener onClickAway={closeAllInputs}>
               <Box
-                component="div"
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #ccc",
-                  borderRadius: 1,
-                  px: 1,
-                  py: 1.2,
+                  position: "absolute",
+                  top: "80px",
+                  left: 0,
+                  width: "100%",
+                  zIndex: 10,
+                  p: 1.5,
                   backgroundColor: "white",
-                  width: "auto",
-                  cursor: "pointer",
-                  maxWidth: 150
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                  borderBottomLeftRadius: 8,
+                  borderBottomRightRadius: 8,
                 }}
               >
-                <LocationOnIcon sx={{ color: "black", fontSize: 20, mr: 1, }} />
-                <Box
-                  component="input"
-                  placeholder={currentSelectedLocation?.name}
-                  sx={{
-                    border: "none",
-                    outline: "none",
-                    flex: 1,
-                    minWidth: 0,
-                    fontSize: '0.9rem'
-                  }}
-                />
+                {showLocationInput && (
+                  <LocationInput handleChange={handleLocationChange}>
+                    <Box
+                      component="div"
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        border: "1px solid #eaeaea",
+                        borderRadius: 2,
+                        px: 1.5,
+                        py: 1.2,
+                        backgroundColor: "white",
+                        width: "100%",
+                      }}
+                    >
+                      <LocationOnIcon sx={{ color: "#333", fontSize: 20, mr: 1 }} />
+                      <Box
+                        component="input"
+                        placeholder="Enter location"
+                        sx={{
+                          border: "none",
+                          outline: "none",
+                          flex: 1,
+                          minWidth: 0,
+                          fontSize: '0.9rem'
+                        }}
+                        autoFocus
+                      />
+                      <IconButton 
+                        size="small" 
+                        onClick={closeAllInputs}
+                        sx={{ color: "#999" }}
+                      >
+                        <CloseIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  </LocationInput>
+                )}
+
+                {showSearchInput && (
+                  <Box
+                    component="div"
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      border: "1px solid #eaeaea",
+                      borderRadius: 2,
+                      px: 1.5,
+                      py: 1.2,
+                      backgroundColor: "white",
+                      width: "100%",
+                    }}
+                  >
+                    <SearchIcon sx={{ color: "#333", fontSize: 20, mr: 1 }} />
+                    <Box
+                      component="input"
+                      placeholder="Search cars..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={handleSearchSubmit}
+                      sx={{
+                        border: "none",
+                        outline: "none",
+                        flex: 1,
+                        minWidth: 0,
+                        fontSize: '0.9rem'
+                      }}
+                      autoFocus
+                    />
+                    <IconButton 
+                      size="small" 
+                      onClick={closeAllInputs}
+                      sx={{ color: "#999" }}
+                    >
+                      <CloseIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                )}
               </Box>
-            </LocationInput>
-          
-          )}
-
-          {isMobile && !showSearch && (
-            <IconButton onClick={() => setShowSearch(true)}>
-              <EditLocationIcon sx={{ color: "black" }} />
-            </IconButton>
-          )}
-
-          {isMobile && showSearch && (
-           <Box
-           sx={{
-             display: "flex",
-             alignItems: "center",
-             border: "1px solid #ccc",
-             borderRadius: 2,
-             px: 1,
-             py: 0.5,
-             backgroundColor: "white",
-             width: "auto",
-             cursor: "pointer",
-           }}
-         >
-           <EditLocationIcon sx={{ color: "#666", fontSize: 20, mr: 0.5 }} />
-           <Typography sx={{ fontSize: "14px", color: "#000" }}>
-             {user.city || "Your Location"}
-           </Typography>
-         </Box>
-         
+            </ClickAwayListener>
           )}
 
           {!isMobile && (
-            <IconButton onClick={() => navigate("/chat")}>
-              <ChatBubbleOutlineIcon sx={{ color: "black" }} />
+            <IconButton 
+              onClick={() => navigate("/chat")}
+              sx={{ 
+                color: "#333",
+                "&:hover": {
+                  backgroundColor: "rgba(0,0,0,0.04)"
+                }
+              }}
+            >
+              <ChatBubbleOutlineIcon />
             </IconButton>
           )}
 
@@ -200,7 +460,13 @@ const MainNavbar = () => {
           <ProfileMenu />
 
           {isMobile && (
-            <IconButton onClick={handleDrawerToggle} sx={{ color: "black" }}>
+            <IconButton 
+              onClick={handleDrawerToggle} 
+              sx={{ 
+                color: "#333",
+                ml: 0.5
+              }}
+            >
               <MenuIcon />
             </IconButton>
           )}
