@@ -133,7 +133,14 @@ const ChatList = () => {
   }, [hasNextPage, isFetchingNextPage]);
 
   return (
-    <Box sx={{ fontFamily: "Inter, sans-serif", p: 2, borderRadius: "12px" }}>
+    <Box sx={{ 
+      fontFamily: "Inter, sans-serif", 
+      p: 2, 
+      borderRadius: "12px",
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
       {/* Header Section */}
       <Box
       sx={{
@@ -144,6 +151,7 @@ const ChatList = () => {
         display: "flex",
         alignItems: "center",
         pl: 1,
+        flexShrink: 0
       }}
     >
       <IconButton onClick={() => navigate(-1)} sx={{ mr: 1 }}>
@@ -163,7 +171,14 @@ const ChatList = () => {
     </Box>
 
       {/* Buying & Selling Toggle with Skewed White Strip */}
-      <Box sx={{ display: "flex", position: "relative", bgcolor: "#F5F5F5", borderRadius: "8px", mb: 2 }}>
+      <Box sx={{ 
+        display: "flex", 
+        position: "relative", 
+        bgcolor: "#F5F5F5", 
+        borderRadius: "8px", 
+        mb: 2,
+        flexShrink: 0 
+      }}>
         <Box
           sx={{
             flex: 1,
@@ -213,7 +228,14 @@ const ChatList = () => {
         </Box>
       </Box>
 
-      <Box sx={{ border: "1px solid #ccc", borderRadius: "12px", p: 2, bgcolor: "white" ,minHeight:600}} >
+      <Box sx={{ 
+        border: "1px solid #ccc", 
+        borderRadius: "12px", 
+        p: 2, 
+        bgcolor: "white",
+        flex: 1,
+        overflow: 'auto'
+      }} >
      
 
        
