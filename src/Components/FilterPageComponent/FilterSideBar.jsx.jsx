@@ -29,14 +29,14 @@ const FilterSidebar = ({ filters, setFilters }) => {
       }}
     >
 
-<TextField
+{/* <TextField
     fullWidth
     size="small"
     placeholder="Search services or keywords"
     value={filters.title || ""}
     onChange={(e) => handleChange("title", e.target.value)}
     sx={{ mb: 2 }}
-  />
+  /> */}
       {/* Price Range */}
       <Typography fontWeight="bold" mb={1} fontFamily="Inter">
         Price Range ($)

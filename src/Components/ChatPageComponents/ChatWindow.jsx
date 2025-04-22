@@ -13,7 +13,6 @@ import { useAuth } from "../../context/auth.context";
 import { useSearchParams } from "react-router-dom";
 import { useSocket } from "../../context/socket.context";
 import ImageViewModal from "../Modals/ImageViewerModal";
-import LazyLoad from "react-lazyload";
 import toast from "react-hot-toast";
 import { uploadImage } from "../../utils/upload";
 
@@ -281,13 +280,13 @@ const ChatWindow = () => {
           >
             {attachment && attachment.type?.includes("image") && (
               <Box mb={1}>
-                        <LazyLoad height={200} offset={100} once>
+                     
 
                 <img
                   src={attachment.url}
                   alt="attachment"
                   onClick={() => handleImageClick(attachment.url)}
-
+                  loading="lazy"
                   style={{
                     width: 200,
                     height:150,
@@ -295,7 +294,7 @@ const ChatWindow = () => {
                     borderRadius: 8,
                   }}
                 />
-                        </LazyLoad >
+                        
 
               </Box>
             )}

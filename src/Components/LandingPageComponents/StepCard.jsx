@@ -4,7 +4,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import homeimg from "../../assets/Png/homeimg.jfif";
 import homeimg2 from "../../assets/Png/homeimg2.jfif";
 import homeimg3 from "../../assets/Png/homeimg3.jfif";
-import LazyLoad from "react-lazyload";
+
 
 const steps = [
   {
@@ -55,12 +55,13 @@ const StepsCard = () => {
               zIndex: 1,
           }}
         >
-                  <LazyLoad height={200} offset={100} once>
+                 
 
          <Box
   component="img"
   src={step.image}
   alt={step.title}
+  loading="lazy"
   sx={{ 
     width: { xs: "90%", sm: "95%", md: "90%", lg: "85%" }, 
     height: { xs: "60%", sm: "65%", md: "70%", lg: "75%" }, 
@@ -69,7 +70,7 @@ const StepsCard = () => {
     borderRadius: 2 
   }} 
 />
-</LazyLoad >
+
 
 
 

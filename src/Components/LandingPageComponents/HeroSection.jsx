@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom"; // Import navigation hook
 import CarSVG from "../../assets/SVG/Carsvg.svg";
 import CarLight from "../../assets/SVG/carlight.svg";
 import colors from "../../Style/color";
-import LazyLoad from 'react-lazyload';
 
 
 const HeroSection = () => {
@@ -120,10 +119,10 @@ const HeroSection = () => {
           position: "relative",
         }}
       >
-                          <LazyLoad offset={100} once>
+                      
 
-        <img src={CarSVG} alt="Car Illustration" style={{ width: "100%" }} />
-        </LazyLoad >
+        <img src={CarSVG} loading="lazy" alt="Car Illustration" style={{ width: "100%" }} />
+   
 
 
 

@@ -28,8 +28,6 @@ import { useQueryClient } from "@tanstack/react-query";
 const MainNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showLocationInput, setShowLocationInput] = useState(false);
-  const [showSearchInput, setShowSearchInput] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef(null);
   const locationInputRef = useRef(null);
   
@@ -37,6 +35,7 @@ const MainNavbar = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const {authState, dispatch} = useAuth();
+  const showSearchInput = authState.searchOpen;
   const currentSelectedLocation = (authState.selectedLocation || authState.user?.location) || {"coordinates": [73.1128313, 33.5255503]};
   const queryClient = useQueryClient();
 
@@ -46,17 +45,26 @@ const MainNavbar = () => {
 
   const handleLocationClick = () => {
     setShowLocationInput(true);
-    setShowSearchInput(false);
+    dispatch({type: 'setSearchOpen', payload: false});
   };
 
   const handleSearchClick = () => {
-    setShowSearchInput(true);
+    if(!window.location.pathname.includes('search')) {
+      navigate('/search')
+    }
+    dispatch({type: 'setSearchOpen', payload: true});
     setShowLocationInput(false);
   };
 
+  const handleSearchNavigate = () => {
+    if(!window.location.pathname.includes('search')) {
+      navigate('/search')
+    }
+  }
+
   const closeAllInputs = () => {
     setShowLocationInput(false);
-    setShowSearchInput(false);
+    dispatch({type: 'setSearchOpen', payload: false});
   };
 
   const handleLocationChange = (location) => {
@@ -300,8 +308,9 @@ const MainNavbar = () => {
                   <Box
                     component="input"
                     placeholder="Search cars..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    value={authState.title}
+                    onClick={handleSearchNavigate}
+                    onChange={(e) => dispatch({type: 'updateTitle', payload: e.target.value})}
                     onKeyDown={handleSearchSubmit}
                     sx={{
                       border: "none",

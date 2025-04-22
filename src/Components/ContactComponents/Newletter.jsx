@@ -1,7 +1,19 @@
 import { Box, Typography, TextField, Button } from "@mui/material";
 import colors from "../../Style/color";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import {subscribeEmail} from "../../api/calls/auth";
 
 const NewsletterSection = () => {
+  const [email, setEmail] = useState();
+
+  const handleSubscribeClick = () => {
+    toast.promise(async () => {
+      await subscribeEmail(email);
+      setEmail('');
+    }, {loading: 'Subscribing', error: e => e.message, success: 'Subscribed to newsletter'})
+  }
+
   return (
     <Box
       sx={{
@@ -64,6 +76,8 @@ const NewsletterSection = () => {
         >
           <TextField
             placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             variant="outlined"
             sx={{
               width: { xs: "100%", md: 350 },
@@ -83,6 +97,7 @@ const NewsletterSection = () => {
             }}
           />
           <Button
+            onClick={handleSubscribeClick}
             variant="contained"
             sx={{
               backgroundColor: "white",

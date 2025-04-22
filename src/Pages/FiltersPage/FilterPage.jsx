@@ -41,7 +41,15 @@ const FilterPage = () => {
     });
 
     useEffect(() => {
-      if(Object.keys(filters).length > 0) {
+      const timeout = setTimeout(() => {
+        setFilters((prev) => ({ ...prev, title: authState.title }));
+      }, 300);
+
+      return () => clearTimeout(timeout);
+    }, [authState.title]);
+
+    useEffect(() => {
+      if(Object.keys(cleanedFilters).length > 0) {
         setSearchParams({page: 1});
         refetch();
       }

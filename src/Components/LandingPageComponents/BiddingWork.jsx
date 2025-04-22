@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Paper, useTheme, useMediaQuery } from "@mui/material";
 import RightIcon from "../../assets/SVG/biddingworkright.svg"; // Replace with actual SVG file
 import LeftIcon from "../../assets/SVG/biddingworkleft.svg"; // Replace with actual SVG file
-import LazyLoad from "react-lazyload";
+
 
 const BiddingWork = () => {
   const theme = useTheme();
@@ -46,14 +46,15 @@ const BiddingWork = () => {
       {/* Left SVG (Hidden on XS & SM screens) */}
       {!isSmallScreen && (
         <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <LazyLoad height={200} offset={100} once>
+        
 
           <img
             src={LeftIcon}
             alt="Left Icon"
+            loading="lazy"
             style={{ width: "100%", height: "100%" }}
           />
-          </LazyLoad>
+         
         </Box>
       )}
 
@@ -100,14 +101,15 @@ const BiddingWork = () => {
       {/* Right SVG (Hidden on XS & SM screens) */}
       {!isSmallScreen && (
         <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <LazyLoad height={200} offset={100} once>
+                
 
           <img
+          loading="lazy"
             src={RightIcon}
             alt="Right Icon"
             style={{ width: "100%", height: "100%" }}
           />
-                  </LazyLoad>
+                 
 
         </Box>
       )}

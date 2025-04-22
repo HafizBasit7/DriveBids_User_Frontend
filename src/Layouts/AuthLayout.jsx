@@ -3,7 +3,6 @@ import Logo from "../assets/SVG/Mainlogo.svg";
 import Carfront from "../assets/SVG/carfrontsvg.svg";
 import colors from "../Style/color";
 import { useNavigate } from "react-router-dom";
-import LazyLoad from "react-lazyload";
 
 const AuthLayout = ({ children }) => {
   const theme = useTheme();
@@ -77,14 +76,15 @@ const AuthLayout = ({ children }) => {
             overflow: "hidden",
           }}
         >
-                  <LazyLoad offset={100} once>
+       
 
           <img 
             src={Carfront} 
             alt="Car Front" 
+            loading="lazy"
             style={{ width: "100%", height: "auto", objectFit: "contain" }} 
           />
-                            </LazyLoad>
+                           
 
         </Box>
       )}

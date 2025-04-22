@@ -254,3 +254,28 @@ export const updateNotificationSettings = async (payload) => {
         throw e;
     }
 };
+
+export const subscribeEmail = async (email) => {
+    try {
+        const result = await apiClient.post('/auth/subscribeEmail', {email});
+        const resultData = result.data;
+
+        if(!resultData.status) {
+            throw {
+                name: 'app',
+                message: resultData.message,
+            };
+        }
+
+        return resultData; 
+    }
+    catch(e) {
+        if(e.response?.data) {
+            throw {
+                name: 'app',
+                ...e.response.data,
+            }
+        }
+        throw e;
+    }
+};
