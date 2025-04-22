@@ -93,6 +93,7 @@ const PricingBidBox = ({ text,onNext, value, onChange }) => {
       <Box display="flex" justifyContent="flex-end">
         <Button
           variant="contained"
+          disabled={!value}
           sx={{
             textTransform: "none",
             height: 35,
@@ -102,6 +103,15 @@ const PricingBidBox = ({ text,onNext, value, onChange }) => {
             fontWeight: 500,
             fontSize: 12,
             px: 3,
+            '&.Mui-disabled': {
+              backgroundColor: '#E0E0E0',
+              color: '#9E9E9E',
+              cursor: 'not-allowed'
+            },
+            '&:hover': {
+              backgroundColor: colors.buttoncolor,
+              opacity: 0.9
+            }
           }}
           onClick={onNext}
         >

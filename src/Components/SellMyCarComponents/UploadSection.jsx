@@ -182,6 +182,7 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
       <Box display="flex" justifyContent="flex-end">
         <Button
           variant="contained"
+          disabled={!currentSelectedImage}
           sx={{
             textTransform: "none",
             minWidth: "120px",
@@ -189,6 +190,15 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
             fontFamily: "Inter",
             mr: 4,
             backgroundColor: colors.buttoncolor,
+            '&.Mui-disabled': {
+              backgroundColor: '#E0E0E0',
+              color: '#9E9E9E',
+              cursor: 'not-allowed'
+            },
+            '&:hover': {
+              backgroundColor: colors.buttoncolor,
+              opacity: 0.9
+            }
           }}
           onClick={save ? saveImagesDraft : onNext}
         >

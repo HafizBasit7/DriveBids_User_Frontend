@@ -1,7 +1,6 @@
-import { Box, Typography, Radio, RadioGroup, FormControlLabel, Button, Paper } from "@mui/material";
-import { useState } from "react";
+import { Box, Typography, List, ListItem, ListItemText, Paper, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../../../Layouts/MainLayout";
+import MainLayout from "../../../Layouts/Mainlayout";
 import colors from "../../../Style/color";
 import { useCar } from "../../../context/car.context";
 
@@ -11,14 +10,14 @@ const CarTransmissionPage = () => {
   const navigate = useNavigate();
   const {carState, dispatch} = useCar();
     
-    function onCangeCarDetails (value) {
-      dispatch({
-        type: 'UPDATE_FIELD',
-        section: 'carDetails',
-        field: 'transmission',
-        value,
-      });
-    };
+  function onCangeCarDetails (value) {
+    dispatch({
+      type: 'UPDATE_FIELD',
+      section: 'carDetails',
+      field: 'transmission',
+      value,
+    });
+  };
 
   return (
     <MainLayout  title="Transmission"
@@ -26,11 +25,7 @@ const CarTransmissionPage = () => {
     buttonText="Back"
     onClick={() => navigate("../engine")}>
       <Box width="100%" >
-      
-
-        <Box  zIndex={2}>
-       
-
+        <Box zIndex={2}>
           <Typography
             variant="h4"
             fontWeight={600}
@@ -41,7 +36,6 @@ const CarTransmissionPage = () => {
             Step <span style={{ color: colors.buttoncolor }}>9</span> of 14
           </Typography>
 
-          {/* Transmission Form */}
           <Box
             component={Paper}
             elevation={3}
@@ -49,53 +43,76 @@ const CarTransmissionPage = () => {
               width: { xs: "90%", sm: "70%", md: "60%" },
               margin: "auto",
               mt: 4,
-              p: 4,
+              p: 3,
               borderRadius: 2,
+              backgroundColor: "white",
+              border: "1px solid #D9D9D9"
             }}
           >
-            <Typography fontWeight={600} sx={{ fontSize: 20, mb: 4, fontFamily: "Inter" }}>
-              What’s the transmission type of the car?
+            <Typography fontWeight={600} sx={{ fontSize: 18, mb: 3, fontFamily: "Inter" }}>
+              What's the transmission type of the car?
             </Typography>
 
-            <RadioGroup
-              value={carState.carDetails.transmission}
-              onChange={(e) => onCangeCarDetails(e.target.value)}
-            >
+            <List>
               {transmissionTypes.map((type) => (
-                <FormControlLabel
+                <ListItem
                   key={type}
-                  value={type}
-                  control={
-                    <Radio
-                      sx={{
-                        color: colors.buttoncolor,
-                        "&.Mui-checked": { color: colors.buttoncolor },
-                      }}
-                    />
-                  }
-                  label={type}
+                  button
+                  selected={carState.carDetails.transmission === type}
+                  onClick={() => onCangeCarDetails(type)}
                   sx={{
-                    fontFamily: "Inter",
-                    fontSize: 16,
                     mb: 1,
+                    borderRadius: 1,
+                    border: '1px solid',
+                    borderColor: carState.carDetails.transmission === type ? colors.buttoncolor : '#E0E0E0',
+                    transition: 'all 0.3s ease',
+                    '&.Mui-selected': {
+                      backgroundColor: `${colors.buttoncolor}10`,
+                      borderColor: colors.buttoncolor,
+                      '&:hover': {
+                        backgroundColor: `${colors.buttoncolor}20`,
+                      },
+                    },
+                    '&:hover': {
+                      backgroundColor: '#F5F5F5',
+                      borderColor: colors.buttoncolor,
+                    },
                   }}
-                />
+                >
+                  <ListItemText 
+                    primary={type}
+                    sx={{
+                      fontFamily: "Inter",
+                      fontSize: 16,
+                      '& .MuiListItemText-primary': {
+                        color: carState.carDetails.transmission === type ? colors.buttoncolor : '#333333',
+                        fontWeight: carState.carDetails.transmission === type ? 600 : 400,
+                      }
+                    }}
+                  />
+                </ListItem>
               ))}
-            </RadioGroup>
+            </List>
 
-            {/* Next Step Button */}
-            <Box display="flex" justifyContent="flex-end" mt={5}>
+            <Box display="flex" justifyContent="flex-end" mt={3}>
               <Button
                 variant="contained"
+                disabled={!carState.carDetails.transmission}
                 sx={{
                   textTransform: "none",
                   minWidth: 120,
-                  height: 40,
+                  height: "40px",
                   fontFamily: "Inter",
                   backgroundColor: colors.buttoncolor,
-                  "&:hover": {
-                    backgroundColor: colors.buttoncolor,
+                  '&.Mui-disabled': {
+                    backgroundColor: '#E0E0E0',
+                    color: '#9E9E9E',
+                    cursor: 'not-allowed'
                   },
+                  '&:hover': {
+                    backgroundColor: colors.buttoncolor,
+                    opacity: 0.9
+                  }
                 }}
                 onClick={() => navigate("../owner")}
               >

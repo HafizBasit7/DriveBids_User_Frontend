@@ -46,7 +46,7 @@ const CarFeatureBox = ({
         {title}
       </Typography>
 
-      <TextField
+      {/* <TextField
         fullWidth
         variant="outlined"
         placeholder={searchPlaceholder}
@@ -75,7 +75,7 @@ const CarFeatureBox = ({
             },
           },
         }}
-      />
+      /> */}
 
       <Grid container spacing={2}>
         {carBrands
@@ -104,11 +104,21 @@ const CarFeatureBox = ({
         <Button
           variant="contained"
           color="primary"
+          disabled={!value || value.length === 0}
           sx={{
             fontFamily: "Inter",
             minWidth: 120,
             height: 40,
             backgroundColor: colors.buttoncolor,
+            '&.Mui-disabled': {
+              backgroundColor: '#E0E0E0',
+              color: '#9E9E9E',
+              cursor: 'not-allowed'
+            },
+            '&:hover': {
+              backgroundColor: colors.buttoncolor,
+              opacity: 0.9
+            }
           }}
           onClick={onNext}
         >

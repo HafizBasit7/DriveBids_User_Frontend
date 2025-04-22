@@ -63,7 +63,7 @@ const VehicleRegistration = () => {
     </MainLayout>
   );
 
-  return <Outlet />;
+  // return <Outlet />;
 };
 
 export default VehicleRegistration;

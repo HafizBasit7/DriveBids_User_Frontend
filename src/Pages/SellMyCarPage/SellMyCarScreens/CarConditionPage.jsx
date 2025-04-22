@@ -1,5 +1,4 @@
-import { Box, Typography, Radio, RadioGroup, FormControlLabel, Button, Paper } from "@mui/material";
-import { useState } from "react";
+import { Box, Typography, List, ListItem, ListItemText, Paper, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
@@ -7,16 +6,16 @@ import { useCar } from "../../../context/car.context";
 
 const CarConditionPage = () => {
     const navigate = useNavigate();
-      const {carState, dispatch} = useCar();
+    const {carState, dispatch} = useCar();
       
-      function onCangeCarDetails (value) {
+    function onCangeCarDetails (value) {
         dispatch({
-          type: 'UPDATE_FIELD',
-          section: 'carDetails',
-          field: 'condition',
-          value,
+            type: 'UPDATE_FIELD',
+            section: 'carDetails',
+            field: 'condition',
+            value,
         });
-      };
+    };
 
     return (
         <MainLayout title="Condition"
@@ -24,11 +23,7 @@ const CarConditionPage = () => {
         buttonText="Back"
         onClick={() => navigate("../horse-power")}>
             <Box width="100%" >
-               
-
-                <Box  zIndex={2}>
-                    
-
+                <Box zIndex={2}>
                     <Typography
                         variant="h4"
                         fontWeight={600}
@@ -56,30 +51,66 @@ const CarConditionPage = () => {
                             Condition of your Car?
                         </Typography>
 
-                        <RadioGroup 
-                            value={carState.carDetails.condition} 
-                            onChange={(e) => onCangeCarDetails(e.target.value)}
-                        >
+                        <List>
                             {['Poor', 'Fair', 'Good', 'Excellent'].map((type) => (
-                                <FormControlLabel
+                                <ListItem
                                     key={type}
-                                    value={type}
-                                    control={<Radio sx={{ color: colors.buttoncolor }} />}
-                                    label={type}
-                                    sx={{ fontFamily: "Inter", fontSize: 16 }}
-                                />
+                                    button
+                                    selected={carState.carDetails.condition === type}
+                                    onClick={() => onCangeCarDetails(type)}
+                                    sx={{
+                                        mb: 1,
+                                        borderRadius: 1,
+                                        border: '1px solid',
+                                        borderColor: carState.carDetails.condition === type ? colors.buttoncolor : '#E0E0E0',
+                                        transition: 'all 0.3s ease',
+                                        '&.Mui-selected': {
+                                            backgroundColor: `${colors.buttoncolor}10`,
+                                            borderColor: colors.buttoncolor,
+                                            '&:hover': {
+                                                backgroundColor: `${colors.buttoncolor}20`,
+                                            },
+                                        },
+                                        '&:hover': {
+                                            backgroundColor: '#F5F5F5',
+                                            borderColor: colors.buttoncolor,
+                                        },
+                                    }}
+                                >
+                                    <ListItemText 
+                                        primary={type}
+                                        sx={{
+                                            fontFamily: "Inter",
+                                            fontSize: 16,
+                                            '& .MuiListItemText-primary': {
+                                                color: carState.carDetails.condition === type ? colors.buttoncolor : '#333333',
+                                                fontWeight: carState.carDetails.condition === type ? 600 : 400,
+                                            }
+                                        }}
+                                    />
+                                </ListItem>
                             ))}
-                        </RadioGroup>
+                        </List>
 
                         <Box display="flex" justifyContent="flex-end" mt={3}>
                             <Button
                                 variant="contained"
+                                disabled={!carState.carDetails.condition}
                                 sx={{
                                     textTransform: "none",
                                     minWidth: 120,
                                     height: "40px",
                                     fontFamily: "Inter",
                                     backgroundColor: colors.buttoncolor,
+                                    '&.Mui-disabled': {
+                                        backgroundColor: '#E0E0E0',
+                                        color: '#9E9E9E',
+                                        cursor: 'not-allowed'
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: colors.buttoncolor,
+                                        opacity: 0.9
+                                    }
                                 }}
                                 onClick={() => navigate("../accident")}
                             >

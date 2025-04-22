@@ -44,6 +44,12 @@ const CarCompanyPage = () => {
   let filteredMakes = isLoading ? [] : makes;
   if(searchInput && searchInput !== '') {
     filteredMakes = filteredMakes.filter(make => make.make_display.toLowerCase().includes(searchInput.toLowerCase()));
+  } else if (!carState.carDetails.make) {
+    // If no make is selected and no search, show only first 5 makes
+    filteredMakes = filteredMakes.slice(0, 8);
+  } else {
+    // If a make is selected and no search, show no makes
+    filteredMakes = [];
   }
 
   // useEffect(() => {
@@ -65,6 +71,8 @@ const CarCompanyPage = () => {
       field: 'variant',
       value: null,
     });
+    // Clear search input when a make is selected
+    setSearchInput('');
   };
 
   return (
@@ -100,7 +108,6 @@ const CarCompanyPage = () => {
           sx={{backgroundColor:"white"}}
           
         >
-
           <TextField
             fullWidth
             variant="outlined"
@@ -110,46 +117,141 @@ const CarCompanyPage = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Search sx={{ color: "#777" }} />
+                  <Search sx={{ color: "#333333" }} />
                 </InputAdornment>
               ),
               sx: {
-                height: 40,
-                fontSize: 14,
-                padding: "0 10px",
+                height: 45,
+                fontSize: 15,
+                padding: "0 12px",
                 borderRadius: 2,
                 marginBottom: 3,
-                backgroundColor: "#F3F3F3",
+                backgroundColor: "white",
+                '&:hover': {
+                  backgroundColor: "white",
+                },
               },
             }}
             sx={{
               fontFamily: "Inter",
               "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "#D9D9D9",
+                  borderWidth: "1.5px",
+                },
+                "&:hover fieldset": {
+                  borderColor: colors.buttoncolor,
+                  borderWidth: "1.5px",
+                },
                 "&.Mui-focused fieldset": {
                   borderColor: colors.buttoncolor,
+                  borderWidth: "1.5px",
+                },
+              },
+              "& .MuiInputBase-input": {
+                "&::placeholder": {
+                  color: "#666666",
+                  opacity: 1,
                 },
               },
             }}
           />
 
-          <RadioGroup
-              value={carState.carDetails.make}
-              onChange={(e) => onChangeCarMake(e.target.value)}
+          {carState.carDetails.make && !searchInput && (
+            <Box
+              sx={{
+                border: `2px solid ${colors.buttoncolor}`,
+                borderRadius: 2,
+                p: 1.5,
+                mb: 3,
+                backgroundColor: `${colors.buttoncolor}15`,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                minHeight: '60px',
+              }}
             >
-              <Grid container spacing={2}>
-                {isLoading ? <CircularProgress sx={{mx:'auto', my: 5}} size={24}/> : filteredMakes.map((brand, index) => (
+              <img
+                loading="lazy"
+                src={`https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/optimized/${carState.carDetails.make.toLowerCase()}.png`}
+                alt={`${carState.carDetails.make} logo`}
+                style={{ width: '35px', height: '35px', objectFit: 'contain' }}
+                onError={(e) => {
+                  e.target.src = 'https://www.shutterstock.com/image-vector/car-logo-icon-emblem-design-600nw-473088037.jpg';
+                }}
+              />
+              <Typography sx={{ fontFamily: "Inter", fontWeight: 500 }}>
+                {carState.carDetails.make}
+              </Typography>
+            </Box>
+          )}
+
+          <Box sx={{ 
+            height: '500px', 
+            overflowY: 'auto',
+            '&::-webkit-scrollbar': {
+              width: '8px',
+            },
+            '&::-webkit-scrollbar-track': {
+              background: '#f1f1f1',
+              borderRadius: '4px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#888',
+              borderRadius: '4px',
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+              background: '#555',
+            }
+          }}>
+            <Grid container spacing={2}>
+              {isLoading ? (
+                <CircularProgress sx={{ mx: 'auto', my: 5 }} size={24} />
+              ) : searchInput && filteredMakes.length === 0 ? (
+                <Box sx={{ width: '100%', textAlign: 'center', py: 4 }}>
+                  <Typography sx={{ fontFamily: "Inter", color: '#666' }}>
+                    No car makes found matching your search
+                  </Typography>
+                </Box>
+              ) : (
+                filteredMakes.map((brand, index) => (
                   <Grid item xs={12} sm={6} key={index}>
-                    <FormControlLabel
-                      value={brand.make_display}
-                      control={<Radio />}
-                      label={
-                        <Typography sx={{ fontFamily: "Inter" }}>{brand.make_display}</Typography>
-                      }
-                    />
+                    <Box
+                      onClick={() => onChangeCarMake(brand.make_display)}
+                      sx={{
+                        border: `2px solid ${carState.carDetails.make === brand.make_display ? colors.buttoncolor : '#D9D9D9'}`,
+                        borderRadius: 2,
+                        p: 1.5,
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        backgroundColor: carState.carDetails.make === brand.make_display ? `${colors.buttoncolor}15` : 'white',
+                        '&:hover': {
+                          borderColor: colors.buttoncolor,
+                          backgroundColor: `${colors.buttoncolor}15`,
+                        },
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1.5,
+                        minHeight: '60px',
+                      }}
+                    >
+                      <img
+                        src={`https://raw.githubusercontent.com/filippofilip95/car-logos-dataset/master/logos/optimized/${brand.make_display.toLowerCase()}.png`}
+                        alt={`${brand.make_display} logo`}
+                        style={{ width: '35px', height: '35px', objectFit: 'contain' }}
+                        onError={(e) => {
+                          e.target.src = 'https://www.shutterstock.com/image-vector/car-logo-icon-emblem-design-600nw-473088037.jpg';
+                        }}
+                      />
+                      <Typography sx={{ fontFamily: "Inter", fontWeight: 500 }}>
+                        {brand.make_display}
+                      </Typography>
+                    </Box>
                   </Grid>
-                ))}
-              </Grid>
-            </RadioGroup>
+                ))
+              )}
+            </Grid>
+          </Box>
 
            {/* {!isLoading && (
              <PaginationComponent 
@@ -166,11 +268,21 @@ const CarCompanyPage = () => {
               <Button
                 variant="contained"
                 color="primary"
+                disabled={!carState.carDetails.make}
                 sx={{
                   fontFamily: "Inter",
                   minWidth: 120,
                   height: 40,
                   backgroundColor: colors.buttoncolor,
+                  '&.Mui-disabled': {
+                    backgroundColor: '#E0E0E0',
+                    color: '#9E9E9E',
+                    cursor: 'not-allowed'
+                  },
+                  '&:hover': {
+                    backgroundColor: colors.buttoncolor,
+                    opacity: 0.9
+                  }
                 }}
                 onClick={() => {
                   if(carState.carDetails.make) {

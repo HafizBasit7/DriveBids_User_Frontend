@@ -4,7 +4,7 @@ import colors from "../../Style/color";
 
 const getAllYears = () => {
   const currentYear = new Date().getFullYear();
-  return Array.from({ length: currentYear - 1899 + 2 }, (_, i) => 1900 + i);
+  return Array.from({ length: currentYear - 1979 }, (_, i) => 1980 + i);
 };
 
 const YearSelectionBox = ({ onNext, value, onChange}) => {
@@ -116,12 +116,22 @@ const YearSelectionBox = ({ onNext, value, onChange}) => {
         <Box width="100%" display="flex" justifyContent="flex-end" p={2}>
           <Button
             variant="contained"
+            disabled={!value}
             sx={{
               fontFamily: "Inter",
               backgroundColor: colors.buttoncolor,
               textTransform: "none",
               minWidth: "120px",
               height: "40px",
+              '&.Mui-disabled': {
+                backgroundColor: '#E0E0E0',
+                color: '#9E9E9E',
+                cursor: 'not-allowed'
+              },
+              '&:hover': {
+                backgroundColor: colors.buttoncolor,
+                opacity: 0.9
+              }
             }}
             onClick={onNext}
           >

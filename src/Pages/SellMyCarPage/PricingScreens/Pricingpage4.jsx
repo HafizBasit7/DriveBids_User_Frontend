@@ -1,4 +1,4 @@
-import { Box, Typography, Radio, RadioGroup, FormControlLabel, Button, Paper } from "@mui/material";
+import { Box, Typography, Button, Paper, List, ListItem, ListItemText } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
@@ -87,36 +87,52 @@ const PricingPagePage4 = () => {
               Duration of Bid?
             </Typography>
 
-            <RadioGroup
-              value={carState.selectedWeek}
-              onChange={(e) => setDuration(e.target.value)}
-            >
+            <List>
               {entities.map((type) => (
-                <FormControlLabel
+                <ListItem
                   key={type.id}
-                  value={type.id}
-                  control={
-                    <Radio
-                      sx={{
-                        color: colors.buttoncolor,
-                        "&.Mui-checked": { color: colors.buttoncolor },
-                      }}
-                    />
-                  }
-                  label={type.name}
+                  button
+                  selected={carState.selectedWeek === type.id}
+                  onClick={() => setDuration(type.id)}
                   sx={{
-                    fontFamily: "Inter",
-                    fontSize: 16,
                     mb: 1,
+                    borderRadius: 1,
+                    border: '1px solid',
+                    borderColor: carState.selectedWeek === type.id ? colors.buttoncolor : '#E0E0E0',
+                    transition: 'all 0.3s ease',
+                    '&.Mui-selected': {
+                      backgroundColor: `${colors.buttoncolor}10`,
+                      borderColor: colors.buttoncolor,
+                      '&:hover': {
+                        backgroundColor: `${colors.buttoncolor}20`,
+                      },
+                    },
+                    '&:hover': {
+                      backgroundColor: '#F5F5F5',
+                      borderColor: colors.buttoncolor,
+                    },
                   }}
-                />
+                >
+                  <ListItemText 
+                    primary={type.name}
+                    sx={{
+                      fontFamily: "Inter",
+                      fontSize: 16,
+                      '& .MuiListItemText-primary': {
+                        color: carState.selectedWeek === type.id ? colors.buttoncolor : '#333333',
+                        fontWeight: carState.selectedWeek === type.id ? 600 : 400,
+                      }
+                    }}
+                  />
+                </ListItem>
               ))}
-            </RadioGroup>
+            </List>
 
             {/* Next Step Button */}
             <Box display="flex" justifyContent="flex-end" mt={5}>
               <Button
                 variant="contained"
+                disabled={!carState.selectedWeek}
                 sx={{
                   textTransform: "none",
                   minWidth: 120,
@@ -126,6 +142,11 @@ const PricingPagePage4 = () => {
                   "&:hover": {
                     backgroundColor: colors.buttoncolor,
                   },
+                  '&.Mui-disabled': {
+                    backgroundColor: '#E0E0E0',
+                    color: '#9E9E9E',
+                    cursor: 'not-allowed'
+                  }
                 }}
                 onClick={handleSavePricing}
               >

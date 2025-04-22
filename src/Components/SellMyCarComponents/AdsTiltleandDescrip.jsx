@@ -79,12 +79,22 @@ const AdTitleDescription = ({
       <Box display="flex" justifyContent="flex-end">
         <Button
           variant="contained"
+          disabled={!title || !description}
           sx={{
             minWidth: '120px',
             height: 40,
             textTransform: 'none',
             backgroundColor: colors.buttoncolor,
             fontFamily: "Inter",
+            '&.Mui-disabled': {
+              backgroundColor: '#E0E0E0',
+              color: '#9E9E9E',
+              cursor: 'not-allowed'
+            },
+            '&:hover': {
+              backgroundColor: colors.buttoncolor,
+              opacity: 0.9
+            }
           }}
           onClick={onFinish}
         >

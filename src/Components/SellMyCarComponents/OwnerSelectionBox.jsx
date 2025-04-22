@@ -115,12 +115,22 @@ const OwnerSelectionBox = ({ onNext, value, onChange }) => {
         <Box width="100%" display="flex" justifyContent="flex-end" p={2}>
           <Button
             variant="contained"
+            disabled={!value}
             sx={{
               fontFamily: "Inter",
               backgroundColor: colors.buttoncolor,
               textTransform: "none",
               minWidth: "120px",
               height: "40px",
+              '&.Mui-disabled': {
+                backgroundColor: '#E0E0E0',
+                color: '#9E9E9E',
+                cursor: 'not-allowed'
+              },
+              '&:hover': {
+                backgroundColor: colors.buttoncolor,
+                opacity: 0.9
+              }
             }}
             onClick={onNext}
           >

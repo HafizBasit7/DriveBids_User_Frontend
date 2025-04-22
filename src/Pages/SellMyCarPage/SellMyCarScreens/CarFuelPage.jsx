@@ -1,5 +1,4 @@
-import { Box, Typography, Radio, RadioGroup, FormControlLabel, Button, Paper } from "@mui/material";
-import { useState } from "react";
+import { Box, Typography, Button, Paper, List, ListItem, ListItemText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
@@ -7,7 +6,6 @@ import { useCar } from "../../../context/car.context";
 
 const CarFuelPage = () => {
     const navigate = useNavigate();
-    const [transmission, setTransmission] = useState("Petrol");
     const {carState, dispatch} = useCar();
       
     function onCangeCarDetails (value) {
@@ -57,30 +55,66 @@ const CarFuelPage = () => {
                             Fuel type the car runs on?
                         </Typography>
 
-                        <RadioGroup 
-                            value={carState.carDetails.fuel} 
-                            onChange={(e) => onCangeCarDetails(e.target.value)}
-                        >
+                        <List>
                             {['Petrol', 'Diesel', 'HI-Octane', 'Electric', 'Hybrid'].map((type) => (
-                                <FormControlLabel
+                                <ListItem
                                     key={type}
-                                    value={type}
-                                    control={<Radio sx={{ color: colors.buttoncolor }} />}
-                                    label={type}
-                                    sx={{ fontFamily: "Inter", fontSize: 16 }}
-                                />
+                                    button
+                                    selected={carState.carDetails.fuel === type}
+                                    onClick={() => onCangeCarDetails(type)}
+                                    sx={{
+                                        mb: 1,
+                                        borderRadius: 1,
+                                        border: '1px solid',
+                                        borderColor: carState.carDetails.fuel === type ? colors.buttoncolor : '#E0E0E0',
+                                        transition: 'all 0.3s ease',
+                                        '&.Mui-selected': {
+                                            backgroundColor: `${colors.buttoncolor}10`,
+                                            borderColor: colors.buttoncolor,
+                                            '&:hover': {
+                                                backgroundColor: `${colors.buttoncolor}20`,
+                                            },
+                                        },
+                                        '&:hover': {
+                                            backgroundColor: '#F5F5F5',
+                                            borderColor: colors.buttoncolor,
+                                        },
+                                    }}
+                                >
+                                    <ListItemText 
+                                        primary={type}
+                                        sx={{
+                                            fontFamily: "Inter",
+                                            fontSize: 16,
+                                            '& .MuiListItemText-primary': {
+                                                color: carState.carDetails.fuel === type ? colors.buttoncolor : '#333333',
+                                                fontWeight: carState.carDetails.fuel === type ? 600 : 400,
+                                            }
+                                        }}
+                                    />
+                                </ListItem>
                             ))}
-                        </RadioGroup>
+                        </List>
 
                         <Box display="flex" justifyContent="flex-end" mt={3}>
                             <Button
                                 variant="contained"
+                                disabled={!carState.carDetails.fuel}
                                 sx={{
                                     textTransform: "none",
                                     minWidth: 120,
                                     height: "40px",
                                     fontFamily: "Inter",
                                     backgroundColor: colors.buttoncolor,
+                                    '&.Mui-disabled': {
+                                        backgroundColor: '#E0E0E0',
+                                        color: '#9E9E9E',
+                                        cursor: 'not-allowed'
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: colors.buttoncolor,
+                                        opacity: 0.9
+                                    }
                                 }}
                                 onClick={() => navigate("../color")}
                             >

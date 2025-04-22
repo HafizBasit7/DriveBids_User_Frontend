@@ -97,7 +97,7 @@ const MainNavbar = () => {
   const navItems = [
     { label: "Home", path: "/home" },
     { label: "Browse Deals", path: "/search" },
-    { label: "Contact Us", path: "/contact" },
+    // { label: "Contact Us", path: "/contact" },
   ];
 
   const getLocationDisplayName = () => {

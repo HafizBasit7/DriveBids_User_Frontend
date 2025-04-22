@@ -1,21 +1,29 @@
 import {
   Box,
   TextField,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Typography,
   Button,
+  Grid,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import colors from "../../Style/color";
+import { useState } from "react";
 
 const FilterSidebar = ({ filters, setFilters }) => {
+  const [expandedAccordions, setExpandedAccordions] = useState({});
+
   const handleChange = (key, value) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+    setExpandedAccordions((prev) => ({
+      ...prev,
+      [panel]: isExpanded,
+    }));
   };
 
   return (
@@ -64,6 +72,20 @@ const FilterSidebar = ({ filters, setFilters }) => {
         <TextField fullWidth size="small" placeholder="Max" value={filters.maxHorsePower || ""} onChange={(e) => handleChange("maxHorsePower", e.target.value)} />
       </Box>
 
+      {/* Model Year */}
+      <Typography fontWeight="bold" mb={1} fontFamily="Inter">
+        Model Year
+      </Typography>
+      <Box sx={{ mb: 2 }}>
+        <TextField 
+          fullWidth 
+          size="small" 
+          placeholder="Enter year (e.g., 2020)" 
+          value={filters.model || ""} 
+          onChange={(e) => handleChange("model", e.target.value)} 
+        />
+      </Box>
+
       {/* Collapsible Filters */}
       {[
         {
@@ -74,61 +96,65 @@ const FilterSidebar = ({ filters, setFilters }) => {
         {
           key: "condition",
           title: "Condition",
-          options: ["New", "Used"],
-        },
-        {
-          key: "city",
-          title: "City",
-          options: ["New York, NY", "Los Angeles, CA", "Chicago, IL"],
+          options: ["Poor", "Fair", "Good", "Excellent"],
         },
         {
           key: "fuel",
           title: "Fuel Type",
-          options: ["Petrol", "Diesel", "Electric", "Hybrid"],
+          options: ['Petrol', 'Diesel', 'HI-Octane', 'Electric', 'Hybrid'],
         },
         {
           key: "color",
           title: "Color",
-          options: ["Red", "Blue", "Black", "White", "Gray"],
+          options: ['Red', 'Blue', 'Black', 'White', 'Gray', 'Silver', 'Green', 'Yellow', 'Orange', 'Brown', 'Purple', 'Beige', 'Gold', 'Bronze'],
         },
         {
           key: "transmission",
           title: "Transmission",
-          options: ["Automatic", "Manual"],
+          options: ['AGS', 'Manual', 'CVT', 'DCT', 'AMT', 'EV Single-Speed'],
         },
       ].map((filter, index) => (
-        <Accordion key={index} defaultExpanded>
+        <Accordion 
+          key={index} 
+          expanded={expandedAccordions[filter.key]}
+          onChange={handleAccordionChange(filter.key)}
+        >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography fontWeight="bold" fontFamily="Inter">
               {filter.title}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <RadioGroup
-              value={filters[filter.key] || ""}
-              onChange={(e) => handleChange(filter.key, e.target.value)}
-            >
+            <Grid container spacing={1}>
               {filter.options.map((option, idx) => (
-                <FormControlLabel
-                  key={idx}
-                  value={option}
-                  control={<Radio sx={{ color: colors.buttoncolor }} />}
-                  label={option}
-                  sx={{ display: "block", fontFamily: "Inter" }}
-                />
+                <Grid item xs={6} key={idx}>
+                  <Button
+                    fullWidth
+                    variant={filters[filter.key] === option ? "contained" : "outlined"}
+                    onClick={() => handleChange(filter.key, filters[filter.key] === option ? "" : option)}
+                    sx={{
+                      textTransform: "none",
+                      fontFamily: "Inter",
+                      color: filters[filter.key] === option ? "#fff" : '#000',
+                      backgroundColor: filters[filter.key] === option ? colors.buttoncolor : "transparent",
+                      borderColor: '#ccc',
+                      '&:hover': {
+                        backgroundColor: filters[filter.key] === option ? colors.buttoncolor : "rgba(0, 0, 0, 0.04)",
+                        borderColor: colors.buttoncolor,
+                      },
+                      minHeight: "36px",
+                      padding: "4px 8px",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    {option}
+                  </Button>
+                </Grid>
               ))}
-            </RadioGroup>
+            </Grid>
           </AccordionDetails>
         </Accordion>
       ))}
-
-      {/* Expand All Button */}
-      <Button
-        fullWidth
-        sx={{ mt: 2, textTransform: "none", fontFamily: "Inter", color: colors.buttoncolor }}
-      >
-        Expand all
-      </Button>
     </Box>
   );
 };

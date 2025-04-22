@@ -58,12 +58,22 @@ const AccidentDescription = () => {
           <Box display="flex" justifyContent="flex-end" width="100%" mt={3}>
             <Button
               variant="contained"
+              disabled={!carState.carDetails.accidentHistory}
               sx={{
                 fontFamily: "Inter",
                 borderRadius: 1.5,
                 width: 150,
                 py: 1,
                 backgroundColor: colors.buttoncolor,
+                '&.Mui-disabled': {
+                  backgroundColor: '#E0E0E0',
+                  color: '#9E9E9E',
+                  cursor: 'not-allowed'
+                },
+                '&:hover': {
+                  backgroundColor: colors.buttoncolor,
+                  opacity: 0.9
+                }
               }}
               onClick={() => navigate("../title")}
             >

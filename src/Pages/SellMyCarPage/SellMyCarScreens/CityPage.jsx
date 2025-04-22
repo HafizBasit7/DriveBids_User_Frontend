@@ -1,6 +1,6 @@
 import { Box, Button, InputAdornment, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../../../Layouts/MainLayout";
+import MainLayout from "../../../Layouts/Mainlayout";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
 import colors from "../../../Style/color";
 import { useCar } from "../../../context/car.context";
@@ -67,22 +67,40 @@ const CityPage = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Search sx={{ color: "#777" }} />
+                        <Search sx={{ color: "#333333" }} />
                       </InputAdornment>
                     ),
                     sx: {
-                      height: 40,
-                      fontSize: 14,
-                      padding: "0 10px",
+                      height: 45,
+                      fontSize: 15,
+                      padding: "0 12px",
                       borderRadius: 2,
-                      backgroundColor: "#F3F3F3",
+                      backgroundColor: "white",
+                      '&:hover': {
+                        backgroundColor: "white",
+                      },
                     },
                   }}
                   sx={{
                     fontFamily: "Inter",
                     "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "#D9D9D9",
+                        borderWidth: "1.5px",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: colors.buttoncolor,
+                        borderWidth: "1.5px",
+                      },
                       "&.Mui-focused fieldset": {
                         borderColor: colors.buttoncolor,
+                        borderWidth: "1.5px",
+                      },
+                    },
+                    "& .MuiInputBase-input": {
+                      "&::placeholder": {
+                        color: "#666666",
+                        opacity: 1,
                       },
                     },
                   }}
@@ -93,11 +111,21 @@ const CityPage = () => {
                 <Button
                   variant="contained"
                   color="primary"
+                  disabled={!carState.carDetails.location}
                   sx={{
                     fontFamily: "Inter",
                     minWidth: 120,
                     height: 40,
                     backgroundColor: colors.buttoncolor,
+                    '&.Mui-disabled': {
+                      backgroundColor: '#E0E0E0',
+                      color: '#9E9E9E',
+                      cursor: 'not-allowed'
+                    },
+                    '&:hover': {
+                      backgroundColor: colors.buttoncolor,
+                      opacity: 0.9
+                    }
                   }}
                   onClick={() => {navigate("../mileage")}}
                 >

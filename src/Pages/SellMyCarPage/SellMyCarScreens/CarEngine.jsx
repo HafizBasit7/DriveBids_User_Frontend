@@ -63,7 +63,7 @@ const CarEnginePage = () => {
             }}
           >
             <Typography fontWeight={600} textAlign="start" mb={6} sx={{ fontSize: 20, fontFamily: "Inter" }}>
-              What’s the engine size of the car?
+              What's the engine size of the car?
             </Typography>
 
             <Box px={3} mb={8}>
@@ -98,12 +98,22 @@ const CarEnginePage = () => {
             <Box display="flex" justifyContent="flex-end" mt={3}>
               <Button
                 variant="contained"
+                disabled={!carState.carDetails.engineSize}
                 sx={{
                   textTransform: "none",
                   minWidth: "120px",
                   height: "40px",
                   fontFamily: "Inter",
                   backgroundColor: colors.buttoncolor,
+                  '&.Mui-disabled': {
+                    backgroundColor: '#E0E0E0',
+                    color: '#9E9E9E',
+                    cursor: 'not-allowed'
+                  },
+                  '&:hover': {
+                    backgroundColor: colors.buttoncolor,
+                    opacity: 0.9
+                  }
                 }}
                 onClick={() => navigate("../transmission")}
               >
