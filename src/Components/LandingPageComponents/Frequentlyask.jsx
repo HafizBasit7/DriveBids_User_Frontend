@@ -10,34 +10,36 @@ import qimg3 from "../../assets/SVG/qimg3.svg";
 
 const faqs = [
   {
-    question: "Is it possible to sell my car with a financing option?",
-    answer:
-      "You don’t have to have paid off all of the finance already; but subject to your contract, there may be a minimum repayment before you have the right to sell.",
+    question: "How does DriveBidz work?",
+    answer: "Sellers list their cars with either a Buy It Now price or set up an auction. Buyers can bid or purchase instantly. Our platform supports verified users and secure payments for a seamless experience.",
   },
   {
-    question: "Does Drivebids allow me to sell my car for free?",
-    answer:
-      "Yes, listing your car on Drivebids is completely free. There are no hidden fees or charges to create a listing.",
+    question: "Is DriveBidz free to use?",
+    answer: "Creating an account and browsing is free. Listing fees and small success fees may apply for sellers — no hidden charges.",
   },
   {
-    question: "What’s the quickest way to sell my car?",
-    answer:
-      "The fastest way is to upload clear photos, set a competitive price, and respond quickly to offers from verified buyers on Drivebids.",
+    question: "How do I know if a car is legit?",
+    answer: "All listings are reviewed and sellers are ID-verified. Look for cars with full inspection reports and seller ratings.",
   },
   {
-    question: "What is the estimated value of my car?",
-    answer:
-      "You can use our built-in valuation tool to get an accurate estimate based on your car’s make, model, year, condition, and mileage.",
+    question: "What payment options are available?",
+    answer: "Buyers can use bank transfers or escrow (coming soon) for added security. Payment methods will be shown at checkout.",
   },
   {
-    question: "Who are the potential buyers for my car?",
-    answer:
-      "Your car listing will be visible to thousands of verified individual buyers and dealerships actively looking for vehicles like yours.",
+    question: "Can I retract or change a bid?",
+    answer: "Bids are binding. If you placed a bid in error, contact support immediately — we'll do our best to help.",
   },
   {
-    question: "What documents are required to sell my car?",
-    answer:
-      "You’ll typically need the car’s registration document (V5C), a valid ID, service history, and any outstanding finance details if applicable.",
+    question: "What documents do I need to list my car?",
+    answer: "You'll need your car's registration, a valid ID, and any service history or finance details.",
+  },
+  {
+    question: "How do I get paid?",
+    answer: "Once the sale is confirmed, payment is processed securely via our platform. You can choose your preferred payout method.",
+  },
+  {
+    question: "What's a reserve price and should I set one?",
+    answer: "A reserve price is the minimum you're willing to accept. It helps protect your sale but may limit bidders. We recommend setting it slightly below market value for best results.",
   },
 ];
 
@@ -57,7 +59,6 @@ const AskQuestions = () => {
           width: { xs: "90%", md: "75%" },
           mx: "auto",
           position: "relative",
-       
         }}
       >
         <Box sx={{ position: "relative", zIndex: 2 }}>
@@ -120,7 +121,7 @@ const AskQuestions = () => {
             position: "absolute",
             top: 0,
             right: 0,
-            width: { xs: 0, md: 220 },
+            width: { xs: 0, md: 280 },
             height: "auto",
             zIndex: 1,
           }}
@@ -131,8 +132,8 @@ const AskQuestions = () => {
           sx={{
             position: "absolute",
             bottom: 0,
-            right: { xs: 0, md: 270 },
-            width: { xs: 0, md: 220 },
+            right: { xs: 0, md: 320 },
+            width: { xs: 0, md: 280 },
             height: "auto",
             zIndex: 1,
           }}
@@ -144,12 +145,12 @@ const AskQuestions = () => {
           src={qimg1}
           sx={{
             position: "absolute",
-            top: "50px",
+            top: "70px",
             right: "130px",
-            width: { xs: 0, md: 165 },
+            width: { xs: 0, md: 200 },
             height: "auto",
             borderRadius: 2,
-            transform: "translateY(0)", // Prevents movement
+            transform: "translateY(0)",
             zIndex: 1,
           }}
         />
@@ -158,12 +159,12 @@ const AskQuestions = () => {
           src={qimg2}
           sx={{
             position: "absolute",
-            top: "170px",
+            top: "240px",
             right: "45px",
-            width: { xs: 0, md: 165 },
+            width: { xs: 0, md: 200 },
             height: "auto",
             borderRadius: 2,
-            transform: "translateY(0)", // Prevents movement
+            transform: "translateY(0)",
             zIndex: 1,
           }}
         />
@@ -174,10 +175,10 @@ const AskQuestions = () => {
             position: "absolute",
             bottom: "30px",
             right: "190px",
-            width: { xs: 0, md: 160 },
+            width: { xs: 0, md: 200 },
             height: "auto",
             borderRadius: 2,
-            transform: "translateY(0)", 
+            transform: "translateY(0)",
             zIndex: 1,
           }}
         />

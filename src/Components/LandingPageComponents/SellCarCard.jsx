@@ -58,7 +58,7 @@ const SellCarCard = () => {
           }}
          
         >
-          Ready to Sell Your Car Today?
+        Looking to Sell or Buy Today?
         </Typography>
         <Typography
           sx={{
@@ -71,8 +71,9 @@ const SellCarCard = () => {
 
         
         >
-          Join thousands of successful sellers and get the best deal for your car in just a few clicks!
-        </Typography>
+Join thousands of users already selling their cars
+or finding the perfect deal on their next ride – all
+in just a few clicks!        </Typography>
         <Box
   sx={{
     display: "flex",

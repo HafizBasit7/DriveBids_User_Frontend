@@ -52,24 +52,23 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Left Content */}
       <Box sx={{ maxWidth: 600, zIndex: 1, px: { xs: 3, md: 10 } }}>
         <Typography
-          variant="h2"
+          variant="h3"
           fontWeight="600"
           sx={{ color: "#000", mb: 2, fontFamily: "Outfit" }}
         >
-          Bid. Buy. Sell. <br /> The Road Starts Here!
+         Smarter car sales. Seamless deals. <br />  The road to better Starts now
+         
         </Typography>
 
         <Typography
-          sx={{ color: "#000000", mb: 3, fontFamily: "Inter", fontWeight: 500 }}
+          sx={{ color: "#000000", mb: 3, fontFamily: "Inter", fontWeight: 600,fontSize:"1.0rem" }}
         >
-          Discover the easiest way to auction your car or find the ride of your
-          dreams.
+         Smarter car deals for buyers and sellers — fast
+         listings, secure payments, no hassle.
         </Typography>
 
-        {/* Sign-Up Button with Navigation */}
         <Button
           variant="contained"
           onClick={() => navigate("/signup")}
@@ -90,7 +89,7 @@ const HeroSection = () => {
         </Button>
 
         {/* Log-In Navigation */}
-        <Typography sx={{ mt: 2 }}>
+        <Typography sx={{ mt: 2 ,fontWeight:500,fontSize:"1rem"}}>
           Already have an account?{" "}
           <Button
             onClick={() => navigate("/login")}

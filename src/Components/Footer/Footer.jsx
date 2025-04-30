@@ -17,12 +17,20 @@ const Footer = () => {
 
   const navItems = [
     { label: "HOME", path: "/home" },
-    { label: "MY ADS", path: "/my-ads" },
+    { label: "BROWSE CARS", path: "/browse" },
     { label: "MY BIDS", path: "/my-bids" },
- 
+    { label: "MY ADS", path: "/my-ads" },
+    { label: "START SELLING", path: "/start-selling" },
     { label: "CONTACT US", path: "/contact" },
-    { label: "STARTS SELLING", path: "/start-selling" },
+    { label: "FAQ / HELP CENTER", path: "/faq" },
   ];
+
+  const policyItems = [
+    { label: "PRIVACY POLICY", path: "/privacy" },
+    { label: "TERMS & CONDITIONS", path: "/terms" },
+    { label: "BUYER & SELLER PROTECTION", path: "/protection" },
+  ];
+
   return (
     <Box
       sx={{
@@ -64,59 +72,59 @@ const Footer = () => {
       /> */}
 
       <Box sx={{ position: "relative", zIndex: 1 }}>
+        {/* Navigation Links */}
         <Box
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            gap: 2,
+            gap: { xs: 1, md: 2 },
             mb: 4,
             width: "100%",
-            ml: 2,
-            
-
+            ml: { xs: 0, md: 2 },
+            justifyContent: { xs: "center", md: "flex-start" },
           }}
         >
-         {navItems.map((item, index) => (
-        <Typography
-          key={index}
-          variant="body2"
-          onClick={() => navigate(item.path)}
-          sx={{
-            cursor: "pointer",
-            width: "210px",
-            textAlign: "start",
-            fontWeight: 600,
-            fontSize: 12,
-            fontFamily: "Inter",
-            zIndex: 1,
-            color: "white",
-            "&:hover": {
-              textDecoration: "underline",
-            },
-          }}
-        >
-          {item.label}
-        </Typography>
-      ))}
+          {navItems.map((item, index) => (
+            <Typography
+              key={index}
+              variant="body2"
+              onClick={() => navigate(item.path)}
+              sx={{
+                cursor: "pointer",
+                width: { xs: "45%", md: "180px" },
+                textAlign: { xs: "center", md: "start" },
+                fontWeight: 600,
+                fontSize: 12,
+                fontFamily: "Inter",
+                zIndex: 1,
+                color: "white",
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              }}
+            >
+              {item.label}
+            </Typography>
+          ))}
         </Box>
 
-        <Box sx={{ width: "95%", height: "1px", backgroundColor: "#545454", mb: 3 }} />
+        <Box sx={{ width: "99%", height: "1px", backgroundColor: "#545454", mb: 3 }} />
 
+        {/* Main Content */}
         <Box
           sx={{
             display: "flex",
-            justifyContent: { xs: "center", md: "space-between" }, 
-            alignItems: "center",
+            justifyContent: { xs: "center", md: "space-between" },
+            alignItems: { xs: "center", md: "flex-start" },
             flexWrap: "wrap",
             width: "100%",
-            pr: { xs: 0, md: 4 }, 
-            textAlign: { xs: "center", md: "left" }, 
+            gap: { xs: 4, md: 0 },
           }}
         >
+          {/* Left Section */}
           <Box
             sx={{
-              width: { xs: "100%", md: "50%" }, 
-              p: 0.4,
+              width: { xs: "100%", md: "30%" },
               display: "flex",
               flexDirection: "column",
               alignItems: { xs: "center", md: "flex-start" },
@@ -125,95 +133,173 @@ const Footer = () => {
             <img
               src={logo}
               alt="DriveBidz"
-              style={{ width: 180, marginBottom: 10 }}
+              style={{ width: 200, marginBottom: 10 }}
             />
             <Typography
               sx={{
                 fontFamily: "Inter",
-                ml: { xs: 0, md: 1.5 },
                 fontSize: 13,
                 textAlign: { xs: "center", md: "left" },
+                mb: 2,
+                ml:3,
+                opacity:0.5,
+                maxWidth: "300px",
               }}
             >
-             Providing you the best  Real Time Bidding experince and selling your cars.
+              Experience seamless auctions, instant buys, and effortless car sales — all in one place.
             </Typography>
+
+            {/* Policy Links */}
+            <Box 
+              sx={{ 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: 1,
+                alignItems: { xs: "center", md: "flex-start" },
+              }}
+            >
+              {policyItems.map((item, index) => (
+                <Typography
+                  key={index}
+                  variant="body2"
+                  onClick={() => navigate(item.path)}
+                  sx={{
+                    cursor: "pointer",
+                    textAlign: { xs: "center", md: "left" },
+                    fontWeight: 600,
+                    fontSize: 12,
+                    fontFamily: "Inter",
+                    ml:3,
+                    opacity:0.5,
+                    color: "#fff",
+                    "&:hover": {
+                      textDecoration: "underline",
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  {item.label}
+                </Typography>
+              ))}
+            </Box>
           </Box>
 
           <Box
             sx={{
               width: { xs: "100%", md: "45%" },
-              textAlign: { xs: "center", md: "right" },
-              p: 2,
-              mr: { xs: 0, md: 0 },
+              display: "flex",
+              flexDirection: "column",
+              alignItems: { xs: "center", md: "flex-end" },
+              gap: 3,
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: { xs: "center", md: "flex-end" },
-                gap: 2,
-                mb: 3,
-               
-              }}
-            >
-              <Box
+            <Box>
+              <Typography
                 sx={{
-                  backgroundColor: "#1976d2",
-                  color: "white",
-                  px: 2,
-                  py: 1,
-                  borderRadius: 2,
-                  display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
                   fontFamily: "Inter",
-                  fontSize: 12,
+                  fontSize: 11,
+                  mb: 2,
+                  color: "white",
+                  width:270,
+                  opacity:0.5,
+                  textAlign: { xs: "center", md: "center" },
                 }}
               >
-                <AppleIcon sx={{ mr: 0.5 }} /> App Store
-              </Box>
+                Download the app and start bidding in seconds.
+              </Typography>
               <Box
                 sx={{
-                  backgroundColor: "#1976d2",
-                  color: "white",
-                  px: 2,
-                  py: 1,
-                  borderRadius: 2,
                   display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  fontFamily: "Inter",
-                  fontSize: 14,
-                  
+                  justifyContent: { xs: "center", md: "flex-end" },
+                  gap: 2,
                 }}
               >
-                <AndroidIcon sx={{ mr: 0.5 }} /> Google Play
+                <Box
+                  sx={{
+                    backgroundColor: "#1976d2",
+                    color: "white",
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    fontFamily: "Inter",
+                    fontSize: 12,
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      backgroundColor: "#1565c0",
+                    },
+                  }}
+                >
+                  <AppleIcon sx={{ mr: 0.5 }} /> App Store
+                </Box>
+                <Box
+                  sx={{
+                    backgroundColor: "#1976d2",
+                    color: "white",
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    fontFamily: "Inter",
+                    fontSize: 12,
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      backgroundColor: "#1565c0",
+                    },
+                  }}
+                >
+                  <AndroidIcon sx={{ mr: 0.5 }} /> Google Play
+                </Box>
               </Box>
             </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: { xs: "center", md: "flex-end" },
-                gap: 0.7,
-                
-                
-              }}
-            >
-              {[FacebookIcon, XIcon, LinkedInIcon, YouTubeIcon, InstagramIcon, TikTokIcon].map(
-                (Icon, index) => (
-                  <IconButton
-                    key={index}
-                    sx={{ color: index < 3 ? "white" : "white" }}
-                  >
-                    <Icon />
-                  </IconButton>
-                )
-              )}
+            {/* Social Media Section */}
+            <Box>
+            
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: { xs: "center", md: "flex-end" },
+                  gap: 0.7,
+                }}
+              >
+                {[FacebookIcon, XIcon, LinkedInIcon, YouTubeIcon, InstagramIcon, TikTokIcon].map(
+                  (Icon, index) => (
+                    <IconButton
+                      key={index}
+                      sx={{
+                        color: "white",
+                        backgroundColor: "rgba(255, 255, 255, 0.1)",
+                        "&:hover": {
+                          backgroundColor: "rgba(255, 255, 255, 0.2)",
+                        },
+                      }}
+                    >
+                      <Icon />
+                    </IconButton>
+                  )
+                )}
+              </Box>
+              <Typography
+                sx={{
+                  fontFamily: "Inter",
+                  fontSize: 11,
+                  mt: 2,
+                  color: "white",
+                  opacity: 0.5,
+                  textAlign: { xs: "center", md: "center" },
+                  width:270,
+                }}
+              >
+                Follow us for car deals, auction tips, and feature updates.
+              </Typography>
             </Box>
           </Box>
         </Box>
-
       </Box>
     </Box>
   );

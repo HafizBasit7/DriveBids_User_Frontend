@@ -1,89 +1,126 @@
-import React, { useState } from "react";
-import { useMediaQuery, useTheme } from "@mui/material";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import React from "react";
+import { Box, Typography, Grid } from "@mui/material";
 import SliderSellCard from "./SliderSellCard";
-import "./CardCarousel.css"; // import the CSS for disabling text selection
+import CarRepairIcon from '@mui/icons-material/CarRepair';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import SecurityIcon from '@mui/icons-material/Security';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import colors from "../../Style/color";
 
-const CardCarousel = () => {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const [autoPlay, setAutoPlay] = useState(true); // state to control autoplay
-
-  const carouselContainerStyle = {
-    maxWidth: isSmallScreen ? "100%" : "70%",
-    margin: "auto",
-    padding: "10px 0",
-    position: "relative",
-  };
-
-  const slideStyle = {
-    transition: "opacity 0.5s ease-in-out, transform 0.5s ease-in-out",
-  };
-
-  const selectedSlideStyle = {
-    ...slideStyle,
-    opacity: 1,
-    transform: "scale(1)",
-  };
-
-  const nonSelectedSlideStyle = {
-    ...slideStyle,
-    opacity: 0.4,
-    transform: "scale(0.9)",
-  };
+const FeatureGrid = () => {
+  const features = [
+    {
+      title: "Comprehensive Car Checks",
+      description: "Every listed vehicle undergoes multi-point inspection or comes with verified service history, giving you peace of mind before you place a bid.",
+      icon: <CarRepairIcon />
+    },
+    {
+      title: "Verified Sellers",
+      description: "Every seller is ID-verified to keep you protected.",
+      icon: <VerifiedUserIcon />
+    },
+    {
+      title: "Secure Payments",
+      description: "Encrypted payments methods. Auto-Bidding Tech - Set it and forget it — we'll bid smart on your behalf.",
+      icon: <SecurityIcon />
+    },
+    {
+      title: "Real Human Support",
+      description: "Talk to our team anytime — no bots.",
+      icon: <SupportAgentIcon />
+    },
+    {
+      title: "One Platform, Full Journey",
+      description: "Buy, sell, bid, and message — all from our platform.",
+      icon: <DashboardIcon />
+    }
+  ];
 
   return (
-    <div style={carouselContainerStyle} className="disable-select">
-      {/* Gradient overlays on left and right */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          width: "15%",
-          background: "linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0))",
-          zIndex: 2,
+    <Box sx={{ py: 4, backgroundColor: "#fff" }}>
+      <Typography
+        variant="h4"
+        sx={{
+          textAlign: "center",
+          mb: 1,
+          fontWeight: 600,
+          color: "#000",
+          fontFamily: "Outfit",
+          fontSize: { xs: 24, md: 34 },
         }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          right: 0,
-          width: "15%",
-          background: "linear-gradient(to left, rgba(255,255,255,0.8), rgba(255,255,255,0))",
-          zIndex: 2,
-        }}
-      />
-
-      <Carousel
-        showArrows={true}
-        infiniteLoop={true}
-        autoPlay={autoPlay}
-        interval={2000}
-        showThumbs={false}
-        showStatus={false}
-        showIndicators={false}
-        centerMode={true}
-        centerSlidePercentage={isSmallScreen ? 80 : 50}
-        emulateTouch={true}
-        onClickItem={() => setAutoPlay(false)} // Stop autoplay on click
-        renderItem={(item, props) => (
-          <div style={props.isSelected ? selectedSlideStyle : nonSelectedSlideStyle}>
-            {item}
-          </div>
-        )}
       >
-        <SliderSellCard />
-        <SliderSellCard />
-        <SliderSellCard />
-        <SliderSellCard />
-      </Carousel>
-    </div>
+        Why DriveBidz?
+      </Typography>
+      <Typography
+        variant="h6"
+        sx={{
+          textAlign: "center",
+          mb: 2,
+          color: "#666",
+          fontFamily: "Inter",
+          fontSize: { xs: 16, md: 18 },
+        }}
+      >
+        Trusted, Transparent, and Built Around You
+      </Typography>
+      <Typography
+        variant="subtitle1"
+        sx={{
+          textAlign: "center",
+          mb: 4,
+          color: "#666",
+          fontFamily: "Inter",
+          fontSize: { xs: 14, md: 15 },
+        }}
+      >
+        We&apos;re not just another car platform — here&apos;s why thousands of users trust us.
+      </Typography>
+
+      <Box 
+        sx={{ 
+          maxWidth: "1000px",
+          margin: "0 auto",
+          px: { xs: 2, sm: 3, md: 4 }
+        }}
+      >
+        {/* First row with 3 cards */}
+        <Grid container spacing={3} sx={{ mb: 3 }}>
+          {features.slice(0, 3).map((feature, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <SliderSellCard
+                title={feature.title}
+                description={feature.description}
+                icon={feature.icon}
+              />
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Second row with 2 centered cards */}
+        <Grid 
+          container 
+          spacing={3} 
+          sx={{ 
+            justifyContent: "center",
+            "& > .MuiGrid-item": {
+              maxWidth: { xs: "100%", sm: "calc(50% - 12px)", md: "calc(33.33% - 12px)" }
+            }
+          }}
+        >
+          {features.slice(3).map((feature, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index + 3}>
+              <SliderSellCard
+                title={feature.title}
+                description={feature.description}
+                icon={feature.icon}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Box>
   );
 };
 
-export default CardCarousel;
+export default FeatureGrid;

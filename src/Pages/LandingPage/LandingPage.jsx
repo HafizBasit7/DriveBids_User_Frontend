@@ -8,6 +8,7 @@ import BloggerCard from "../../Components/LandingPageComponents/BloggerCard";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BiddingWork from "../../Components/LandingPageComponents/BiddingWork";
+import TransparencySection from "../../Components/LandingPageComponents/TransparencySection";
 import AskQuestions from "../../Components/LandingPageComponents/Frequentlyask";
 import colors from "../../Style/color";
 import Footer from "../../Components/Footer/Footer";
@@ -107,7 +108,8 @@ const LandingPage = () => {
             zIndex: 1,
           }}
         >
-          Sign up now to buy and sell cars with ease!
+Where Cars Meet Their Match. Whether You're
+Buying or Selling – It's All Here.
         </Typography>
       </Box>
 
@@ -160,8 +162,8 @@ const LandingPage = () => {
           fontWeight="bold"
           sx={{ color: "#000", mb: 1, fontFamily: "Outfit" }}
         >
-          See what Drivebidz’s users are saying
-        </Typography>
+Hear From Real Buyers & Sellers
+</Typography>
         <Typography
           sx={{
             color: "#555",
@@ -171,8 +173,11 @@ const LandingPage = () => {
             fontSize: 14,
           }}
         >
-          See how real users sold their cars easily and successfully on our
-          platform.
+          Success stories from drivers who listed, bid, and
+bought with confidence.
+Make the reviews look genuine and from both
+buyers and sellers.
+
         </Typography>
 
         <Box
@@ -220,7 +225,7 @@ const LandingPage = () => {
         </Box>
       </Box>
 
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -251,9 +256,54 @@ const LandingPage = () => {
           See how real users sold their cars easily and successfully on our
           platform.
         </Typography>
-      </Box>
+      </Box> */}
       <Box sx={{ width: "100%" }}>
         <CardCarousel />
+      </Box>
+
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          pt: 3,
+
+          width: "100%",
+          gap: 1,
+        }}
+        ref={howItWorksRef}
+      >
+        <Typography
+          
+          fontWeight="bold"
+          sx={{ color: "#000", mb: 1, fontFamily: "Outfit",fontSize:25 }}
+        >
+         At DriveBidz, transparency isn't optional  <br></br> it's built into every listing.
+        </Typography>
+        <Typography
+          sx={{
+            color: "#555",
+            fontFamily: "Inter",
+            fontWeight: 400,
+            maxWidth: "600px",
+            fontSize: 14,
+          }}
+        >
+When sellers upload a vehicle, they are required to complete:        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          py: 1,
+        }}
+      >
+        <TransparencySection />
       </Box>
       <Box
         sx={{
@@ -273,7 +323,7 @@ const LandingPage = () => {
           fontWeight="bold"
           sx={{ color: "#000", mb: 1, fontFamily: "Outfit" }}
         >
-          How Our Biding Works
+          How Our Bidding Works
         </Typography>
         <Typography
           sx={{
@@ -295,10 +345,11 @@ const LandingPage = () => {
           width: "100%",
           py: 5,
         }}
-       
       >
         <BiddingWork />
       </Box>
+
+    
 
       <Box
         sx={{

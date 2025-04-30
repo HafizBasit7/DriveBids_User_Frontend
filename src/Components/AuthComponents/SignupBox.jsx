@@ -139,78 +139,115 @@ const Signup = () => {
         zIndex: 1,
       }}
     >
-    <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
-  <ToggleButtonGroup
-    value={role}
-    exclusive
-    onChange={(event, newRole) => {
-      if (newRole !== null) setRole(newRole);
-    }}
-    sx={{
-      width: "80%",
-      display: "flex",
-      justifyContent: "center",
-      mt: 1,
-    }}
-  >
-    <ToggleButton
-      value="Individual"
-      sx={{
-        flex: 1,
-        width: "100%", // Ensures full width for better clicking
-        fontSize: 14,
-        textTransform: "none",
-        borderRadius: 2,
-        px: 2, // Increased padding for a larger click area
-        py: 1.5, // More height for better UI
-        bgcolor: "#fff",
-        fontFamily: "Inter",
-        color: "#000",
-        "&.Mui-selected": {
-          bgcolor: colors.buttoncolor,
-          color: "#fff",
-          "&:hover": {
-            bgcolor: colors.buttoncolor,
-          },
-        },
-      }}
-    >
-      Individual
-    </ToggleButton>
+    <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+      <ToggleButtonGroup
+        value={role}
+        exclusive
+        onChange={(event, newRole) => {
+          if (newRole !== null) setRole(newRole);
+        }}
+        sx={{
+          width: "auto",
+          display: "flex",
+          justifyContent: "center",
+          mt: 1,
+          gap: 0,
+          p: 0.5,
+          bgcolor: "#fff",
+          borderRadius: 1.5,
+          position: "relative",
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: "1px",
+            height: "70%",
+            backgroundColor: "#E0E0E0",
+            transform: "translate(-50%, -50%)",
+            zIndex: 1,
+          }
+        }}
+      >
+        <ToggleButton
+          value="Individual"
+          sx={{
+            minWidth: { xs: "100px", sm: "110px" },
+            fontSize: { xs: 12, sm: 13 },
+            textTransform: "none",
+            borderRadius: "1px 0 0 1px",
+            px: { xs: 1.5, sm: 2 },
+            py: { xs: 0.8, sm: 1 },
+            bgcolor: "#fff",
+            borderRadius: 2,
+            fontFamily: "Inter",
+            color: "#000",
+            transition: "all 0.2s ease",
+            borderRight: "none",
+            "&:hover": {
+              bgcolor: "#fff",
+              transform: "translateY(-1px)",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+            },
+            "&.Mui-selected": {
+              bgcolor: colors.buttoncolor,
+              color: "#fff",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+              "&:hover": {
+                bgcolor: colors.buttoncolor,
+                transform: "translateY(-1px)",
+              },
+            },
+          }}
+        >
+          Individual
+        </ToggleButton>
 
-    <ToggleButton
-      value="Trader"
-      sx={{
-        flex: 1,
-        width: "100%", // Same as above
-        fontSize: 14,
-        textTransform: "none",
-        borderRadius: 2,
-        fontFamily: "Inter",
-        px: 2, // Increased padding
-        py: 1.5, // Better click target
-        bgcolor: "#fff",
-        color: "#000",
-        "&.Mui-selected": {
-          bgcolor: colors.buttoncolor,
-          color: "#fff",
-          "&:hover": {
-            bgcolor: colors.buttoncolor,
-          },
-        },
-      }}
-    >
-      Trader
-    </ToggleButton>
-  </ToggleButtonGroup>
-</Box>
+        <ToggleButton
+          value="Trader"
+          sx={{
+            minWidth: { xs: "100px", sm: "110px" },
+            fontSize: { xs: 12, sm: 13 },
+            textTransform: "none",
+            borderRadius: "0 1px 1px 0",
+            fontFamily: "Inter",
+            px: { xs: 1.5, sm: 2 },
+            py: { xs: 0.8, sm: 1 },
+            bgcolor: "#fff",
+            color: "#000",
+            borderRadius: 2,
+
+            transition: "all 0.2s ease",
+            borderLeft: "none",
+            "&:hover": {
+              bgcolor: "#fff",
+              transform: "translateY(-1px)",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+            },
+            "&.Mui-selected": {
+              bgcolor: colors.buttoncolor,
+              color: "#fff",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+              "&:hover": {
+                bgcolor: colors.buttoncolor,
+                transform: "translateY(-1px)",
+              },
+            },
+          }}
+        >
+          Trader
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </Box>
 
 
       <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 27, textAlign: "start" }}>
-        Create An Account
+        {role === "Individual" ? "Private Account" : "Business Account"}
       </Typography>
       <Typography color="textSecondary" sx={{ mb: 2, fontFamily: "Inter", fontSize: 11, fontWeight: 350, textAlign: "start" }}>
-        Sign up to enjoy the features of DriveBidz
+        {role === "Individual" 
+          ? "Buy or sell cars for personal use." 
+          : "List and manage cars as a dealer or professional trader."}
       </Typography>
       
       <Box sx={{ mb: 2 }}>
@@ -366,72 +403,65 @@ const Signup = () => {
       </Box>
 
       <Box sx={{ mb: 2, display: "flex", gap: 1 }}>
-  <FormControl sx={{ minWidth: 80, width: "auto" }}>
-    <InputLabel
-      id="country-code-label"
-      sx={{
-        color: "#888",
-        "&.Mui-focused": { color: colors.buttoncolor },
-      }}
-    >
-      {
-        countryCodes.find((item) => item.code === country)?.dial_code || "+971"
-      }
-    </InputLabel>
+        <FormControl sx={{ minWidth: 100, width: "auto" }}>
+          <Select
+            value={country}
+            disabled={loading}
+            onChange={(e) => setCountry(e.target.value)}
+            sx={{
+              height: 50,
+              borderRadius: 2,
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ccc" },
+              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
+              "& .MuiSelect-select": {
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                minWidth: "80px",
+              }
+            }}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  maxHeight: 300,
+                  "& .MuiMenuItem-root": {
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    minWidth: "120px",
+                  }
+                },
+              },
+            }}
+          >
+            {countryCodes.map((item) => (
+              <MenuItem key={item.code} value={item.dial_code}>
+                {item.code} {item.dial_code}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-    <Select
-      labelId="country-code-label"
-      id="country-code-select"
-      value={country}
-      disabled={loading}
-      onChange={(e) => setCountry(e.target.value)}
-      label="Code"
-      renderValue={(selected) => selected} // Show only country code like PK, AUS, etc.
-      sx={{
-        height: 50,
-        borderRadius: 2,
-        "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ccc" },
-        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
-        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
-      }}
-      MenuProps={{
-        PaperProps: {
-          sx: {
-            maxHeight: 5 * 38,
-            overflowY: "auto",
-            "&::-webkit-scrollbar": { width: 0 },
-            "&::-webkit-scrollbar-thumb": { backgroundColor: "transparent" },
-          },
-        },
-      }}
-    >
-      {countryCodes.map((item) => (
-        <MenuItem key={item.code} value={item.dial_code}>
-          {item.code} ({item.dial_code})
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-
-  <TextField
-    label="Phone Number"
-    disabled={loading}
-    fullWidth
-    value={phone}
-    onChange={(e) => setPhone(e.target.value)}
-    sx={{
-      "& .MuiOutlinedInput-root": {
-        height: 50,
-        borderRadius: 2,
-        "& fieldset": { borderColor: "#ccc" },
-        "&:hover fieldset": { borderColor: "#2F61BF" },
-        "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
-      },
-      "& .MuiInputLabel-root": { color: "#888" },
-      "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor },
-    }}
-  />
-</Box>
+        <TextField
+          label="Phone Number"
+          disabled={loading}
+          fullWidth
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              height: 50,
+              borderRadius: 2,
+              "& fieldset": { borderColor: "#ccc" },
+              "&:hover fieldset": { borderColor: "#2F61BF" },
+              "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+            },
+            "& .MuiInputLabel-root": { color: "#888" },
+            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor },
+          }}
+        />
+      </Box>
 
       <Box sx={{ mb: 2 }}>
         <LocationInput value={location?.name} handleChange={(location) => setLocation(location)}/>
