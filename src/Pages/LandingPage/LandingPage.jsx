@@ -142,7 +142,7 @@ Buying or Selling – It's All Here.
           mx:"auto"
         }}
       >
-        <SellCarCard />
+        <SellCarCard  isLandingPage={true}/>
       </Box>
 
       <Box

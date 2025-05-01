@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { Box, Typography, Button } from "@mui/material";
 import SellCarImage from "../../assets/Png/sellcarimg.png"; // Replace with actual image path
 import colors from "../../Style/color";
@@ -7,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const SellCarCard = () => {
+const SellCarCard = ({isLandingPage}) => {
   const navigate =useNavigate()
   return (
     <Box
@@ -74,40 +75,111 @@ const SellCarCard = () => {
 Join thousands of users already selling their cars
 or finding the perfect deal on their next ride – all
 in just a few clicks!        </Typography>
-        <Box
-  sx={{
-    display: "flex",
-    justifyContent: { xs: "center", sm: "center", md: "flex-start" }, // Center on xs & sm, left on md+
-  }}
->
-  <Button
-    variant="contained"
-    sx={{
-      backgroundColor: "#2F61BF",
-      color: "#fff",
-      px: 2,
-      py: 1.5,
-      borderRadius: "5px",
-      fontWeight:600,
-      fontFamily: "Inter",
-      display: "flex",
-      alignItems: "center",
-      gap: 1, // Spacing between text and icon
-      "&:hover": { backgroundColor: "#1D4FB3" },
-      fontSize: 13,
-      mt:1
-    }}
-    onClick={() => navigate("/ad")}
-  >
-    Start Selling Now  
-    <Box 
-      component="img"
-      src={rigtharrow} 
-      alt="Right Arrow"
-      sx={{ width: 16, height: 16, ml: 0.5 }} // Adjust size & spacing
-    />
-  </Button>
-</Box>
+        {!isLandingPage ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: { xs: "center", sm: "center", md: "flex-start" },
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#2F61BF",
+                color: "#fff",
+                px: 2,
+                py: 1.5,
+                borderRadius: "5px",
+                fontWeight: 600,
+                fontFamily: "Inter",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                "&:hover": { backgroundColor: "#1D4FB3" },
+                fontSize: 13,
+                mt: 1
+              }}
+              onClick={() => navigate("/ad")}
+            >
+              Start Selling Now  
+              <Box 
+                component="img"
+                src={rigtharrow} 
+                alt="Right Arrow"
+                sx={{ width: 16, height: 16, ml: 0.5 }}
+              />
+            </Button>
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              justifyContent: "flex-start",
+              gap: 2,
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#2F61BF",
+                color: "#fff",
+                px: 2,
+                py: 1,
+                borderRadius: "5px",
+                fontWeight: 600,
+                fontFamily: "Inter",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                "&:hover": { backgroundColor: "#1D4FB3" },
+                fontSize: 13,
+                mt: 1,
+                width: "auto",
+                minWidth: "auto"
+              }}
+              onClick={() => navigate("/ad")}
+            >
+              Start Selling Now  
+              <Box 
+                component="img"
+                src={rigtharrow} 
+                alt="Right Arrow"
+                sx={{ width: 16, height: 16, ml: 0.5 }}
+              />
+            </Button>
+            
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#2F61BF",
+                color: "#fff",
+                px: 2,
+                py: 1,
+                borderRadius: "5px",
+                fontWeight: 600,
+                fontFamily: "Inter",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                "&:hover": { backgroundColor: "#1D4FB3" },
+                fontSize: 13,
+                mt: 1,
+                width: "auto",
+                minWidth: "auto"
+              }}
+              onClick={() => navigate("/find-ride")}
+            >
+              Find a Ride
+              <Box 
+                component="img"
+                src={rigtharrow} 
+                alt="Right Arrow"
+                sx={{ width: 16, height: 16, ml: 0.5 }}
+              />
+            </Button>
+          </Box>
+        )}
 
 
       </Box>
@@ -138,6 +210,10 @@ in just a few clicks!        </Typography>
 
     </Box>
   );
+};
+
+SellCarCard.propTypes = {
+  isLandingPage: PropTypes.bool
 };
 
 export default SellCarCard;
