@@ -69,7 +69,7 @@ const CompletedDeals = () => {
         gap: 4, 
         justifyContent: { xs: "center", lg: "start" } 
       }}>
-        {isLoading ? <SkeletonLoader count={3}/> : completedDeals?.length < 1 ? <EmptyPlaceHolder/> : completedDeals?.map((deal, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : completedDeals?.length < 1 ? <Box sx={{ width: "100%", display: "flex", justifyContent: "center",height:300 }}><EmptyPlaceHolder/></Box> : completedDeals?.map((deal, index) => (
           <CompletedDealsCard 
             key={index} 
             ad={deal.car}

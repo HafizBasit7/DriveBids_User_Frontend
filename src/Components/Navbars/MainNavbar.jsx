@@ -223,7 +223,6 @@ const MainNavbar = () => {
                 </Box>
               )}
 
-              {/* Expanded Location Input */}
               <Fade in={showLocationInput}>
                 <Box sx={{ position: "relative", display: showLocationInput ? "block" : "none" }}>
                   <LocationInput handleChange={handleLocationChange}>

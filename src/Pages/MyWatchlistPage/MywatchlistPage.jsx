@@ -48,7 +48,7 @@ const MyWatchPage = () => {
         flexWrap: "wrap",
         justifyContent: { xs: "center", lg: "start" } 
       }}>
-        {isLoading ? <SkeletonLoader count={3}/> : watchList?.length < 1 ? <EmptyPlaceHolder/> : watchList?.map((item, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : watchList?.length < 1 ? <Box sx={{ width: "100%", display: "flex", justifyContent: "center",height:300 }}><EmptyPlaceHolder/></Box>  : watchList?.map((item, index) => (
           <CarCard 
             key={index} 
             carsInWatchList={carsInWatchList} 

@@ -42,7 +42,7 @@ const MyAdsPage = () => {
     onClick={() => navigate("/home")}
     isnotSellMyCar ={true}>
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap" ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {isLoading ? <SkeletonLoader count={3}/> : cars?.length < 1 ? <EmptyPlaceHolder/> : cars?.map((car, index) => (
+        {isLoading ? <SkeletonLoader count={3}/> : cars?.length < 1 ? <Box sx={{ width: "100%", display: "flex", justifyContent: "center",height:300 }}><EmptyPlaceHolder/></Box> : cars?.map((car, index) => (
            <CarCard key={index} carsInWatchList={carsInWatchList} ad={car} />
         ))}
       </Box>
