@@ -274,7 +274,7 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals 
           endIcon={<img src={cardarrow} alt="arrow" width={20} height={20} />}
           onClick={()=>navigate(`/car/${ad._id}`)}
         >
-          View Ad
+          View Auction
         </Button>
       </CardContent>
 

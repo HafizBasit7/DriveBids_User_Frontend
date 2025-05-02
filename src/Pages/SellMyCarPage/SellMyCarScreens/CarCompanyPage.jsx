@@ -106,6 +106,8 @@ const CarCompanyPage = () => {
           border="1px solid #D9D9D9"
           borderRadius={2}
           sx={{backgroundColor:"white"}}
+         
+
           
         >
           <TextField
@@ -187,7 +189,7 @@ const CarCompanyPage = () => {
           )}
 
           <Box sx={{ 
-            height: '500px', 
+            height: carState.carDetails.make ? '200px' : '400px', 
             overflowY: 'auto',
             '&::-webkit-scrollbar': {
               width: '8px',

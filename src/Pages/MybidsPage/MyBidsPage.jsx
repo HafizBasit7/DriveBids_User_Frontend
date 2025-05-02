@@ -84,7 +84,7 @@ const MyBidsPage = () => {
           />
         ))}
         {bids?.length < 1 && (
-          <EmptyPlaceHolder/>
+         <Box sx={{ width: "100%", display: "flex", justifyContent: "center",height:300 }}><EmptyPlaceHolder/></Box> 
         )}
       </Box>
 

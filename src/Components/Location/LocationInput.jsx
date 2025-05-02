@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
-import { TextField } from "@mui/material";
+import {  TextField } from "@mui/material";
 import colors from "../../Style/color";
+import LocationLoader from "../Loader/locationloader";
 
 export default function LocationInput ({loading, value, handleChange, placeholder, children}) {
     const inputRef = useRef();
@@ -25,8 +26,11 @@ export default function LocationInput ({loading, value, handleChange, placeholde
         <LoadScript
             googleMapsApiKey="AIzaSyC2oZNWzhuw6yjImkFYSvZ3miShktBq0gI"
             libraries={["places"]}
+            loadingElement={ <LocationLoader />}
+
         >
             <StandaloneSearchBox
+            
                 onLoad={ref => (inputRef.current = ref)}
                 onPlacesChanged={handlePlaceChanged}
             >

@@ -71,8 +71,19 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
   };
 
   const handleSave = () => {
-    if(!selectedImage || !selected || !damageDescription) {
-      return null;
+    if (!selectedImage) {
+      toast.error('Please upload an image of the damage');
+      return;
+    }
+
+    if (!selected) {
+      toast.error('Please select a damage type');
+      return;
+    }
+
+    if (!damageDescription) {
+      toast.error('Please provide a damage description');
+      return;
     }
 
     setShowDamageForm(false);
