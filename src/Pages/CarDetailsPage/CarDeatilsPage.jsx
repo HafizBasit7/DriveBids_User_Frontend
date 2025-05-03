@@ -27,8 +27,8 @@ import { useSocket } from "../../context/socket.context";
 
 const SimilarCars = ({make, carId}) => {
   const {data, isLoading} = useQuery({
-    queryKey: ['similarCars'],
-    queryFn: () => getSimilarCars(1, 10, make),
+    queryKey: ['similarCars', carId],
+    queryFn: () => getSimilarCars(1, 10, carId),
   });
 
   const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
