@@ -74,7 +74,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", mt: 3 }}> 
-        <DealsBanner title="Ending Soonest" subtitle={`${endingCarList?.meta.count || 0} Cars Available`} buttonText="View All" onClick={() => navigate("/all/ending")} />
+        <DealsBanner title="Ending Soon" subtitle={`${endingCarList?.meta.count || 0} Cars Available`} buttonText="View All" onClick={() => navigate("/all/ending")} />
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>

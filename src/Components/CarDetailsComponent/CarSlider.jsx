@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Box, IconButton, Button, Dialog } from "@mui/material";
+import { Box, IconButton, Button, Dialog, Tooltip, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos , Close} from "@mui/icons-material";
 import Carimg from "../../assets/Png/cardetailimg.png";
 import Carimgg from "../../assets/Png/sellcarimage.png";
@@ -18,6 +18,7 @@ const CarSlider = ({car}) => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const [open, setOpen] = useState(false);
+  const [openBuyNowDialog, setOpenBuyNowDialog] = useState(false);
   const thumbnailRef = useRef();
   const mainThumbRefs = useRef([]);
 
@@ -119,6 +120,22 @@ const thumbnailScrollStyles = {
   '&::-webkit-scrollbar-thumb': { backgroundColor: '#ccc', borderRadius: '4px' },
   '&::-webkit-scrollbar-track': { backgroundColor: 'transparent' },
 };
+
+const tooltipStyles = {
+  tooltip: {
+    fontSize: '14px',
+    padding: '12px 16px',
+    backgroundColor: 'white',
+    color: 'black',
+    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.15)',
+    borderRadius: '8px',
+    maxWidth: '300px',
+  },
+  arrow: {
+    color: 'white',
+  }
+};
+
   return (
     <Box
       sx={{
@@ -289,17 +306,9 @@ const thumbnailScrollStyles = {
       >
         <Button
           variant="outlined"
-          onClick={async () => {
-            if(buyNowMutation.isPending) return;
-            toast.promise(buyNowMutation.mutateAsync(car._id), {
-              loading: 'Buying the car',
-              error: (error) => error.message,
-              success: 'Car is yours now.'
-            })
-          }}
+          onClick={() => setOpenBuyNowDialog(true)}
           sx={{
             flex: 1,
-            
             minWidth: "30%",
             color: "#6F6F6F",
             fontWeight: "bold",
@@ -314,10 +323,26 @@ const thumbnailScrollStyles = {
             height:50,
           }}
         >
-          BUY IT NOW
-          <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 12 }, fontWeight: 700, fontFamily: "Inter" }}>
-            AED {formatAmount(car.buyNowPrice)}
-          </Box>
+          <Tooltip 
+            title="Purchase the car immediately at the listed price" 
+            arrow 
+            placement="top"
+            componentsProps={{
+              tooltip: {
+                sx: tooltipStyles.tooltip
+              },
+              arrow: {
+                sx: tooltipStyles.arrow
+              }
+            }}
+          >
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              BUY IT NOW
+              <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 12 }, fontWeight: 700, fontFamily: "Inter" }}>
+                AED {formatAmount(car.buyNowPrice)}
+              </Box>
+            </Box>
+          </Tooltip>
         </Button>
 
         <Button
@@ -337,7 +362,21 @@ const thumbnailScrollStyles = {
           }}
           onClick={() => setOpen(true)}
         >
-          PLACE BID
+          <Tooltip 
+            title="Place a custom bid amount with your maximum budget" 
+            arrow 
+            placement="top"
+            componentsProps={{
+              tooltip: {
+                sx: tooltipStyles.tooltip
+              },
+              arrow: {
+                sx: tooltipStyles.arrow
+              }
+            }}
+          >
+            <Box>PLACE BID</Box>
+          </Tooltip>
         </Button>
 
         <Button
@@ -369,17 +408,32 @@ const thumbnailScrollStyles = {
             height:50,
           }}
         >
-          {mutation.isPending ? 'Placing bid' : 'QUICK BID'}
-          {!mutation.isPending && (
-            <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-            AED {formatAmount(car.highestBid > 0 ? car.highestBid + 1 : car.staringBidPrice + 1)}
-          </Box>
+          {mutation.isPending ? 'Placing bid' : (
+            <Tooltip 
+              title="Quickly place a bid 1 AED higher than the current highest bid" 
+              arrow 
+              placement="top"
+              componentsProps={{
+                tooltip: {
+                  sx: tooltipStyles.tooltip
+                },
+                arrow: {
+                  sx: tooltipStyles.arrow
+                }
+              }}
+            >
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                QUICK BID
+                <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+                  AED {formatAmount(car.highestBid > 0 ? car.highestBid + 1 : car.staringBidPrice + 1)}
+                </Box>
+              </Box>
+            </Tooltip>
           )}
         </Button>
         {bid && (
           <>
             <Box
-              
               variant="outlined"
               sx={{
                 flex: 1,
@@ -397,17 +451,30 @@ const thumbnailScrollStyles = {
                 height:50,
               }}
             >
-              
-              <Box sx={{ color: "#6F6F6F", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-                Current Bid
-              </Box>
-                <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-                AED {bid.bidAmount.toLocaleString()}
-              </Box>
-              
+              <Tooltip 
+                title="Your current highest bid on this car" 
+                arrow 
+                placement="top"
+                componentsProps={{
+                  tooltip: {
+                    sx: tooltipStyles.tooltip
+                  },
+                  arrow: {
+                    sx: tooltipStyles.arrow
+                  }
+                }}
+              >
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Box sx={{ color: "#6F6F6F", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+                    Current Bid
+                  </Box>
+                  <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+                    AED {bid.bidAmount.toLocaleString()}
+                  </Box>
+                </Box>
+              </Tooltip>
             </Box>
             <Box
-            
               variant="outlined"
               sx={{
                 flex: 1,
@@ -425,15 +492,28 @@ const thumbnailScrollStyles = {
                 height:50,
               }}
             >
-              
-            
-                <Box sx={{ color: "#6F6F6F", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-                Max Budget
-              </Box>
-              <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-                AED {bid.maxBudget.toLocaleString()}
-              </Box>
-              
+              <Tooltip 
+                title="Your maximum budget - we'll automatically bid up to this amount" 
+                arrow 
+                placement="top"
+                componentsProps={{
+                  tooltip: {
+                    sx: tooltipStyles.tooltip
+                  },
+                  arrow: {
+                    sx: tooltipStyles.arrow
+                  }
+                }}
+              >
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Box sx={{ color: "#6F6F6F", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+                    Max Budget
+                  </Box>
+                  <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
+                    AED {bid.maxBudget.toLocaleString()}
+                  </Box>
+                </Box>
+              </Tooltip>
             </Box>
           </>
         )}
@@ -466,6 +546,66 @@ const thumbnailScrollStyles = {
       </Box>
 
       <BidModal car={car} open={open} onClose={() => setOpen(false)} />
+
+      {/* Buy Now Confirmation Dialog */}
+      <Dialog 
+        open={openBuyNowDialog} 
+        onClose={() => setOpenBuyNowDialog(false)}
+        PaperProps={{
+          sx: {
+            borderRadius: 2,
+            padding: 3,
+            maxWidth: '400px',
+            width: '100%'
+          }
+        }}
+      >
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
+            Confirm Purchase
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 3 }}>
+            Are you sure you want to buy this car for AED {formatAmount(car.buyNowPrice)}?
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+            <Button
+              variant="outlined"
+              onClick={() => setOpenBuyNowDialog(false)}
+              sx={{
+                minWidth: '120px',
+                borderRadius: 2,
+                textTransform: 'none'
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              onClick={async () => {
+                if(buyNowMutation.isPending) return;
+                setOpenBuyNowDialog(false);
+                toast.promise(buyNowMutation.mutateAsync(car._id), {
+                  loading: 'Processing purchase...',
+                  error: (error) => error.message,
+                  success: 'Car purchased successfully!'
+                });
+              }}
+              sx={{
+                minWidth: '120px',
+                borderRadius: 2,
+                textTransform: 'none',
+                backgroundColor: colors.buttoncolor,
+                '&:hover': {
+                  backgroundColor: colors.buttoncolor,
+                  opacity: 0.9
+                }
+              }}
+            >
+              Confirm
+            </Button>
+          </Box>
+        </Box>
+      </Dialog>
     </Box>
   );
 };
