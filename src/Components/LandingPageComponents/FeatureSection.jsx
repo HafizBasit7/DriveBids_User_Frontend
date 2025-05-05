@@ -21,51 +21,63 @@ const features = [
 
 const FeatureSection = () => {
   return (
-    <>
-      {/* Features Section */}
-     
-        {features.map((feature, index) => (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 2,
+        p: 2,
+        backgroundColor: '#fff',
+      }}
+    >
+      {features.map((feature, index) => (
+        <Box
+          key={index}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            maxWidth: 350,
+            p: 2,
+            borderRadius: 1,
+            backgroundColor: '#fff',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+            transition: 'all 0.2s ease',
+            '&:hover': {
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            }
+          }}
+        >
           <Box
-            key={index}
             sx={{
+              backgroundColor: "#2F61BF",
+              width: 50,
+              height: 50,
               display: "flex",
               alignItems: "center",
-              gap: 2,
-              maxWidth: 350,
-            
-              zIndex: 1,
+              justifyContent: "center",
+              borderRadius: "50%",
+              flexShrink: 0,
+              boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
             }}
           >
-            <Box
-              sx={{
-                backgroundColor: "#2F61BF",
-                width: 50,
-                height: 50,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "50%",
-                flexShrink: 0,
-              }}
-            >
-              <img src={feature.icon} alt="Feature Icon" style={{ width: 32, height: 32 }} />
-            </Box>
-            <Typography
-              sx={{
-                fontSize: { xs: 12, sm: 14 },
-                fontWeight: 600,
-                color: "#000",
-                fontFamily: "Inter",
-              }}
-            >
-              {feature.text}
-            </Typography>
+            <img src={feature.icon} alt="Feature Icon" style={{ width: 32, height: 32 }} />
           </Box>
-        ))}
-    
-
-      
-    </>
+          <Typography
+            sx={{
+              fontSize: { xs: 12, sm: 14 },
+              fontWeight: 600,
+              color: "#000",
+              fontFamily: "Inter",
+            }}
+          >
+            {feature.text}
+          </Typography>
+        </Box>
+      ))}
+    </Box>
   );
 };
 

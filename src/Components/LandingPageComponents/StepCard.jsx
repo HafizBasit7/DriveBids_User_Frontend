@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import homeimg from "../../assets/Png/homeimg.jfif";
 import homeimg2 from "../../assets/Png/homeimg2.jfif";
 import homeimg3 from "../../assets/Png/homeimg3.jfif";
-
+import { motion, useAnimation } from "framer-motion";
 
 const steps = [
   {
@@ -40,85 +40,142 @@ const steps = [
 ];
 
 const StepsCard = () => {
+  const controls = useAnimation();
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          controls.start("visible");
+        }
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [controls]);
+
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 1,
+      }
+    },
+  };
+
   return (
-    <>
+    <Box
+      ref={ref}
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        gap: 3,
+        py: 2,
+        width: "100%",
+        zIndex: 1,
+        backgroundColor: "#fff",
+        px: { xs: 2 },
+      }}
+    >
       {steps.map((step) => (
-        <Box
+        <motion.div
           key={step.id}
-          sx={{
-            width: { xs: "100%", sm: "21%",md:"23%" }, 
-            backgroundColor: "#fff",
-            borderRadius: 2,
-            overflow: "hidden",
-            textAlign: "left",
-              height:"100%",
-              zIndex: 1,
-          }}
+          variants={variants}
+          initial="hidden"
+          animate={controls}
+          style={{ flex: "1 1 300px", maxWidth: "300px" }}
         >
-                 
-
-         <Box
-  component="img"
-  src={step.image}
-  alt={step.title}
-  loading="lazy"
-  sx={{ 
-    width: { xs: "90%", sm: "95%", md: "90%", lg: "85%" }, 
-    height: { xs: "60%", sm: "65%", md: "70%", lg: "75%" }, 
-    objectFit: "cover",
-    m: 1,
-    borderRadius: 2 
-  }} 
-/>
-
-
-
-
-          <Box sx={{ p: 1 }}>
-            <Typography
+          <Box
+            sx={{
+              width: "100%",
+              backgroundColor: "#fff",
+              borderRadius: 2,
+              overflow: "hidden",
+              textAlign: "left",
+              height: "100%",
+              zIndex: 1,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+              transition: "box-shadow 0.3s ease",
+              '&:hover': {
+                boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+              }
+            }}
+          >
+            <Box
+              component="img"
+              src={step.image}
+              alt={step.title}
+              loading="lazy"
               sx={{
-                fontWeight: "bold",
-                fontSize: 25, 
-                mb: 0.1,
-                fontFamily:"Outfit"
+                width: "90%",
+                height: "60%",
+                objectFit: "cover",
+                m: 1,
+                borderRadius: 2,
               }}
-            >
-              <span style={{ color: "#000" }}>Step </span>
-              <span style={{ color: "#000" }}>{step.id}:</span>
-            </Typography>
+            />
 
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: "bold",
-                color: "#000",
-                fontFamily: "Inter",
-                fontSize: 20, 
-                mb: 1,
-                fontFamily:"Outfit"
+            <Box sx={{ p: 1 }}>
+              <Typography
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: 25,
+                  mb: 0.1,
+                  fontFamily: "Outfit",
+                }}
+              >
+                <span style={{ color: "#000" }}>Step </span>
+                <span style={{ color: "#000" }}>{step.id}:</span>
+              </Typography>
 
-              }}
-            >
-              {step.title}
-            </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  color: "#000",
+                  fontFamily: "Inter",
+                  fontSize: 20,
+                  mb: 1,
+                  fontFamily: "Outfit",
+                }}
+              >
+                {step.title}
+              </Typography>
 
-            <Box>
-              {step.description.map((point, index) => (
-                <Box 
-                  key={index} 
-                  sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}
-                >
-                  <CheckCircleIcon sx={{ color: "#0057FF", fontSize: 14 }} />
-                  <Typography sx={{ fontSize: 12, color: "#333" }}>
-                    {point}
-                  </Typography>
-                </Box>
-              ))}
+              <Box>
+                {step.description.map((point, index) => (
+                  <Box
+                    key={index}
+                    sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}
+                  >
+                    <CheckCircleIcon sx={{ color: "#0057FF", fontSize: 14 }} />
+                    <Typography sx={{ fontSize: 12, color: "#333" }}>
+                      {point}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
             </Box>
           </Box>
-        </Box>
+        </motion.div>
       ))}
-      </>
+    </Box>
   );
 };
 

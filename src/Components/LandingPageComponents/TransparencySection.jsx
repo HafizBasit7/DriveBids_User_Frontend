@@ -1,12 +1,62 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import colors from "../../Style/color";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import DescriptionIcon from "@mui/icons-material/Description";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import { motion, useAnimation } from "framer-motion";
 
 const TransparencySection = () => {
+  const controls = useAnimation();
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          controls.start("visible");
+        }
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [controls]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   const features = [
     {
       icon: <ChecklistIcon sx={{ fontSize: 40, color: colors.buttoncolor }} />,
@@ -32,196 +82,205 @@ const TransparencySection = () => {
   ];
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 4,
-        py: 8,
-        backgroundColor: "#fff",
-      }}
+    <motion.div
+      ref={ref}
+      variants={containerVariants}
+      initial="hidden"
+      animate={controls}
     >
       <Box
         sx={{
-          maxWidth: { xs: "90%", md: "80%" },
-          mx: "auto",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          py: 8,
+          backgroundColor: "#fff",
         }}
       >
-        <Grid container spacing={4}>
-          {features.map((feature, index) => (
-            <Grid item xs={12} md={4} key={index}>
-              <Box
+        <Box
+          sx={{
+            maxWidth: { xs: "90%", md: "80%" },
+            mx: "auto",
+          }}
+        >
+          <Grid container spacing={4}>
+            {features.map((feature, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <motion.div variants={itemVariants}>
+                  <Box
+                    sx={{
+                      height: "100%",
+                      p: 3,
+                      borderRadius: 3,
+                      backgroundColor: "rgba(255, 255, 255, 0.7)",
+                      backdropFilter: "blur(10px)",
+                      border: "1px solid rgba(255, 255, 255, 0.3)",
+                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-5px)",
+                        boxShadow: "0 12px 40px rgba(0, 0, 0, 0.15)",
+                      },
+                    }}
+                  >
+                    <Box sx={{ mb: 2 }}>{feature.icon}</Box>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: 18,
+                        fontFamily: "Inter",
+                        color: colors.buttoncolor,
+                        mb: 2,
+                      }}
+                    >
+                      {feature.title}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        color: "#595B61",
+                        fontFamily: "Inter",
+                        mb: 2,
+                      }}
+                    >
+                      {feature.description}
+                    </Typography>
+                    {feature.points && (
+                      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                        {feature.points.map((point, pointIndex) => (
+                          <Typography
+                            key={pointIndex}
+                            sx={{
+                              fontSize: 12,
+                              color: "#595B61",
+                              fontFamily: "Inter",
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Box
+                              component="span"
+                              sx={{
+                                color: colors.buttoncolor,
+                                mr: 1,
+                                fontSize: 16,
+                              }}
+                            >
+                              •
+                            </Box>
+                            {point}
+                          </Typography>
+                        ))}
+                      </Box>
+                    )}
+                  </Box>
+                </motion.div>
+              </Grid>
+            ))}
+          </Grid>
+
+          {/* Why It Matters Section */}
+          <Box
+            sx={{
+              mt: 6,
+              p: 4,
+              borderRadius: 3,
+              backgroundColor: "rgba(255, 255, 255, 0.7)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+              <VerifiedUserIcon sx={{ fontSize: 40, color: colors.buttoncolor, mr: 2 }} />
+              <Typography
                 sx={{
-                  height: "100%",
-                  p: 3,
-                  borderRadius: 3,
-                  backgroundColor: "rgba(255, 255, 255, 0.7)",
-                  backdropFilter: "blur(10px)",
-                  border: "1px solid rgba(255, 255, 255, 0.3)",
-                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: "0 12px 40px rgba(0, 0, 0, 0.15)",
-                  },
+                  fontWeight: "bold",
+                  fontSize: 24,
+                  fontFamily: "Inter",
+                  color: colors.buttoncolor,
                 }}
               >
-                <Box sx={{ mb: 2 }}>{feature.icon}</Box>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: 18,
-                    fontFamily: "Inter",
-                    color: colors.buttoncolor,
-                    mb: 2,
-                  }}
-                >
-                  {feature.title}
-                </Typography>
+                Why It Matters
+              </Typography>
+            </Box>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={4}>
                 <Typography
                   sx={{
                     fontSize: 14,
                     color: "#595B61",
                     fontFamily: "Inter",
-                    mb: 2,
+                    display: "flex",
+                    alignItems: "center",
                   }}
                 >
-                  {feature.description}
-                </Typography>
-                {feature.points && (
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                    {feature.points.map((point, pointIndex) => (
-                      <Typography
-                        key={pointIndex}
-                        sx={{
-                          fontSize: 12,
-                          color: "#595B61",
-                          fontFamily: "Inter",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Box
-                          component="span"
-                          sx={{
-                            color: colors.buttoncolor,
-                            mr: 1,
-                            fontSize: 16,
-                          }}
-                        >
-                          •
-                        </Box>
-                        {point}
-                      </Typography>
-                    ))}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: colors.buttoncolor,
+                      mr: 1,
+                      fontSize: 16,
+                    }}
+                  >
+                    •
                   </Box>
-                )}
-              </Box>
+                  Buyers know exactly what they&apos;re getting — no mystery, no guesswork.
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Typography
+                  sx={{
+                    fontSize: 14,
+                    color: "#595B61",
+                    fontFamily: "Inter",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      color: colors.buttoncolor,
+                      mr: 1,
+                      fontSize: 16,
+                    }}
+                  >
+                    •
+                  </Box>
+                  Sellers build trust and receive more serious bids, faster.
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Typography
+                  sx={{
+                    fontSize: 14,
+                    color: "#595B61",
+                    fontFamily: "Inter",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      color: colors.buttoncolor,
+                      mr: 1,
+                      fontSize: 16,
+                    }}
+                  >
+                    •
+                  </Box>
+                  DriveBidz keeps the marketplace safe, transparent, and high-quality for everyone.
+                </Typography>
+              </Grid>
             </Grid>
-          ))}
-        </Grid>
-
-        {/* Why It Matters Section */}
-        <Box
-          sx={{
-            mt: 6,
-            p: 4,
-            borderRadius: 3,
-            backgroundColor: "rgba(255, 255, 255, 0.7)",
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-            <VerifiedUserIcon sx={{ fontSize: 40, color: colors.buttoncolor, mr: 2 }} />
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                fontSize: 24,
-                fontFamily: "Inter",
-                color: colors.buttoncolor,
-              }}
-            >
-              Why It Matters
-            </Typography>
           </Box>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={4}>
-              <Typography
-                sx={{
-                  fontSize: 14,
-                  color: "#595B61",
-                  fontFamily: "Inter",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    color: colors.buttoncolor,
-                    mr: 1,
-                    fontSize: 16,
-                  }}
-                >
-                  •
-                </Box>
-                Buyers know exactly what they&apos;re getting — no mystery, no guesswork.
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Typography
-                sx={{
-                  fontSize: 14,
-                  color: "#595B61",
-                  fontFamily: "Inter",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    color: colors.buttoncolor,
-                    mr: 1,
-                    fontSize: 16,
-                  }}
-                >
-                  •
-                </Box>
-                Sellers build trust and receive more serious bids, faster.
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Typography
-                sx={{
-                  fontSize: 14,
-                  color: "#595B61",
-                  fontFamily: "Inter",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    color: colors.buttoncolor,
-                    mr: 1,
-                    fontSize: 16,
-                  }}
-                >
-                  •
-                </Box>
-                DriveBidz keeps the marketplace safe, transparent, and high-quality for everyone.
-              </Typography>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
-    </Box>
+    </motion.div>
   );
 };
 

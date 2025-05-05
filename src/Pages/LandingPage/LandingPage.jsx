@@ -136,7 +136,7 @@ Buying or Selling – It's All Here.
           justifyContent: "center",
           alignSelf: "center",
           height: "100%",
-          width: {md:"70%",lg:"70%"},
+          width: {md:"70%",lg:"80%"},
           backgroundColor: "#fff",
           py: 5,
           mx:"auto"
@@ -225,38 +225,7 @@ buyers and sellers.
         </Box>
       </Box>
 
-      {/* <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-          py: 3,
-
-          width: "100%",
-          gap: 1,
-        }}
-      >
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          sx={{ color: "#000", mb: 1, fontFamily: "Outfit" }}
-        >
-          Some Tips for selling your car
-        </Typography>
-        <Typography
-          sx={{
-            color: "#555",
-            fontFamily: "Inter",
-            fontWeight: 400,
-            maxWidth: "600px",
-            fontSize: 14,
-          }}
-        >
-          See how real users sold their cars easily and successfully on our
-          platform.
-        </Typography>
-      </Box> */}
+     
       <Box sx={{ width: "100%" }}>
         <CardCarousel />
       </Box>
