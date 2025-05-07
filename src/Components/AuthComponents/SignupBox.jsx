@@ -111,6 +111,7 @@ const Signup = () => {
     toast.promise(async () => {
       try {
         const result = await verifyEmailOtp({email, otp: parseInt(otp)});
+        console.log(result);
         setToken(result.data.token);
         setOtp();
       }
@@ -497,6 +498,7 @@ const Signup = () => {
         onClick={handleSignupClick}
         fullWidth
         variant="contained"
+        disabled={!token || loading}
         sx={{
           py: 1.5,
           fontSize: 10,
@@ -506,9 +508,13 @@ const Signup = () => {
           fontSize:15,
           mb:1,
           "&:hover": { backgroundColor: colors.buttoncolor },
+          "&.Mui-disabled": {
+            backgroundColor: "#cccccc",
+            color: "#666666"
+          }
         }}
       >
-        Sign Up
+        {!token ? "Verify Email to Continue" : "Sign Up"}
       </Button>
 
       <Typography

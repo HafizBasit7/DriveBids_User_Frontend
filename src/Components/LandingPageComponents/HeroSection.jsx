@@ -191,7 +191,6 @@ const HeroSection = () => {
           <span>Sign Up for Free Now</span>
         </Button>
 
-        {/* Log-In Navigation with hover effect */}
         <Typography 
           sx={{ 
             mt: 2,
@@ -236,7 +235,6 @@ const HeroSection = () => {
         </Typography>
       </Box>
 
-      {/* Right Side - Car Image & Lights with animation */}
       <Box
         sx={{
           width: { xs: "100%", md: "50%" },
