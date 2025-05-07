@@ -125,7 +125,7 @@ const FeatureGrid = () => {
     },
     {
       title: "Verified Sellers",
-      description: "Every seller is ID-verified to keep you protected.",
+      description: "Every seller is ID-verified and verified service history to keep you protected and get the best deal.",
       icon: <VerifiedUserIcon />
     },
     {

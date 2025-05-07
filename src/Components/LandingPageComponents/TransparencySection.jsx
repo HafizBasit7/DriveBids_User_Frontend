@@ -113,6 +113,7 @@ const TransparencySection = () => {
                     sx={{
                       height: "100%",
                       p: 3,
+                      minHeight: "365px",
                       borderRadius: 3,
                       backgroundColor: "rgba(255, 255, 255, 0.7)",
                       backdropFilter: "blur(10px)",

@@ -15,7 +15,7 @@ const SliderSellCard = ({ title, description, icon }) => {
         overflow: "hidden",
         width: "100%",
         height: "100%",
-        minHeight: "140px",
+        minHeight: "180px",
         position: "relative",
         p: 2,
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
