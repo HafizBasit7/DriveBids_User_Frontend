@@ -20,9 +20,10 @@ const authReducerFunction = (state, action) => {
             let currency = 'AED';
             if (action.payload?.name?.toLowerCase().includes('kuwait')) {
                 currency = 'KWD';
-            } else if (action.payload?.name?.toLowerCase().includes('uae')) {
-                currency = 'AED';
-            }
+            } else if (action.payload?.name?.toLowerCase().includes('united kingdom')) {
+                currency = 'GBP';
+            } 
+            
             return {
                 ...state,
                 selectedLocation: action.payload,
