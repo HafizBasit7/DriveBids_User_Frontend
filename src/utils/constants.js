@@ -1,7 +1,7 @@
 //Inspection report
 //Dynamic operations
 export const dynamicOperations = [
-    {name: "Break Efficiency", target: "breakEfficiency"},
+    {name: "Brake Efficiency", target: "breakEfficiency"},
     {name: "Hand Brake Test", target: "handBrakeTest"},
     {name: "Static Gear Selection", target: "staticGearSelection"},
     {name: "Reverse Clutch Slip", target: "reverseClutchSlip"},

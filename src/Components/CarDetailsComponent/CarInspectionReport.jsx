@@ -27,7 +27,7 @@ const images = [
   imgsketch3,
   imgsketch2
 ];
-const views = ["Front View", "Right View", "Left Side View", "Back View"];
+const views = ["Front View", "Right View", "Left Side View", "Rear View"];
 
 const CarInspectionReport = ({car}) => {
   const [open, setOpen] = useState(false);
@@ -178,7 +178,7 @@ const CarInspectionReport = ({car}) => {
           }}
         >
           <VisibilityIcon fontSize="small" />
-          View All Report
+          See All Listings by This Seller
         </Link>
 
       </Box>
@@ -267,77 +267,93 @@ const CarInspectionReport = ({car}) => {
             width: "100%",
           }}
         >
-          <Typography variant="body1" sx={{ fontSize: 13, fontWeight: 600 }}>
-            Click the label to reveal the damage report
-          </Typography>
+          {!damageReport ? (
+            <Typography 
+              sx={{ 
+                fontSize: 14, 
+                color: "#666",
+                fontFamily: "Inter",
+                fontStyle: "italic",
+                p: 2
+              }}
+            >
+              No damage has been reported for this vehicle.
+            </Typography>
+          ) : (
+            <>
+              <Typography variant="body1" sx={{ fontSize: 13, fontWeight: 600 }}>
+                Click the label to reveal the damage report
+              </Typography>
 
-          {/* Dynamic View Name */}
-          <Typography
-            variant="body1"
-            sx={{
-              color: "#2F61BF",
-              cursor: "pointer",
-              fontWeight: 500,
-              fontFamily: "Inter",
-              fontSize: 12,
-              mt: 1,
-            }}
-          >
-            {views[currentIndex]}
-          </Typography>
-
-          {/* Slider */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-              justifyContent: "space-between",
-              mt: 2,
-              position: "relative",
-            }}
-          >
-            <IconButton sx={{ color: "#2F61BF", fontSize: 28 }} onClick={handlePrev}>
-              <ArrowBackIosNewIcon fontSize="small" />
-            </IconButton>
-
-            <Box sx={{ width: "200px", height: "auto", position: 'relative' }}>
-              <img ref={imageRef} src={images[currentIndex]} alt="Car View" width="100%"
-                onLoad={() => {
-                  setImageLoaded(true);
-                }}
-              />
-              {imageLoaded && currentDamageReport.map(val => {
-                const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
-                return (
-                  <img
-                    onClick={() => {selectedDamage.current = val; setOpenDamage(true)}}
-                    src={iconSrc}
-                    style={{ width: 30, height: 30, position: 'absolute', ...getPoistion(val.x, val.y), }}
-                  />
-                )
-              })}
-            </Box>
-
-            <IconButton sx={{ color: "#2F61BF", fontSize: 28 }} onClick={handleNext}>
-              <ArrowForwardIosIcon fontSize="small" />
-            </IconButton>
-          </Box>
-
-          {/* Dots */}
-          <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
-            {images.map((_, index) => (
-              <Box
-                key={index}
+              {/* Dynamic View Name */}
+              <Typography
+                variant="body1"
                 sx={{
-                  width: 10,
-                  height: 10,
-                  backgroundColor: index === currentIndex ? "#2F61BF" : "#D3D3D3",
-                  borderRadius: "50%",
+                  color: "#2F61BF",
+                  cursor: "pointer",
+                  fontWeight: 500,
+                  fontFamily: "Inter",
+                  fontSize: 12,
+                  mt: 1,
                 }}
-              />
-            ))}
-          </Box>
+              >
+                {views[currentIndex]}
+              </Typography>
+
+              {/* Slider */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
+                  mt: 2,
+                  position: "relative",
+                }}
+              >
+                <IconButton sx={{ color: "#2F61BF", fontSize: 28 }} onClick={handlePrev}>
+                  <ArrowBackIosNewIcon fontSize="small" />
+                </IconButton>
+
+                <Box sx={{ width: "200px", height: "auto", position: 'relative' }}>
+                  <img ref={imageRef} src={images[currentIndex]} alt="Car View" width="100%"
+                    onLoad={() => {
+                      setImageLoaded(true);
+                    }}
+                  />
+                  {imageLoaded && currentDamageReport.map(val => {
+                    const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
+                    return (
+                      <img
+                        onClick={() => {selectedDamage.current = val; setOpenDamage(true)}}
+                        src={iconSrc}
+                        style={{ width: 30, height: 30, position: 'absolute', ...getPoistion(val.x, val.y), }}
+                      />
+                    )
+                  })}
+                </Box>
+
+                <IconButton sx={{ color: "#2F61BF", fontSize: 28 }} onClick={handleNext}>
+                  <ArrowForwardIosIcon fontSize="small" />
+                </IconButton>
+              </Box>
+
+              {/* Dots */}
+              <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
+                {images.map((_, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: 10,
+                      height: 10,
+                      backgroundColor: index === currentIndex ? "#2F61BF" : "#D3D3D3",
+                      borderRadius: "50%",
+                    }}
+                  />
+                ))}
+              </Box>
+            </>
+          )}
         </Box>
       </Box>
 

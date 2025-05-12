@@ -10,7 +10,7 @@ const InteriorImagesPage1 = () => {
 
   return (
     <MainLayout  title="Interior Images"
-    subtitle="Pick these 5 images"
+    subtitle="Upload these 5 required images"
     buttonText="Back"
     onClick={() => navigate("../")}>
       
@@ -25,7 +25,7 @@ const InteriorImagesPage1 = () => {
       </Typography>
 
       <UploadBox
-        title="Font Seats"
+        title="Front Seats"
         description="Take a picture of your car from the  front seats as shown below"
         imgSketch={imgsketch1}
         type='interior'

@@ -11,7 +11,7 @@ const DamgeReportPage2 = () => {
 
   return (
     <MainLayout    title="Damage Report"
-    subtitle="Place Pointers Accurately"
+    subtitle="Mark Visible Damage – Choose Label & Upload Area Image"
     buttonText="Back"
     onClick={() => navigate("../damage-1")}>
      
@@ -26,8 +26,8 @@ const DamgeReportPage2 = () => {
       </Typography>
 
       <DamageReportBox
-        title="Back View"
-        description="Please pick the damage label and place it on the Back part of the car that is damaged"
+        title="Right Side View"
+        description="Please pick the damage label and place it on the rear part of the car that is damaged"
         carFacing={1}
         onNext={() => navigate("../damage-3")}
       />

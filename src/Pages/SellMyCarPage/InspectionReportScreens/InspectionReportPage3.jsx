@@ -42,9 +42,23 @@ const InspectionReportPage3 = () => {
         Step <span style={{ color: "#007bff" }}>3</span> of 3
       </Typography>
 
+      <Typography 
+        textAlign="center" 
+        mt={1} 
+        mb={3} 
+        sx={{ 
+          fontSize: 14, 
+          color: "#666",
+          fontFamily: "Inter",
+          fontStyle: "italic"
+        }}
+      >
+        Please ensure all sections are completed for a comprehensive inspection report
+      </Typography>
+
       <InspectionReportComponent
         title="Interior Checks"
-        subtitle="The functionality of  your car’s headlights, fog lights, and side lights to ensure safety."
+        subtitle="Check the condition and functionality of your car's interior features including abs, dashboard, and indicators."
         tests={interiorChecks}
         selectedValues={(carState.carInspectionReport?.interiorChecks ?? {})}
         onChange={handleSelectTest}

@@ -1,12 +1,12 @@
 import { Box, Typography, Button } from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useNavigate } from "react-router-dom";
 import colors from "../../Style/color";
 import {useCar} from "../../context/car.context";
 import { useRef } from "react";
 import { uploadImage } from "../../utils/upload";
 import toast from "react-hot-toast";
-
 
 const UploadBox = ({ title, description, imgSketch, onNext, type, index, save }) => {
   const {carState, dispatch, draftSave} = useCar();
@@ -28,9 +28,9 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
           value: {type: 'image', url: imgUrl}
         });
       }, {
-        loading: 'Uploading image',
+        loading: 'Uploading image...',
         error: e => e.message,
-        success: 'Image uploaded'
+        success: 'Image uploaded successfully! Click Next Step to continue.'
       })
     }
   };
@@ -40,9 +40,9 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
       await draftSave('images', type);
       navigate('../');
     }, {
-      loading: 'Saving Draft',
+      loading: 'Saving Draft...',
       error: e => e.message,
-      success: 'Draft Saved',
+      success: 'Draft Saved Successfully!',
     })
   };
   
@@ -123,13 +123,26 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
                 padding: 1,
                 width: { xs: "100%", lg: 380 },
                 height: { xs: "auto", md: 250 },
+                position: "relative",
               }}
             >
               <img
-             src={currentSelectedImage}
-             alt="Car Sketch"
-             style={{ width: "100%", height: '100%', objectFit: 'cover' }}
-           />
+                src={currentSelectedImage}
+                alt="Car Sketch"
+                style={{ width: "100%", height: '100%', objectFit: 'cover' }}
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  borderRadius: "50%",
+                  p: 0.5,
+                }}
+              >
+                <CheckCircleIcon sx={{ color: colors.buttoncolor, fontSize: 30 }} />
+              </Box>
             </Box>
             )}
 
@@ -179,16 +192,26 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
         )}
       </Box>
 
-      <Box display="flex" justifyContent="flex-end">
+      <Box 
+        display="flex" 
+        justifyContent="flex-end"
+        sx={{
+          borderTop: "1px solid #E0E0E0",
+          pt: 3,
+          mt: 2
+        }}
+      >
         <Button
           variant="contained"
           disabled={!currentSelectedImage}
           sx={{
             textTransform: "none",
-            minWidth: "120px",
-            height: "40px",
+            minWidth: "180px",
+            height: "48px",
             fontFamily: "Inter",
             mr: 4,
+            fontSize: "16px",
+            fontWeight: 600,
             backgroundColor: colors.buttoncolor,
             '&.Mui-disabled': {
               backgroundColor: '#E0E0E0',
@@ -202,7 +225,7 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
           }}
           onClick={save ? saveImagesDraft : onNext}
         >
-          {save ? 'SAVE' : 'NEXT STEP'}
+          {save ? 'SAVE & CONTINUE' : 'NEXT STEP →'}
         </Button>
       </Box>
     </Box>

@@ -10,7 +10,7 @@ const ExteriorImages4 = () => {
 
   return (
     <MainLayout title="Exterior Images"
-    subtitle="Pick these 6 images"
+    subtitle="Upload these 6 required images"
     buttonText="Back"
     onClick={() => navigate("../exterior-3")}>
 
@@ -25,8 +25,8 @@ const ExteriorImages4 = () => {
       </Typography>
 
       <UploadBox
-        title="Right Back View"
-        description="Take a picture of your car from the right Back as shown below"
+        title="Right Rear View"
+        description="Upload a clear image of your car from the right rear as shown below"
         imgSketch={imgsketch4}
         type='exterior'
         index={3}

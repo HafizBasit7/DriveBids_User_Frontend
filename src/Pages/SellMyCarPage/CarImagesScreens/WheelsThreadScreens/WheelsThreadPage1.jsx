@@ -10,7 +10,7 @@ const WheelsThreadPage1 = () => {
 
   return (
     <MainLayout  title="Wheel Treads"
-    subtitle="Pick these 4 images"
+    subtitle="Upload these 4 required images"
     buttonText="Back"
     onClick={() => navigate("../")}>
      
@@ -25,8 +25,8 @@ const WheelsThreadPage1 = () => {
       </Typography>
 
       <UploadBox
-        title="Back Driver Tyre Treads"
-        description="Take a picture of your car’s back driver tyre treads as shown below"
+        title="Rear Driver Tyre Treads"
+        description="Upload a clear image of your car's rear driver tyre treads as shown below."
         imgSketch={imgsketch1}
         type='tyreTreads'
         index={0}

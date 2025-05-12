@@ -148,7 +148,7 @@ const CompletedDealsCard = ({ ad, item}) => {
 
                {/* Static Winning Price */}
 <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 14, fontFamily: "Inter" }}>
-  Winning Price: AED {item.buyingAmount.toLocaleString()}
+  Winning Price: {authState.currency} {item.buyingAmount.toLocaleString()}
 </Typography>
 <Button onClick={() => setOpenOwnerDetails(true)} sx={{ fontWeight: 600, mt: 0.2, fontSize: 14, fontFamily: "Inter" ,textDecoration:"underline", color: 'black'}} >
   View {item.seller === authState.user._id ? 'Buyer': 'Seller'} Deatils 

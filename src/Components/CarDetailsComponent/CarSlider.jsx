@@ -339,7 +339,7 @@ const tooltipStyles = {
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               BUY IT NOW
               <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 12 }, fontWeight: 700, fontFamily: "Inter" }}>
-                AED {formatAmount(car.buyNowPrice)}
+                {authState.currency} {formatAmount(car.buyNowPrice)}
               </Box>
             </Box>
           </Tooltip>
@@ -410,7 +410,7 @@ const tooltipStyles = {
         >
           {mutation.isPending ? 'Placing bid' : (
             <Tooltip 
-              title="Quickly place a bid 1 AED higher than the current highest bid" 
+              title={`Quickly place a bid 1 ${authState.currency} higher than the current highest bid`} 
               arrow 
               placement="top"
               componentsProps={{
@@ -425,7 +425,7 @@ const tooltipStyles = {
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 QUICK BID
                 <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-                  AED {formatAmount(car.highestBid > 0 ? car.highestBid + 1 : car.staringBidPrice + 1)}
+                  {authState.currency} {formatAmount(car.highestBid > 0 ? car.highestBid + 1 : car.staringBidPrice + 1)}
                 </Box>
               </Box>
             </Tooltip>
@@ -469,7 +469,7 @@ const tooltipStyles = {
                     Current Bid
                   </Box>
                   <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-                    AED {bid.bidAmount.toLocaleString()}
+                    {authState.currency} {bid.bidAmount.toLocaleString()}
                   </Box>
                 </Box>
               </Tooltip>
@@ -510,7 +510,7 @@ const tooltipStyles = {
                     Max Budget
                   </Box>
                   <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-                    AED {bid.maxBudget.toLocaleString()}
+                    {authState.currency} {bid.maxBudget.toLocaleString()}
                   </Box>
                 </Box>
               </Tooltip>
@@ -565,7 +565,7 @@ const tooltipStyles = {
             Confirm Purchase
           </Typography>
           <Typography variant="body1" sx={{ mb: 3 }}>
-            Are you sure you want to buy this car for AED {formatAmount(car.buyNowPrice)}?
+            Are you sure you want to buy this car for {authState.currency} {formatAmount(car.buyNowPrice)}?
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
             <Button

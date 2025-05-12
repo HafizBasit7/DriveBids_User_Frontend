@@ -11,9 +11,10 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import colors from "../../Style/color";
 import { useState } from "react";
-
+import { useAuth } from "../../context/auth.context";
 const FilterSidebar = ({ filters, setFilters }) => {
   const [expandedAccordions, setExpandedAccordions] = useState({});
+  const {authState} = useAuth();
 
   const handleChange = (key, value) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -47,7 +48,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
   /> */}
       {/* Price Range */}
       <Typography fontWeight="bold" mb={1} fontFamily="Inter">
-        Price Range ($)
+        Price Range ({authState.currency})
       </Typography>
       <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
         <TextField fullWidth size="small" placeholder="Min" value={filters.minPrice || ""} onChange={(e) => handleChange("minPrice", e.target.value)} />
@@ -63,14 +64,14 @@ const FilterSidebar = ({ filters, setFilters }) => {
         <TextField fullWidth size="small" placeholder="Max" value={filters.maxMileage || ""} onChange={(e) => handleChange("maxMileage", e.target.value)} />
       </Box>
 
-      {/* Horsepower */}
+      {/* Horsepower
       <Typography fontWeight="bold" mb={1} fontFamily="Inter">
         Horsepower
       </Typography>
       <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
         <TextField fullWidth size="small" placeholder="Min" value={filters.minHorsePower || ""} onChange={(e) => handleChange("minHorsePower", e.target.value)} />
         <TextField fullWidth size="small" placeholder="Max" value={filters.maxHorsePower || ""} onChange={(e) => handleChange("maxHorsePower", e.target.value)} />
-      </Box>
+      </Box> */}
 
       {/* Model Year */}
       <Typography fontWeight="bold" mb={1} fontFamily="Inter">

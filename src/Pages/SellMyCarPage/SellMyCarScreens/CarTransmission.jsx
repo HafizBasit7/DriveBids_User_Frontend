@@ -1,10 +1,18 @@
-import { Box, Typography, List, ListItem, ListItemText, Paper, Button } from "@mui/material";
+import { Box, Typography, List, ListItem, ListItemText, Paper, Button, Tooltip, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../../../Layouts/Mainlayout";
+import MainLayout from "../../../Layouts/MainLayout";
 import colors from "../../../Style/color";
 import { useCar } from "../../../context/car.context";
+import InfoIcon from '@mui/icons-material/Info';
 
-const transmissionTypes = ['AGS', 'Manual', 'CVT', 'DCT', 'AMT', 'EV Single-Speed'];
+const transmissionTypes = [
+  { type: 'AGS', description: 'Auto Gear Shift (semi-automatic)' },
+  { type: 'Manual', description: '' },
+  { type: 'CVT', description: 'Continuously Variable Transmission' },
+  { type: 'DCT', description: 'Dual Clutch Transmission' },
+  { type: 'AMT', description: 'Automated Manual Transmission' },
+  { type: 'EV Single-Speed', description: 'Used in most electric vehicles' }
+];
 
 const CarTransmissionPage = () => {
   const navigate = useNavigate();
@@ -54,18 +62,19 @@ const CarTransmissionPage = () => {
             </Typography>
 
             <List>
-              {transmissionTypes.map((type) => (
+              {transmissionTypes.map((item) => (
                 <ListItem
-                  key={type}
+                  key={item.type}
                   button
-                  selected={carState.carDetails.transmission === type}
-                  onClick={() => onCangeCarDetails(type)}
+                  selected={carState.carDetails.transmission === item.type}
+                  onClick={() => onCangeCarDetails(item.type)}
                   sx={{
                     mb: 1,
                     borderRadius: 1,
                     border: '1px solid',
-                    borderColor: carState.carDetails.transmission === type ? colors.buttoncolor : '#E0E0E0',
+                    borderColor: carState.carDetails.transmission === item.type ? colors.buttoncolor : '#E0E0E0',
                     transition: 'all 0.3s ease',
+                    cursor: 'pointer',
                     '&.Mui-selected': {
                       backgroundColor: `${colors.buttoncolor}10`,
                       borderColor: colors.buttoncolor,
@@ -80,13 +89,13 @@ const CarTransmissionPage = () => {
                   }}
                 >
                   <ListItemText 
-                    primary={type}
+                    primary={item.description ? `${item.type} - ${item.description}` : item.type}
                     sx={{
                       fontFamily: "Inter",
                       fontSize: 16,
                       '& .MuiListItemText-primary': {
-                        color: carState.carDetails.transmission === type ? colors.buttoncolor : '#333333',
-                        fontWeight: carState.carDetails.transmission === type ? 600 : 400,
+                        color: carState.carDetails.transmission === item.type ? colors.buttoncolor : '#333333',
+                        fontWeight: carState.carDetails.transmission === item.type ? 600 : 400,
                       }
                     }}
                   />

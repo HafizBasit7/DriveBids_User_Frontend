@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { placeBidOnCar } from "../../api/calls/bid";
 import toast from "react-hot-toast";
 import CloseIcon from "@mui/icons-material/Close";
+import { useAuth } from "../../context/auth.context";
 
 
 const colors = {
@@ -16,6 +17,7 @@ const colors = {
 
 const BidModal = ({ open, onClose, car }) => {
   const [bid, setBid] = useState(0);
+  const {authState} = useAuth();
   const minBid = car.highestBid ? car.highestBid + 1 : car.staringBidPrice; // Minimum bid required
   const suggestedBids = [minBid + 100, minBid + 200, minBid + 300];
 
@@ -69,7 +71,7 @@ const BidModal = ({ open, onClose, car }) => {
             width: isSmallScreen ? "90%" : 400, // Adjust width for small screens
           }}
         >
-          <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>AED</Typography>
+          <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>{authState.currency}</Typography>
           <TextField
             variant="standard"
             inputProps={{
@@ -90,7 +92,7 @@ const BidModal = ({ open, onClose, car }) => {
         {/* Warning Message */}
         {bid < minBid ? (
           <Typography sx={{ color: "#B7342C", mt: 1, fontSize: 15 }}>
-            Please bid AED {minBid.toLocaleString()} or higher.
+            Please bid {authState.currency} {minBid.toLocaleString()} or higher.
           </Typography>
         ):(  <Button
           onClick={async () => {
@@ -144,7 +146,7 @@ const BidModal = ({ open, onClose, car }) => {
               }}
               onClick={() => setBid(amount)}
             >
-              AED {amount.toLocaleString()}
+              {authState.currency} {amount.toLocaleString()}
             </Button>
           ))}
         </Box>

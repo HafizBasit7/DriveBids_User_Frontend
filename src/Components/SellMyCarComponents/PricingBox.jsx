@@ -2,8 +2,11 @@ import { Box, Typography, Button, TextField, InputAdornment } from "@mui/materia
 import { useState } from "react";
 import colors from "../../Style/color";
 import Dollar from "../../assets/SVG/dollar.svg"
+import { useAuth } from "../../context/auth.context";
 
 const PricingBidBox = ({ text,onNext, value, onChange }) => {
+
+  const {authState} = useAuth();
 
   return (
     <Box
@@ -83,7 +86,7 @@ const PricingBidBox = ({ text,onNext, value, onChange }) => {
               >
 
                 {/* <img src={Dollar} alt="currency" style={{ width: 28, height: 28 }} /> */}
-                <span style={{fontSize:20,fontWeight:900,color:"#000" }} >AED</span>
+                <span style={{fontSize:20,fontWeight:900,color:"#000" }} >{authState.currency}</span>
               </InputAdornment>
             ),
           }}

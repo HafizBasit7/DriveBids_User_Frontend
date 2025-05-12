@@ -9,7 +9,7 @@ const DamgeReportPage1 = () => {
 
   return (
     <MainLayout     title="Damage Report"
-    subtitle="Place Pointers Accurately"
+    subtitle="Mark Visible Damage – Choose Label & Upload Area Image"
     buttonText="Back"
     onClick={() => navigate("../")}>
       

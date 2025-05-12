@@ -31,9 +31,23 @@ const InspectionReportPage2 = () => {
         Step <span style={{ color: "#007bff" }}>2</span> of 3
       </Typography>
 
+      <Typography 
+        textAlign="center" 
+        mt={1} 
+        mb={3} 
+        sx={{ 
+          fontSize: 14, 
+          color: "#666",
+          fontFamily: "Inter",
+          fontStyle: "italic"
+        }}
+      >
+        Please ensure all sections are completed for a comprehensive inspection report
+      </Typography>
+
       <InspectionReportComponent
         title="Essential Checks"
-        subtitle="The functionality of  your car’s headlights, fog lights, and side lights to ensure safety."
+        subtitle="The functionality of  your car's headlights, fog lights, and side lights to ensure safety."
         tests={essentialsChecks}
         selectedValues={(carState.carInspectionReport?.essentialChecks ?? {})}
         onChange={handleSelectTest}

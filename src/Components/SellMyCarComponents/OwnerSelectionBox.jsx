@@ -1,141 +1,99 @@
-import { useState, useRef, useEffect } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, TextField } from "@mui/material";
 import colors from "../../Style/color";
 
-const getNumbering = () => {
-  const totalNumbers = new Date().getFullYear() - 1899 + 2; 
-  return Array.from({ length: totalNumbers }, (_, i) => i + 1);
-};
-
 const OwnerSelectionBox = ({ onNext, value, onChange }) => {
-  const numbers = getNumbering();  // Removed reverse here
-  const scrollRef = useRef(null);
+  const maxOwners = 20;
 
-  useEffect(() => {
-    centerNumber(value);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollRef.current) {
-        const container = scrollRef.current;
-        const items = container.children;
-        let closest = null;
-        let closestOffset = Infinity;
-        const containerCenter = container.getBoundingClientRect().top + container.clientHeight / 2;
-
-        for (let item of items) {
-          const rect = item.getBoundingClientRect();
-          const itemCenter = rect.top + rect.height / 2;
-          const offset = Math.abs(containerCenter - itemCenter);
-
-          if (offset < closestOffset) {
-            closest = item;
-            closestOffset = offset;
-          }
-        }
-
-        if (closest) {
-          onChange(Number(closest.textContent));
-        }
-      }
-    };
-
-    const container = scrollRef.current;
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
-    }
-  }, []);
-
-  const centerNumber = (number) => {
-    const container = scrollRef.current;
-    if (container) {
-      const index = numbers.indexOf(number);
-      const itemHeight = container.scrollHeight / numbers.length;
-      const scrollPosition = itemHeight * index - container.clientHeight / 2 + itemHeight / 2;
-      container.scrollTo({ top: scrollPosition, behavior: "smooth" });
-    }
-  };
-
-  const handleNumberClick = (number) => {
-    onChange(parseInt(number));
-    centerNumber(number);
+  const handleInputChange = (event) => {
+    const newValue = parseInt(event.target.value);
+    // if (!isNaN(newValue) && newValue >= 1 && newValue <= maxOwners) {
+    //   onChange(newValue);
+    // }
+    onChange(newValue);
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%">
-      <Box
-        width={{ xs: "90%", sm: "70%", md: "65%" }}
-        height={350}
-        border="1px solid #ddd"
-        borderRadius={2}
-        overflow="hidden"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="flex-end"
-        position="relative"
-        py={2}
-      >
+    <Box width="100%">
+      <Box zIndex={2}>
         <Box
-          ref={scrollRef}
           sx={{
-            flex: 1,
-            overflowY: "auto",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            "&::-webkit-scrollbar": { display: "none" },
-            width: "100%",
-            textAlign: "center",
-            scrollSnapType: "y mandatory",
+            width: { xs: "90%", sm: "70%", md: "70%" },
+            margin: "auto",
+            mt: 4,
+            p: 3,
+            borderRadius: 2,
+            backgroundColor: "white",
+            border: "1px solid #D9D9D9",
           }}
         >
-          {numbers.map((num) => (
+          <Typography fontWeight={600} textAlign="start" mb={6} sx={{ fontSize: 20, fontFamily: "Inter" }}>
+            How many previous owners has the car had?
+          </Typography>
+
+          <Box px={3} mb={8}>
+            <Typography fontWeight={500} textAlign="start" mb={3} sx={{ fontSize: 18, fontFamily: "Inter" }}>
+              Number of Previous Owners
+            </Typography>
+            <Box mb={3}>
+              <TextField
+                fullWidth
+                type="number"
+                placeholder="Enter number of previous owners"
+                value={value || ""}
+                onChange={handleInputChange}
+                sx={{
+                  fontFamily: "Inter",
+                  "& .MuiOutlinedInput-root": {
+                    height: 40,
+                    fontSize: 14,
+                    "& input": {
+                      padding: 2,
+                      fontFamily: "Inter",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: colors.buttoncolor,
+                    },
+                  },
+                }}
+              />
+            </Box>
             <Typography
-              key={num}
-              variant="h5"
-              onClick={() => handleNumberClick(num)}
+              variant="body2"
               sx={{
                 fontFamily: "Inter",
-                fontWeight: value === num ? 600 : 300,
-                fontSize: value === num ? 40 : 20,
-                color: value === num ? colors.buttoncolor : "rgba(0, 0, 0, 0.4)",
-                transition: "all 0.3s ease-in-out",
-                cursor: "pointer",
-                padding: "10px 0",
-                scrollSnapAlign: "center",
+                color: "rgba(0, 0, 0, 0.5)",
+                fontSize: "14px"
               }}
             >
-              {num}
+              Enter a number between 1 and {maxOwners}
             </Typography>
-          ))}
-        </Box>
+          </Box>
 
-        <Box width="100%" display="flex" justifyContent="flex-end" p={2}>
-          <Button
-            variant="contained"
-            disabled={!value}
-            sx={{
-              fontFamily: "Inter",
-              backgroundColor: colors.buttoncolor,
-              textTransform: "none",
-              minWidth: "120px",
-              height: "40px",
-              '&.Mui-disabled': {
-                backgroundColor: '#E0E0E0',
-                color: '#9E9E9E',
-                cursor: 'not-allowed'
-              },
-              '&:hover': {
+          <Box display="flex" justifyContent="flex-end" mt={3}>
+            <Button
+              variant="contained"
+              disabled={!value}
+              sx={{
+                textTransform: "none",
+                minWidth: "120px",
+                height: "40px",
+                fontFamily: "Inter",
                 backgroundColor: colors.buttoncolor,
-                opacity: 0.9
-              }
-            }}
-            onClick={onNext}
-          >
-            Next Step
-          </Button>
+                '&.Mui-disabled': {
+                  backgroundColor: '#E0E0E0',
+                  color: '#9E9E9E',
+                  cursor: 'not-allowed'
+                },
+                '&:hover': {
+                  backgroundColor: colors.buttoncolor,
+                  opacity: 0.9
+                }
+              }}
+              onClick={onNext}
+            >
+              Next Step
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

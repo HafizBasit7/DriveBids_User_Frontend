@@ -95,7 +95,8 @@ const MainNavbar = () => {
   }, [showSearchInput]);
 
   const navItems = [
-    { label: "Home", path: "/home" },
+    { label: "Home", path: "/" },
+    { label: "Listings", path: "/home" },
     { label: "Browse Deals", path: "/search" },
     // { label: "Contact Us", path: "/contact" },
   ];

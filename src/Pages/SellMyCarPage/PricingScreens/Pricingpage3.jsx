@@ -36,6 +36,15 @@ const PricingPage3 = () => {
         Step <span style={{ color: colors.buttoncolor }}>3</span> of 4
       </Typography>
 
+      <Typography
+        textAlign="center"
+        mt={1}
+        mb={2}
+        sx={{ fontFamily: "Inter", fontSize: 16, color: "gray" }}
+      >
+        Enter a price for immediate purchase (bypasses bidding)
+      </Typography>
+
       <PricingBidBox value={carState.carPricing.buyNowPrice} onChange={setBuynowPrice} text={"Enter buy now price for your car"} onNext={() => navigate("../pricing-4")} />
     </MainLayout>
   );

@@ -40,6 +40,26 @@ const Navbar = ({howItWorksRef}) => {
             <Button
               sx={{
                 color: "#fff",
+                backgroundColor: colors.buttoncolor,
+                textTransform: "none",
+                fontSize: 13,
+                fontFamily: "Inter",
+                fontWeight: 500,
+                px: 2,
+                py: 0.8,
+                borderRadius: 2,
+                mx: 1,
+                "&:hover": {
+                  backgroundColor: "#1E4BA0"
+                }
+              }}
+              onClick={() => navigate("/ad")}
+            >
+              Start Selling
+            </Button>
+            <Button
+              sx={{
+                color: "#fff",
                 borderColor: "#2F61BF",
                 backgroundColor: colors.buttoncolor,
                 fontSize: "12px",
@@ -51,7 +71,6 @@ const Navbar = ({howItWorksRef}) => {
                 "&:hover": { borderColor: "#2F61BF", backgroundColor: "#1E4BA0" },
               }}
               onClick={() => navigate("/login")}
-
             >
               Login
             </Button>
@@ -87,12 +106,36 @@ const Navbar = ({howItWorksRef}) => {
               fullWidth
               sx={{
                 color: "#fff",
+                backgroundColor: colors.buttoncolor,
+                textTransform: "none",
+                fontSize: 13,
+                fontFamily: "Inter",
+                fontWeight: 500,
+                height: "45px",
+                borderRadius: 2,
+                mb: 2,
+                "&:hover": {
+                  backgroundColor: "#1E4BA0"
+                }
+              }}
+              onClick={() => {
+                navigate("/ad");
+                handleDrawerToggle();
+              }}
+            >
+              Start Selling
+            </Button>
+          </ListItem>
+          <ListItem>
+            <Button
+              fullWidth
+              sx={{
+                color: "#fff",
                 borderColor: "#2F61BF",
                 backgroundColor: "#2F61BF",
                 fontSize: "12px",
                 height: "45px",
                 borderRadius: 2,
-               
               }}
               onClick={() => navigate("/login")}
             >

@@ -63,7 +63,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%" ,mt: 3}}>
-        <DealsBanner title="Features Adds" subtitle={`${carsByBidCount?.meta.count || 0} Cars Available`} buttonText="View All" onClick={() => navigate("/all/bid")} 
+        <DealsBanner title="Featured Ads" subtitle={`${carsByBidCount?.meta.count || 0} ${carsByBidCount?.meta.count === 1 ? 'Car Available' : 'Cars Available'}`} buttonText="View All" onClick={() => navigate("/all/bid")} 
       />
       </Box>
 
@@ -74,7 +74,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", mt: 3 }}> 
-        <DealsBanner title="Ending Soon" subtitle={`${endingCarList?.meta.count || 0} Cars Available`} buttonText="View All" onClick={() => navigate("/all/ending")} />
+        <DealsBanner title="Ending Soon" subtitle={`${endingCarList?.meta.count || 0} ${endingCarList?.meta.count === 1 ? 'Car Available' : 'Cars Available'}`} buttonText="View All" onClick={() => navigate("/all/ending")} />
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2,justifyContent:{xs:"center" ,lg:"start"} }}>
@@ -84,7 +84,7 @@ const HomePage = () => {
       </Box>
 
       <Box sx={{ width: "100%", mt: 3 }}> 
-        <DealsBanner title="Newly Listed" subtitle={`${data?.meta.count || 0} Cars Available`} buttonText="View All" onClick={() => navigate("/all/recent")} />
+        <DealsBanner title="Newly Listed" subtitle={`${data?.meta.count || 0} ${data?.meta.count === 1 ? 'Car Available' : 'Cars Available'}`} buttonText="View All" onClick={() => navigate("/all/recent")} />
       </Box>
 
       <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>

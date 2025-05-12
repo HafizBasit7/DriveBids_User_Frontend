@@ -11,7 +11,7 @@ const WheelsImagesPage2 = () => {
 
   return (
     <MainLayout title="Wheels"
-    subtitle="Pick these 4 images"
+    subtitle="Upload these 4 required images"
     buttonText="Back"
     onClick={() => navigate("../wheel-1")}>
       
@@ -26,8 +26,8 @@ const WheelsImagesPage2 = () => {
       </Typography>
 
       <UploadBox
-        title="Back Driver Wheel"
-        description="Take a picture of your car’s back driver wheel as shown below"
+        title="Rear Driver Wheel"
+        description="Upload a clear image of your car's rear driver wheel as shown below."
         imgSketch={imgsketch2}
         type='wheels'
         index={1}

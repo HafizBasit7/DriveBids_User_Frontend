@@ -36,6 +36,15 @@ const PricingPage1 = () => {
         Step <span style={{ color: colors.buttoncolor }}>1</span> of 4
       </Typography>
 
+      <Typography
+        textAlign="center"
+        mt={1}
+        mb={2}
+        sx={{ fontFamily: "Inter", fontSize: 16, color: "gray" }}
+      >
+        This is the minimum price users can start bidding from
+      </Typography>
+
       <PricingBidBox value={carState.carPricing.staringBidPrice} onChange={setStartingBidPrice}  text={"Enter starting bid price for your car"} onNext={() => navigate("../pricing-2")} />
     </MainLayout>
   );

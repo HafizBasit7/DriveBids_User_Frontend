@@ -128,6 +128,19 @@ const PricingPagePage4 = () => {
               ))}
             </List>
 
+            <Typography 
+              sx={{ 
+                mt: 2, 
+                fontSize: 14, 
+                color: "#666",
+                fontFamily: "Inter",
+                fontStyle: "italic",
+                textAlign: "center"
+              }}
+            >
+              After the selected duration, your listing will expire and no new bids can be placed.
+            </Typography>
+
             {/* Next Step Button */}
             <Box display="flex" justifyContent="flex-end" mt={5}>
               <Button

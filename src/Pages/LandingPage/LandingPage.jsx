@@ -207,9 +207,9 @@ buyers and sellers.
               alignItems: { xs: "center", sm: "center", md: "flex-start" }, 
             }}
           >
-            <BloggerCard />
-            <BloggerCard />
-            <BloggerCard />
+            <BloggerCard index={0} />
+            <BloggerCard index={1} />
+            <BloggerCard index={2} />
           </Box>
 
           <IconButton
@@ -332,6 +332,7 @@ When sellers upload a vehicle, they are required to complete:        </Typograph
         }}
       >
         <Typography
+        id="faq"
           fontWeight="bold"
           sx={{
             color: "#000",

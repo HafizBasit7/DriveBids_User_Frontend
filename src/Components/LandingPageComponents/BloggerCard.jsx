@@ -2,12 +2,39 @@ import React, { useEffect, useRef } from "react";
 import { Box, Typography, Avatar } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import avatarimg from "../../assets/Png/avtarimg.jfif"
+import avatar1 from "../../assets/Png/avtarimg.jfif";
+import avatar2 from "../../assets/Png/homeimg2.jfif";
+import avatar3 from "../../assets/Png/homeimg3.jfif";
 import { motion, useAnimation } from "framer-motion";
 
-const BloggerCard = () => {
+const testimonials = [
+  {
+    name: "Ahmed Al-Kuwaiti",
+    role: "Car Seller",
+    rating: 5,
+    review: "Sold my Range Rover in just 2 days! The bidding process was transparent and I got a better price than expected. Highly recommend DriveBids for selling luxury vehicles.",
+    avatar: avatar1
+  },
+  {
+    name: "Sarah Thompson",
+    role: "First-time Buyer",
+    rating: 5,
+    review: "As a first-time car buyer, I was nervous about the process. But DriveBids made it so easy! The detailed car reports and transparent bidding gave me confidence in my purchase.",
+    avatar: avatar2
+  },
+  {
+    name: "Mohammed Al-Dubai",
+    role: "Regular Seller",
+    rating: 5,
+    review: "I've sold multiple cars through DriveBids. Their inspection process is thorough and the platform attracts serious buyers. The mobile app makes it even easier to manage my listings on the go!",
+    avatar: avatar3
+  }
+];
+
+const BloggerCard = ({ index = 0 }) => {
   const controls = useAnimation();
   const ref = useRef(null);
+  const testimonial = testimonials[index];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,41 +92,40 @@ const BloggerCard = () => {
         }}
       >
         <Avatar
-          src={avatarimg}
-          alt="Blogger"
+          src={testimonial.avatar}
+          alt={testimonial.name}
           sx={{
             width: 60,
             height: 60,
             position: "absolute",
-            top: -35, // Moves the avatar outside the box
+            top: -35,
             left: "50%",
             transform: "translateX(-50%)",
-            border: "3px solid white", // White border for clean overlap
+            border: "3px solid white",
             backgroundColor: "#fff",
           }}
         />
 
         <Box mt={4}>
           <Typography fontWeight="bold" sx={{ fontSize:18, fontFamily:"Inter" }}>
-            Sofia
+            {testimonial.name}
           </Typography>
           <Typography color="text.secondary" mb={1} sx={{ fontSize:18, fontFamily:"Inter" }}>
-            Blogger
+            {testimonial.role}
           </Typography>
 
           {/* Star Ratings */}
           <Box display="flex" justifyContent="center" mb={1}>
-            <StarIcon sx={{ color: "#1E88E5" }} />
-            <StarIcon sx={{ color: "#1E88E5" }} />
-            <StarIcon sx={{ color: "#1E88E5" }} />
-            <StarBorderIcon sx={{ color: "#B0BEC5" }} />
-            <StarBorderIcon sx={{ color: "#B0BEC5" }} />
+            {[...Array(5)].map((_, i) => (
+              i < testimonial.rating ? 
+                <StarIcon key={i} sx={{ color: "#1E88E5" }} /> : 
+                <StarBorderIcon key={i} sx={{ color: "#B0BEC5" }} />
+            ))}
           </Box>
 
           {/* Description */}
-          <Typography variant="body2" color="text.secondary" sx={{fontFamily:"Inter"}}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore.
+          <Typography variant="body2" color="text.secondary" sx={{fontFamily:"Inter", fontSize: 14, lineHeight: 1.6}}>
+            {testimonial.review}
           </Typography>
         </Box>
       </Box>

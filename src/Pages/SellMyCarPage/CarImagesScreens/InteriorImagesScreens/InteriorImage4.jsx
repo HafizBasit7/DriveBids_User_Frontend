@@ -10,7 +10,7 @@ const InteriorImagesPage4 = () => {
 
   return (
     <MainLayout    title="Interior Images"
-    subtitle="Pick these 5 images"
+    subtitle="Upload these 5 required images"
     buttonText="Back"
     onClick={() => navigate("../interior-3")}>
      

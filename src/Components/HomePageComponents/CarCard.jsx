@@ -23,11 +23,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleWatchList } from "../../api/calls/watchlist";
 import {calculateTimeLeft, formatAmount} from "../../utils/utils";
 import { LocalGasStation, PaletteOutlined, PrecisionManufacturing } from "@mui/icons-material";
+import { useAuth } from "../../context/auth.context";
 
 const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals = false }) => {
  
 
   const navigate = useNavigate();
+  const {authState} = useAuth();
 
   const queryClient = useQueryClient();
   const toggleWatchListMutation = useMutation({
@@ -229,13 +231,13 @@ const CarCard = ({ ad, carsInWatchList, isFromMyBids, bid, isFromCompletedDeals 
         {/* Top Bid */}
         {!isFromCompletedDeals && (
           <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter"  }}>
-            Top Bid: AED {formatAmount(ad.highestBid)}
+            Top Bid: {authState.currency} {formatAmount(ad.highestBid)}
           </Typography>
         )}
 
         {isFromMyBids && (
           <Typography sx={{ fontWeight: 600, mt: 1, fontSize: 19,fontFamily:"Inter"  }}>
-            My Bid: AED {formatAmount(bid.bidAmount)}
+            My Bid: {authState.currency} {formatAmount(bid.bidAmount)}
           </Typography>
         )}
 

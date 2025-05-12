@@ -10,7 +10,7 @@ const ExteriorImages2 = () => {
 
   return (
     <MainLayout title="Exterior Images"
-    subtitle="Pick these 6 images"
+    subtitle="Upload these 6 required images"
     buttonText="Back"
     onClick={() => navigate("../exterior-1")}>
       

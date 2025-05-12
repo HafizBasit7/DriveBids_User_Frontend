@@ -3,10 +3,12 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"; // Dot icon
 import { useNavigate } from "react-router-dom";
 import {useSocket} from "../../context/socket.context";
+import { useAuth } from "../../context/auth.context";
 
 const AdBanner = ({ chatHeadDataReal }) => {
   const navigate = useNavigate();
   const {chatSocket} = useSocket();
+  const {authState} = useAuth();
 
   const handleClick = () => {
     navigate(`/car/${chatHeadDataReal.car._id}`);
@@ -40,7 +42,7 @@ const AdBanner = ({ chatHeadDataReal }) => {
       <Box sx={{ flexGrow: 1, fontFamily: "Inter" }}>
         <Typography fontWeight="bold">{chatHeadDataReal?.car.title}</Typography>
         <Typography color="black" sx={{fontSize:16}}>
-          Highest Bid: <strong>AED {chatHeadDataReal?.car.highestBid}</strong>
+          Highest Bid: <strong>{authState.currency} {chatHeadDataReal?.car.highestBid}</strong>
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", mt: 0.1 }}>
           <FiberManualRecordIcon

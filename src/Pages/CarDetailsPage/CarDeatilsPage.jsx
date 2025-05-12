@@ -45,7 +45,7 @@ const filteredCars = cars?.filter(car => car._id !== carId);
               <DealsBanner title="Similar Cars"  buttonText={make} />
             </Box>
             <Box sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2, flexWrap: "wrap", mt: 2 ,justifyContent:{xs:"center" ,lg:"start"} }}>
-        {isLoading ?  <SkeletonLoader count={3}/> : filteredCars.length < 1 ? <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}><EmptyPlaceHolder/></Box>: filteredCars.map((car, index) => {
+        {isLoading ?  <SkeletonLoader count={3}/> : filteredCars?.length < 1 ? <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}><EmptyPlaceHolder/></Box>: filteredCars?.map((car, index) => {
           if(car._id === carId) {
             return <></>
           }

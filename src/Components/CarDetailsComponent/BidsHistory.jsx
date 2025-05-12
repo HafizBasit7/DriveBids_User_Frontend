@@ -90,7 +90,7 @@ const BidsHistory = ({car, owner}) => {
           {/* Amount & Date (First Row) */}
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <Typography variant="body1" sx={{ fontFamily: "Inter", fontWeight: 500 }}>
-              AED {formatAmount(bid.bidAmount)}
+              {authState.currency} {formatAmount(bid.bidAmount)}
             </Typography>
             <Typography variant="caption" color="gray" sx={{ fontFamily: "Inter, sans-serif" }}>
               Bid At {formatDateTime(bid.createdAt)}

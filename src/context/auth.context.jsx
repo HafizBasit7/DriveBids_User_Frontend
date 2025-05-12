@@ -4,13 +4,29 @@ import { removeAuthToken, setAuthToken } from "../api/client";
 
 
 //State
-const intialState = {isLoading: true, isAuthenticated: false, user: null, selectedLocation: null, title: null, searchOpen: false};
+const intialState = {
+    isLoading: true, 
+    isAuthenticated: false, 
+    user: null, 
+    selectedLocation: null, 
+    title: null, 
+    searchOpen: false,
+    currency: 'AED' // Default currency
+};
+
 const authReducerFunction = (state, action) => {
     switch(action.type) {
         case 'updateLocation': {
+            let currency = 'AED';
+            if (action.payload?.name?.toLowerCase().includes('kuwait')) {
+                currency = 'KWD';
+            } else if (action.payload?.name?.toLowerCase().includes('uae')) {
+                currency = 'AED';
+            }
             return {
                 ...state,
                 selectedLocation: action.payload,
+                currency: currency
             };
         }
         case 'setSearchOpen': {
@@ -52,7 +68,13 @@ const authReducerFunction = (state, action) => {
 };
 
 //Context
-const AuthContext = createContext({authState: intialState, login: async (payload) => {}, logoutUser: async () => {}, dispatch: () => {}});
+const AuthContext = createContext({
+    authState: intialState, 
+    login: async (payload) => {}, 
+    logoutUser: async () => {}, 
+    dispatch: () => {}
+});
+
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthContextProvider ({children}) {
@@ -64,6 +86,12 @@ export default function AuthContextProvider ({children}) {
             initialLoad();
         }
     }, []);
+
+    useEffect(() => {
+        if(authState.user) {
+            dispatch({type: 'updateLocation', payload: authState.user.location});
+        }
+    }, [authState.user]);
 
     //Initial
     const loadUser = async (token) => {

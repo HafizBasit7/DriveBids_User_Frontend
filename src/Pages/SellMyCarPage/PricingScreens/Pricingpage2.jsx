@@ -35,6 +35,15 @@ const PricingPage2 = () => {
         Step <span style={{ color: colors.buttoncolor }}>2</span> of 4
       </Typography>
 
+      <Typography
+        textAlign="center"
+        mt={1}
+        mb={2}
+        sx={{ fontFamily: "Inter", fontSize: 16, color: "gray" }}
+      >
+        The lowest price you're willing to sell for—if bidding doesn't reach this, the car won't sell
+      </Typography>
+
       <PricingBidBox value={carState.carPricing.reserveBidPrice} onChange={setReservedBidPrice} text={"Enter reserve bid price for your car"} onNext={() => navigate("../pricing-3")} />
     </MainLayout>
   );

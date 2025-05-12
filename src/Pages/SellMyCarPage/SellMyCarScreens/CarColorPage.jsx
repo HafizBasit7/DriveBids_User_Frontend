@@ -1,4 +1,4 @@
-import { Box, Typography, List, ListItem, ListItemText, Paper, Button, Grid } from "@mui/material";
+import { Box, Typography, List, ListItem, ListItemText, Paper, Button, Grid, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/Mainlayout";
 import colors from "../../../Style/color";
@@ -65,6 +65,36 @@ const CarColorPage = () => {
           >
             <Typography fontWeight={600} sx={{ fontSize: 18, mb: 3, fontFamily: "Inter" }}>
               What is the color of your car?
+            </Typography>
+
+            <Box mb={3}>
+              <Typography fontWeight={500} sx={{ fontSize: 16, mb: 2, fontFamily: "Inter" }}>
+                Or enter a custom color
+              </Typography>
+              <TextField
+                fullWidth
+                placeholder="Enter custom color"
+                value={carState.carDetails.color || ""}
+                onChange={(e) => onCangeCarDetails(e.target.value)}
+                sx={{
+                  fontFamily: "Inter",
+                  "& .MuiOutlinedInput-root": {
+                    height: 40,
+                    fontSize: 14,
+                    "& input": {
+                      padding: 2,
+                      fontFamily: "Inter",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: colors.buttoncolor,
+                    },
+                  },
+                }}
+              />
+            </Box>
+
+            <Typography fontWeight={500} sx={{ fontSize: 16, mb: 2, fontFamily: "Inter" }}>
+              Or select from common colors
             </Typography>
 
             <Grid container spacing={2}>

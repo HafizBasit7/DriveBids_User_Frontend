@@ -10,19 +10,17 @@ import XIcon from '@mui/icons-material/X';
 import TikTokIcon from "@mui/icons-material/MusicNote";
 import footerimg from "../../assets/Png/footerimg.png";
 import logo from "../../assets/SVG/Mainlogo.svg";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
-  const navigate = useNavigate();
-
   const navItems = [
-    { label: "HOME", path: "/home" },
-    { label: "BROWSE CARS", path: "/browse" },
+    { label: "HOME", path: "/" },
+    { label: "BROWSE CARS", path: "/home" },
     { label: "MY BIDS", path: "/my-bids" },
     { label: "MY ADS", path: "/my-ads" },
-    { label: "START SELLING", path: "/start-selling" },
+    { label: "START SELLING", path: "/ad" },
     { label: "CONTACT US", path: "/contact" },
-    { label: "FAQ / HELP CENTER", path: "/faq" },
+    { label: "FAQ / HELP CENTER", path: "/#faq" },
   ];
 
   const policyItems = [
@@ -43,7 +41,7 @@ const Footer = () => {
         px: { xs: 2, md: 13 },
         py: 7,
         mt: 4,
-        zIndex: -1,
+        // zIndex: -1,
       }}
     >
       <Box
@@ -85,26 +83,33 @@ const Footer = () => {
           }}
         >
           {navItems.map((item, index) => (
-            <Typography
+            <Link
               key={index}
-              variant="body2"
-              onClick={() => navigate(item.path)}
-              sx={{
-                cursor: "pointer",
+              to={item.path}
+              style={{
+                textDecoration: 'none',
                 width: { xs: "45%", md: "180px" },
                 textAlign: { xs: "center", md: "start" },
-                fontWeight: 600,
-                fontSize: 12,
-                fontFamily: "Inter",
-                zIndex: 1,
-                color: "white",
-                "&:hover": {
-                  textDecoration: "underline",
-                },
               }}
             >
-              {item.label}
-            </Typography>
+              <Typography
+                sx={{
+                  cursor: "pointer",
+                  width: { xs: "45%", md: "180px" },
+                  textAlign: { xs: "center", md: "start" },
+                  fontWeight: 600,
+                  fontSize: 12,
+                  fontFamily: "Inter",
+                  zIndex: 1,
+                  color: "white",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
+                }}
+              >
+                {item.label}
+              </Typography>
+            </Link>
           ))}
         </Box>
 
@@ -159,27 +164,32 @@ const Footer = () => {
               }}
             >
               {policyItems.map((item, index) => (
-                <Typography
+                <Link
                   key={index}
-                  variant="body2"
-                  onClick={() => navigate(item.path)}
-                  sx={{
-                    cursor: "pointer",
-                    textAlign: { xs: "center", md: "left" },
-                    fontWeight: 600,
-                    fontSize: 12,
-                    fontFamily: "Inter",
-                    ml:3,
-                    opacity:0.5,
-                    color: "#fff",
-                    "&:hover": {
-                      textDecoration: "underline",
-                      opacity: 1,
-                    },
+                  to={item.path}
+                  style={{
+                    textDecoration: 'none',
                   }}
                 >
-                  {item.label}
-                </Typography>
+                  <Typography
+                    sx={{
+                      cursor: "pointer",
+                      textAlign: { xs: "center", md: "left" },
+                      fontWeight: 600,
+                      fontSize: 12,
+                      fontFamily: "Inter",
+                      ml:3,
+                      opacity:0.5,
+                      color: "#fff",
+                      "&:hover": {
+                        textDecoration: "underline",
+                        opacity: 1,
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </Typography>
+                </Link>
               ))}
             </Box>
           </Box>
