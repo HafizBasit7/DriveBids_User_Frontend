@@ -17,17 +17,9 @@ const intialState = {
 const authReducerFunction = (state, action) => {
     switch(action.type) {
         case 'updateLocation': {
-            let currency = 'AED';
-            if (action.payload?.name?.toLowerCase().includes('kuwait')) {
-                currency = 'KWD';
-            } else if (action.payload?.name?.toLowerCase().includes('united kingdom')) {
-                currency = 'GBP';
-            } 
-            
             return {
                 ...state,
                 selectedLocation: action.payload,
-                currency: currency
             };
         }
         case 'setSearchOpen': {
@@ -88,11 +80,11 @@ export default function AuthContextProvider ({children}) {
         }
     }, []);
 
-    useEffect(() => {
-        if(authState.user) {
-            dispatch({type: 'updateLocation', payload: authState.user.location});
-        }
-    }, [authState.user]);
+    // useEffect(() => {
+    //     if(authState.user) {
+    //         dispatch({type: 'updateLocation', payload: authState.user.location});
+    //     }
+    // }, [authState.user]);
 
     //Initial
     const loadUser = async (token) => {
