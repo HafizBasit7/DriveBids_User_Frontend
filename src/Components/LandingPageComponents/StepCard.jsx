@@ -4,6 +4,10 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import homeimg from "../../assets/Png/homeimg.jfif";
 import homeimg2 from "../../assets/Png/homeimg2.jfif";
 import homeimg3 from "../../assets/Png/homeimg3.jfif";
+import homeimg4 from "../../assets/Png/1.avif";
+import homeimg5 from "../../assets/Png/2.avif";
+import homeimg6 from "../../assets/Png/3.avif";
+
 import { motion, useAnimation } from "framer-motion";
 
 const sellerSteps = [
@@ -41,7 +45,7 @@ const buyerSteps = [
     description: [
       "Free sign-up to unlock full access to listings and bidding.",
     ],
-    image: homeimg,
+    image: homeimg4,
   },
   {
     id: 2,
@@ -50,7 +54,7 @@ const buyerSteps = [
       "Explore a wide range of vehicles.",
       "Bid live or choose instant purchase.",
     ],
-    image: homeimg2,
+    image: homeimg6,
   },
   {
     id: 3,
@@ -59,7 +63,7 @@ const buyerSteps = [
       "Verified listings and transparent pricing.",
       "Secure payment options for peace of mind.",
     ],
-    image: homeimg3,
+    image: homeimg5,
   },
 ];
 

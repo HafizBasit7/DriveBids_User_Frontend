@@ -18,8 +18,8 @@ const colors = {
 const BidModal = ({ open, onClose, car }) => {
   const [bid, setBid] = useState(0);
   const {authState} = useAuth();
-  const minBid = car.highestBid ? car.highestBid + 1 : car.staringBidPrice; // Minimum bid required
-  const suggestedBids = [minBid + 100, minBid + 200, minBid + 300];
+  const minBid = car.highestBid ? car.highestBid : car.staringBidPrice; // Minimum bid required
+  const suggestedBids = [minBid + 50, minBid + 100, minBid + 250];
 
   const mutation = useMutation({
     mutationFn: placeBidOnCar,
@@ -68,7 +68,7 @@ const BidModal = ({ open, onClose, car }) => {
             py: 2,
             mt: 1,
             mx: "auto",
-            width: isSmallScreen ? "90%" : 400, // Adjust width for small screens
+            width: isSmallScreen ? "90%" : 600, // Increased from 400 to 600
           }}
         >
           <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>{authState.currency}</Typography>
@@ -79,7 +79,7 @@ const BidModal = ({ open, onClose, car }) => {
                 textAlign: "center",
                 fontSize: 28,
                 fontWeight: "bold",
-                width: 100,
+                width: 200, // Increased from 100 to 200
                 border: "none",
                 outline: "none",
               },
