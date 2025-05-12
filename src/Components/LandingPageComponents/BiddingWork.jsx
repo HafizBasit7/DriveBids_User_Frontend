@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, useTheme, useMediaQuery, Collapse, IconButton } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery, Collapse, IconButton, Tab, Tabs } from "@mui/material";
 import RightIcon from "../../assets/SVG/biddingworkright.svg";
 import LeftIcon from "../../assets/SVG/biddingworkleft.svg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -10,6 +10,7 @@ const BiddingWork = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [expandedCard, setExpandedCard] = useState(null);
+  const [selectedTab, setSelectedTab] = useState(0); // Track the active tab
 
   const sellerSteps = [
     {
@@ -84,10 +85,10 @@ const BiddingWork = () => {
         <Box sx={{ width: "100%" }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <Typography
-              sx={{ 
-                fontWeight: "bold", 
-                fontSize: 14, 
-                mb: 1, 
+              sx={{
+                fontWeight: "bold",
+                fontSize: 14,
+                mb: 1,
                 fontFamily: "Inter",
                 color: "#000000",
               }}
@@ -96,7 +97,7 @@ const BiddingWork = () => {
             </Typography>
             <IconButton
               onClick={() => setExpandedCard(expandedCard === `${type}-${index}` ? null : `${type}-${index}`)}
-              sx={{ 
+              sx={{
                 color: colors.buttoncolor,
                 "&:hover": {
                   backgroundColor: "transparent",
@@ -131,6 +132,28 @@ const BiddingWork = () => {
         p: 2,
       }}
     >
+      {/* Tabs for Sellers & Buyers */}
+      <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+        <Tabs
+          value={selectedTab}
+          onChange={(e, newValue) => setSelectedTab(newValue)}
+          centered
+          sx={{
+            "& .MuiTab-root": {
+              fontWeight: "bold",
+              fontSize: 16,
+              color: colors.buttoncolor,
+            },
+            "& .MuiTabs-indicator": {
+              backgroundColor: colors.buttoncolor,
+            },
+          }}
+        >
+          <Tab label="For Sellers" />
+          <Tab label="For Buyers" />
+        </Tabs>
+      </Box>
+
       {/* Main Content Box with Two Columns */}
       <Box
         sx={{
@@ -171,10 +194,9 @@ const BiddingWork = () => {
             height: "100%",
           }}
         >
-          {/* Two Column Layout */}
-          <Box sx={{ display: "flex", gap: 4, flexDirection: { xs: "column", md: "row" } }}>
-            {/* Sellers Column */}
-            <Box sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+          {/* Render the selected section based on the active tab */}
+          {selectedTab === 0 && (
+            <Box sx={{ flex: 1 }}>
               <Typography
                 sx={{
                   fontWeight: "bold",
@@ -189,9 +211,10 @@ const BiddingWork = () => {
               </Typography>
               {renderSteps(sellerSteps, "seller")}
             </Box>
+          )}
 
-            {/* Buyers Column with Trust Section */}
-            <Box sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+          {selectedTab === 1 && (
+            <Box sx={{ flex: 1 }}>
               <Typography
                 sx={{
                   fontWeight: "bold",
@@ -205,60 +228,8 @@ const BiddingWork = () => {
                 For Buyers – Bid Boldly. Buy Instantly. Know Exactly What You&apos;re Getting.
               </Typography>
               {renderSteps(buyerSteps, "buyer")}
-              
-              {/* Why Trust DriveBidz Section - Inside Buyers Column */}
-              <Box sx={{ width: "90%", mt: 2 }}>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: 16,
-                    mb: 2,
-                    fontFamily: "Inter",
-                    color: colors.buttoncolor,
-                    textAlign: "center",
-                  }}
-                >
-                  Why Trust DriveBidz?
-                </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    p: 2,
-                    borderRadius: 2,
-                    backgroundColor: "rgba(255, 255, 255, 0.7)",
-                    backdropFilter: "blur(10px)",
-                    border: "1px solid rgba(255, 255, 255, 0.3)",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 255, 255, 0.9)",
-                      transform: "translateY(-2px)",
-                    },
-                  }}
-                >
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                    <Typography sx={{ fontSize: 12, color: "#595B61", fontFamily: "Inter", display: "flex", alignItems: "center" }}>
-                      <Box component="span" sx={{ color: colors.buttoncolor, mr: 1 }}>•</Box>
-                      Full vehicle transparency
-                    </Typography>
-                    <Typography sx={{ fontSize: 12, color: "#595B61", fontFamily: "Inter", display: "flex", alignItems: "center" }}>
-                      <Box component="span" sx={{ color: colors.buttoncolor, mr: 1 }}>•</Box>
-                      ID-verified users only
-                    </Typography>
-                    <Typography sx={{ fontSize: 12, color: "#595B61", fontFamily: "Inter", display: "flex", alignItems: "center" }}>
-                      <Box component="span" sx={{ color: colors.buttoncolor, mr: 1 }}>•</Box>
-                      Secure platform-managed payment
-                    </Typography>
-                    <Typography sx={{ fontSize: 12, color: "#595B61", fontFamily: "Inter", display: "flex", alignItems: "center" }}>
-                      <Box component="span" sx={{ color: colors.buttoncolor, mr: 1 }}>•</Box>
-                      Live support from real humans
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
 
         {/* Right SVG (Hidden on XS & SM screens) */}

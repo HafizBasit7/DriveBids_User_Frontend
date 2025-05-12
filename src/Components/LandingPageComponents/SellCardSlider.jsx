@@ -120,30 +120,63 @@ const FeatureGrid = () => {
   const features = [
     {
       title: "Comprehensive Car Checks",
-      description: "Every listed vehicle undergoes multi-point inspection or comes with verified service history, giving you peace of mind before you place a bid.",
-      icon: <CarRepairIcon />
+      description: (
+        <ul style={{ paddingLeft: "20px", margin: 0, listStyleType: "disc" }}>
+          <li>Sellers must complete a detailed checklist</li>
+          <li>Our camera template ensures full-angle photos</li>
+          <li>Faults, damage, and missing features must be declared</li>
+          <li>Buyers get a clear view before placing a bid</li>
+        </ul>
+      ),
+      icon: <CarRepairIcon />,
+      alignLeft: true
     },
     {
       title: "Verified Sellers",
-      description: "Every seller is ID-verified and verified service history to keep you protected and get the best deal.",
+      description: (
+        <ul style={{ paddingLeft: "20px", margin: 0, listStyleType: "disc" }}>
+          <li>Every seller is ID-verified</li>
+          <li>Verified service history for peace of mind</li>
+          <li>Helps ensure safer, trustworthy transactions</li>
+        </ul>
+      ),
       icon: <VerifiedUserIcon />
     },
     {
-      title: "Secure Payments",
-      description: "Encrypted payments methods. Auto-Bidding Tech - Set it and forget it — we'll bid smart on your behalf.",
-      icon: <SecurityIcon />
+      title: "One Platform, Full Control",
+      description: (
+        <ul style={{ paddingLeft: "20px", margin: 0, listStyleType: "disc" }}>
+          <li>“Buy It Now” and “Auction” formats</li>
+          <li>Real-time bidding and tracking</li>
+          <li>Bid, buy, list, and message in one place</li>
+        </ul>
+      ),
+      icon: <DashboardIcon />
     },
     {
       title: "Real Human Support",
-      description: "Talk to our team anytime — no bots.",
+      description: (
+        <ul style={{ paddingLeft: "20px", margin: 0, listStyleType: "disc" }}>
+          <li>Talk to real people — no bots</li>
+          <li>Support available throughout your journey</li>
+          <li>Quick, helpful, and human responses</li>
+        </ul>
+      ),
       icon: <SupportAgentIcon />
     },
     {
       title: "One Platform, Full Journey",
-      description: "Buy, sell, bid, and message — all from our platform.",
+      description: (
+        <ul style={{ paddingLeft: "20px", margin: 0, listStyleType: "disc" }}>
+          <li>Everything in one place — no app switching</li>
+          <li>Manage listings, bids, and messages easily</li>
+          <li>Streamlined experience from start to finish</li>
+        </ul>
+      ),
       icon: <DashboardIcon />
     }
   ];
+  
 
   return (
     <motion.div

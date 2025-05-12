@@ -15,7 +15,7 @@ const SliderSellCard = ({ title, description, icon }) => {
         overflow: "hidden",
         width: "100%",
         height: "100%",
-        minHeight: "180px",
+        minHeight: "240px",
         position: "relative",
         p: 2,
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
@@ -45,8 +45,8 @@ const SliderSellCard = ({ title, description, icon }) => {
             backgroundColor: colors.buttoncolor,
             color: "white",
             "& .MuiSvgIcon-root": {
-              fontSize: "20px"
-            }
+              fontSize: "20px",
+            },
           }}
         >
           {icon}
@@ -58,19 +58,21 @@ const SliderSellCard = ({ title, description, icon }) => {
             fontFamily: "Outfit",
             color: colors.buttoncolor,
             lineHeight: 1.2,
-            textAlign: "center",
+            textAlign: "left",
           }}
         >
           {title}
         </Typography>
       </Box>
+
       <Typography
+        component="div"
         sx={{
-          fontSize: { xs: 12, md: 13 },
+          fontSize: { xs: 12, md: 12 },
           color: "#666",
           fontFamily: "Inter",
           lineHeight: 1.4,
-          textAlign: "center",
+          textAlign: "left",
           px: 1,
         }}
       >
@@ -82,7 +84,7 @@ const SliderSellCard = ({ title, description, icon }) => {
 
 SliderSellCard.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.node.isRequired, // changed from string to node to accept JSX like <ul>
   icon: PropTypes.element.isRequired,
 };
 
