@@ -53,7 +53,7 @@ const PostAds = () => {
   ];
 
   const handleNavigate = (index) => {
-    if(carState?.carDamageReport === null || carState?.carDamageReport?.damageReport?.length === 0) {
+    if(index === 4 && (carState?.carDamageReport === null || carState?.carDamageReport?.damageReport?.length === 0)) {
       dispatch({type: 'SET_DRAFT', payload: {...carState, carDamageReport: undefined}});
     }
     navigate(routes[index]);
