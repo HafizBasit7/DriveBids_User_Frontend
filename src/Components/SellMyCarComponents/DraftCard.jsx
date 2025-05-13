@@ -10,7 +10,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import colors from "../../Style/color";
-import cardimg from "../../assets/Png/cardimg.png";
+import cardimg from "../../assets/Png/placeholder.png";
 import { useCar } from "../../context/car.context";
 import { loadDraft } from "../../api/calls/car";
 import toast from "react-hot-toast";
@@ -20,6 +20,10 @@ const DraftCard = ({draft}) => {
 
   const {dispatch} = useCar();
   const navigate = useNavigate();
+
+  
+  const allImages = Object.values(draft.images || {}).flatMap(arr => arr);
+  const imgUrl = allImages[0] || null;
 
   const loadDraftCar = () => {
     toast.promise(handleLoadDraft(), {
@@ -32,8 +36,10 @@ const DraftCard = ({draft}) => {
   const handleLoadDraft = async () => {
     try {
       const Loadeddraft = await loadDraft(draft._id);
-      dispatch({type: 'SET_DRAFT', payload: Loadeddraft.data.draft});
-      navigate('/ad/post/vehicle-register')
+      navigate('/ad/post/vehicle-register');
+      setTimeout(() => {
+        dispatch({type: 'SET_DRAFT', payload: Loadeddraft.data.draft});    
+      }, 300);
     }
     catch(e) {
       throw e;
@@ -93,7 +99,7 @@ const DraftCard = ({draft}) => {
         <CardMedia
           component="img"
           height="180"
-          image={cardimg}
+          image={imgUrl?.url || cardimg}
           alt="Car"
           sx={{ width: "100%", objectFit: "cover" }}
         />

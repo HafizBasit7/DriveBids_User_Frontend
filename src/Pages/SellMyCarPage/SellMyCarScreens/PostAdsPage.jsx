@@ -31,12 +31,12 @@ const PostAds = () => {
   const navigate = useNavigate();
 
 
-  const {carState, carPostAd} = useCar();
+  const {carState, carPostAd, dispatch} = useCar();
   const carPricingCompletion = carPricingValidation.safeParse(carState.carPricing);
   const carInspectionReportCompletion = carInspectionReportValidation.safeParse(carState.carInspectionReport);
   const carDetailsCompletion = carDetailsValidation.safeParse(carState.carDetails);
   const imageCompletion = imagesValidation.safeParse(carState.images);
-  const carDamageReportComplection = carDamageReportValidation.safeParse(carState.carDamageReport || undefined);
+  const carDamageReportComplection = carDamageReportValidation.safeParse(carState.carDamageReport);
   const carFeaturesCompletion = carFeaturesValidation.safeParse(carState.features);
 
   const postAdAllow = (carPricingCompletion.success && carInspectionReportCompletion.success && carDetailsCompletion.success && imageCompletion.success
@@ -51,6 +51,13 @@ const PostAds = () => {
     { title: "Damage Report", status: carDamageReportComplection.success, steps: 4, icon: <ReportIcon fontSize="large" /> },
     { title: "Car Pricing", status: carPricingCompletion.success, steps: 4, icon: <MonetizationOnIcon fontSize="large" /> },
   ];
+
+  const handleNavigate = (index) => {
+    if(carState?.carDamageReport === null || carState?.carDamageReport?.damageReport?.length === 0) {
+      dispatch({type: 'SET_DRAFT', payload: {...carState, carDamageReport: undefined}});
+    }
+    navigate(routes[index]);
+  };
 
   const handlePostAd = () => {
     toast.promise(async () => {
@@ -80,7 +87,7 @@ const PostAds = () => {
               {steps.map((item, index) => (
                 <Box
                   key={index}
-                  onClick={() => navigate(routes[index])}
+                  onClick={() => handleNavigate(index)}
                   sx={{
                     display: "flex",
                     alignItems: "center",
