@@ -1,15 +1,13 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Box, Typography, Button } from "@mui/material";
 import SellCarImage from "../../assets/Png/sellcarimg.png"; // Replace with actual image path
 import colors from "../../Style/color";
 import rigtharrow from "../../assets/SVG/arrow-right-small.svg"; // Replace with actual image path
 import { useNavigate } from "react-router-dom";
 
-
-
-const SellCarCard = ({isLandingPage}) => {
-  const navigate =useNavigate()
+const SellCarCard = ({ isLandingPage }) => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -22,11 +20,11 @@ const SellCarCard = ({isLandingPage}) => {
         overflow: "hidden",
         width: { xs: "90%", md: "100%" },
         mx: "auto",
-    
-        borderRadius:2,
-        
-        position: "relative", 
-        maxHeight:330
+
+        borderRadius: 2,
+
+        position: "relative",
+        maxHeight: 330,
       }}
     >
       <Box
@@ -34,11 +32,11 @@ const SellCarCard = ({isLandingPage}) => {
           position: "absolute",
           top: 0,
           bottom: 0,
-          left: "49%", 
+          left: "49%",
           width: "8%",
           backgroundColor: "white",
-          transform: "skewX(45deg)", 
-          zIndex: 2, 
+          transform: "skewX(45deg)",
+          zIndex: 2,
         }}
       />
 
@@ -47,8 +45,8 @@ const SellCarCard = ({isLandingPage}) => {
           flex: 1,
           textAlign: { xs: "center", md: "left" },
           padding: { xs: 2, md: 3 },
-          zIndex: 3, 
-          maxWidth:{ xs:"100%", md: "40%" },
+          zIndex: 3,
+          maxWidth: { xs: "100%", md: "40%" },
         }}
       >
         <Typography
@@ -57,9 +55,8 @@ const SellCarCard = ({isLandingPage}) => {
             fontSize: { xs: 20, md: 30 },
             fontFamily: "Outfit",
           }}
-         
         >
-        Looking to Sell or Buy Today?
+          Looking to Sell or Buy Today?
         </Typography>
         <Typography
           sx={{
@@ -69,12 +66,10 @@ const SellCarCard = ({isLandingPage}) => {
             fontFamily: "Inter",
             fontWeight: 550,
           }}
-
-        
         >
-Join thousands of users already selling their cars
-or finding the perfect deal on their next ride – all
-in just a few clicks!        </Typography>
+          Join thousands of users already selling their cars or finding the
+          perfect deal on their next ride – all in just a few clicks!{" "}
+        </Typography>
         {!isLandingPage ? (
           <Box
             sx={{
@@ -97,14 +92,14 @@ in just a few clicks!        </Typography>
                 gap: 1,
                 "&:hover": { backgroundColor: "#1D4FB3" },
                 fontSize: 13,
-                mt: 1
+                mt: 1,
               }}
               onClick={() => navigate("/ad")}
             >
-              Start Selling Now  
-              <Box 
+              Start Selling Now
+              <Box
                 component="img"
-                src={rigtharrow} 
+                src={rigtharrow}
                 alt="Right Arrow"
                 sx={{ width: 16, height: 16, ml: 0.5 }}
               />
@@ -136,20 +131,20 @@ in just a few clicks!        </Typography>
                 fontSize: 13,
                 mt: 1,
                 width: "auto",
-                minWidth: "auto"
+                minWidth: "auto",
               }}
               onClick={() => navigate("/ad")}
             >
-              Start Selling Now  
-              <Box 
+              Start Selling Now
+              <Box
                 component="img"
-                src={rigtharrow} 
+                src={rigtharrow}
                 alt="Right Arrow"
                 sx={{ width: 16, height: 16, ml: 0.5 }}
               />
             </Button>
-            
-            <Button
+
+            {/* <Button
               variant="contained"
               sx={{
                 backgroundColor: "#2F61BF",
@@ -177,43 +172,38 @@ in just a few clicks!        </Typography>
                 alt="Right Arrow"
                 sx={{ width: 16, height: 16, ml: 0.5 }}
               />
-            </Button>
+            </Button> */}
           </Box>
         )}
-
-
       </Box>
 
       <Box
-  sx={{
-    flex: 1,
-    display: { xs: "none", md: "flex" }, 
-    justifyContent: "center",
-    alignItems: "center",
-    mt: { xs: 3, md: 0 },
-    height: "100%", 
-  }}
->
-
-  <img
-    src={SellCarImage}
-    alt="Sell Your Car"
-    style={{
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      zIndex: 1,
-    }}
-  />
-
-</Box>
-
+        sx={{
+          flex: 1,
+          display: { xs: "none", md: "flex" },
+          justifyContent: "center",
+          alignItems: "center",
+          mt: { xs: 3, md: 0 },
+          height: "100%",
+        }}
+      >
+        <img
+          src={SellCarImage}
+          alt="Sell Your Car"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 1,
+          }}
+        />
+      </Box>
     </Box>
   );
 };
 
 SellCarCard.propTypes = {
-  isLandingPage: PropTypes.bool
+  isLandingPage: PropTypes.bool,
 };
 
 export default SellCarCard;
