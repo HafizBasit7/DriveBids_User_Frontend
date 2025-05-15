@@ -9,12 +9,12 @@ const DamgeReportPage4 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout   title="Damage Report"
-    subtitle="Mark Visible Damage – Choose Label & Upload Area Image"
-    buttonText="Back"
-    onClick={() => navigate("../damage-3")}>
-      
-
+    <MainLayout
+      title="Damage Report"
+      subtitle="Mark Visible Damage – Choose Label & Upload Area Image"
+      buttonText="Back"
+      onClick={() => navigate("../damage-3")}
+    >
       <Typography
         fontWeight={600}
         textAlign="center"
@@ -26,7 +26,7 @@ const DamgeReportPage4 = () => {
 
       <DamageReportBox
         title="Rear View"
-        description="Please pick the damage label and place it on the right part of the car that is damaged"
+        description="Please select the appropriate damage label and place it on the damaged area on the rear side of the car. If there's no damage, proceed to the next step."
         carFacing={3}
         save={true}
       />

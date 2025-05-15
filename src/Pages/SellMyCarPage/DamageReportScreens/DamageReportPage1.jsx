@@ -1,4 +1,4 @@
-import { Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import colors from "../../../Style/color";
@@ -8,12 +8,12 @@ const DamgeReportPage1 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout     title="Damage Report"
-    subtitle="Mark Visible Damage – Choose Label & Upload Area Image"
-    buttonText="Back"
-    onClick={() => navigate("../")}>
-      
-
+    <MainLayout
+      title="Damage Report"
+      subtitle="Mark Visible Damage – Choose Label & Upload Area Image"
+      buttonText="Back"
+      onClick={() => navigate("../")}
+    >
       <Typography
         fontWeight={600}
         textAlign="center"
@@ -25,7 +25,7 @@ const DamgeReportPage1 = () => {
 
       <DamageReportBox
         title="Front View"
-        description="Please pick the damage label and place it on the front part of the car that is damaged"
+        description="Please select the appropriate damage label and place it on the damaged area at the front of the car. If there is no visible damage, simply proceed to the next step."
         carFacing={0}
         onNext={() => navigate("../damage-2")}
       />
