@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import {acceptBid as acceptBidOnCar} from "../../api/calls/bid";
 import Emptyplaceholder from "../../Components/Loader/Empytplaceholder"
 
-const BidsHistory = ({car, owner}) => {
+const BidsHistory = ({car, owner, isSold}) => {
 
   const {authState} = useAuth();
   const user = authState.user;
@@ -98,7 +98,7 @@ const BidsHistory = ({car, owner}) => {
                  {/* Accept Bid Button */}
 
           </Box>
-         {user._id === owner && (
+         {user._id === owner && !isSold && (
            <Button
            variant="contained"
            size="small"

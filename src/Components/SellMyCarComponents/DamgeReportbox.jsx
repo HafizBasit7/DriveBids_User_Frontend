@@ -119,7 +119,7 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
     }, {
       loading: 'Saving draft',
       error: e => e.message,
-      success: 'Draft saved',
+      success: !carState.carDamageReport ? "Draft Saved, No Damage Reported." : 'Draft Saved',
     })
   };
 

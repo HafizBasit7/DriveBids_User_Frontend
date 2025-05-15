@@ -210,7 +210,7 @@ const CarDetailsPage = () => {
             alignItems: "center",
           }}
         >
-          <BidsHistory car={car?._id} owner={car?.user._id}/>
+          <BidsHistory car={car?._id} owner={car?.user._id} isSold={car.status === 'sold'}/>
         </Box>
       </Box>
       <SimilarCars make={car.make} carId={car?._id}/>

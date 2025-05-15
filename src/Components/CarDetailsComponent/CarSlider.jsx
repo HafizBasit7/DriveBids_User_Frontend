@@ -32,6 +32,14 @@ const CarSlider = ({car}) => {
   const bids = data?.data?.bids;
   const bid = bids?.find(c => c.user === authState.user._id);
 
+  let computedQuickBid = car.highestBid ? car.highestBid + 1 : car.staringBidPrice;
+  if(bid) {
+    //Self user highest bid
+    if(bid.bidAmount === car.highestBid) {
+      computedQuickBid = bid.maxBudget + 1;
+    }
+  }
+
   useEffect(() => {
     scrollThumbnailIntoView(mainThumbRefs);
     scrollThumbnailIntoView(dialogThumbRefs);
@@ -384,7 +392,7 @@ const tooltipStyles = {
           if(mutation.isPending) return;
           toast.promise(mutation.mutateAsync({
             carId: car._id,
-            bidAmount: parseInt(car.highestBid ? car.highestBid + 1 : car.staringBidPrice)
+            bidAmount: parseInt(computedQuickBid)
           }), {
             loading: 'Placing bid',
             error: (error) => error.message,
@@ -425,7 +433,7 @@ const tooltipStyles = {
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 QUICK BID
                 <Box sx={{ color: "#BC413A", fontSize: { xs: 12, sm: 14 }, fontWeight: 700, fontFamily: "Inter" }}>
-                  {authState.currency} {formatAmount(car.highestBid > 0 ? car.highestBid + 1 : car.staringBidPrice + 1)}
+                  {authState.currency} {formatAmount(computedQuickBid)}
                 </Box>
               </Box>
             </Tooltip>
