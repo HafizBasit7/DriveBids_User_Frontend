@@ -1,4 +1,4 @@
-import {  Typography, Button } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../../Layouts/MainLayout";
 import colors from "../../../../Style/color";
@@ -9,12 +9,12 @@ const InteriorImagesPage1 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout  title="Interior Images"
-    subtitle="Upload these 5 required images"
-    buttonText="Back"
-    onClick={() => navigate("../")}>
-      
-
+    <MainLayout
+      title="Interior Images"
+      subtitle="Upload these 5 required images"
+      buttonText="Back"
+      onClick={() => navigate("../")}
+    >
       <Typography
         fontWeight={600}
         textAlign="center"
@@ -26,9 +26,9 @@ const InteriorImagesPage1 = () => {
 
       <UploadBox
         title="Front Seats"
-        description="Take a picture of your car from the  front seats as shown below"
+        description="Please capture an image of the front seats of your car, as illustrated."
         imgSketch={imgsketch1}
-        type='interior'
+        type="interior"
         index={0}
         onNext={() => navigate("../interior-2")}
       />

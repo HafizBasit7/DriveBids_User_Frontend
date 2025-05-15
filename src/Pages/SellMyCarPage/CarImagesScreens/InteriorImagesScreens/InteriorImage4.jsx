@@ -9,12 +9,12 @@ const InteriorImagesPage4 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout    title="Interior Images"
-    subtitle="Upload these 5 required images"
-    buttonText="Back"
-    onClick={() => navigate("../interior-3")}>
-     
-
+    <MainLayout
+      title="Interior Images"
+      subtitle="Upload these 5 required images"
+      buttonText="Back"
+      onClick={() => navigate("../interior-3")}
+    >
       <Typography
         fontWeight={600}
         textAlign="center"
@@ -26,9 +26,9 @@ const InteriorImagesPage4 = () => {
 
       <UploadBox
         title="Dashboard"
-        description="Take a picture of your car’s dashboard as shown below"
+        description="Please capture a photo of your car’s dashboard, as illustrated."
         imgSketch={imgsketch4}
-        type='interior'
+        type="interior"
         index={3}
         onNext={() => navigate("../interior-5")}
       />

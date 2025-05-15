@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
 import Notifications from "../Modals/Notification";
@@ -30,13 +30,14 @@ const MainNavbar = () => {
   const [showLocationInput, setShowLocationInput] = useState(false);
   const searchInputRef = useRef(null);
   const locationInputRef = useRef(null);
-  
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
-  const {authState, dispatch} = useAuth();
+  const { authState, dispatch } = useAuth();
   const showSearchInput = authState.searchOpen;
-  const currentSelectedLocation = (authState.selectedLocation || authState.user?.location) || {"coordinates": [73.1128313, 33.5255503]};
+  const currentSelectedLocation = authState.selectedLocation ||
+    authState.user?.location || { coordinates: [73.1128313, 33.5255503] };
   const queryClient = useQueryClient();
 
   const handleDrawerToggle = () => {
@@ -45,43 +46,43 @@ const MainNavbar = () => {
 
   const handleLocationClick = () => {
     setShowLocationInput(true);
-    dispatch({type: 'setSearchOpen', payload: false});
+    dispatch({ type: "setSearchOpen", payload: false });
   };
 
   const handleSearchClick = () => {
-    if(!window.location.pathname.includes('search')) {
-      navigate('/search')
+    if (!window.location.pathname.includes("search")) {
+      navigate("/search");
     }
-    dispatch({type: 'setSearchOpen', payload: true});
+    dispatch({ type: "setSearchOpen", payload: true });
     setShowLocationInput(false);
   };
 
   const handleSearchNavigate = () => {
-    if(!window.location.pathname.includes('search')) {
-      navigate('/search')
+    if (!window.location.pathname.includes("search")) {
+      navigate("/search");
     }
-  }
+  };
 
   const closeAllInputs = () => {
     setShowLocationInput(false);
-    dispatch({type: 'setSearchOpen', payload: false});
+    dispatch({ type: "setSearchOpen", payload: false });
   };
 
   const handleLocationChange = (location) => {
-    dispatch({ type: 'updateLocation', payload: location });
+    dispatch({ type: "updateLocation", payload: location });
     setTimeout(() => {
-      queryClient.invalidateQueries({ queryKey: ['cars'] });
-      queryClient.invalidateQueries({ queryKey: ['carsEnding'] });
-      queryClient.invalidateQueries({ queryKey: ['carsByBidCount'] });
-      queryClient.invalidateQueries({ queryKey: ['carsAll'] });
-      queryClient.invalidateQueries({ queryKey: ['carsEndingAll'] });
-      queryClient.invalidateQueries({ queryKey: ['carsByBidCountAll'] });
+      queryClient.invalidateQueries({ queryKey: ["cars"] });
+      queryClient.invalidateQueries({ queryKey: ["carsEnding"] });
+      queryClient.invalidateQueries({ queryKey: ["carsByBidCount"] });
+      queryClient.invalidateQueries({ queryKey: ["carsAll"] });
+      queryClient.invalidateQueries({ queryKey: ["carsEndingAll"] });
+      queryClient.invalidateQueries({ queryKey: ["carsByBidCountAll"] });
     }, 200);
     closeAllInputs();
   };
 
   const handleSearchSubmit = (e) => {
-    if (e.key === 'Enter' && searchQuery.trim()) {
+    if (e.key === "Enter" && searchQuery.trim()) {
       navigate(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
       closeAllInputs();
     }
@@ -97,14 +98,17 @@ const MainNavbar = () => {
   const navItems = [
     { label: "Home", path: "/" },
     { label: "Listings", path: "/home" },
-    { label: "Browse Deals", path: "/search" },
+    { label: "Search Deals", path: "/search" },
+    { label: "My Ads", path: "/my-ads" },
     // { label: "Contact Us", path: "/contact" },
   ];
 
   const getLocationDisplayName = () => {
     if (currentSelectedLocation?.name) {
       const locationName = currentSelectedLocation.name;
-      return locationName.length > 10 ? locationName.substring(0, 15) + '' : locationName;
+      return locationName.length > 10
+        ? locationName.substring(0, 15) + ""
+        : locationName;
     }
     return "Location";
   };
@@ -161,7 +165,7 @@ const MainNavbar = () => {
             width: { xs: "65%", md: "63%" }, // Increased width from 63% to 68%
             display: "flex",
             alignItems: "center",
-            gap: isMobile ? 1 : 2,
+            gap: isMobile ? 1 : 1.5,
             justifyContent: "flex-end",
             borderRadius: 2,
             border: isMobile ? "none" : "2px solid #dbdbdb",
@@ -177,15 +181,15 @@ const MainNavbar = () => {
             navItems.map((item, index) => (
               <Button
                 key={index}
-                sx={{ 
-                  color: "black", 
-                  textTransform: "none", 
-                  fontSize: 15, 
+                sx={{
+                  color: "black",
+                  textTransform: "none",
+                  fontSize: 15,
                   fontFamily: "Inter",
                   fontWeight: 500,
                   "&:hover": {
-                    backgroundColor: "rgba(0,0,0,0.04)"
-                  }
+                    backgroundColor: "rgba(0,0,0,0.04)",
+                  },
                 }}
                 onClick={() => navigate(item.path)}
               >
@@ -194,7 +198,7 @@ const MainNavbar = () => {
             ))}
 
           <ClickAwayListener onClickAway={closeAllInputs}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               {/* Compact Location button */}
               {!isMobile && !showLocationInput && (
                 <Box
@@ -217,15 +221,30 @@ const MainNavbar = () => {
                     // }
                   }}
                 >
-                  <LocationOnIcon sx={{ color: "#333", fontSize: 20, mr: 0.5,mb:0.5 }} />
-                  <Typography noWrap sx={{ fontSize: "0.95rem", color: "#333",textDecoration:"underline",fontWeight:500 }}>
+                  <LocationOnIcon
+                    sx={{ color: "#333", fontSize: 20, mr: 0.5, mb: 0.5 }}
+                  />
+                  <Typography
+                    noWrap
+                    sx={{
+                      fontSize: "0.95rem",
+                      color: "#333",
+                      textDecoration: "underline",
+                      fontWeight: 500,
+                    }}
+                  >
                     {getLocationDisplayName()}
                   </Typography>
                 </Box>
               )}
 
               <Fade in={showLocationInput}>
-                <Box sx={{ position: "relative", display: showLocationInput ? "block" : "none" }}>
+                <Box
+                  sx={{
+                    position: "relative",
+                    display: showLocationInput ? "block" : "none",
+                  }}
+                >
                   <LocationInput handleChange={handleLocationChange}>
                     <Box
                       component="div"
@@ -242,7 +261,9 @@ const MainNavbar = () => {
                       }}
                       ref={locationInputRef}
                     >
-                      <LocationOnIcon sx={{ color: "#333", fontSize: 20, mr: 1 }} />
+                      <LocationOnIcon
+                        sx={{ color: "#333", fontSize: 20, mr: 1 }}
+                      />
                       <Box
                         component="input"
                         placeholder={getLocationDisplayName()}
@@ -251,12 +272,12 @@ const MainNavbar = () => {
                           outline: "none",
                           flex: 1,
                           minWidth: 0,
-                          fontSize: '0.9rem'
+                          fontSize: "0.9rem",
                         }}
                         autoFocus
                       />
-                      <IconButton 
-                        size="small" 
+                      <IconButton
+                        size="small"
                         onClick={closeAllInputs}
                         sx={{ color: "#999" }}
                       >
@@ -269,9 +290,9 @@ const MainNavbar = () => {
 
               {/* Compact Search button */}
               {!isMobile && !showSearchInput && (
-                <IconButton 
+                <IconButton
                   onClick={handleSearchClick}
-                  sx={{ 
+                  sx={{
                     border: "1px solid #eaeaea",
                     borderRadius: 2,
                     backgroundColor: "white",
@@ -280,8 +301,8 @@ const MainNavbar = () => {
                     transition: "all 0.2s ease",
                     "&:hover": {
                       borderColor: "#ddd",
-                      boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
-                    }
+                      boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    },
                   }}
                 >
                   <SearchIcon sx={{ fontSize: 20 }} />
@@ -290,7 +311,7 @@ const MainNavbar = () => {
 
               {/* Expanded Search Input */}
               <Fade in={showSearchInput}>
-                <Box 
+                <Box
                   component="div"
                   sx={{
                     display: showSearchInput ? "flex" : "none",
@@ -310,19 +331,21 @@ const MainNavbar = () => {
                     placeholder="Search cars..."
                     value={authState.title}
                     onClick={handleSearchNavigate}
-                    onChange={(e) => dispatch({type: 'updateTitle', payload: e.target.value})}
+                    onChange={(e) =>
+                      dispatch({ type: "updateTitle", payload: e.target.value })
+                    }
                     onKeyDown={handleSearchSubmit}
                     sx={{
                       border: "none",
                       outline: "none",
                       flex: 1,
                       minWidth: 0,
-                      fontSize: '0.9rem'
+                      fontSize: "0.9rem",
                     }}
                     ref={searchInputRef}
                   />
-                  <IconButton 
-                    size="small" 
+                  <IconButton
+                    size="small"
                     onClick={closeAllInputs}
                     sx={{ color: "#999" }}
                   >
@@ -336,17 +359,11 @@ const MainNavbar = () => {
           {/* Mobile location and search handling */}
           {isMobile && (
             <>
-              <IconButton 
-                onClick={handleLocationClick}
-                sx={{ color: "#333" }}
-              >
+              <IconButton onClick={handleLocationClick} sx={{ color: "#333" }}>
                 <LocationOnIcon />
               </IconButton>
-              
-              <IconButton 
-                onClick={handleSearchClick}
-                sx={{ color: "#333" }}
-              >
+
+              <IconButton onClick={handleSearchClick} sx={{ color: "#333" }}>
                 <SearchIcon />
               </IconButton>
             </>
@@ -384,7 +401,9 @@ const MainNavbar = () => {
                         width: "100%",
                       }}
                     >
-                      <LocationOnIcon sx={{ color: "#333", fontSize: 20, mr: 1 }} />
+                      <LocationOnIcon
+                        sx={{ color: "#333", fontSize: 20, mr: 1 }}
+                      />
                       <Box
                         component="input"
                         placeholder="Enter location"
@@ -393,12 +412,12 @@ const MainNavbar = () => {
                           outline: "none",
                           flex: 1,
                           minWidth: 0,
-                          fontSize: '0.9rem'
+                          fontSize: "0.9rem",
                         }}
                         autoFocus
                       />
-                      <IconButton 
-                        size="small" 
+                      <IconButton
+                        size="small"
                         onClick={closeAllInputs}
                         sx={{ color: "#999" }}
                       >
@@ -434,12 +453,12 @@ const MainNavbar = () => {
                         outline: "none",
                         flex: 1,
                         minWidth: 0,
-                        fontSize: '0.9rem'
+                        fontSize: "0.9rem",
                       }}
                       autoFocus
                     />
-                    <IconButton 
-                      size="small" 
+                    <IconButton
+                      size="small"
                       onClick={closeAllInputs}
                       sx={{ color: "#999" }}
                     >
@@ -452,13 +471,13 @@ const MainNavbar = () => {
           )}
 
           {!isMobile && (
-            <IconButton 
+            <IconButton
               onClick={() => navigate("/chat")}
-              sx={{ 
+              sx={{
                 color: "#333",
                 "&:hover": {
-                  backgroundColor: "rgba(0,0,0,0.04)"
-                }
+                  backgroundColor: "rgba(0,0,0,0.04)",
+                },
               }}
             >
               <ChatBubbleOutlineIcon />
@@ -469,11 +488,11 @@ const MainNavbar = () => {
           <ProfileMenu />
 
           {isMobile && (
-            <IconButton 
-              onClick={handleDrawerToggle} 
-              sx={{ 
+            <IconButton
+              onClick={handleDrawerToggle}
+              sx={{
                 color: "#333",
-                ml: 0.5
+                ml: 0.5,
               }}
             >
               <MenuIcon />

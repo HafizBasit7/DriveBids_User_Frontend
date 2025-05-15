@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { Modal, Box, Typography, Button, TextField, useMediaQuery } from "@mui/material";
+import {
+  Modal,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  useMediaQuery,
+} from "@mui/material";
 import DealsBanner from "../HomePageComponents/DealBanner";
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useMutation } from "@tanstack/react-query";
 import { placeBidOnCar } from "../../api/calls/bid";
 import toast from "react-hot-toast";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAuth } from "../../context/auth.context";
-
 
 const colors = {
   buttoncolor: "#0052CC",
@@ -17,7 +23,7 @@ const colors = {
 
 const BidModal = ({ open, onClose, car }) => {
   const [bid, setBid] = useState(0);
-  const {authState} = useAuth();
+  const { authState } = useAuth();
   const minBid = car.highestBid ? car.highestBid : car.staringBidPrice; // Minimum bid required
   const suggestedBids = [minBid + 50, minBid + 100, minBid + 250];
 
@@ -46,18 +52,28 @@ const BidModal = ({ open, onClose, car }) => {
       >
         {/* Header Banner */}
         <Box sx={{ width: "100%" }}>
-          <DealsBanner title="Max Bid" subtitle="" buttonText="Close" showClose 
-                    onClose={onClose}
-   icon={<CloseIcon sx={{ cursor: 'pointer' }} onClick={onClose} />}                     />
+          <DealsBanner
+            title="Max Bid"
+            subtitle=""
+            buttonText="Close"
+            showClose
+            onClose={onClose}
+            icon={<CloseIcon sx={{ cursor: "pointer" }} onClick={onClose} />}
+          />
         </Box>
 
         {/* Bid Description */}
-        <Typography sx={{ mt: 2, fontSize: 14, color: "#979797", fontWeight: 500 }}>
-          We'll automatically raise your bid in small increments up to this limit until the auction concludes or you win the item.
+        <Typography
+          sx={{ mt: 2, fontSize: 14, color: "#979797", fontWeight: 500 }}
+        >
+          We’ll automatically increase your bid in small increments, up to your
+          maximum limit, until the auction ends or you win the item.
         </Typography>
 
         {/* Max Bid Input */}
-        <Typography sx={{ mt: 3, fontWeight: 500 }}>Place your max bid</Typography>
+        <Typography sx={{ mt: 3, fontWeight: 500 }}>
+          Place your max bid
+        </Typography>
         <Box
           sx={{
             border: `2px solid ${colors.borderColor}`,
@@ -71,7 +87,9 @@ const BidModal = ({ open, onClose, car }) => {
             width: isSmallScreen ? "90%" : 600, // Increased from 400 to 600
           }}
         >
-          <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>{authState.currency}</Typography>
+          <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
+            {authState.currency}
+          </Typography>
           <TextField
             variant="standard"
             inputProps={{
@@ -94,33 +112,42 @@ const BidModal = ({ open, onClose, car }) => {
           <Typography sx={{ color: "#B7342C", mt: 1, fontSize: 15 }}>
             Please bid {authState.currency} {minBid.toLocaleString()} or higher.
           </Typography>
-        ):(  <Button
-          onClick={async () => {
-            toast.promise(mutation.mutateAsync({carId: car._id, bidAmount: parseInt(bid)}), {
-              loading: 'Placing bid',
-              error: error => error.message,
-              success: 'Bid placed'
-            })
-          }} 
-          
-          variant="outlined"
-          sx={{
-            borderRadius: 2,
-            borderColor: "#2F61BF",
-            color: "#fff",
-            width: "100%", // Full width
-            border: "1px solid #2F61BF",
-            py: 1,
-            width:"33%",
-            my:1,
-            mt:2,
-            backgroundColor:"#2F61BF",
-            fontWeight:600,
-            fontSize:14
-          }}
-        >
-          Place Bid
-        </Button>)}
+        ) : (
+          <Button
+            onClick={async () => {
+              await toast.promise(
+                mutation.mutateAsync({
+                  carId: car._id,
+                  bidAmount: parseInt(bid),
+                }),
+                {
+                  loading: "Placing bid",
+                  error: (error) => error.message,
+                  success: "Bid placed sucessfully.",
+                }
+              );
+              setBid(0);
+              onClose();
+            }}
+            variant="outlined"
+            sx={{
+              borderRadius: 2,
+              borderColor: "#2F61BF",
+              color: "#fff",
+              width: "100%", // Full width
+              border: "1px solid #2F61BF",
+              py: 1,
+              width: "33%",
+              my: 1,
+              mt: 2,
+              backgroundColor: "#2F61BF",
+              fontWeight: 600,
+              fontSize: 14,
+            }}
+          >
+            Place Bid
+          </Button>
+        )}
 
         {/* Suggested Bids - Responsive Layout */}
         <Box

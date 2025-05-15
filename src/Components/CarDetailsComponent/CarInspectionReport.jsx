@@ -21,33 +21,30 @@ import { useQuery } from "@tanstack/react-query";
 import { getCarDamageReport } from "../../api/calls/car";
 import { Link } from "react-router-dom";
 
-const images = [
-  imgsketch1,
-  imgsketch4,
-  imgsketch3,
-  imgsketch2
-];
+const images = [imgsketch1, imgsketch4, imgsketch3, imgsketch2];
 const views = ["Front View", "Right View", "Left Side View", "Rear View"];
 
-const CarInspectionReport = ({car}) => {
+const CarInspectionReport = ({ car }) => {
   const [open, setOpen] = useState(false);
   const [openDamage, setOpenDamage] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const {authState} = useAuth();
+  const { authState } = useAuth();
   const imageRef = useRef();
 
   const selectedDamage = useRef();
 
-  const {data, isLoading} = useQuery({
-    queryKey: ['damageReport', car._id],
+  const { data, isLoading } = useQuery({
+    queryKey: ["damageReport", car._id],
     queryFn: () => getCarDamageReport(car._id),
     refetchOnMount: false,
   });
-  
+
   const damageReport = data?.data.damageReport.damageReport;
-  const currentDamageReport = (damageReport || []).filter(val => val.imageIndex === currentIndex);
-  
+  const currentDamageReport = (damageReport || []).filter(
+    (val) => val.imageIndex === currentIndex
+  );
+
   const isMyCar = car.user._id === authState.user._id;
 
   const handlePrev = () => {
@@ -76,7 +73,7 @@ const CarInspectionReport = ({car}) => {
     const bounds = imageRef.current.getBoundingClientRect();
     const absoluteX = x * bounds.width - 10;
     const absoluteY = y * bounds.height - 10;
-    return {left: absoluteX, top: absoluteY};
+    return { left: absoluteX, top: absoluteY };
   };
 
   return (
@@ -94,97 +91,109 @@ const CarInspectionReport = ({car}) => {
       }}
     >
       {/* Seller Info */}
-     {!isMyCar && ( <Box
-  sx={{
-    p: 0.5,
-    borderRadius: 2,
-    border: "1px solid #ddd",
-    display: "flex",
-    flexDirection: "column", // Stack items vertically
-    alignItems: "flex-end", // Align items to the end (right side)
-    pl: 2,
-  }}
->
-<Box sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 1 }}>
-      {/* First Row: Profile Info & Image */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-        }}
-      >
-        {/* Seller Info */}
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 0.2 }}>
-          <Typography
-            sx={{
-              fontWeight: 500,
-              fontFamily: "Inter",
-              textTransform: "uppercase",
-              fontSize: 18,
-            }}
-          >
-            {car.user.name}
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: 500,
-              fontFamily: "Inter",
-              fontSize: 14,
-              color: "#6F6F6F",
-            }}
-          >
-            {car.user.type === "individual" ? "Private Seller" : "Trader"}
-          </Typography>
-        </Box>
-
-        {/* Profile Image */}
+      {!isMyCar && (
         <Box
-          component="img"
-          src={
-            car.user.imgUrl ||
-            "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
-          }
-          alt="Seller"
-          sx={{ width: 45, height: 45, borderRadius: 2, objectFit: "cover" }}
-        />
-      </Box>
-
-      {/* Second Row: View All Report & Accept Bid */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-        }}
-      >
-        {/* View All Report */}
-        <Link
-          to={`/cars/${car.user._id}`}
-          underline="hover"
-          style={{
-            fontSize: 14,
+          sx={{
+            p: 0.5,
+            borderRadius: 2,
+            border: "1px solid #ddd",
             display: "flex",
-            alignItems: "center",
-            gap: 4,
-            color: "#0056D2",
-            cursor: 'pointer',
-            fontWeight: 500,
-            textDecoration: "underline",
-            fontFamily: "Inter",
-            mt: 1,
+            flexDirection: "column", // Stack items vertically
+            alignItems: "flex-end", // Align items to the end (right side)
+            pl: 2,
           }}
         >
-          <VisibilityIcon fontSize="small" />
-          See All Listings by This Seller
-        </Link>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+            }}
+          >
+            {/* First Row: Profile Info & Image */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              {/* Seller Info */}
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 0.2 }}>
+                <Typography
+                  sx={{
+                    fontWeight: 500,
+                    fontFamily: "Inter",
+                    textTransform: "uppercase",
+                    fontSize: 18,
+                  }}
+                >
+                  {car.user.name}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 500,
+                    fontFamily: "Inter",
+                    fontSize: 14,
+                    color: "#6F6F6F",
+                  }}
+                >
+                  {car.user.type === "individual" ? "Private Seller" : "Trader"}
+                </Typography>
+              </Box>
 
-      </Box>
-    </Box>
-    </Box>)}
+              {/* Profile Image */}
+              <Box
+                component="img"
+                src={
+                  car.user.imgUrl ||
+                  "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+                }
+                alt="Seller"
+                sx={{
+                  width: 45,
+                  height: 45,
+                  borderRadius: 2,
+                  objectFit: "cover",
+                }}
+              />
+            </Box>
 
+            {/* Second Row: View All Report & Accept Bid */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              {/* View All Report */}
+              <Link
+                to={`/cars/${car.user._id}`}
+                underline="hover"
+                style={{
+                  fontSize: 14,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                  color: "#0056D2",
+                  cursor: "pointer",
+                  fontWeight: 500,
+                  textDecoration: "underline",
+                  fontFamily: "Inter",
+                  mt: 1,
+                }}
+              >
+                <VisibilityIcon fontSize="small" />
+                View Seller’s Other Ads
+              </Link>
+            </Box>
+          </Box>
+        </Box>
+      )}
 
       {/* Car Inspection Report */}
       <Box sx={{ p: 2, borderRadius: 2, border: "1px solid #ddd" }}>
@@ -192,7 +201,6 @@ const CarInspectionReport = ({car}) => {
           Car Inspection Report
         </Typography>
         <Box
-          
           underline="hover"
           sx={{
             fontSize: 14,
@@ -200,7 +208,7 @@ const CarInspectionReport = ({car}) => {
             alignItems: "center",
             gap: 0.5,
             color: "#0056D2",
-            cursor: 'pointer',
+            cursor: "pointer",
             fontWeight: 500,
             textDecoration: "underline",
             fontFamily: "Inter",
@@ -238,7 +246,16 @@ const CarInspectionReport = ({car}) => {
         </Button> */}
 
         {/* Damage Types */}
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 2, mt: 2, alignItems: "flex-start" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
+            mb: 2,
+            mt: 2,
+            alignItems: "flex-start",
+          }}
+        >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <img src={Scratch} alt="Scratch" width={25} />
             <Typography variant="body2">Scratches</Typography>
@@ -268,20 +285,23 @@ const CarInspectionReport = ({car}) => {
           }}
         >
           {!damageReport ? (
-            <Typography 
-              sx={{ 
-                fontSize: 14, 
+            <Typography
+              sx={{
+                fontSize: 14,
                 color: "#666",
                 fontFamily: "Inter",
                 fontStyle: "italic",
-                p: 2
+                p: 2,
               }}
             >
               No damage has been reported for this vehicle.
             </Typography>
           ) : (
             <>
-              <Typography variant="body1" sx={{ fontSize: 13, fontWeight: 600 }}>
+              <Typography
+                variant="body1"
+                sx={{ fontSize: 13, fontWeight: 600 }}
+              >
                 Click the label to reveal the damage report
               </Typography>
 
@@ -311,29 +331,52 @@ const CarInspectionReport = ({car}) => {
                   position: "relative",
                 }}
               >
-                <IconButton sx={{ color: "#2F61BF", fontSize: 28 }} onClick={handlePrev}>
+                <IconButton
+                  sx={{ color: "#2F61BF", fontSize: 28 }}
+                  onClick={handlePrev}
+                >
                   <ArrowBackIosNewIcon fontSize="small" />
                 </IconButton>
 
-                <Box sx={{ width: "200px", height: "auto", position: 'relative' }}>
-                  <img ref={imageRef} src={images[currentIndex]} alt="Car View" width="100%"
+                <Box
+                  sx={{ width: "200px", height: "auto", position: "relative" }}
+                >
+                  <img
+                    ref={imageRef}
+                    src={images[currentIndex]}
+                    alt="Car View"
+                    width="100%"
                     onLoad={() => {
                       setImageLoaded(true);
                     }}
                   />
-                  {imageLoaded && currentDamageReport.map(val => {
-                    const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
-                    return (
-                      <img
-                        onClick={() => {selectedDamage.current = val; setOpenDamage(true)}}
-                        src={iconSrc}
-                        style={{ width: 30, height: 30, position: 'absolute', ...getPoistion(val.x, val.y), }}
-                      />
-                    )
-                  })}
+                  {imageLoaded &&
+                    currentDamageReport.map((val) => {
+                      const iconSrc = damages.find(
+                        (valIcon) => valIcon.name === val.damageType
+                      ).colored;
+                      return (
+                        <img
+                          onClick={() => {
+                            selectedDamage.current = val;
+                            setOpenDamage(true);
+                          }}
+                          src={iconSrc}
+                          style={{
+                            width: 30,
+                            height: 30,
+                            position: "absolute",
+                            ...getPoistion(val.x, val.y),
+                          }}
+                        />
+                      );
+                    })}
                 </Box>
 
-                <IconButton sx={{ color: "#2F61BF", fontSize: 28 }} onClick={handleNext}>
+                <IconButton
+                  sx={{ color: "#2F61BF", fontSize: 28 }}
+                  onClick={handleNext}
+                >
                   <ArrowForwardIosIcon fontSize="small" />
                 </IconButton>
               </Box>
@@ -346,7 +389,8 @@ const CarInspectionReport = ({car}) => {
                     sx={{
                       width: 10,
                       height: 10,
-                      backgroundColor: index === currentIndex ? "#2F61BF" : "#D3D3D3",
+                      backgroundColor:
+                        index === currentIndex ? "#2F61BF" : "#D3D3D3",
                       borderRadius: "50%",
                     }}
                   />
@@ -358,8 +402,16 @@ const CarInspectionReport = ({car}) => {
       </Box>
 
       {/* Modals */}
-      <CarInspectionModal car={car._id} open={open} onClose={() => setOpen(false)} />
-      <DamageModal damage={selectedDamage.current} open={openDamage} onClose={() => setOpenDamage(false)} />
+      <CarInspectionModal
+        car={car._id}
+        open={open}
+        onClose={() => setOpen(false)}
+      />
+      <DamageModal
+        damage={selectedDamage.current}
+        open={openDamage}
+        onClose={() => setOpenDamage(false)}
+      />
     </Box>
   );
 };

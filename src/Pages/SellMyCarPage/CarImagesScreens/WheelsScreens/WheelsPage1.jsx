@@ -10,12 +10,12 @@ const WheelsImagesPage1 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout   title="Wheels"
-    subtitle="Upload these 4 required images"
-    buttonText="Back"
-    onClick={() => navigate("../")}>
-     
-
+    <MainLayout
+      title="Wheels"
+      subtitle="Upload these 4 required images"
+      buttonText="Back"
+      onClick={() => navigate("../")}
+    >
       <Typography
         fontWeight={600}
         textAlign="center"
@@ -27,9 +27,9 @@ const WheelsImagesPage1 = () => {
 
       <UploadBox
         title="Front Driver Wheel"
-        description="Upload a clear image of your car's front driver wheel as shown below."
+        description="Upload a clear image of your car's front driver wheel as illustrated."
         imgSketch={imgsketch1}
-        type='wheels'
+        type="wheels"
         index={0}
         onNext={() => navigate("../wheel-2")}
       />

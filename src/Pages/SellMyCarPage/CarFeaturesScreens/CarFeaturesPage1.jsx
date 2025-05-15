@@ -10,6 +10,7 @@ const exteriorFeaturesLabels = [
   "Sunroof",
   "Fog Lights",
   "Alloy Wheels",
+  "Keyless Entry",
   "LED Headlights",
   "Rear Spoiler",
   "Roof Rails",
@@ -20,57 +21,63 @@ const exteriorFeaturesLabels = [
   "Parking Sensors",
   "3D Camera",
   "Reverse Camera",
-  "Immobiliser"
+  "Immobiliser",
 ];
 
 const CarFeaturesPage1 = () => {
   const navigate = useNavigate();
-  const {carState, dispatch} = useCar();
+  const { carState, dispatch } = useCar();
   const [customFeatures, setCustomFeatures] = useState([]);
 
   useEffect(() => {
     // Get features from carState that are not in predefined list
-    const existingCustomFeatures = carState.features?.exterior?.filter(
-      feature => !exteriorFeaturesLabels.includes(feature)
-    ) || [];
+    const existingCustomFeatures =
+      carState.features?.exterior?.filter(
+        (feature) => !exteriorFeaturesLabels.includes(feature)
+      ) || [];
     setCustomFeatures(existingCustomFeatures);
   }, []);
 
   const toggleSelection = (value) => {
-    if(carState.features?.exterior?.includes(value)) {
+    if (carState.features?.exterior?.includes(value)) {
       dispatch({
-        type: 'REMOVE_FEATURE',
-        section: 'exterior',
+        type: "REMOVE_FEATURE",
+        section: "exterior",
         value,
       });
       return;
-    };
+    }
 
     dispatch({
-      type: 'UPDATE_FEATURE',
-      section: 'exterior',
+      type: "UPDATE_FEATURE",
+      section: "exterior",
       value,
     });
   };
 
   const handleCustomFeature = (event) => {
-    if (event.key === 'Enter' && event.target.value.trim()) {
+    if (event.key === "Enter" && event.target.value.trim()) {
       const newFeature = event.target.value.trim();
-      if (!exteriorFeaturesLabels.includes(newFeature) && !customFeatures.includes(newFeature)) {
-        setCustomFeatures(prev => [...prev, newFeature]);
+      if (
+        !exteriorFeaturesLabels.includes(newFeature) &&
+        !customFeatures.includes(newFeature)
+      ) {
+        setCustomFeatures((prev) => [...prev, newFeature]);
         toggleSelection(newFeature);
       }
-      event.target.value = '';
+      event.target.value = "";
     }
   };
 
   const allFeatures = [...exteriorFeaturesLabels, ...customFeatures];
 
   return (
-    <MainLayout title="Car Features"
-    subtitle="Pick The Feature of Your Car"
-    buttonText="Back"
-    onClick={() => navigate("..")}>
+    <MainLayout
+      title="Car Features"
+      subtitle="Pick The Feature of Your Car"
+      buttonText="Back"
+      onClick={() => navigate("..")}
+    >
       <Typography
         fontWeight={600}
         textAlign="center"
@@ -82,7 +89,10 @@ const CarFeaturesPage1 = () => {
 
       <Box width={{ xs: "95%", sm: "80%", md: "70%" }} mx="auto" mt={3}>
         <Box mb={3}>
-          <Typography fontWeight={500} sx={{ fontSize: 16, mb: 2, fontFamily: "Inter" }}>
+          <Typography
+            fontWeight={500}
+            sx={{ fontSize: 16, mb: 2, fontFamily: "Inter" }}
+          >
             Add a custom exterior feature
           </Typography>
           <TextField
@@ -106,13 +116,13 @@ const CarFeaturesPage1 = () => {
           />
         </Box>
 
-        <CarFeatureBox 
+        <CarFeatureBox
           value={carState.features?.exterior}
           onChange={toggleSelection}
           carBrands={allFeatures}
           title="Select exterior features"
-          searchPlaceholder="enter custom feature" 
-          onNext={() => navigate("../feature-2")} 
+          searchPlaceholder="enter custom feature"
+          onNext={() => navigate("../feature-2")}
         />
       </Box>
     </MainLayout>

@@ -10,12 +10,12 @@ const WheelsThreadPage2 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout title="Wheel Treads"
-    subtitle="Upload these 4 required images"
-    buttonText="Back"
-    onClick={() => navigate("../tread-1")}>
-     
-
+    <MainLayout
+      title="Wheel Treads"
+      subtitle="Upload these 4 required images"
+      buttonText="Back"
+      onClick={() => navigate("../tread-1")}
+    >
       <Typography
         fontWeight={600}
         textAlign="center"
@@ -27,9 +27,9 @@ const WheelsThreadPage2 = () => {
 
       <UploadBox
         title="Rear Passenger Tyre Treads"
-        description="Upload a clear image of your car's rear passenger tyre treads as shown below."
+        description="Upload a clear image of your car's rear passenger tyre treads as illustrated."
         imgSketch={imgsketch1}
-        type='tyreTreads'
+        type="tyreTreads"
         index={1}
         onNext={() => navigate("../tread-3")}
       />

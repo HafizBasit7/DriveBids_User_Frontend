@@ -1,4 +1,4 @@
-import {  Typography, } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../../Layouts/MainLayout";
 import colors from "../../../../Style/color";
@@ -9,12 +9,12 @@ const ExteriorImages3 = () => {
   const navigate = useNavigate();
 
   return (
-    <MainLayout  title="Exterior Images"
-    subtitle="Upload these 6 required images"
-    buttonText="Back"
-    onClick={() => navigate("../exterior-2")}>
-      
-
+    <MainLayout
+      title="Exterior Images"
+      subtitle="Upload these 6 required images"
+      buttonText="Back"
+      onClick={() => navigate("../exterior-2")}
+    >
       <Typography
         fontWeight={600}
         textAlign="center"
@@ -26,9 +26,9 @@ const ExteriorImages3 = () => {
 
       <UploadBox
         title="Left Rear View"
-        description="Upload a clear image of your car from the left rear as shown below"
+        description="Upload a clear image of your car from the left rear as illustrated."
         imgSketch={imgsketch3}
-        type='exterior'
+        type="exterior"
         index={2}
         onNext={() => navigate("../exterior-4")}
       />
