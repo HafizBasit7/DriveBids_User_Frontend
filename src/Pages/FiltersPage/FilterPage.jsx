@@ -11,49 +11,64 @@ import { useAuth } from "../../context/auth.context.jsx";
 import PaginationComponent from "../../Components/Common/PaginationComponent.jsx";
 import SkeletonLoader from "../../Components/Loader/SkeletonLoader.jsx";
 import EmptyPlaceHolder from "../../Components/Loader/Empytplaceholder";
-
+import SortByDropdown from "./SortBy.jsx";
 
 const LIMIT = 10;
 
 const FilterPage = () => {
-  document.title = 'Search';
+  document.title = "Search";
 
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
+  const page = searchParams.get("page")
+    ? parseInt(searchParams.get("page"))
+    : 1;
 
-  const {authState} = useAuth();
-  const currentSelectedLocation = (authState.selectedLocation || authState.user.location) || {"coordinates": [73.1128313, 33.5255503]};
+  const { authState } = useAuth();
+  const currentSelectedLocation = authState.selectedLocation ||
+    authState.user.location || { coordinates: [73.1128313, 33.5255503] };
 
   // State for filters
   const [filters, setFilters] = useState({});
-  const cleanedFilters = Object.fromEntries(Object.entries(filters).filter(([_, value]) => value !== null && value !== undefined && value !== ''));
+  const cleanedFilters = Object.fromEntries(
+    Object.entries(filters).filter(
+      ([_, value]) => value !== null && value !== undefined && value !== ""
+    )
+  );
+  const [sortBy, setsortBy] = useState("Most relevant");
 
   // Fetch cars based on filters using useQuery
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["search", cleanedFilters, page],
-    queryFn: () => searchCars(cleanedFilters, page, LIMIT, currentSelectedLocation.coordinates[0], currentSelectedLocation.coordinates[1]),
+    queryFn: () =>
+      searchCars(
+        cleanedFilters,
+        page,
+        LIMIT,
+        currentSelectedLocation.coordinates[0],
+        currentSelectedLocation.coordinates[1]
+      ),
   });
 
-  const {data: carsInWatchList, isLoading: watchlistLoading} = useQuery({
-      queryKey: ['carsInWatchList'],
-      queryFn: getCarsIdInWatchList,
-    });
+  const { data: carsInWatchList, isLoading: watchlistLoading } = useQuery({
+    queryKey: ["carsInWatchList"],
+    queryFn: getCarsIdInWatchList,
+  });
 
-    useEffect(() => {
-      const timeout = setTimeout(() => {
-        setFilters((prev) => ({ ...prev, title: authState.title }));
-      }, 300);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setFilters((prev) => ({ ...prev, title: authState.title }));
+    }, 300);
 
-      return () => clearTimeout(timeout);
-    }, [authState.title]);
+    return () => clearTimeout(timeout);
+  }, [authState.title]);
 
-    useEffect(() => {
-      if(Object.keys(cleanedFilters).length > 0) {
-        setSearchParams({page: 1});
-        refetch();
-      }
-    }, [filters])
+  useEffect(() => {
+    if (Object.keys(cleanedFilters).length > 0) {
+      setSearchParams({ page: 1 });
+      refetch();
+    }
+  }, [filters]);
 
   return (
     <MainLayout
@@ -73,8 +88,25 @@ const FilterPage = () => {
           alignItems: "flex-start",
         }}
       >
+        {/* Sidebar Filters */}
+        <Box
+          sx={{
+            width: { xs: "100%", md: "25%" },
+            border: "1px solid #ddd",
+            borderRadius: 2,
+            padding: 1,
+            alignSelf: "flex-start",
+            order: { xs: -1, md: -1 },
+          }}
+        >
+          <FilterSidebar filters={filters} setFilters={setFilters} />
+        </Box>
+
         {/* Cars Listing Section */}
         <Box sx={{ width: { xs: "100%", md: "75%", lg: "80%" } }}>
+          <Box sx={{ justifySelf: "flex-end", width: "20%" }}>
+            <SortByDropdown sortBy={sortBy} setsortBy={setsortBy} />
+          </Box>
           <Box
             sx={{
               width: "100%",
@@ -88,37 +120,44 @@ const FilterPage = () => {
             }}
           >
             {isLoading ? (
-              <SkeletonLoader count={3}/> 
+              <SkeletonLoader count={3} />
             ) : error ? (
               <p>Error fetching cars</p>
             ) : data?.data.cars.length > 0 ? (
-              data.data.cars.map((car) => <CarCard carsInWatchList={carsInWatchList} key={car._id} ad={car} />)
+              data.data.cars.map((car) => (
+                <CarCard
+                  carsInWatchList={carsInWatchList}
+                  key={car._id}
+                  ad={car}
+                />
+              ))
             ) : (
-              <EmptyPlaceHolder/>
+              <EmptyPlaceHolder />
             )}
           </Box>
 
           {/* Pagination */}
-          <Box sx={{ width: "100%", display: "flex", justifyContent: "center", mt: 4 }}>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              mt: 4,
+            }}
+          >
             {/* <Pagination count={isSmallScreen ? 3 : 5} shape="rounded" /> */}
           </Box>
         </Box>
-
-        {/* Sidebar Filters */}
-        <Box
-          sx={{
-            width: { xs: "100%", md: "25%" },
-            border: "1px solid #ddd",
-            borderRadius: 2,
-            padding: 1,
-            alignSelf: "flex-start",
-            order: { xs: -1, md: 1 },
-          }}
-        >
-          <FilterSidebar filters={filters} setFilters={setFilters} />
-        </Box>
       </Box>
-      {data?.data.cars.length > 0 && (<PaginationComponent page={page} pages={data?.meta.pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>)}
+      {data?.data.cars.length > 0 && (
+        <PaginationComponent
+          page={page}
+          pages={data?.meta.pages}
+          handleChange={(event, value) => {
+            setSearchParams({ page: value });
+          }}
+        />
+      )}
     </MainLayout>
   );
 };

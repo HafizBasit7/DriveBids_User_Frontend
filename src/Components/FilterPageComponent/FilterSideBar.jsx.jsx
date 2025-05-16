@@ -12,9 +12,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import colors from "../../Style/color";
 import { useState } from "react";
 import { useAuth } from "../../context/auth.context";
+import { Close } from "@mui/icons-material";
 const FilterSidebar = ({ filters, setFilters }) => {
   const [expandedAccordions, setExpandedAccordions] = useState({});
-  const {authState} = useAuth();
+  const { authState } = useAuth();
 
   const handleChange = (key, value) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -31,14 +32,15 @@ const FilterSidebar = ({ filters, setFilters }) => {
     <Box
       sx={{
         width: "100%",
+        height: "75vh",
         borderRadius: 2,
         padding: 2,
         backgroundColor: "#fff",
         fontFamily: "Inter", // Set font family
+        overflowY: "scroll",
       }}
     >
-
-{/* <TextField
+      {/* <TextField
     fullWidth
     size="small"
     placeholder="Search services or keywords"
@@ -47,12 +49,71 @@ const FilterSidebar = ({ filters, setFilters }) => {
     sx={{ mb: 2 }}
   /> */}
       {/* Price Range */}
-      <Typography fontWeight="bold" mb={1} fontFamily="Inter">
-        Price Range ({authState.currency})
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          mb: 0,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <Typography fontWeight="bold" mb={1} fontFamily="Inter">
+          Price Range ({authState.currency})
+        </Typography>
+        <Box
+          component="button"
+          onClick={() => setFilters({})}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.4,
+            color: "#2F61BF",
+            cursor: "pointer",
+            mb: 1,
+            py: 0.5,
+            border: "none",
+            background: "transparent",
+            fontFamily: "Inter, sans-serif",
+            fontSize: "0.875rem",
+            fontWeight: "500",
+            transition: "color 0.2s ease",
+            "&:hover": {
+              color: "text.primary",
+              textDecoration: "underline",
+            },
+          }}
+        >
+          <Close fontFamily="Inter" fontSize="18px" />
+          <Typography
+            component="span"
+            sx={{
+              fontFamily: "inherit",
+              fontSize: "inherit",
+              fontWeight: "inherit",
+            }}
+          >
+            Clear Filters
+          </Typography>
+        </Box>
+      </Box>
       <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
-        <TextField fullWidth size="small" placeholder="Min" value={filters.minPrice || ""} onChange={(e) => handleChange("minPrice", e.target.value)} />
-        <TextField fullWidth size="small" placeholder="Max" value={filters.maxPrice || ""} onChange={(e) => handleChange("maxPrice", e.target.value)} />
+        <TextField
+          fullWidth
+          size="small"
+          placeholder="Min"
+          value={filters.minPrice || ""}
+          onChange={(e) => handleChange("minPrice", e.target.value)}
+        />
+        <TextField
+          fullWidth
+          size="small"
+          placeholder="Max"
+          value={filters.maxPrice || ""}
+          onChange={(e) => handleChange("maxPrice", e.target.value)}
+        />
       </Box>
 
       {/* Mileage */}
@@ -60,8 +121,20 @@ const FilterSidebar = ({ filters, setFilters }) => {
         Mileage (KMs)
       </Typography>
       <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
-        <TextField fullWidth size="small" placeholder="Min" value={filters.minMileage || ""} onChange={(e) => handleChange("minMileage", e.target.value)} />
-        <TextField fullWidth size="small" placeholder="Max" value={filters.maxMileage || ""} onChange={(e) => handleChange("maxMileage", e.target.value)} />
+        <TextField
+          fullWidth
+          size="small"
+          placeholder="Min"
+          value={filters.minMileage || ""}
+          onChange={(e) => handleChange("minMileage", e.target.value)}
+        />
+        <TextField
+          fullWidth
+          size="small"
+          placeholder="Max"
+          value={filters.maxMileage || ""}
+          onChange={(e) => handleChange("maxMileage", e.target.value)}
+        />
       </Box>
 
       {/* Horsepower
@@ -78,12 +151,12 @@ const FilterSidebar = ({ filters, setFilters }) => {
         Model Year
       </Typography>
       <Box sx={{ mb: 2 }}>
-        <TextField 
-          fullWidth 
-          size="small" 
-          placeholder="Enter year (e.g., 2020)" 
-          value={filters.model || ""} 
-          onChange={(e) => handleChange("model", e.target.value)} 
+        <TextField
+          fullWidth
+          size="small"
+          placeholder="Enter year (e.g., 2020)"
+          value={filters.model || ""}
+          onChange={(e) => handleChange("model", e.target.value)}
         />
       </Box>
 
@@ -102,21 +175,36 @@ const FilterSidebar = ({ filters, setFilters }) => {
         {
           key: "fuel",
           title: "Fuel Type",
-          options: ['Petrol', 'Diesel', 'HI-Octane', 'Electric', 'Hybrid'],
+          options: ["Petrol", "Diesel", "HI-Octane", "Electric", "Hybrid"],
         },
         {
           key: "color",
           title: "Color",
-          options: ['Red', 'Blue', 'Black', 'White', 'Gray', 'Silver', 'Green', 'Yellow', 'Orange', 'Brown', 'Purple', 'Beige', 'Gold', 'Bronze'],
+          options: [
+            "Red",
+            "Blue",
+            "Black",
+            "White",
+            "Gray",
+            "Silver",
+            "Green",
+            "Yellow",
+            "Orange",
+            "Brown",
+            "Purple",
+            "Beige",
+            "Gold",
+            "Bronze",
+          ],
         },
         {
           key: "transmission",
           title: "Transmission",
-          options: ['AGS', 'Manual', 'CVT', 'DCT', 'AMT', 'EV Single-Speed'],
+          options: ["AGS", "Manual", "CVT", "DCT", "AMT", "EV Single-Speed"],
         },
       ].map((filter, index) => (
-        <Accordion 
-          key={index} 
+        <Accordion
+          key={index}
           expanded={expandedAccordions[filter.key]}
           onChange={handleAccordionChange(filter.key)}
         >
@@ -131,16 +219,29 @@ const FilterSidebar = ({ filters, setFilters }) => {
                 <Grid item xs={6} key={idx}>
                   <Button
                     fullWidth
-                    variant={filters[filter.key] === option ? "contained" : "outlined"}
-                    onClick={() => handleChange(filter.key, filters[filter.key] === option ? "" : option)}
+                    variant={
+                      filters[filter.key] === option ? "contained" : "outlined"
+                    }
+                    onClick={() =>
+                      handleChange(
+                        filter.key,
+                        filters[filter.key] === option ? "" : option
+                      )
+                    }
                     sx={{
                       textTransform: "none",
                       fontFamily: "Inter",
-                      color: filters[filter.key] === option ? "#fff" : '#000',
-                      backgroundColor: filters[filter.key] === option ? colors.buttoncolor : "transparent",
-                      borderColor: '#ccc',
-                      '&:hover': {
-                        backgroundColor: filters[filter.key] === option ? colors.buttoncolor : "rgba(0, 0, 0, 0.04)",
+                      color: filters[filter.key] === option ? "#fff" : "#000",
+                      backgroundColor:
+                        filters[filter.key] === option
+                          ? colors.buttoncolor
+                          : "transparent",
+                      borderColor: "#ccc",
+                      "&:hover": {
+                        backgroundColor:
+                          filters[filter.key] === option
+                            ? colors.buttoncolor
+                            : "rgba(0, 0, 0, 0.04)",
                         borderColor: colors.buttoncolor,
                       },
                       minHeight: "36px",
