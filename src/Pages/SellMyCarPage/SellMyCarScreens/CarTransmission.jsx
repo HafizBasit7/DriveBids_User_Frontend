@@ -22,7 +22,7 @@ const transmissionTypes = [
   { type: "CVT", description: "Continuously Variable Transmission" },
   { type: "DCT", description: "Dual Clutch Transmission" },
   { type: "AMT", description: "Automated Manual Transmission" },
-  { type: "EV Single-Speed", description: "Used in most electric vehicles" },
+  { type: "EV", description: "Used in most electric vehicles" },
 ];
 
 const CarTransmissionPage = () => {
