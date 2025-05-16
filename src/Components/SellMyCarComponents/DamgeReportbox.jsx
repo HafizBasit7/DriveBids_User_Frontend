@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Box, Typography, Button, TextField, Link } from "@mui/material";
 import colors from "../../Style/color";
 import greyDent from "../../assets/SVG/greyDent.svg";
@@ -11,29 +11,37 @@ import imgsketch1 from "../../assets/SVG/frontdamage.svg";
 import imgsketch2 from "../../assets/SVG/backdamage.svg";
 import imgsketch3 from "../../assets/SVG/leftdamage.svg";
 import imgsketch4 from "../../assets/SVG/rightdamage.svg";
-import {useCar} from "../../context/car.context";
+import { useCar } from "../../context/car.context";
 import toast from "react-hot-toast";
-import {uploadImage} from "../../utils/upload";
+import { uploadImage } from "../../utils/upload";
 import { useNavigate } from "react-router-dom";
 
-const images = [
-  imgsketch1,
-  imgsketch4,
-  imgsketch3,
-  imgsketch2
-];
+const images = [imgsketch1, imgsketch4, imgsketch3, imgsketch2];
 
-const DamageReportBox = ({ title, description, carFacing, onNext, save = false }) => {
+const DamageReportBox = ({
+  title,
+  description,
+  carFacing,
+  onNext,
+  save = false,
+}) => {
   const [selected, setSelected] = useState(null);
   const [damageDescription, setDamageDescription] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
-  const {carState, dispatch, draftSave} = useCar();
-  const [imageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
+  const { carState, dispatch, draftSave } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const imageRef = useRef();
 
-  const currentDamageReport = (carState.carDamageReport?.damageReport || []).filter(val => val.imageIndex === carFacing);
-
+  const currentDamageReport = (
+    carState.carDamageReport?.damageReport || []
+  ).filter((val) => val.imageIndex === carFacing);
 
   const [showDamageForm, setShowDamageForm] = useState(false);
   const clickedPosition = useRef();
@@ -45,14 +53,14 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
     }
   };
   const handleSketchClick = (e) => {
-    const rect = e.target.getBoundingClientRect();  
+    const rect = e.target.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
 
     clickedPosition.current = { x, y };
-    setShowDamageForm(true); 
+    setShowDamageForm(true);
   };
-  
+
   const damages = [
     { name: "Scratches", grey: greyScratch, colored: Scratch },
     { name: "Dents/Cracks", grey: greyDent, colored: Dent },
@@ -72,55 +80,63 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
 
   const handleSave = () => {
     if (!selectedImage) {
-      toast.error('Please upload an image of the damage');
+      toast.error("Please upload an image of the damage");
       return;
     }
 
     if (!selected) {
-      toast.error('Please select a damage type');
+      toast.error("Please select a damage type");
       return;
     }
 
     if (!damageDescription) {
-      toast.error('Please provide a damage description');
+      toast.error("Please provide a damage description");
       return;
     }
 
     setShowDamageForm(false);
 
     //Save image and insert damage with imgurl
-    toast.promise(async () => {
-      const imgUrl = await uploadImage(selectedImage);
-      //Save new damage report
-      dispatch({
-        type: 'INSERT_DAMAGE',
-        value: {
-          imageIndex: carFacing,
-          x: clickedPosition.current.x,
-          y: clickedPosition.current.y,
-          imageUrl: imgUrl,
-          damageType: selected,
-          description: damageDescription,
-        },
-      });
+    toast.promise(
+      async () => {
+        const imgUrl = await uploadImage(selectedImage);
+        //Save new damage report
+        dispatch({
+          type: "INSERT_DAMAGE",
+          value: {
+            imageIndex: carFacing,
+            x: clickedPosition.current.x,
+            y: clickedPosition.current.y,
+            imageUrl: imgUrl,
+            damageType: selected,
+            description: damageDescription,
+          },
+        });
 
-      resetState();
-    }, {
-      loading: 'Uploading image',
-      error: e => e.message,
-      success: 'Damage report added.'
-    })
+        resetState();
+      },
+      {
+        loading: "Uploading image",
+        error: (e) => e.message,
+        success: "Damage report added.",
+      }
+    );
   };
 
-  const saveDamageRpeort =  () => {
-    toast.promise(async () => {
-      await draftSave('carDamageReport');
-      navigate('..')
-    }, {
-      loading: 'Saving draft',
-      error: e => e.message,
-      success: !carState.carDamageReport ? "Draft Saved, No Damage Reported." : 'Draft Saved',
-    })
+  const saveDamageRpeort = () => {
+    toast.promise(
+      async () => {
+        await draftSave("carDamageReport");
+        navigate("..");
+      },
+      {
+        loading: "Saving draft",
+        error: (e) => e.message,
+        success: !carState.carDamageReport
+          ? "Draft Saved, No Damage Reported."
+          : "Draft Saved",
+      }
+    );
   };
 
   const renderPoint = (iconSrc, val, index) => {
@@ -132,10 +148,16 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
       <img
         key={index}
         src={iconSrc}
-        style={{ width: 30, height: 30, position: 'absolute', left: absoluteX, top: absoluteY, }}
+        style={{
+          width: 30,
+          height: 30,
+          position: "absolute",
+          left: absoluteX,
+          top: absoluteY,
+        }}
       />
     );
-  }
+  };
 
   return (
     <Box
@@ -163,10 +185,14 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
         }}
       >
         <Box>
-          <Typography sx={{ fontFamily: "Outfit", fontWeight: 900, fontSize: 30, mb: 2 }}>
+          <Typography
+            sx={{ fontFamily: "Outfit", fontWeight: 900, fontSize: 30, mb: 2 }}
+          >
             {title}
           </Typography>
-          <Typography sx={{ fontFamily: "Outfit", fontWeight: 500, fontSize: 17, mb: 2 }}>
+          <Typography
+            sx={{ fontFamily: "Outfit", fontWeight: 500, fontSize: 17, mb: 2 }}
+          >
             {description}
           </Typography>
 
@@ -187,221 +213,223 @@ const DamageReportBox = ({ title, description, carFacing, onNext, save = false }
             Damage Labels
           </Button>
 
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", gap: 2, mt: 3 }}>
-        {damages.map((damage) => (
           <Box
-            key={damage.name}
             sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              cursor: "pointer",
-            }}
-            onClick={() => setSelected(damage.name)}
-          >
-            <img
-              src={selected === damage.name ? damage.colored : damage.grey}
-              alt={damage.name}
-              style={{ width: 30, height: 30 }}
-            />
-            <Typography sx={{ fontFamily: "Outfit", fontSize: 16, fontWeight: 600 }}>
-              {damage.name}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-        </Box>
-          {/* image  */}
-        <Box
-            sx={{
-              border: "1px dashed #B4B4B4",
-              borderRadius: 2,
-              textAlign: "center",
-              p: 3,
-              width: { xs: "100%", lg: 380 },
-              height: { xs: "auto", md: 280 },
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              cursor: "pointer",
-              visibility: showDamageForm ? 'hidden' : 'visible',
-              position: showDamageForm ? 'absolute' : null,
+              alignItems: "start",
+              gap: 2,
+              mt: 3,
             }}
-            // onClick={handleSketchClick}
           >
-            <Box sx={{position: 'relative'}}>
-              <img
-                ref={imageRef}
-                src={images[carFacing]}
-                alt="Car Sketch"
-                onLoad={() => {
-                  setImageLoaded(true);
+            {damages.map((damage) => (
+              <Box
+                key={damage.name}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  cursor: "pointer",
                 }}
-                onAbort={() => {
-                  setImageLoaded(false);
-                }}
-                style={{ maxWidth: "100%", margin: "auto" }}
-                onClick={handleSketchClick}
-              />
-              {imageLoaded && (
-                currentDamageReport.map((val, index) => {
-                  const iconSrc = damages.find(valIcon => valIcon.name === val.damageType).colored; 
-                  return (
-                    renderPoint(iconSrc, val, index)
-                  )
-                })
-              )}
-            </Box>
-            
-            
-            <Typography
-              sx={{
-                fontFamily: "Inter",
-                fontSize: 15,
-                mt: 2,
-                color: "#000",
-                textAlign: "center",
-              }}
-            >
-              Upload an Image
-            </Typography>
-            <Typography
-              sx={{
-                fontFamily: "Inter",
-                fontSize: 12,
-                mt: 1,
-                color: "#000",
-                textAlign: "center",
-              }}
-            >
-              Supports: PNG, JPG, JPEG
-            </Typography>
+                onClick={() => setSelected(damage.name)}
+              >
+                <img
+                  src={selected === damage.name ? damage.colored : damage.grey}
+                  alt={damage.name}
+                  style={{ width: 30, height: 30 }}
+                />
+                <Typography
+                  sx={{ fontFamily: "Outfit", fontSize: 16, fontWeight: 600 }}
+                >
+                  {damage.name}
+                </Typography>
+              </Box>
+            ))}
           </Box>
-{/* form  */}
-        {showDamageForm && (
-          <Box
-              
+        </Box>
+        {/* image  */}
+        <Box
           sx={{
-            border: "1px solid #2F61BF",
+            border: "1px dashed #B4B4B4",
             borderRadius: 2,
             textAlign: "center",
-            p: 2,
+            p: 3,
             width: { xs: "100%", lg: 380 },
+            height: { xs: "auto", md: 280 },
             display: "flex",
             flexDirection: "column",
-            
-            gap: 2,
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
+            visibility: showDamageForm ? "hidden" : "visible",
+            position: showDamageForm ? "absolute" : null,
           }}
+          // onClick={handleSketchClick}
         >
-          <Button
+          <Box sx={{ position: "relative" }}>
+            <img
+              ref={imageRef}
+              src={images[carFacing]}
+              alt="Car Sketch"
+              onLoad={() => {
+                setImageLoaded(true);
+              }}
+              onAbort={() => {
+                setImageLoaded(false);
+              }}
+              style={{ maxWidth: "100%", margin: "auto" }}
+              onClick={handleSketchClick}
+            />
+            {imageLoaded &&
+              currentDamageReport.map((val, index) => {
+                const iconSrc = damages.find(
+                  (valIcon) => valIcon.name === val.damageType
+                ).colored;
+                return renderPoint(iconSrc, val, index);
+              })}
+          </Box>
+
+          <Typography
             sx={{
-              backgroundColor: colors.buttoncolor,
-              color: "white",
-              fontSize: 10,
-              borderRadius: 1,
-              width: "fit-content",
-              alignSelf: "center",
-              px: 2,
-              py: 0.5,
-              fontFamily:"Inter"
+              fontFamily: "Inter",
+              fontSize: 15,
+              mt: 2,
+              color: "#000",
+              textAlign: "center",
             }}
           >
-            Damage Description
-          </Button>
-
-          <TextField
-            multiline
-            minRows={4}
-            placeholder="Provide a description of the damage."
-            value={damageDescription}
-            onChange={(e) => setDamageDescription(e.target.value)}
-            fullWidth
-            sx={{
-              backgroundColor: "#fff",
-              borderRadius: 1,
-              "& .MuiOutlinedInput-root": { border: "none" },
-              "& .MuiInputBase-input::placeholder": { 
-                fontSize: 14,   
-                color: "gray", 
-              },
-            }}
-          />
-
-
-<Typography>
-<label 
-  htmlFor="image-upload" 
-  style={{ 
-    color: colors.buttoncolor, 
-    fontWeight: 600, 
-    fontSize: 12, 
-    fontFamily: "Inter", 
-    cursor: "pointer" 
-  }}
->
-  Upload an image {selectedImage ? `(${selectedImage.name})` : ''}
-</label> 
-{" "}<br />
-
-<Typography
+            Upload an Image
+          </Typography>
+          <Typography
             sx={{
               fontFamily: "Inter",
               fontSize: 12,
-              mt: 0.2,
+              mt: 1,
               color: "#000",
               textAlign: "center",
             }}
           >
             Supports: PNG, JPG, JPEG
           </Typography>
-</Typography>
-
-<input 
-id="image-upload" 
-type="file" 
-accept="image/png, image/jpeg, image/jpg" 
-style={{ display: 'none' }} 
-onChange={handleImageUpload}
-/>
-
-
-          <Box>
-          <Button
-            onClick={handleSave}
-            sx={{
-              backgroundColor: colors.buttoncolor,
-fontSize:12,
-              color: "white",
-              textTransform: "none",
-              width: 80,
-              alignSelf: "center",
-              fontFamily:"Inter"
-            }}
-          >
-            Save
-          </Button>
-
-          <Button
-            onClick={handleCancel}
-            sx={{
-              backgroundColor: colors.buttoncolor,
-fontSize:12,
-              color: "white",
-              textTransform: "none",
-              width: 80,
-              marginLeft: 1,
-              alignSelf: "center",
-              fontFamily:"Inter"
-            }}
-          >
-            Cancel
-          </Button>
-          </Box>
-
         </Box>
+        {/* form  */}
+        {showDamageForm && (
+          <Box
+            sx={{
+              border: "1px solid #2F61BF",
+              borderRadius: 2,
+              textAlign: "center",
+              p: 2,
+              width: { xs: "100%", lg: 380 },
+              display: "flex",
+              flexDirection: "column",
+
+              gap: 2,
+            }}
+          >
+            <Button
+              sx={{
+                backgroundColor: colors.buttoncolor,
+                color: "white",
+                fontSize: 10,
+                borderRadius: 1,
+                width: "fit-content",
+                alignSelf: "center",
+                px: 2,
+                py: 0.5,
+                fontFamily: "Inter",
+              }}
+            >
+              Damage Description
+            </Button>
+
+            <TextField
+              multiline
+              minRows={4}
+              placeholder="Provide a description of the damage."
+              value={damageDescription}
+              onChange={(e) => setDamageDescription(e.target.value)}
+              fullWidth
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: 1,
+                "& .MuiOutlinedInput-root": { border: "none" },
+                "& .MuiInputBase-input::placeholder": {
+                  fontSize: 14,
+                  color: "gray",
+                },
+              }}
+            />
+
+            <Typography>
+              <label
+                htmlFor="image-upload"
+                style={{
+                  color: colors.buttoncolor,
+                  fontWeight: 600,
+                  fontSize: 12,
+                  fontFamily: "Inter",
+                  cursor: "pointer",
+                }}
+              >
+                Upload an image {selectedImage ? `(${selectedImage.name})` : ""}
+              </label>{" "}
+              <br />
+              <Typography
+                sx={{
+                  fontFamily: "Inter",
+                  fontSize: 12,
+                  mt: 0.2,
+                  color: "#000",
+                  textAlign: "center",
+                }}
+              >
+                Supports: PNG, JPG, JPEG
+              </Typography>
+            </Typography>
+
+            <input
+              id="image-upload"
+              type="file"
+              accept="image/png, image/jpeg, image/jpg"
+              style={{ display: "none" }}
+              onChange={handleImageUpload}
+            />
+
+            <Box>
+              <Button
+                onClick={handleSave}
+                sx={{
+                  backgroundColor: colors.buttoncolor,
+                  fontSize: 12,
+                  color: "white",
+                  textTransform: "none",
+                  width: 80,
+                  alignSelf: "center",
+                  fontFamily: "Inter",
+                }}
+              >
+                Save
+              </Button>
+
+              <Button
+                onClick={handleCancel}
+                sx={{
+                  backgroundColor: colors.buttoncolor,
+                  fontSize: 12,
+                  color: "white",
+                  textTransform: "none",
+                  width: 80,
+                  marginLeft: 1,
+                  alignSelf: "center",
+                  fontFamily: "Inter",
+                }}
+              >
+                Cancel
+              </Button>
+            </Box>
+          </Box>
         )}
-       
       </Box>
 
       {/* NEXT STEP */}
@@ -418,7 +446,7 @@ fontSize:12,
           }}
           onClick={!save ? onNext : saveDamageRpeort}
         >
-          {save ? 'SAVE' : 'Next Step'}
+          {save ? "SAVE" : "Next Step"}
         </Button>
       </Box>
     </Box>

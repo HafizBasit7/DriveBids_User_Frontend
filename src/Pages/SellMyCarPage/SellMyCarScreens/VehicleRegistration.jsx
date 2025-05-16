@@ -11,15 +11,15 @@ const VehicleRegistration = () => {
 
   function onChangeTextReg(value) {
     dispatch({
-      type: 'UPDATE_FIELD',
-      field: 'regNo',
+      type: "UPDATE_FIELD",
+      field: "regNo",
       value,
     });
   }
 
   function nextPage() {
     if (!carState.regNo) {
-      toast.error('Enter registration number')
+      toast.error("Enter registration number");
       return;
     } else {
       navigate("..");
@@ -33,15 +33,25 @@ const VehicleRegistration = () => {
       buttonText="Back "
       onClick={() => navigate("/ad")}
     >
-      <Box width="100%" sx={{ mt: 15, display: "flex", justifyContent: "center" }}>
-        <Stack spacing={2} alignItems="flex-start" justifyContent="center" width="50%">
-          <Typography variant="h6" sx={{fontFamily:"Inter", fontSize:25}}>Enter Your Vehicle Registration</Typography>
-          <TextField 
+      <Box
+        width="100%"
+        sx={{ mt: 15, display: "flex", justifyContent: "center" }}
+      >
+        <Stack
+          spacing={2}
+          alignItems="flex-start"
+          justifyContent="center"
+          width="50%"
+        >
+          <Typography variant="h6" sx={{ fontFamily: "Inter", fontSize: 25 }}>
+            Enter Your Vehicle Registration
+          </Typography>
+          <TextField
             value={carState.regNo}
             onChange={(e) => onChangeTextReg(e.target.value)}
-            variant="outlined" 
-            placeholder="A12345" 
-            fullWidth 
+            variant="outlined"
+            placeholder="A12345"
+            fullWidth
           />
           <Box display="flex" justifyContent="flex-end" width="100%" mt={3}>
             <Button

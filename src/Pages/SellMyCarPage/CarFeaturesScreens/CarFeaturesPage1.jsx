@@ -27,6 +27,11 @@ const exteriorFeaturesLabels = [
 const CarFeaturesPage1 = () => {
   const navigate = useNavigate();
   const { carState, dispatch } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
   const [customFeatures, setCustomFeatures] = useState([]);
 
   useEffect(() => {

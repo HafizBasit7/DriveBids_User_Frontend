@@ -1,4 +1,10 @@
-import { Box, Button, InputAdornment, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/Mainlayout";
 import CarSelectionBox from "../../../Components/SellMyCarComponents/CarCompanyBox";
@@ -6,34 +12,34 @@ import colors from "../../../Style/color";
 import { useCar } from "../../../context/car.context";
 import LocationInput from "../../../Components/Location/LocationInput";
 import { Search } from "@mui/icons-material";
+import { useEffect } from "react";
 
 const CityPage = () => {
   const navigate = useNavigate();
-  const {carState, dispatch} = useCar();
-  
-  function onCangeCarDetails (value) {
+  const { carState, dispatch } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
+  function onCangeCarDetails(value) {
     dispatch({
-      type: 'UPDATE_FIELD',
-      section: 'carDetails',
-      field: 'location',
+      type: "UPDATE_FIELD",
+      section: "carDetails",
+      field: "location",
       value,
     });
-  };
+  }
 
   return (
     <MainLayout
-    title="Location"
-            subtitle="Pick Your City"
-            buttonText="Back"
-            onClick={() => navigate("../model")}
-  >
-      <Box width="100%" >
-        
-        
-
-        <Box  zIndex={2}>
-          
-
+      title="Location"
+      subtitle="Pick Your City"
+      buttonText="Back"
+      onClick={() => navigate("../model")}
+    >
+      <Box width="100%">
+        <Box zIndex={2}>
           <Typography
             variant="h5"
             fontWeight={600}
@@ -57,13 +63,15 @@ const CityPage = () => {
               p={3}
               border="1px solid #D9D9D9"
               borderRadius={2}
-              sx={{backgroundColor:"white"}}
+              sx={{ backgroundColor: "white" }}
             >
               <LocationInput handleChange={onCangeCarDetails}>
                 <TextField
                   fullWidth
                   variant="outlined"
-                  placeholder={carState?.carDetails.location?.name || 'Search Location'}
+                  placeholder={
+                    carState?.carDetails.location?.name || "Search Location"
+                  }
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -76,7 +84,7 @@ const CityPage = () => {
                       padding: "0 12px",
                       borderRadius: 2,
                       backgroundColor: "white",
-                      '&:hover': {
+                      "&:hover": {
                         backgroundColor: "white",
                       },
                     },
@@ -106,7 +114,7 @@ const CityPage = () => {
                   }}
                 />
               </LocationInput>
-               {/* Next Step Button */}
+              {/* Next Step Button */}
               <Box display="flex" justifyContent="flex-end" mt={2}>
                 <Button
                   variant="contained"
@@ -117,17 +125,19 @@ const CityPage = () => {
                     minWidth: 120,
                     height: 40,
                     backgroundColor: colors.buttoncolor,
-                    '&.Mui-disabled': {
-                      backgroundColor: '#E0E0E0',
-                      color: '#9E9E9E',
-                      cursor: 'not-allowed'
+                    "&.Mui-disabled": {
+                      backgroundColor: "#E0E0E0",
+                      color: "#9E9E9E",
+                      cursor: "not-allowed",
                     },
-                    '&:hover': {
+                    "&:hover": {
                       backgroundColor: colors.buttoncolor,
-                      opacity: 0.9
-                    }
+                      opacity: 0.9,
+                    },
                   }}
-                  onClick={() => {navigate("../mileage")}}
+                  onClick={() => {
+                    navigate("../mileage");
+                  }}
                 >
                   Next Step
                 </Button>

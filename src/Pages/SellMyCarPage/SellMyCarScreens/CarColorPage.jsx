@@ -1,8 +1,19 @@
-import { Box, Typography, List, ListItem, ListItemText, Paper, Button, Grid, TextField } from "@mui/material";
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Button,
+  Grid,
+  TextField,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/Mainlayout";
 import colors from "../../../Style/color";
 import { useCar } from "../../../context/car.context";
+import { useEffect } from "react";
 
 const CarColorPage = () => {
   const navigate = useNavigate();
@@ -20,25 +31,31 @@ const CarColorPage = () => {
     { name: "Purple", hex: "#800080" },
     { name: "Beige", hex: "#F5F5DC" },
     { name: "Gold", hex: "#FFD700" },
-    { name: "Bronze", hex: "#CD7F32" }
+    { name: "Bronze", hex: "#CD7F32" },
   ];
-  const {carState, dispatch} = useCar();
-    
-  function onCangeCarDetails (value) {
+  const { carState, dispatch } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
+  function onCangeCarDetails(value) {
     dispatch({
-      type: 'UPDATE_FIELD',
-      section: 'carDetails',
-      field: 'color',
+      type: "UPDATE_FIELD",
+      section: "carDetails",
+      field: "color",
       value,
     });
-  };
+  }
 
   return (
-    <MainLayout  title="Car Colour"
-    subtitle="Pick The Colour Of Your Car"
-    buttonText="Back"
-    onClick={() => navigate("../fuel")}>
-      <Box width="100%" >
+    <MainLayout
+      title="Car Colour"
+      subtitle="Pick The Colour Of Your Car"
+      buttonText="Back"
+      onClick={() => navigate("../fuel")}
+    >
+      <Box width="100%">
         <Box zIndex={2}>
           <Typography
             variant="h4"
@@ -60,15 +77,21 @@ const CarColorPage = () => {
               p: 3,
               borderRadius: 2,
               backgroundColor: "white",
-              border: "1px solid #D9D9D9"
+              border: "1px solid #D9D9D9",
             }}
           >
-            <Typography fontWeight={600} sx={{ fontSize: 18, mb: 3, fontFamily: "Inter" }}>
+            <Typography
+              fontWeight={600}
+              sx={{ fontSize: 18, mb: 3, fontFamily: "Inter" }}
+            >
               What is the color of your car?
             </Typography>
 
             <Box mb={3}>
-              <Typography fontWeight={500} sx={{ fontSize: 16, mb: 2, fontFamily: "Inter" }}>
+              <Typography
+                fontWeight={500}
+                sx={{ fontSize: 16, mb: 2, fontFamily: "Inter" }}
+              >
                 Or enter a custom color
               </Typography>
               <TextField
@@ -93,7 +116,10 @@ const CarColorPage = () => {
               />
             </Box>
 
-            <Typography fontWeight={500} sx={{ fontSize: 16, mb: 2, fontFamily: "Inter" }}>
+            <Typography
+              fontWeight={500}
+              sx={{ fontSize: 16, mb: 2, fontFamily: "Inter" }}
+            >
               Or select from common colors
             </Typography>
 
@@ -106,18 +132,21 @@ const CarColorPage = () => {
                     onClick={() => onCangeCarDetails(color.name)}
                     sx={{
                       borderRadius: 1,
-                      border: '1px solid',
-                      borderColor: carState.carDetails.color === color.name ? colors.buttoncolor : '#E0E0E0',
-                      transition: 'all 0.3s ease',
-                      '&.Mui-selected': {
+                      border: "1px solid",
+                      borderColor:
+                        carState.carDetails.color === color.name
+                          ? colors.buttoncolor
+                          : "#E0E0E0",
+                      transition: "all 0.3s ease",
+                      "&.Mui-selected": {
                         backgroundColor: `${colors.buttoncolor}10`,
                         borderColor: colors.buttoncolor,
-                        '&:hover': {
+                        "&:hover": {
                           backgroundColor: `${colors.buttoncolor}20`,
                         },
                       },
-                      '&:hover': {
-                        backgroundColor: '#F5F5F5',
+                      "&:hover": {
+                        backgroundColor: "#F5F5F5",
                         borderColor: colors.buttoncolor,
                       },
                     }}
@@ -126,21 +155,28 @@ const CarColorPage = () => {
                       sx={{
                         width: 16,
                         height: 16,
-                        borderRadius: '50%',
+                        borderRadius: "50%",
                         backgroundColor: color.hex,
-                        border: color.name === 'White' ? '1px solid #E0E0E0' : 'none',
-                        mr: 2
+                        border:
+                          color.name === "White" ? "1px solid #E0E0E0" : "none",
+                        mr: 2,
                       }}
                     />
-                    <ListItemText 
+                    <ListItemText
                       primary={color.name}
                       sx={{
                         fontFamily: "Inter",
                         fontSize: 16,
-                        '& .MuiListItemText-primary': {
-                          color: carState.carDetails.color === color.name ? colors.buttoncolor : '#333333',
-                          fontWeight: carState.carDetails.color === color.name ? 600 : 400,
-                        }
+                        "& .MuiListItemText-primary": {
+                          color:
+                            carState.carDetails.color === color.name
+                              ? colors.buttoncolor
+                              : "#333333",
+                          fontWeight:
+                            carState.carDetails.color === color.name
+                              ? 600
+                              : 400,
+                        },
                       }}
                     />
                   </ListItem>
@@ -158,15 +194,15 @@ const CarColorPage = () => {
                   height: "40px",
                   fontFamily: "Inter",
                   backgroundColor: colors.buttoncolor,
-                  '&.Mui-disabled': {
-                    backgroundColor: '#E0E0E0',
-                    color: '#9E9E9E',
-                    cursor: 'not-allowed'
+                  "&.Mui-disabled": {
+                    backgroundColor: "#E0E0E0",
+                    color: "#9E9E9E",
+                    cursor: "not-allowed",
                   },
-                  '&:hover': {
+                  "&:hover": {
                     backgroundColor: colors.buttoncolor,
-                    opacity: 0.9
-                  }
+                    opacity: 0.9,
+                  },
                 }}
                 onClick={() => navigate("../engine")}
               >

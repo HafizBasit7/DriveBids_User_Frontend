@@ -3,49 +3,69 @@ import UploadIcon from "@mui/icons-material/Upload";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useNavigate } from "react-router-dom";
 import colors from "../../Style/color";
-import {useCar} from "../../context/car.context";
-import { useRef } from "react";
+import { useCar } from "../../context/car.context";
+import { useEffect, useRef } from "react";
 import { uploadImage } from "../../utils/upload";
 import toast from "react-hot-toast";
 
-const UploadBox = ({ title, description, imgSketch, onNext, type, index, save }) => {
-  const {carState, dispatch, draftSave} = useCar();
+const UploadBox = ({
+  title,
+  description,
+  imgSketch,
+  onNext,
+  type,
+  index,
+  save,
+}) => {
+  const { carState, dispatch, draftSave } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
-  const currentSelectedImage = ((carState.images || {})[type] || [])[index]?.url;
+  const currentSelectedImage = ((carState.images || {})[type] || [])[index]
+    ?.url;
 
   const onSelectImage = (e) => {
     const file = e.target.files[0];
     if (file) {
       //Upload image and then update in dispatch
-      toast.promise(async () => {
-        const imgUrl = await uploadImage(file);
-        dispatch({
-          type: 'UPDATE_IMAGE',
-          section: type,
-          index: index,
-          value: {type: 'image', url: imgUrl}
-        });
-      }, {
-        loading: 'Uploading image...',
-        error: e => e.message,
-        success: 'Image uploaded successfully! Click Next Step to continue.'
-      })
+      toast.promise(
+        async () => {
+          const imgUrl = await uploadImage(file);
+          dispatch({
+            type: "UPDATE_IMAGE",
+            section: type,
+            index: index,
+            value: { type: "image", url: imgUrl },
+          });
+        },
+        {
+          loading: "Uploading image...",
+          error: (e) => e.message,
+          success: "Image uploaded successfully! Click Next Step to continue.",
+        }
+      );
     }
   };
 
   const saveImagesDraft = () => {
-    toast.promise(async () => {
-      await draftSave('images', type);
-      navigate('../');
-    }, {
-      loading: 'Saving Draft...',
-      error: e => e.message,
-      success: 'Draft Saved Successfully!',
-    })
+    toast.promise(
+      async () => {
+        await draftSave("images", type);
+        navigate("../");
+      },
+      {
+        loading: "Saving Draft...",
+        error: (e) => e.message,
+        success: "Draft Saved Successfully!",
+      }
+    );
   };
-  
+
   return (
     <Box
       sx={{
@@ -72,7 +92,9 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
         }}
       >
         <Box>
-          <Typography sx={{ fontFamily: "Inter", fontWeight: 800, fontSize: 30, mb: 3 }}>
+          <Typography
+            sx={{ fontFamily: "Inter", fontWeight: 800, fontSize: 30, mb: 3 }}
+          >
             {title}
           </Typography>
           <Typography
@@ -114,91 +136,93 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
             Upload Image
           </Button>
         </Box>
-            {currentSelectedImage && (
-              <Box
+        {currentSelectedImage && (
+          <Box
+            sx={{
+              border: "1px dashed #B4B4B4",
+              borderRadius: 2,
+              textAlign: "center",
+              padding: 1,
+              width: { xs: "100%", lg: 380 },
+              height: { xs: "auto", md: 250 },
+              position: "relative",
+            }}
+          >
+            <img
+              src={currentSelectedImage}
+              alt="Car Sketch"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+            <Box
               sx={{
-                border: "1px dashed #B4B4B4",
-                borderRadius: 2,
-                textAlign: "center",
-                padding: 1,
-                width: { xs: "100%", lg: 380 },
-                height: { xs: "auto", md: 250 },
-                position: "relative",
+                position: "absolute",
+                top: 10,
+                right: 10,
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
+                borderRadius: "50%",
+                p: 0.5,
               }}
             >
-              <img
-                src={currentSelectedImage}
-                alt="Car Sketch"
-                style={{ width: "100%", height: '100%', objectFit: 'cover' }}
+              <CheckCircleIcon
+                sx={{ color: colors.buttoncolor, fontSize: 30 }}
               />
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 10,
-                  right: 10,
-                  backgroundColor: "rgba(255, 255, 255, 0.9)",
-                  borderRadius: "50%",
-                  p: 0.5,
-                }}
-              >
-                <CheckCircleIcon sx={{ color: colors.buttoncolor, fontSize: 30 }} />
-              </Box>
             </Box>
-            )}
+          </Box>
+        )}
 
         {!currentSelectedImage && (
-           <Box
-           sx={{
-             border: "1px dashed #B4B4B4",
-             borderRadius: 2,
-             textAlign: "center",
-             p: 3,
-             width: { xs: "100%", lg: 380 },
-             height: { xs: "auto", md: 250 },
-             display: "flex",
-             flexDirection: "column",
-             justifyContent: "center",
-             alignItems: "center",
-           }}
-         >
-           <img
-             src={imgSketch}
-             alt="Car Sketch"
-             style={{ maxWidth: "100%", margin: "auto" }}
-           />
-           <Typography
-             sx={{
-               fontFamily: "Inter",
-               fontSize: 15,
-               mt: 2,
-               color: "#000",
-               textAlign: "center",
-             }}
-           >
-             Upload an Image
-           </Typography>
-           <Typography
-             sx={{
-               fontFamily: "Inter",
-               fontSize: 12,
-               mt: 1,
-               color: "#000",
-               textAlign: "center",
-             }}
-           >
-             Supports: PNG, JPG, JPEG
-           </Typography>
-         </Box>
+          <Box
+            sx={{
+              border: "1px dashed #B4B4B4",
+              borderRadius: 2,
+              textAlign: "center",
+              p: 3,
+              width: { xs: "100%", lg: 380 },
+              height: { xs: "auto", md: 250 },
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={imgSketch}
+              alt="Car Sketch"
+              style={{ maxWidth: "100%", margin: "auto" }}
+            />
+            <Typography
+              sx={{
+                fontFamily: "Inter",
+                fontSize: 15,
+                mt: 2,
+                color: "#000",
+                textAlign: "center",
+              }}
+            >
+              Upload an Image
+            </Typography>
+            <Typography
+              sx={{
+                fontFamily: "Inter",
+                fontSize: 12,
+                mt: 1,
+                color: "#000",
+                textAlign: "center",
+              }}
+            >
+              Supports: PNG, JPG, JPEG
+            </Typography>
+          </Box>
         )}
       </Box>
 
-      <Box 
-        display="flex" 
+      <Box
+        display="flex"
         justifyContent="flex-end"
         sx={{
           borderTop: "1px solid #E0E0E0",
           pt: 3,
-          mt: 2
+          mt: 2,
         }}
       >
         <Button
@@ -213,23 +237,23 @@ const UploadBox = ({ title, description, imgSketch, onNext, type, index, save })
             fontSize: "16px",
             fontWeight: 600,
             backgroundColor: colors.buttoncolor,
-            '&.Mui-disabled': {
-              backgroundColor: '#E0E0E0',
-              color: '#9E9E9E',
-              cursor: 'not-allowed'
+            "&.Mui-disabled": {
+              backgroundColor: "#E0E0E0",
+              color: "#9E9E9E",
+              cursor: "not-allowed",
             },
-            '&:hover': {
+            "&:hover": {
               backgroundColor: colors.buttoncolor,
-              opacity: 0.9
-            }
+              opacity: 0.9,
+            },
           }}
           onClick={save ? saveImagesDraft : onNext}
         >
-          {save ? 'SAVE & CONTINUE' : 'NEXT STEP →'}
+          {save ? "SAVE & CONTINUE" : "NEXT STEP →"}
         </Button>
       </Box>
     </Box>
-  )
+  );
 };
 
 export default UploadBox;

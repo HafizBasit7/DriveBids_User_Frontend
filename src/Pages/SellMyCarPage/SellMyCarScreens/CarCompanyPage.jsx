@@ -18,7 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import apiClient from "../../../api/client";
 import PaginationComponent from "../../../Components/Common/PaginationComponent";
 import { useEffect, useState } from "react";
-import { Search } from "@mui/icons-material";
+import { Search, PlusOneOutlined, PlusOne, Add } from "@mui/icons-material";
 
 const LIMIT = 15;
 
@@ -26,6 +26,11 @@ const CarCompanyPage = () => {
   const navigate = useNavigate();
 
   const { carState, dispatch } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
   // const [searchParams, setSearchParams] = useSearchParams();
   // const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
   const [searchInput, setSearchInput] = useState();
@@ -38,7 +43,17 @@ const CarCompanyPage = () => {
     },
     refetchOnMount: false,
   });
-  const makes = data?.Makes;
+  const [makes, setMakes] = useState(data?.Makes);
+  const [showInput, setShowInput] = useState(false);
+  const [customText, setCustomText] = useState("");
+
+  const handleAddCustom = () => {
+    if (customText.trim()) {
+      onChangeCarMake(customText.trim());
+      setCustomText("");
+      setShowInput(false);
+    }
+  };
 
   // let totalPages;
   // let slicedMakes;
@@ -91,7 +106,7 @@ const CarCompanyPage = () => {
   return (
     <MainLayout
       title="Car Make"
-      subtitle="Pick The Company of Your Car"
+      subtitle="Pick The Make of Your Car"
       buttonText="Back"
       onClick={() => navigate("..")}
     >
@@ -167,6 +182,74 @@ const CarCompanyPage = () => {
               },
             }}
           />
+          <Box className="w-full">
+            {!showInput ? (
+              <Button
+                variant="outlined"
+                startIcon={<Add size={16} />}
+                onClick={() => setShowInput(true)}
+                className="rounded-full mt-2 text-gray-800"
+                sx={{
+                  borderColor: "#D9D9D9",
+                  borderWidth: "1.5px",
+                  textTransform: "none",
+                  padding: "6px 12px",
+                  "&:hover": {
+                    borderColor: "#666666",
+                    backgroundColor: "rgba(0, 0, 0, 0.04)",
+                  },
+                  fontWeight: "600",
+                  marginBottom: "8px",
+                }}
+              >
+                Add Custom
+              </Button>
+            ) : (
+              <Box className="flex items-center gap-3 mt-0 mb-0">
+                <TextField
+                  size="small"
+                  value={customText}
+                  onChange={(e) => setCustomText(e.target.value)}
+                  placeholder="Enter custom make"
+                  autoFocus
+                  className="flex-grow"
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      "& fieldset": {
+                        borderColor: "#D9D9D9",
+                        borderWidth: "1.5px",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: "#666666",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "#2F61BF",
+                        borderWidth: 1.6,
+                      },
+                    },
+                    marginRight: "8px",
+                    marginBottom: "8px",
+                  }}
+                />
+                <Button
+                  variant="contained"
+                  onClick={handleAddCustom}
+                  className="rounded-full"
+                  sx={{
+                    backgroundColor: "#2F61BF",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "#2F61BF",
+                    },
+                    padding: "5px 25px",
+                  }}
+                >
+                  Add
+                </Button>
+              </Box>
+            )}
+          </Box>
 
           {carState.carDetails.make && !searchInput && (
             <Box

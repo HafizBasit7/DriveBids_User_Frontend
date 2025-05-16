@@ -1,27 +1,29 @@
 import { Box, Typography, Slider, Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
 import { useCar } from "../../../context/car.context";
 
-
 const CarHorsePower = () => {
   const navigate = useNavigate();
 
-    const {carState, dispatch} = useCar();
+  const { carState, dispatch } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
+  // console.log(carState.carDetails);
 
-    console.log(carState.carDetails);
-    
-    function onCangeCarDetails (value) {
-      dispatch({
-        type: 'UPDATE_FIELD',
-        section: 'carDetails',
-        field: 'horsePower',
-        value,
-      });
-
-    };
+  function onCangeCarDetails(value) {
+    dispatch({
+      type: "UPDATE_FIELD",
+      section: "carDetails",
+      field: "horsePower",
+      value,
+    });
+  }
 
   return (
     <MainLayout
@@ -85,7 +87,7 @@ const CarHorsePower = () => {
                       height: 40, // reduced height
                       fontSize: 14,
                       "& input": {
-                        padding:2,
+                        padding: 2,
                         fontFamily: "Inter",
                       },
                       "&.Mui-focused fieldset": {
@@ -108,15 +110,15 @@ const CarHorsePower = () => {
                   height: "40px",
                   fontFamily: "Inter",
                   backgroundColor: colors.buttoncolor,
-                  '&.Mui-disabled': {
-                    backgroundColor: '#E0E0E0',
-                    color: '#9E9E9E',
-                    cursor: 'not-allowed'
+                  "&.Mui-disabled": {
+                    backgroundColor: "#E0E0E0",
+                    color: "#9E9E9E",
+                    cursor: "not-allowed",
                   },
-                  '&:hover': {
+                  "&:hover": {
                     backgroundColor: colors.buttoncolor,
-                    opacity: 0.9
-                  }
+                    opacity: 0.9,
+                  },
                 }}
                 onClick={() => navigate("../condition")}
               >

@@ -35,7 +35,11 @@ const CarFeaturesPage2 = () => {
   const navigate = useNavigate();
   const { carState, dispatch, draftSave } = useCar();
   const [customFeatures, setCustomFeatures] = useState([]);
-
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
   useEffect(() => {
     // Get features from carState that are not in predefined list
     const existingCustomFeatures =

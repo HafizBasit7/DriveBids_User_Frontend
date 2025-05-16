@@ -1,5 +1,13 @@
-import { Box, Typography, Button, Paper, List, ListItem, ListItemText } from "@mui/material";
-import { useState } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import { useCar } from "../../../context/car.context";
@@ -15,9 +23,13 @@ const entities = [
 
 const PricingPagePage4 = () => {
   const navigate = useNavigate();
-  const {carState, dispatch, draftSave} = useCar();
-
-  function setDuration (value) {
+  const { carState, dispatch, draftSave } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
+  function setDuration(value) {
     const getFutureDateUTC = (weeks) => {
       const currentDateUTC = new Date();
       const futureDateUTC = new Date(currentDateUTC);
@@ -26,41 +38,42 @@ const PricingPagePage4 = () => {
     };
 
     dispatch({
-      type: 'UPDATE_FIELD',
-      section: 'carPricing',
-      field: 'duration',
+      type: "UPDATE_FIELD",
+      section: "carPricing",
+      field: "duration",
       value: getFutureDateUTC(value),
     });
 
     dispatch({
-      type: 'UPDATE_FIELD',
-      field: 'selectedWeek',
+      type: "UPDATE_FIELD",
+      field: "selectedWeek",
       value,
     });
-  };
+  }
 
   const handleSavePricing = () => {
-    toast.promise(async () => {
-      await draftSave('carPricing');
-      navigate('/ad/post')
-    }, {
-      loading: 'Saving draft',
-      error: (error) => error.message,
-      success: 'Draft is saved',
-    })
+    toast.promise(
+      async () => {
+        await draftSave("carPricing");
+        navigate("/ad/post");
+      },
+      {
+        loading: "Saving draft",
+        error: (error) => error.message,
+        success: "Draft is saved",
+      }
+    );
   };
 
   return (
-    <MainLayout  title="Duration"
-    // subtitle="Pick Theweeks"
-    buttonText="Back"
-    onClick={() => navigate("../pricing-3")}>
-      <Box width="100%" >
-      
-
-        <Box  zIndex={2}>
-       
-
+    <MainLayout
+      title="Duration"
+      // subtitle="Pick Theweeks"
+      buttonText="Back"
+      onClick={() => navigate("../pricing-3")}
+    >
+      <Box width="100%">
+        <Box zIndex={2}>
           <Typography
             variant="h4"
             fontWeight={600}
@@ -83,7 +96,10 @@ const PricingPagePage4 = () => {
               borderRadius: 2,
             }}
           >
-            <Typography fontWeight={600} sx={{ fontSize: 20, mb: 4, fontFamily: "Inter" }}>
+            <Typography
+              fontWeight={600}
+              sx={{ fontSize: 20, mb: 4, fontFamily: "Inter" }}
+            >
               Duration of Bid?
             </Typography>
 
@@ -97,48 +113,56 @@ const PricingPagePage4 = () => {
                   sx={{
                     mb: 1,
                     borderRadius: 1,
-                    border: '1px solid',
-                    borderColor: carState.selectedWeek === type.id ? colors.buttoncolor : '#E0E0E0',
-                    transition: 'all 0.3s ease',
-                    '&.Mui-selected': {
+                    border: "1px solid",
+                    borderColor:
+                      carState.selectedWeek === type.id
+                        ? colors.buttoncolor
+                        : "#E0E0E0",
+                    transition: "all 0.3s ease",
+                    "&.Mui-selected": {
                       backgroundColor: `${colors.buttoncolor}10`,
                       borderColor: colors.buttoncolor,
-                      '&:hover': {
+                      "&:hover": {
                         backgroundColor: `${colors.buttoncolor}20`,
                       },
                     },
-                    '&:hover': {
-                      backgroundColor: '#F5F5F5',
+                    "&:hover": {
+                      backgroundColor: "#F5F5F5",
                       borderColor: colors.buttoncolor,
                     },
                   }}
                 >
-                  <ListItemText 
+                  <ListItemText
                     primary={type.name}
                     sx={{
                       fontFamily: "Inter",
                       fontSize: 16,
-                      '& .MuiListItemText-primary': {
-                        color: carState.selectedWeek === type.id ? colors.buttoncolor : '#333333',
-                        fontWeight: carState.selectedWeek === type.id ? 600 : 400,
-                      }
+                      "& .MuiListItemText-primary": {
+                        color:
+                          carState.selectedWeek === type.id
+                            ? colors.buttoncolor
+                            : "#333333",
+                        fontWeight:
+                          carState.selectedWeek === type.id ? 600 : 400,
+                      },
                     }}
                   />
                 </ListItem>
               ))}
             </List>
 
-            <Typography 
-              sx={{ 
-                mt: 2, 
-                fontSize: 14, 
+            <Typography
+              sx={{
+                mt: 2,
+                fontSize: 14,
                 color: "#666",
                 fontFamily: "Inter",
                 fontStyle: "italic",
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
-              After the selected duration, your listing will expire and no new bids can be placed.
+              After the selected duration, your listing will expire and no new
+              bids can be placed.
             </Typography>
 
             {/* Next Step Button */}
@@ -155,11 +179,11 @@ const PricingPagePage4 = () => {
                   "&:hover": {
                     backgroundColor: colors.buttoncolor,
                   },
-                  '&.Mui-disabled': {
-                    backgroundColor: '#E0E0E0',
-                    color: '#9E9E9E',
-                    cursor: 'not-allowed'
-                  }
+                  "&.Mui-disabled": {
+                    backgroundColor: "#E0E0E0",
+                    color: "#9E9E9E",
+                    cursor: "not-allowed",
+                  },
                 }}
                 onClick={handleSavePricing}
               >

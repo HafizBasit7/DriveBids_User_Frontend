@@ -1,5 +1,5 @@
 import { Box, Typography, Slider, Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import colors from "../../../Style/color";
@@ -17,30 +17,30 @@ const marks = [
 const CarEnginePage = () => {
   const navigate = useNavigate();
 
-  const {carState, dispatch} = useCar();
-    
-    function onCangeCarDetails (value) {
-      dispatch({
-        type: 'UPDATE_FIELD',
-        section: 'carDetails',
-        field: 'engineSize',
-        value,
-      });
-    };
+  const { carState, dispatch } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
+  function onCangeCarDetails(value) {
+    dispatch({
+      type: "UPDATE_FIELD",
+      section: "carDetails",
+      field: "engineSize",
+      value,
+    });
+  }
 
   return (
     <MainLayout
-    title="Car Engine"
-    subtitle="Pick The Engine Size Of Your Car"
-    buttonText="Back "
-    onClick={() => navigate("../color")}>
-
-      <Box width="100%" >
-        
-
-        <Box  zIndex={2}>
-          
-
+      title="Car Engine"
+      subtitle="Pick The Engine Size Of Your Car"
+      buttonText="Back "
+      onClick={() => navigate("../color")}
+    >
+      <Box width="100%">
+        <Box zIndex={2}>
           <Typography
             variant="h4"
             fontWeight={600}
@@ -62,12 +62,22 @@ const CarEnginePage = () => {
               border: "1px solid #D9D9D9",
             }}
           >
-            <Typography fontWeight={600} textAlign="start" mb={6} sx={{ fontSize: 20, fontFamily: "Inter" }}>
+            <Typography
+              fontWeight={600}
+              textAlign="start"
+              mb={6}
+              sx={{ fontSize: 20, fontFamily: "Inter" }}
+            >
               What's the engine size of the car?
             </Typography>
 
             <Box px={3} mb={8}>
-              <Typography fontWeight={500} textAlign="start" mb={3} sx={{ fontSize: 18, fontFamily: "Inter" }}>
+              <Typography
+                fontWeight={500}
+                textAlign="start"
+                mb={3}
+                sx={{ fontSize: 18, fontFamily: "Inter" }}
+              >
                 Engine Size (CCs)
               </Typography>
               <Box mb={3}>
@@ -82,7 +92,7 @@ const CarEnginePage = () => {
                       height: 40, // reduced height
                       fontSize: 14,
                       "& input": {
-                        padding:2,
+                        padding: 2,
                         fontFamily: "Inter",
                       },
                       "&.Mui-focused fieldset": {
@@ -92,7 +102,6 @@ const CarEnginePage = () => {
                   }}
                 />
               </Box>
-             
             </Box>
 
             <Box display="flex" justifyContent="flex-end" mt={3}>
@@ -105,15 +114,15 @@ const CarEnginePage = () => {
                   height: "40px",
                   fontFamily: "Inter",
                   backgroundColor: colors.buttoncolor,
-                  '&.Mui-disabled': {
-                    backgroundColor: '#E0E0E0',
-                    color: '#9E9E9E',
-                    cursor: 'not-allowed'
+                  "&.Mui-disabled": {
+                    backgroundColor: "#E0E0E0",
+                    color: "#9E9E9E",
+                    cursor: "not-allowed",
                   },
-                  '&:hover': {
+                  "&:hover": {
                     backgroundColor: colors.buttoncolor,
-                    opacity: 0.9
-                  }
+                    opacity: 0.9,
+                  },
                 }}
                 onClick={() => navigate("../transmission")}
               >

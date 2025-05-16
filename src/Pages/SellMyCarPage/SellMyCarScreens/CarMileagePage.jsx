@@ -1,10 +1,9 @@
 import { Box, Typography, Slider, Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
 import colors from "../../../Style/color";
 import { useCar } from "../../../context/car.context";
-
 
 const marks = [
   { value: 20, label: "20" },
@@ -17,29 +16,30 @@ const marks = [
 const CarMileagePage = () => {
   const navigate = useNavigate();
 
-  const {carState, dispatch} = useCar();
-    
-  function onCangeCarDetails (value) {
+  const { carState, dispatch } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
+  function onCangeCarDetails(value) {
     dispatch({
-      type: 'UPDATE_FIELD',
-      section: 'carDetails',
-      field: 'mileage',
+      type: "UPDATE_FIELD",
+      section: "carDetails",
+      field: "mileage",
       value,
     });
-  };
+  }
 
   return (
-    <MainLayout  title="Car Mileage"
-    subtitle="Enter the Mileage of Your Car"
-    buttonText="Back"
-    onClick={() => navigate("../city")}>
+    <MainLayout
+      title="Car Mileage"
+      subtitle="Enter the Mileage of Your Car"
+      buttonText="Back"
+      onClick={() => navigate("../city")}
+    >
       <Box width="100%">
-
-       
-
-        <Box  zIndex={2}>
-         
-
+        <Box zIndex={2}>
           <Typography
             variant="h4"
             fontWeight={600}
@@ -93,7 +93,7 @@ const CarMileagePage = () => {
                       height: 40, // reduced height
                       fontSize: 14,
                       "& input": {
-                        padding:2,
+                        padding: 2,
                         fontFamily: "Inter",
                       },
                       "&.Mui-focused fieldset": {
@@ -138,7 +138,6 @@ const CarMileagePage = () => {
               /> */}
             </Box>
 
-          
             <Box display="flex" justifyContent="flex-end" mt={3}>
               <Button
                 variant="contained"
@@ -149,15 +148,15 @@ const CarMileagePage = () => {
                   height: "40px",
                   fontFamily: "Inter",
                   backgroundColor: colors.buttoncolor,
-                  '&.Mui-disabled': {
-                    backgroundColor: '#E0E0E0',
-                    color: '#9E9E9E',
-                    cursor: 'not-allowed'
+                  "&.Mui-disabled": {
+                    backgroundColor: "#E0E0E0",
+                    color: "#9E9E9E",
+                    cursor: "not-allowed",
                   },
-                  '&:hover': {
+                  "&:hover": {
                     backgroundColor: colors.buttoncolor,
-                    opacity: 0.9
-                  }
+                    opacity: 0.9,
+                  },
                 }}
                 onClick={() => navigate("../fuel")}
               >

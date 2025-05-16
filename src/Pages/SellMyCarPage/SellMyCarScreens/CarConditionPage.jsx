@@ -1,127 +1,152 @@
-import { Box, Typography, List, ListItem, ListItemText, Paper, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Button,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
 import { useCar } from "../../../context/car.context";
+import { useEffect } from "react";
 
 const CarConditionPage = () => {
-    const navigate = useNavigate();
-    const {carState, dispatch} = useCar();
-      
-    function onCangeCarDetails (value) {
-        dispatch({
-            type: 'UPDATE_FIELD',
-            section: 'carDetails',
-            field: 'condition',
-            value,
-        });
-    };
+  const navigate = useNavigate();
+  const { carState, dispatch } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
+  function onCangeCarDetails(value) {
+    dispatch({
+      type: "UPDATE_FIELD",
+      section: "carDetails",
+      field: "condition",
+      value,
+    });
+  }
 
-    return (
-        <MainLayout title="Condition"
-        subtitle="Pick Your Car Condition"
-        buttonText="Back"
-        onClick={() => navigate("../horse-power")}>
-            <Box width="100%" >
-                <Box zIndex={2}>
-                    <Typography
-                        variant="h4"
-                        fontWeight={600}
-                        textAlign="center"
-                        mt={3}
-                        sx={{ fontFamily: "Inter", fontSize: 30 }}
-                    >
-                        Step <span style={{ color: colors.buttoncolor }}>12</span> of 14
-                    </Typography>
+  return (
+    <MainLayout
+      title="Condition"
+      subtitle="Pick Your Car Condition"
+      buttonText="Back"
+      onClick={() => navigate("../horse-power")}
+    >
+      <Box width="100%">
+        <Box zIndex={2}>
+          <Typography
+            variant="h4"
+            fontWeight={600}
+            textAlign="center"
+            mt={3}
+            sx={{ fontFamily: "Inter", fontSize: 30 }}
+          >
+            Step <span style={{ color: colors.buttoncolor }}>12</span> of 14
+          </Typography>
 
-                    <Box
-                        component={Paper}
-                        elevation={3}
-                        sx={{
-                            width: { xs: "90%", sm: "70%", md: "60%" },
-                            margin: "auto",
-                            mt: 4,
-                            p: 3,
-                            borderRadius: 2,
-                            backgroundColor: "white",
-                            border: "1px solid #D9D9D9"
-                        }}
-                    >
-                        <Typography fontWeight={600} sx={{ fontSize: 18, mb: 3, fontFamily: "Inter" }}>
-                            Condition of your Car?
-                        </Typography>
+          <Box
+            component={Paper}
+            elevation={3}
+            sx={{
+              width: { xs: "90%", sm: "70%", md: "60%" },
+              margin: "auto",
+              mt: 4,
+              p: 3,
+              borderRadius: 2,
+              backgroundColor: "white",
+              border: "1px solid #D9D9D9",
+            }}
+          >
+            <Typography
+              fontWeight={600}
+              sx={{ fontSize: 18, mb: 3, fontFamily: "Inter" }}
+            >
+              Condition of your Car?
+            </Typography>
 
-                        <List>
-                            {['Poor', 'Fair', 'Good', 'Excellent'].map((type) => (
-                                <ListItem
-                                    key={type}
-                                    button
-                                    selected={carState.carDetails.condition === type}
-                                    onClick={() => onCangeCarDetails(type)}
-                                    sx={{
-                                        mb: 1,
-                                        borderRadius: 1,
-                                        border: '1px solid',
-                                        borderColor: carState.carDetails.condition === type ? colors.buttoncolor : '#E0E0E0',
-                                        transition: 'all 0.3s ease',
-                                        '&.Mui-selected': {
-                                            backgroundColor: `${colors.buttoncolor}10`,
-                                            borderColor: colors.buttoncolor,
-                                            '&:hover': {
-                                                backgroundColor: `${colors.buttoncolor}20`,
-                                            },
-                                        },
-                                        '&:hover': {
-                                            backgroundColor: '#F5F5F5',
-                                            borderColor: colors.buttoncolor,
-                                        },
-                                    }}
-                                >
-                                    <ListItemText 
-                                        primary={type}
-                                        sx={{
-                                            fontFamily: "Inter",
-                                            fontSize: 16,
-                                            '& .MuiListItemText-primary': {
-                                                color: carState.carDetails.condition === type ? colors.buttoncolor : '#333333',
-                                                fontWeight: carState.carDetails.condition === type ? 600 : 400,
-                                            }
-                                        }}
-                                    />
-                                </ListItem>
-                            ))}
-                        </List>
+            <List>
+              {["Poor", "Fair", "Good", "Excellent"].map((type) => (
+                <ListItem
+                  key={type}
+                  button
+                  selected={carState.carDetails.condition === type}
+                  onClick={() => onCangeCarDetails(type)}
+                  sx={{
+                    mb: 1,
+                    borderRadius: 1,
+                    border: "1px solid",
+                    borderColor:
+                      carState.carDetails.condition === type
+                        ? colors.buttoncolor
+                        : "#E0E0E0",
+                    transition: "all 0.3s ease",
+                    "&.Mui-selected": {
+                      backgroundColor: `${colors.buttoncolor}10`,
+                      borderColor: colors.buttoncolor,
+                      "&:hover": {
+                        backgroundColor: `${colors.buttoncolor}20`,
+                      },
+                    },
+                    "&:hover": {
+                      backgroundColor: "#F5F5F5",
+                      borderColor: colors.buttoncolor,
+                    },
+                  }}
+                >
+                  <ListItemText
+                    primary={type}
+                    sx={{
+                      fontFamily: "Inter",
+                      fontSize: 16,
+                      "& .MuiListItemText-primary": {
+                        color:
+                          carState.carDetails.condition === type
+                            ? colors.buttoncolor
+                            : "#333333",
+                        fontWeight:
+                          carState.carDetails.condition === type ? 600 : 400,
+                      },
+                    }}
+                  />
+                </ListItem>
+              ))}
+            </List>
 
-                        <Box display="flex" justifyContent="flex-end" mt={3}>
-                            <Button
-                                variant="contained"
-                                disabled={!carState.carDetails.condition}
-                                sx={{
-                                    textTransform: "none",
-                                    minWidth: 120,
-                                    height: "40px",
-                                    fontFamily: "Inter",
-                                    backgroundColor: colors.buttoncolor,
-                                    '&.Mui-disabled': {
-                                        backgroundColor: '#E0E0E0',
-                                        color: '#9E9E9E',
-                                        cursor: 'not-allowed'
-                                    },
-                                    '&:hover': {
-                                        backgroundColor: colors.buttoncolor,
-                                        opacity: 0.9
-                                    }
-                                }}
-                                onClick={() => navigate("../accident")}
-                            >
-                                Next Step
-                            </Button>
-                        </Box>
-                    </Box>
-                </Box>
+            <Box display="flex" justifyContent="flex-end" mt={3}>
+              <Button
+                variant="contained"
+                disabled={!carState.carDetails.condition}
+                sx={{
+                  textTransform: "none",
+                  minWidth: 120,
+                  height: "40px",
+                  fontFamily: "Inter",
+                  backgroundColor: colors.buttoncolor,
+                  "&.Mui-disabled": {
+                    backgroundColor: "#E0E0E0",
+                    color: "#9E9E9E",
+                    cursor: "not-allowed",
+                  },
+                  "&:hover": {
+                    backgroundColor: colors.buttoncolor,
+                    opacity: 0.9,
+                  },
+                }}
+                onClick={() => navigate("../accident")}
+              >
+                Next Step
+              </Button>
             </Box>
-        </MainLayout>
-    );
+          </Box>
+        </Box>
+      </Box>
+    </MainLayout>
+  );
 };
 
 export default CarConditionPage;

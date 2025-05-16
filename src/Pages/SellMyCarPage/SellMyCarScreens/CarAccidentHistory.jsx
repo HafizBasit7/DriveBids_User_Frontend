@@ -3,21 +3,25 @@ import { useNavigate } from "react-router-dom";
 import colors from "../../../Style/color";
 import MainLayout from "../../../Layouts/Mainlayout";
 import { useCar } from "../../../context/car.context";
+import { useEffect } from "react";
 
 const AccidentDescription = () => {
   const navigate = useNavigate();
 
-  const {carState, dispatch} = useCar();
-    
-    function onCangeCarDetails (value) {
-      dispatch({
-        type: 'UPDATE_FIELD',
-        section: 'carDetails',
-        field: 'accidentHistory',
-        value,
-      });
-    };
-  
+  const { carState, dispatch } = useCar();
+  useEffect(() => {
+    if (!carState?.regNo) {
+      navigate("/ad");
+    }
+  }, [carState, navigate]);
+  function onCangeCarDetails(value) {
+    dispatch({
+      type: "UPDATE_FIELD",
+      section: "carDetails",
+      field: "accidentHistory",
+      value,
+    });
+  }
 
   return (
     <MainLayout
@@ -26,8 +30,16 @@ const AccidentDescription = () => {
       buttonText="Back"
       onClick={() => navigate("../condition")}
     >
-      <Box width="100%" sx={{ my: 10, display: "flex", justifyContent: "center" }}>
-        <Stack spacing={2} alignItems="flex-start" justifyContent="center" width="50%">
+      <Box
+        width="100%"
+        sx={{ my: 10, display: "flex", justifyContent: "center" }}
+      >
+        <Stack
+          spacing={2}
+          alignItems="flex-start"
+          justifyContent="center"
+          width="50%"
+        >
           {/* Description Title */}
           <Typography variant="h6" sx={{ fontFamily: "Inter", fontSize: 25 }}>
             Vehicle Accident History
@@ -65,15 +77,15 @@ const AccidentDescription = () => {
                 width: 150,
                 py: 1,
                 backgroundColor: colors.buttoncolor,
-                '&.Mui-disabled': {
-                  backgroundColor: '#E0E0E0',
-                  color: '#9E9E9E',
-                  cursor: 'not-allowed'
+                "&.Mui-disabled": {
+                  backgroundColor: "#E0E0E0",
+                  color: "#9E9E9E",
+                  cursor: "not-allowed",
                 },
-                '&:hover': {
+                "&:hover": {
                   backgroundColor: colors.buttoncolor,
-                  opacity: 0.9
-                }
+                  opacity: 0.9,
+                },
               }}
               onClick={() => navigate("../title")}
             >
