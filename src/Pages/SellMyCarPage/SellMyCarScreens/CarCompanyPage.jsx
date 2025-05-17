@@ -74,7 +74,7 @@ const CarCompanyPage = () => {
     );
   } else if (!carState.carDetails.make) {
     // If no make is selected and no search, show only first 5 makes
-    filteredMakes = filteredMakes.slice(0, 8);
+    filteredMakes = filteredMakes?.slice(0, 8);
   } else {
     // If a make is selected and no search, show no makes
     filteredMakes = [];

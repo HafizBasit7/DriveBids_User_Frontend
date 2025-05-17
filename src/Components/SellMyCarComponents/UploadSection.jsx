@@ -18,12 +18,12 @@ const UploadBox = ({
   save,
 }) => {
   const { carState, dispatch, draftSave } = useCar();
+  const navigate = useNavigate();
   useEffect(() => {
     if (!carState?.regNo) {
       navigate("/ad");
     }
   }, [carState, navigate]);
-  const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
   const currentSelectedImage = ((carState.images || {})[type] || [])[index]

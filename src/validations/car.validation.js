@@ -75,7 +75,7 @@ export const carDetailsValidation = zod.object({
     fuel: zod.enum(['Petrol', 'Diesel', 'HI-Octane', 'Electric', 'Hybrid']),
     color: zod.string({required_error: 'color is missing'}),
     engineSize: zod.number({required_error: 'engine size is missing'}),
-    transmission: zod.enum(['AGS', 'Manual', 'CVT', 'DCT', 'AMT', 'EV Single-Speed']),
+    transmission: zod.enum(['AGS', 'Manual', 'CVT', 'DCT', 'AMT', 'EV']),
     noOfOwners: zod.number({required_error: "no of owners missing"}),
     horsePower: zod.number({required_error: 'horse power missing'}),
     accidentHistory: zod.string({required_error: 'accident history is missing'}),
