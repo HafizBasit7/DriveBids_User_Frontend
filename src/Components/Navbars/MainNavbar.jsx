@@ -28,6 +28,7 @@ import { useQueryClient } from "@tanstack/react-query";
 const MainNavbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showLocationInput, setShowLocationInput] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef(null);
   const locationInputRef = useRef(null);
 
@@ -77,6 +78,7 @@ const MainNavbar = () => {
       queryClient.invalidateQueries({ queryKey: ["carsAll"] });
       queryClient.invalidateQueries({ queryKey: ["carsEndingAll"] });
       queryClient.invalidateQueries({ queryKey: ["carsByBidCountAll"] });
+      queryClient.invalidateQueries({ queryKey: ["search"] });
     }, 200);
     closeAllInputs();
   };
@@ -359,11 +361,27 @@ const MainNavbar = () => {
           {/* Mobile location and search handling */}
           {isMobile && (
             <>
-              <IconButton onClick={handleLocationClick} sx={{ color: "#333" }}>
+              <IconButton 
+                onClick={handleLocationClick} 
+                sx={{ 
+                  color: "#333",
+                  "&:hover": {
+                    backgroundColor: "rgba(0,0,0,0.04)",
+                  },
+                }}
+              >
                 <LocationOnIcon />
               </IconButton>
 
-              <IconButton onClick={handleSearchClick} sx={{ color: "#333" }}>
+              <IconButton 
+                onClick={handleSearchClick} 
+                sx={{ 
+                  color: "#333",
+                  "&:hover": {
+                    backgroundColor: "rgba(0,0,0,0.04)",
+                  },
+                }}
+              >
                 <SearchIcon />
               </IconButton>
             </>
@@ -455,6 +473,7 @@ const MainNavbar = () => {
                         minWidth: 0,
                         fontSize: "0.9rem",
                       }}
+                      ref={searchInputRef}
                       autoFocus
                     />
                     <IconButton
@@ -493,6 +512,9 @@ const MainNavbar = () => {
               sx={{
                 color: "#333",
                 ml: 0.5,
+                "&:hover": {
+                  backgroundColor: "rgba(0,0,0,0.04)",
+                },
               }}
             >
               <MenuIcon />

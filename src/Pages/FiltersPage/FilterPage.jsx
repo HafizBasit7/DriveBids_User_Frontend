@@ -28,14 +28,19 @@ const FilterPage = () => {
   const currentSelectedLocation = authState.selectedLocation ||
     authState.user.location || { coordinates: [73.1128313, 33.5255503] };
 
+  const [sortBy, setsortBy] = useState("relevant");
+
   // State for filters
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({sort: sortBy});
   const cleanedFilters = Object.fromEntries(
     Object.entries(filters).filter(
       ([_, value]) => value !== null && value !== undefined && value !== ""
     )
   );
-  const [sortBy, setsortBy] = useState("Most relevant");
+  
+  useEffect(() => {
+    setFilters((prev) => ({ ...prev, sort: sortBy }));
+  }, [sortBy]);
 
   // Fetch cars based on filters using useQuery
   const { data, isLoading, error, refetch } = useQuery({

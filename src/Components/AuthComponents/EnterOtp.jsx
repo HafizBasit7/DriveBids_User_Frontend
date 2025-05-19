@@ -17,7 +17,7 @@ const Enteropt = () => {
   const [otp, setOtp] = useState("");
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email');
-  const [timeLeft, setTimeLeft] = useState(300);
+  const [timeLeft, setTimeLeft] = useState(60);
 
   useEffect(() => {
     const currentInterval = setInterval(() => {
@@ -35,7 +35,8 @@ const Enteropt = () => {
 
   const navigate = useNavigate();
 
-  const handleResend = () => {
+  const handleResend = (e) => {
+    e.preventDefault();
     if(timeLeft < 1) {
       toast.promise(async () => {
          await sendResetOtp({email});
@@ -128,18 +129,26 @@ const Enteropt = () => {
         sx={{ mb: 2, fontSize: 12, display: "flex", justifyContent: "start", ml:1 }}
       >
         {formatSeconds(timeLeft)}{" "}
-        <Link
-          href="#"
-          onClick={handleResend} 
+        <Button
+          onClick={handleResend}
           sx={{
             ml: 1,
             fontWeight: "bold",
-            color: timeLeft > 0 ? 'grey' : colors.buttoncolor, 
+            color: timeLeft > 0 ? 'grey' : colors.buttoncolor,
             textDecoration: "none",
+            minWidth: 'auto',
+            padding: 0,
+            textTransform: 'none',
+            fontSize: '12px',
+            lineHeight: 1,
+            '&:hover': {
+              backgroundColor: 'transparent',
+              textDecoration: 'none'
+            }
           }}
         >
           Resend
-        </Link>
+        </Button>
       </Typography>
 
       {/* Verify Button */}

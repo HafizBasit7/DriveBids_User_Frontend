@@ -5,10 +5,10 @@ export default function SortByDropdown({ sortBy, setsortBy }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const sortOptions = [
-    "Newly listed",
-    "Most relevant",
-    "Lowest price",
-    "Highest price",
+    {type: 'recent', label: 'Newly listed'},
+    {type: 'relevant', label: 'Most relevant'},
+    {type: 'lowPrice', label: 'Lowest price'},
+    {type: 'highPrice', label: 'Highest price'},
   ];
 
   const toggleDropdown = () => {
@@ -49,7 +49,7 @@ export default function SortByDropdown({ sortBy, setsortBy }) {
           >
             SORT BY:
           </span>
-          <span>{sortBy}</span>
+          <span>{sortOptions.find(option => option.type === sortBy)?.label || ''}</span>
         </div>
         {isOpen ? (
           <ArrowUpward fontSize={"18px"} color="#003057" />
@@ -76,18 +76,18 @@ export default function SortByDropdown({ sortBy, setsortBy }) {
         >
           {sortOptions.map((option) => (
             <div
-              key={option}
-              onClick={() => selectOption(option)}
+              key={option.type}
+              onClick={() => selectOption(option.type)}
               style={{
                 display: "flex",
                 alignItems: "center",
                 padding: "10px 12px",
                 cursor: "pointer",
                 borderBottom:
-                  option !== sortOptions[sortOptions.length - 1]
+                  option.type !== sortOptions[sortOptions.length - 1].type
                     ? "1px solid #f0f0f0"
                     : "none",
-                color: option === "Most relevant" ? "#003057" : "inherit",
+                color: option.type === sortBy ? "#003057" : "inherit",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = "#f5f5f5";
@@ -97,11 +97,11 @@ export default function SortByDropdown({ sortBy, setsortBy }) {
               }}
             >
               <div style={{ width: "24px", marginRight: "8px" }}>
-                {option === sortBy && (
+                {option.type === sortBy && (
                   <Check fontSize={"18px"} color="#003057" />
                 )}
               </div>
-              <span>{option}</span>
+              <span>{option.label}</span>
             </div>
           ))}
         </div>
