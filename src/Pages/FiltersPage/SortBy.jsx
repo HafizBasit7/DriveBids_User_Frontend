@@ -5,10 +5,10 @@ export default function SortByDropdown({ sortBy, setsortBy }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const sortOptions = [
-    {type: 'recent', label: 'Newly listed'},
-    {type: 'relevant', label: 'Most relevant'},
-    {type: 'lowPrice', label: 'Lowest price'},
-    {type: 'highPrice', label: 'Highest price'},
+    { type: "recent", label: "Newly listed" },
+    { type: "relevant", label: "Most relevant" },
+    { type: "lowPrice", label: "Lowest price" },
+    { type: "highPrice", label: "Highest price" },
   ];
 
   const toggleDropdown = () => {
@@ -45,16 +45,23 @@ export default function SortByDropdown({ sortBy, setsortBy }) {
       >
         <div style={{ display: "flex", alignItems: "center" }}>
           <span
-            style={{ fontWeight: "600", color: "#003057", marginRight: "8px" }}
+            style={{
+              fontWeight: "600",
+              color: "#003057",
+              marginRight: "8px",
+              fontSize: 14,
+            }}
           >
             SORT BY:
           </span>
-          <span>{sortOptions.find(option => option.type === sortBy)?.label || ''}</span>
+          <span>
+            {sortOptions.find((option) => option.type === sortBy)?.label || ""}
+          </span>
         </div>
         {isOpen ? (
-          <ArrowUpward fontSize={"18px"} color="#003057" />
+          <ArrowUpward fontSize={"17px"} color="#003057" />
         ) : (
-          <ArrowDownward fontSize={"18px"} color="#003057" />
+          <ArrowDownward fontSize={"17px"} color="#003057" />
         )}
       </div>
 
