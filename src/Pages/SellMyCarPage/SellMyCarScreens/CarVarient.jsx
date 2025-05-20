@@ -47,7 +47,7 @@ const CarVarient = () => {
 
   let filteredVariants = isLoading ? [] : variants;
   if (searchInput && searchInput !== "") {
-    filteredVariants = filteredVariants.filter((variant) =>
+    filteredVariants = filteredVariants?.filter((variant) =>
       variant.model_name.toLowerCase().includes(searchInput.toLowerCase())
     );
   }
@@ -264,11 +264,11 @@ const CarVarient = () => {
                       )}
 
                       {/* Show variants based on conditions */}
-                      {filteredVariants.length > 0 && (
+                      {filteredVariants?.length > 0 && (
                         <>
                           {searchInput
                             ? // Show all filtered variants when searching
-                              filteredVariants.map((brand, index) => (
+                              filteredVariants?.map((brand, index) => (
                                 <Grid item xs={12} sm={6} key={index}>
                                   <Box
                                     onClick={() =>
@@ -356,7 +356,7 @@ const CarVarient = () => {
                       )}
 
                       {/* Show message when no results found */}
-                      {searchInput && filteredVariants.length === 0 && (
+                      {searchInput && filteredVariants?.length === 0 && (
                         <Grid item xs={12}>
                           <Typography
                             sx={{ textAlign: "center", color: "#666", py: 2 }}

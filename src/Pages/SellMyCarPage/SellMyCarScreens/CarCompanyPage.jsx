@@ -69,7 +69,7 @@ const CarCompanyPage = () => {
 
   let filteredMakes = isLoading ? [] : makes;
   if (searchInput && searchInput !== "") {
-    filteredMakes = filteredMakes.filter((make) =>
+    filteredMakes = filteredMakes?.filter((make) =>
       make.make_display.toLowerCase().includes(searchInput.toLowerCase())
     );
   } else if (!carState.carDetails.make) {
@@ -304,14 +304,14 @@ const CarCompanyPage = () => {
             <Grid container spacing={2}>
               {isLoading ? (
                 <CircularProgress sx={{ mx: "auto", my: 5 }} size={24} />
-              ) : searchInput && filteredMakes.length === 0 ? (
+              ) : searchInput && filteredMakes?.length === 0 ? (
                 <Box sx={{ width: "100%", textAlign: "center", py: 4 }}>
                   <Typography sx={{ fontFamily: "Inter", color: "#666" }}>
                     No car makes found matching your search
                   </Typography>
                 </Box>
               ) : (
-                filteredMakes.map((brand, index) => (
+                filteredMakes?.map((brand, index) => (
                   <Grid item xs={12} sm={6} key={index}>
                     <Box
                       onClick={() => onChangeCarMake(brand.make_display)}
