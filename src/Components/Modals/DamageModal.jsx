@@ -23,13 +23,12 @@ const DamageModal = ({ open, onClose, damage }) => {
             backgroundColor: "white",
             borderRadius: 2,
             width: { xs: "90%", sm: "80%", md: "70%" },
-            p: { xs: 2, sm: 3 },
+            p: { xs: 1, sm: 3 },
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             boxShadow: 24,
-            textAlign: "center",
             maxHeight: "80vh",
             overflowY: "auto",
           }}
@@ -46,102 +45,142 @@ const DamageModal = ({ open, onClose, damage }) => {
             />
           </Box>
 
-          {/* Damage Description */}
-          <Button
-            disabled
-            variant="contained"
-            sx={{
-              backgroundColor: "#2F61BF",
-              borderRadius: 2,
-              m: { xs: 1, sm: 2 },
-              fontSize: { xs: "0.8rem", sm: "1rem" },
-              fontWeight: 600,
-              fontFamily: "Inter",
-              textTransform: "none",
-              color: "#fff",
-              cursor: "default",
-              "&.Mui-disabled": {
-                backgroundColor: "#2F61BF",
-                color: "#fff",
-                opacity: 1,
-              },
-            }}
-          >
-            {damage?.damageType}
-          </Button>
-          <Typography
-            sx={{
-              fontSize: { xs: "12px", sm: "14px" },
-              color: "#000",
-              fontWeight: 400,
-              backgroundColor: "#fff",
-              p: { xs: 1, sm: 2 },
-              borderRadius: 2,
-              fontFamily: "Inter",
-              textAlign: "center",
-            }}
-          >
-            {damage?.description}
-          </Typography>
+          {/* Damage Type Section */}
+          <Box sx={{ mt: 3, textAlign: "left" }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 600,
+                fontFamily: "Inter",
+                fontSize: { xs: "16px", sm: "18px" },
+                color: "#333",
+                mb: 1.5,
+              }}
+            >
+              Damage Type
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "14px", sm: "16px" },
+                color: "#2F61BF",
+                fontWeight: 500,
+                backgroundColor: "#f5f7fa",
+                p: { xs: 1.5, sm: 2 },
+                borderRadius: 2,
+                fontFamily: "Inter",
+                border: "1px solid #e0e7ff",
+              }}
+            >
+              {damage?.damageType}
+            </Typography>
+          </Box>
 
-          {/* Photos Section */}
-          <Button
-            disabled
-            variant="contained"
-            sx={{
-              backgroundColor: "#2F61BF",
-              borderRadius: 2,
-              mt: { xs: 1, sm: 2 },
-              fontSize: { xs: "0.8rem", sm: "1rem" },
-              fontWeight: 600,
-              textTransform: "none",
-              color: "#fff",
-              cursor: "default",
-              "&.Mui-disabled": {
-                backgroundColor: "#2F61BF",
-                color: "#fff",
-                opacity: 1,
-              },
-            }}
-          >
-            Photos
-          </Button>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: { xs: 1, sm: 2 },
-              mt: { xs: 1, sm: 2 },
-              flexWrap: "wrap",
-            }}
-          >
-            {damage?.imageUrl && (
-              <Box
-                sx={{
-                  width: 150,
-                  height: 150,
-                  position: "relative",
-                  overflow: "hidden",
-                  borderRadius: 1,
-                  cursor: "pointer",
-                }}
-                onClick={handleImageClick}
-              >
-                <img
-                  src={damage?.imageUrl}
-                  alt="Damage"
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
+          {/* Description Section */}
+          <Box sx={{ mt: 3, textAlign: "left" }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 600,
+                fontFamily: "Inter",
+                fontSize: { xs: "16px", sm: "18px" },
+                color: "#333",
+                mb: 1.5,
+              }}
+            >
+              Description
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "14px", sm: "16px" },
+                color: "#555",
+                fontWeight: 400,
+                backgroundColor: "#f9f9f9",
+                p: { xs: 1.5, sm: 2 },
+                borderRadius: 2,
+                fontFamily: "Inter",
+                lineHeight: 1.6,
+                border: "1px solid #e0e0e0",
+              }}
+            >
+              {damage?.description || "No description available"}
+            </Typography>
+          </Box>
+
+          {/* Images Section */}
+          <Box sx={{ mt: 3, textAlign: "left" }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 600,
+                fontFamily: "Inter",
+                fontSize: { xs: "16px", sm: "18px" },
+                color: "#333",
+                mb: 1.5,
+              }}
+            >
+              Images
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                gap: { xs: 1, sm: 2 },
+                flexWrap: "wrap",
+                p: 2,
+                backgroundColor: "#f9f9f9",
+                borderRadius: 2,
+                border: "1px solid #e0e0e0",
+                minHeight: "100px",
+                alignItems: "center",
+              }}
+            >
+              {damage?.imageUrl ? (
+                <Box
+                  sx={{
+                    width: 150,
+                    height: 150,
+                    position: "relative",
+                    overflow: "hidden",
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    border: "2px solid #ddd",
+                    transition: "transform 0.2s ease",
+                    "&:hover": {
+                      transform: "scale(1.02)",
+                      borderColor: "#2F61BF",
+                    },
                   }}
-                />
-              </Box>
-            )}
+                  onClick={handleImageClick}
+                >
+                  <img
+                    src={damage?.imageUrl}
+                    alt="Damage"
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Box>
+              ) : (
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", sm: "16px" },
+                    color: "#999",
+                    fontStyle: "italic",
+                    fontFamily: "Inter",
+                    textAlign: "center",
+                    width: "100%",
+                  }}
+                >
+                  No images available
+                </Typography>
+              )}
+            </Box>
           </Box>
         </Box>
       </Modal>

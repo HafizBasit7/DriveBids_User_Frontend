@@ -249,6 +249,7 @@ const CarInspectionReport = ({ car }) => {
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <img src={Rust} alt="Rust" width={25} />
+
             <Typography variant="body2">Rust</Typography>
           </Box>
         </Box>

@@ -6,7 +6,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import XIcon from '@mui/icons-material/X';
+import XIcon from "@mui/icons-material/X";
 import TikTokIcon from "@mui/icons-material/MusicNote";
 import footerimg from "../../assets/Png/footerimg.png";
 import logo from "../../assets/SVG/Mainlogo.svg";
@@ -51,7 +51,8 @@ const Footer = () => {
           right: 0,
           width: "40%",
           height: "100%",
-          background: "linear-gradient(to left, rgba(0,0,0,0.9), rgba(0,0,0,0.5), transparent)",
+          background:
+            "linear-gradient(to left, rgba(0,0,0,0.9), rgba(0,0,0,0.5), transparent)",
           zIndex: 0,
         }}
       />
@@ -87,7 +88,7 @@ const Footer = () => {
               key={index}
               to={item.path}
               style={{
-                textDecoration: 'none',
+                textDecoration: "none",
                 width: { xs: "45%", md: "180px" },
                 textAlign: { xs: "center", md: "start" },
               }}
@@ -113,7 +114,14 @@ const Footer = () => {
           ))}
         </Box>
 
-        <Box sx={{ width: "99%", height: "1px", backgroundColor: "#545454", mb: 3 }} />
+        <Box
+          sx={{
+            width: "99%",
+            height: "1px",
+            backgroundColor: "#545454",
+            mb: 3,
+          }}
+        />
 
         {/* Main Content */}
         <Box
@@ -146,19 +154,20 @@ const Footer = () => {
                 fontSize: 13,
                 textAlign: { xs: "center", md: "left" },
                 mb: 2,
-                ml:3,
-                opacity:0.5,
+                ml: 3,
+                opacity: 0.5,
                 maxWidth: "300px",
               }}
             >
-              Experience seamless auctions, instant buys, and effortless car sales — all in one place.
+              Experience seamless auctions, instant buys, and effortless car
+              sales — all in one place.
             </Typography>
 
             {/* Policy Links */}
-            <Box 
-              sx={{ 
-                display: "flex", 
-                flexDirection: "column", 
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
                 gap: 1,
                 alignItems: { xs: "center", md: "flex-start" },
               }}
@@ -168,7 +177,7 @@ const Footer = () => {
                   key={index}
                   to={item.path}
                   style={{
-                    textDecoration: 'none',
+                    textDecoration: "none",
                   }}
                 >
                   <Typography
@@ -178,8 +187,8 @@ const Footer = () => {
                       fontWeight: 600,
                       fontSize: 12,
                       fontFamily: "Inter",
-                      ml:3,
-                      opacity:0.5,
+                      ml: 3,
+                      opacity: 0.5,
                       color: "#fff",
                       "&:hover": {
                         textDecoration: "underline",
@@ -210,8 +219,8 @@ const Footer = () => {
                   fontSize: 11,
                   mb: 2,
                   color: "white",
-                  width:270,
-                  opacity:0.5,
+                  width: 270,
+                  opacity: 0.5,
                   textAlign: { xs: "center", md: "center" },
                 }}
               >
@@ -269,7 +278,6 @@ const Footer = () => {
 
             {/* Social Media Section */}
             <Box>
-            
               <Box
                 sx={{
                   display: "flex",
@@ -277,22 +285,27 @@ const Footer = () => {
                   gap: 0.7,
                 }}
               >
-                {[FacebookIcon, XIcon, LinkedInIcon, YouTubeIcon, InstagramIcon, TikTokIcon].map(
-                  (Icon, index) => (
-                    <IconButton
-                      key={index}
-                      sx={{
-                        color: "white",
-                        backgroundColor: "rgba(255, 255, 255, 0.1)",
-                        "&:hover": {
-                          backgroundColor: "rgba(255, 255, 255, 0.2)",
-                        },
-                      }}
-                    >
-                      <Icon />
-                    </IconButton>
-                  )
-                )}
+                {[
+                  FacebookIcon,
+                  XIcon,
+                  LinkedInIcon,
+                  YouTubeIcon,
+                  InstagramIcon,
+                  TikTokIcon,
+                ].map((Icon, index) => (
+                  <IconButton
+                    key={index}
+                    sx={{
+                      color: "white",
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                      },
+                    }}
+                  >
+                    <Icon />
+                  </IconButton>
+                ))}
               </Box>
               <Typography
                 sx={{
@@ -302,7 +315,7 @@ const Footer = () => {
                   color: "white",
                   opacity: 0.5,
                   textAlign: { xs: "center", md: "center" },
-                  width:270,
+                  width: 270,
                 }}
               >
                 Follow us for car deals, auction tips, and feature updates.

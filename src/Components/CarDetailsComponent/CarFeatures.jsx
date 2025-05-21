@@ -15,7 +15,7 @@ const CarFeaturesComponent = ({ car }) => {
         border: "1px solid #D9D9D9",
         backgroundColor: "white",
         fontFamily: "Inter",
-        minHeight: 340,
+        minHeight: 430,
         width: "100%",
         overflow: "hidden", // Ensures content stays within box
       }}

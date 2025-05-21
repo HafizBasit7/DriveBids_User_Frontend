@@ -15,18 +15,6 @@ import {
   VerifiedUserSharp,
 } from "@mui/icons-material";
 
-const carDetails = [
-  { icon: <DirectionsCarIcon />, label: "MAKE", value: "Ford" },
-  { icon: <SportsCarIcon />, label: "VARIANT", value: "Mustang" },
-  { icon: <DriveEtaIcon />, label: "BODYTYPE", value: "Sedan" },
-  { icon: <SpeedIcon />, label: "MILEAGE", value: "200,000" },
-  { icon: <ColorLensIcon />, label: "COLOUR", value: "Red" },
-  { icon: <DateRangeIcon />, label: "REGISTERED", value: "1996, California" },
-  { icon: <BuildIcon />, label: "ENGINE", value: "Mustang" },
-  { icon: <LocalGasStationIcon />, label: "FUEL", value: "Sedan" },
-  { icon: <SettingsIcon />, label: "TRANSMISSION", value: "Manual" },
-];
-
 const CarDetailsComponent = ({ car }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -34,13 +22,11 @@ const CarDetailsComponent = ({ car }) => {
   const carDetails = [
     { icon: <DirectionsCarIcon />, label: "MAKE", value: car.make },
     { icon: <SportsCarIcon />, label: "VARIANT", value: car.variant },
-
     { icon: <SpeedIcon />, label: "MILEAGE", value: `${car.mileage} KM` },
     { icon: <ColorLensIcon />, label: "COLOUR", value: car.color },
     { icon: <DateRangeIcon />, label: "MODEL", value: car.model },
     { icon: <BuildIcon />, label: "ENGINE", value: car.engineSize },
     { icon: <LocalGasStationIcon />, label: "FUEL", value: car.fuel },
-
     { icon: <DriveEtaIcon />, label: "Reg No", value: car.regNo },
     { icon: <SettingsIcon />, label: "TRANSMISSION", value: car.transmission },
     { icon: <Battery1BarOutlined />, label: "CONDITION", value: car.condition },
@@ -55,10 +41,6 @@ const CarDetailsComponent = ({ car }) => {
       value: car?.horsePower ? car?.horsePower : "NA",
     },
   ];
-
-  // Split the array for large screens
-  const firstRow = carDetails.slice(0, 5);
-  const secondRow = carDetails.slice(5);
 
   const renderDetailBox = (item, index) => (
     <Box
@@ -98,6 +80,13 @@ const CarDetailsComponent = ({ car }) => {
     </Box>
   );
 
+  // Split the carDetails into chunks of 4 for each row
+  const chunkSize = 4;
+  const rows = [];
+  for (let i = 0; i < carDetails.length; i += chunkSize) {
+    rows.push(carDetails.slice(i, i + chunkSize));
+  }
+
   return (
     <Box
       sx={{
@@ -116,44 +105,28 @@ const CarDetailsComponent = ({ car }) => {
         Car Details
       </Typography>
 
-      {isSmallScreen ? (
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: isSmallScreen
-              ? "repeat(3, 1fr)"
-              : "repeat(5, 1fr)",
-            gap: 3,
-            justifyContent: "center",
-          }}
-        >
-          {carDetails.map(renderDetailBox)}
-        </Box>
-      ) : (
-        <>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 3,
+        }}
+      >
+        {rows.map((row, rowIndex) => (
           <Box
+            key={rowIndex}
             sx={{
               display: "grid",
-              gridTemplateColumns: "repeat(5, 1fr)",
+              gridTemplateColumns: "repeat(4, 1fr)",
               gap: 3,
-              mb: 3,
             }}
           >
-            {firstRow.map(renderDetailBox)}
+            {row.map((item, itemIndex) =>
+              renderDetailBox(item, rowIndex * chunkSize + itemIndex)
+            )}
           </Box>
-
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr 1fr",
-              gap: 3,
-              ml: `calc(100% / 5 / 4)`,
-            }}
-          >
-            {secondRow.map(renderDetailBox)}
-          </Box>
-        </>
-      )}
+        ))}
+      </Box>
     </Box>
   );
 };
