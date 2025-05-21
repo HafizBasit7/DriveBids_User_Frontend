@@ -222,7 +222,7 @@ const CarDetailsPage = () => {
             alignItems: "center",
           }}
         >
-          <DescriptionBox description={car.description} />
+          <DescriptionBox isAccident={true} accident={car.accidentHistory} />
         </Box>
         <Box
           sx={{
@@ -239,7 +239,7 @@ const CarDetailsPage = () => {
           />
         </Box>
       </Box>
-
+      <DescriptionBox isAccident={false} description={car.description} />
       <SimilarCars make={car.make} carId={car?._id} />
     </MainLayout>
   );

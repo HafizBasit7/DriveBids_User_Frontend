@@ -1,9 +1,4 @@
-import {
-  Box,
-  Typography,
-  useMediaQuery,
-  useTheme
-} from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import SportsCarIcon from "@mui/icons-material/EmojiTransportation";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
@@ -13,6 +8,12 @@ import SpeedIcon from "@mui/icons-material/Speed";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import BuildIcon from "@mui/icons-material/Build";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
+import {
+  Battery1BarOutlined,
+  Power,
+  PowerOutlined,
+  VerifiedUserSharp,
+} from "@mui/icons-material";
 
 const carDetails = [
   { icon: <DirectionsCarIcon />, label: "MAKE", value: "Ford" },
@@ -23,25 +24,36 @@ const carDetails = [
   { icon: <DateRangeIcon />, label: "REGISTERED", value: "1996, California" },
   { icon: <BuildIcon />, label: "ENGINE", value: "Mustang" },
   { icon: <LocalGasStationIcon />, label: "FUEL", value: "Sedan" },
-  { icon: <SettingsIcon />, label: "TRANSMISSION", value: "Manual" }
+  { icon: <SettingsIcon />, label: "TRANSMISSION", value: "Manual" },
 ];
 
-const CarDetailsComponent = ({car}) => {
+const CarDetailsComponent = ({ car }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const carDetails = [
     { icon: <DirectionsCarIcon />, label: "MAKE", value: car.make },
     { icon: <SportsCarIcon />, label: "VARIANT", value: car.variant },
-    
+
     { icon: <SpeedIcon />, label: "MILEAGE", value: `${car.mileage} KM` },
     { icon: <ColorLensIcon />, label: "COLOUR", value: car.color },
     { icon: <DateRangeIcon />, label: "MODEL", value: car.model },
     { icon: <BuildIcon />, label: "ENGINE", value: car.engineSize },
     { icon: <LocalGasStationIcon />, label: "FUEL", value: car.fuel },
-   
+
     { icon: <DriveEtaIcon />, label: "Reg No", value: car.regNo },
     { icon: <SettingsIcon />, label: "TRANSMISSION", value: car.transmission },
+    { icon: <Battery1BarOutlined />, label: "CONDITION", value: car.condition },
+    {
+      icon: <VerifiedUserSharp />,
+      label: "PREVIOUS OWNERS",
+      value: car?.noOfOwners ? car?.noOfOwners : "NA",
+    },
+    {
+      icon: <PowerOutlined />,
+      label: "HORSE POWER",
+      value: car?.horsePower ? car?.horsePower : "NA",
+    },
   ];
 
   // Split the array for large screens
@@ -76,7 +88,7 @@ const CarDetailsComponent = ({car}) => {
         variant="caption"
         color="#6F6F6F"
         fontWeight={600}
-        sx={{ fontFamily: "Inter",fontSize: 12 }}
+        sx={{ fontFamily: "Inter", fontSize: 12 }}
       >
         {item.label}
       </Typography>
@@ -135,7 +147,7 @@ const CarDetailsComponent = ({car}) => {
               display: "grid",
               gridTemplateColumns: "1fr 1fr 1fr 1fr",
               gap: 3,
-              ml: `calc(100% / 5 / 4)`, 
+              ml: `calc(100% / 5 / 4)`,
             }}
           >
             {secondRow.map(renderDetailBox)}

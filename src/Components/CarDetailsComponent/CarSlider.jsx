@@ -7,7 +7,12 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
+import {
+  ArrowBackIos,
+  ArrowForwardIos,
+  Close,
+  LocationOnRounded,
+} from "@mui/icons-material";
 import Carimg from "../../assets/Png/cardetailimg.png";
 import Carimgg from "../../assets/Png/sellcarimage.png";
 import colors from "../../Style/color";
@@ -331,6 +336,15 @@ const CarSlider = ({ car }) => {
           </Box>
         </Box>
       </Dialog>
+      <Box
+        display="flex"
+        alignItems="center"
+        marginTop={1}
+        color={colors.buttoncolor}
+      >
+        <LocationOnRounded sx={{ mr: 1 }} />
+        <Typography>{car?.location?.name}</Typography>
+      </Box>
 
       {!isMyCar && car.status !== "sold" && (
         <Box

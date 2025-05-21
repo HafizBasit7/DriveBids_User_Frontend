@@ -1,23 +1,32 @@
 import { Box, Typography } from "@mui/material";
 
-const DescriptionBox = ({description}) => {
+const DescriptionBox = ({
+  description = "",
+  accident = "",
+  isAccident = true,
+}) => {
   return (
     <Box
       sx={{
         p: 2,
         borderRadius: 2,
-        
+
         backgroundColor: "white",
-        border:"1px solid #D9D9D9",
-        minHeight:"100%",
-        minWidth:"100%"
+        border: "1px solid #D9D9D9",
+        minHeight: "100%",
+        minWidth: "100%",
+        marginTop: isAccident ? 0 : 2,
       }}
     >
-      <Typography  sx={{ fontWeight: 500, mb: 1.5,fontFamily:"Inter",fontSize:22 }}>
-        Description
+      <Typography
+        sx={{ fontWeight: 500, mb: 1.5, fontFamily: "Inter", fontSize: 22 }}
+      >
+        {isAccident ? "Accident History" : "Seller's Comments"}
       </Typography>
-      <Typography  sx={{ fontWeight: 400, mb: 1,fontFamily:"Inter",fontSize:14 }}>
-        {description}
+      <Typography
+        sx={{ fontWeight: 400, mb: 1, fontFamily: "Inter", fontSize: 14 }}
+      >
+        {isAccident ? accident : description}
       </Typography>
     </Box>
   );
