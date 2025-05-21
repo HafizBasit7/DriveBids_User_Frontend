@@ -2,6 +2,7 @@ import { Box, Typography, Button, IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import colors from "../../Style/color";
 import Scratch from "../../assets/SVG/ScratchSvg.svg";
 import Dent from "../../assets/SVG/dentsvg.svg";
@@ -188,7 +189,7 @@ const CarInspectionReport = ({ car }) => {
                 }}
               >
                 <VisibilityIcon fontSize="small" />
-                View Seller’s Other Ads
+                View Seller's Other Ads
               </Link>
             </Box>
           </Box>
@@ -226,24 +227,6 @@ const CarInspectionReport = ({ car }) => {
         <Typography variant="h6" sx={{ fontWeight: 500, fontFamily: "Inter" }}>
           Damage Report
         </Typography>
-
-        {/* <Button
-          variant="contained"
-          size="small"
-          sx={{
-            mb: 2,
-            backgroundColor: colors.buttoncolor,
-            borderRadius: 2,
-            fontWeight: 400,
-            fontFamily: "Inter",
-            fontSize: 10,
-            p: 1,
-            mt: 1,
-          }}
-          // onClick={() => setOpenDamage(true)}
-        >
-          Damage Labels
-        </Button> */}
 
         {/* Damage Types */}
         <Box
@@ -351,13 +334,15 @@ const CarInspectionReport = ({ car }) => {
                     }}
                   />
                   {imageLoaded &&
-                    currentDamageReport.map((val) => {
+                    currentDamageReport.map((val, index) => {
                       const iconSrc = damages.find(
                         (valIcon) => valIcon.name === val.damageType
                       ).colored;
                       return (
                         <img
-                          onClick={() => {
+                          key={index}
+                          onClick={(e) => {
+                            e.stopPropagation();
                             selectedDamage.current = val;
                             setOpenDamage(true);
                           }}
@@ -366,6 +351,7 @@ const CarInspectionReport = ({ car }) => {
                             width: 30,
                             height: 30,
                             position: "absolute",
+                            cursor: "pointer",
                             ...getPoistion(val.x, val.y),
                           }}
                         />
@@ -380,6 +366,36 @@ const CarInspectionReport = ({ car }) => {
                   <ArrowForwardIosIcon fontSize="small" />
                 </IconButton>
               </Box>
+
+              {/* No Damage Text for Current View */}
+              {currentDamageReport.length === 0 && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    mt: 2,
+                    gap: 1,
+                  }}
+                >
+                  <InfoOutlinedIcon
+                    sx={{
+                      color: "#999",
+                      fontSize: 24,
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      fontSize: 14,
+                      color: "#999",
+                      fontFamily: "Inter",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    No damage reported for {views[currentIndex]}
+                  </Typography>
+                </Box>
+              )}
 
               {/* Dots */}
               <Box sx={{ display: "flex", gap: 1, mt: 2 }}>

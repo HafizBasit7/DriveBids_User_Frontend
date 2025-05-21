@@ -1,58 +1,76 @@
-import { Box,  } from "@mui/material";
+import { Box } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-
 import DraftCard from "../../../Components/SellMyCarComponents/DraftCard";
 import { useQuery } from "@tanstack/react-query";
 import { getDrafts } from "../../../api/calls/car";
 import SkeletonLoader from "../../../Components/Loader/SkeletonLoader";
 import PaginationComponent from "../../../Components/Common/PaginationComponent";
+import { useCallback } from "react";
 
-const LIMIT = 5
+const LIMIT = 5;
 
 const Draft = () => {
-  document.title = 'Car Drafts';
+  document.title = "Car Drafts";
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-    const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
+  const page = searchParams.get("page")
+    ? parseInt(searchParams.get("page"))
+    : 1;
 
-  const {data, isLoading} = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["drafts", page],
     queryFn: () => getDrafts(page, LIMIT),
+    staleTime: 0, // Ensure fresh data on revisit
   });
 
   const drafts = data?.data.drafts;
   const pages = data?.meta.pages;
 
+  const handlePageChange = useCallback(
+    (event, value) => {
+      setSearchParams({ page: value });
+    },
+    [setSearchParams]
+  );
+
+  const handleBackClick = useCallback(() => {
+    navigate("../");
+  }, [navigate]);
+
   return (
     <MainLayout
-    title="Drafts"
-          subtitle={`${(data?.meta?.count || 0)} drafts`}
-          buttonText="Back"
-          onClick={() => navigate("../")}
-          isnotSellMyCar={true}
-  >
-     
-
+      title="Drafts"
+      subtitle={`${data?.meta?.count || 0} drafts`}
+      buttonText="Back"
+      onClick={handleBackClick}
+      isnotSellMyCar={true}
+    >
       <Box
         sx={{
           width: "100%",
           mt: { xs: 4, md: 2 },
           mb: { xs: 5, md: 7 },
-          display:"flex",
-          flexDirection:"row",
-          gap:2,
-          flexWrap:"wrap",
-          justifyContent:{ xs: "center", sm: "flex-start" ,md: "flex-start" },
+          display: "flex",
+          flexDirection: "row",
+          gap: 2,
+          flexWrap: "wrap",
+          justifyContent: { xs: "center", sm: "flex-start", md: "flex-start" },
         }}
       >
-    {isLoading ? <SkeletonLoader count={3}/> : drafts?.map((draft, index) => (
-      <DraftCard key={index} draft={draft}/>
-    ))}
-     
-    </Box>
-         <PaginationComponent page={page} pages={pages} handleChange={(event, value) => {setSearchParams({page: value})}}/>
-    
+        {isLoading ? (
+          <SkeletonLoader count={3} />
+        ) : (
+          drafts?.map((draft, index) => (
+            <DraftCard key={draft._id || index} draft={draft} />
+          ))
+        )}
+      </Box>
+      <PaginationComponent
+        page={page}
+        pages={pages}
+        handleChange={handlePageChange}
+      />
     </MainLayout>
   );
 };
