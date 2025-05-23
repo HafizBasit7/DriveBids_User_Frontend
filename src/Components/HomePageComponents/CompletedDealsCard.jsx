@@ -29,6 +29,7 @@ const CompletedDealsCard = ({ ad, item}) => {
     // const [isFavorited, setIsFavorited] = useState(false);
     // const [openDelete, setOpenDelete] = useState(false);
     const [openOwnerDetails, setOpenOwnerDetails] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
     const {authState} = useAuth();
 
     const navigate = useNavigate();
@@ -37,11 +38,20 @@ const CompletedDealsCard = ({ ad, item}) => {
         mutationFn: getChatId,
     });
 
-    const handleChat = () => {
-        toast.promise(async () => {
+    const handleChat = async () => {
+        if (isProcessing) return;
+        setIsProcessing(true);
+        const toastId = toast.loading("Connecting to chat...");
+        
+        try {
             const result = await chatNowMutation.mutateAsync({userId: item.user._id, carId: ad._id});
-            navigate(`/chat?chatId=${result.data.chatId}`);
-        }, {loading: 'Please wait...', error: e => e.message, success: 'Opening Chat'});
+            toast.dismiss(toastId);
+            window.location.href = `/chat?chatId=${result.data.chatId}`;
+        } catch (error) {
+            toast.dismiss(toastId);
+            toast.error(error.message || "Failed to start chat");
+            setIsProcessing(false);
+        }
     };
 
     //Calculations
@@ -187,6 +197,7 @@ const CompletedDealsCard = ({ ad, item}) => {
 
   <Button
     variant="outlined"
+    disabled={isProcessing}
     sx={{
       flex: 1,
       borderRadius: 3,
@@ -200,7 +211,7 @@ const CompletedDealsCard = ({ ad, item}) => {
     }}
     onClick={handleChat}
   >
-    Chat Now
+    {isProcessing ? "Connecting..." : "Chat Now"}
   </Button>
 </Box>
 

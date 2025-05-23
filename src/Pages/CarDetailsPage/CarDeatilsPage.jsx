@@ -108,14 +108,10 @@ const CarDetailsPage = () => {
   document.title = car.title;
 
   const messageOwnerHandle = async () => {
-    // Check both state and ref to prevent multiple clicks
     if (isProcessing || processingRef.current) return;
-
-    // Set both state and ref to prevent race conditions
     setIsProcessing(true);
     processingRef.current = true;
     const toastId = toast.loading("Connecting to chat...");
-
     try {
       const result = await getChatId({ userId: car.user._id, carId: carId });
       toast.dismiss(toastId);

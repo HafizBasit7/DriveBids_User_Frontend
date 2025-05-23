@@ -24,9 +24,9 @@ const Footer = () => {
   ];
 
   const policyItems = [
-    { label: "PRIVACY POLICY", path: "/privacy" },
-    { label: "TERMS & CONDITIONS", path: "/terms" },
-    { label: "BUYER & SELLER PROTECTION", path: "/protection" },
+    { label: "PRIVACY POLICY", path: "/privacy-policy" },
+    { label: "TERMS & CONDITIONS", path: "/terms-and-conditions" },
+    { label: "BUYER & SELLER PROTECTION", path: "/buyer-seller-protection" },
   ];
 
   return (
@@ -134,7 +134,6 @@ const Footer = () => {
             gap: { xs: 4, md: 0 },
           }}
         >
-          {/* Left Section */}
           <Box
             sx={{
               width: { xs: "100%", md: "30%" },
@@ -163,7 +162,6 @@ const Footer = () => {
               sales — all in one place.
             </Typography>
 
-            {/* Policy Links */}
             <Box
               sx={{
                 display: "flex",

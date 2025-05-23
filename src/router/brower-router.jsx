@@ -1,4 +1,4 @@
-import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import { useAuth } from "../context/auth.context";
 import LandingPage from "../Pages/LandingPage/LandingPage";
 import authLoader from "./loaders/auth.loader";
@@ -79,6 +79,9 @@ import ChatPage from "../Pages/ChatPage/ChatPage";
 import CompletedDeals from "../Pages/CompletedDeals/CompletedDeals";
 import NotificationSettings from "../Pages/NotificationSettings/NotificationSettings";
 import InitialLoadingPage from "../Pages/Service/InitialLoadingPage";
+import TermandCondition from "../Pages/TermandConditionPage/TermandCondition";
+import PrivacyPolicy from "../Pages/Privacy&PolicyPage/PrivacyPolicy";
+import BuyerandSellerProtection from "../Pages/BuyerandSelllerProtectionPage/BuyerandSellerProtection";
 
 const createRouter = (authState) => createBrowserRouter([
     {path: '/', element: <LandingPage/>},
@@ -108,6 +111,9 @@ const createRouter = (authState) => createBrowserRouter([
             {path: 'car/:carId', element: <CarDetailsPage/>},
             {path: 'cars/:userId', element: <CarListingPage/>},
             {path: 'contact', element: <ContactPage/>},
+            {path: 'terms-and-conditions', element: <TermandCondition/>},
+            {path: 'privacy-policy', element: <PrivacyPolicy/>},
+            {path: 'buyer-seller-protection', element: <BuyerandSellerProtection/>},
             //User
             {path: 'my-ads', element: <MyAdsPage/>},
             {path: 'my-bids', element: <MyBidsPage/>},
