@@ -59,7 +59,7 @@ const ProfileMenu = () => {
   return (
     <Box>
       <IconButton onClick={handleClick}>
-        <Avatar src={user.imgUrl || "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} sx={{ bgcolor: "blue" }} />
+        <Avatar src={user?.imgUrl || "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} sx={{ bgcolor: "blue" }} />
       </IconButton>
 
       <Menu
@@ -78,10 +78,10 @@ const ProfileMenu = () => {
       >
         {/* User Info */}
         <Box sx={{ p: 1.5, display: "flex", alignItems: "center", gap: 1.5 }}>
-          <Avatar src={user.imgUrl || "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} sx={{ bgcolor: "blue", width: 50, height: 50 }} />
+          <Avatar src={user?.imgUrl || "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} sx={{ bgcolor: "blue", width: 50, height: 50 }} />
           <Box>
-            <Typography fontWeight="bold">{user.name}</Typography>
-            <Typography variant="body2" color="gray">{user.email}</Typography>
+            <Typography fontWeight="bold">{user?.name}</Typography>
+            <Typography variant="body2" color="gray">{user?.email}</Typography>
           </Box>
         </Box>
 

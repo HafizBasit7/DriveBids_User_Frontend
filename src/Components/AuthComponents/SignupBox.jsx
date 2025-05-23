@@ -12,7 +12,9 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  FormControlLabel,
+  Checkbox
 } from "@mui/material";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -472,7 +474,7 @@ const Signup = () => {
     
 
        {role === "Trader" && (
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ mb: 1 }}>
           <TextField
             disabled={loading}
             label="Business Address"
@@ -493,6 +495,45 @@ const Signup = () => {
           />
         </Box>
       )}
+
+      <FormControlLabel
+        control={
+          <Checkbox 
+            sx={{
+              '&:hover': {
+                backgroundColor: 'transparent'
+              },
+              '& .MuiSvgIcon-root': {
+                fontSize: 20
+              }
+            }}
+          />
+        }
+        label={
+          <Typography sx={{ fontSize: 13, fontFamily: "Inter" }}>
+            I agree to the{" "}
+            <Typography
+              component="span"
+              sx={{
+                color: colors.buttoncolor,
+                textDecoration: "underline",
+                cursor: "pointer",
+                fontSize: 13,
+                fontFamily: "Inter",
+              }}
+              onClick={() => navigate("/terms-and-conditions")}
+            >
+              Terms and Conditions
+            </Typography>
+          </Typography>
+        }
+        sx={{ 
+          mb: 1,
+          '&:hover': {
+            backgroundColor: 'transparent'
+          }
+        }}
+      />
 
       <Button
         onClick={handleSignupClick}

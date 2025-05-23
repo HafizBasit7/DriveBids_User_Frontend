@@ -98,6 +98,10 @@ const createRouter = (authState) => createBrowserRouter([
             {path: 'confirm-reset-pass', loader: resetLoader, element: <ResetPasswordPage/>},
         ]
     },
+    //Public Pages
+    {path: 'terms-and-conditions', element: <TermandCondition/>},
+    {path: 'privacy-policy', element: <PrivacyPolicy/>},
+    {path: 'buyer-seller-protection', element: <BuyerandSellerProtection/>},
     //Dashboard stack
     {
         path: '/',
@@ -111,9 +115,6 @@ const createRouter = (authState) => createBrowserRouter([
             {path: 'car/:carId', element: <CarDetailsPage/>},
             {path: 'cars/:userId', element: <CarListingPage/>},
             {path: 'contact', element: <ContactPage/>},
-            {path: 'terms-and-conditions', element: <TermandCondition/>},
-            {path: 'privacy-policy', element: <PrivacyPolicy/>},
-            {path: 'buyer-seller-protection', element: <BuyerandSellerProtection/>},
             //User
             {path: 'my-ads', element: <MyAdsPage/>},
             {path: 'my-bids', element: <MyBidsPage/>},
