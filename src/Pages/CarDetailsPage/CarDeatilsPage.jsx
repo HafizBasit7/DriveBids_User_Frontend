@@ -15,7 +15,7 @@ import { timeAgo } from "../../utils/utils";
 import DealsBanner from "../../Components/HomePageComponents/DealBanner";
 import { getCarsIdInWatchList } from "../../api/calls/watchlist";
 import CarCard from "../../Components/HomePageComponents/CarCard";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import toast from "react-hot-toast";
 import { getChatId } from "../../api/calls/chat";
 import CarLoader from "../../Components/Loader/CarLoader";
@@ -80,21 +80,15 @@ const CarDetailsPage = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const processingRef = useRef(false);
 
-  useEffect(() => {
-    if (socket) {
-      socket.emit("join-room", { roomId: carId });
-    }
-    return () => {
-      if (socket) {
-        socket.emit("leave-room", { roomId: carId });
-      }
-    };
-  }, [socket, carId]);
-
   const { data, isLoading, error } = useQuery({
     queryKey: ["car", carId],
     queryFn: () => getCar(carId),
   });
+
+  const isOwner = useMemo(() => {
+    if (!data?.data?.car || !authState?.user) return false;
+    return authState.user._id === data.data.car.user._id;
+  }, [data, authState]);
 
   if (isLoading) {
     return <CarLoader />;
@@ -127,15 +121,26 @@ const CarDetailsPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (socket) {
+      socket.emit("join-room", { roomId: carId });
+    }
+    return () => {
+      if (socket) {
+        socket.emit("leave-room", { roomId: carId });
+      }
+    };
+  }, [socket, carId]);
+
   return (
     <MainLayout
       title={car.title}
       subtitle={`Posted ${timeAgo(car.postedOn || car.createdAt)}`}
-      buttonText={isProcessing ? "Connecting..." : "Message Owner"}
-      onClick={messageOwnerHandle}
+      buttonText={!isOwner ? (isProcessing ? "Connecting..." : "Message Owner") : undefined}
+      onClick={!isOwner ? messageOwnerHandle : undefined}
       isnotSellMyCar={true}
-      icon={<ChatIcon sx={{ cursor: "pointer" }} />}
-      buttonDisabled={isProcessing} // This helps prevent multiple clicks
+      icon={!isOwner ? <ChatIcon sx={{ cursor: "pointer" }} /> : undefined}
+      buttonDisabled={isProcessing}
     >
       <Box
         sx={{

@@ -54,10 +54,10 @@ const LoginBox = () => {
     <Paper
     elevation={4}
     sx={{
-      p: 5,
+      p: 4,
       width: "100%",
       maxWidth: 450,
-      py: 12,
+      py: 8,
       borderRadius: 1,
       boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)", 
       zIndex: 1,
@@ -65,17 +65,17 @@ const LoginBox = () => {
   >
   
       {/* Title */}
-      <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 30 }}>
+      <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 28 }}>
         Login
       </Typography>
 
       {/* Subtitle */}
-      <Typography  color="textSecondary" sx={{ mb: 4, fontFamily: "Inter", fontSize: 15,fontWeight:400 }}>
+      <Typography  color="textSecondary" sx={{ mb: 3, fontFamily: "Inter", fontSize: 14,fontWeight:400 }}>
         Please login to continue to your account.
       </Typography>
 
       {/* Email Input */}
-      <Box sx={{ mb: 3 }}>
+      <Box sx={{ mb: 2.5 }}>
   <TextField
     disabled={loading}
     label="Email"
@@ -131,7 +131,7 @@ const LoginBox = () => {
       </Box>
 
       {/* Remember Me & Forgot Password */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
         <FormControlLabel
           sx={{ fontWeight: 700, color: "#12141D" }}
           control={<Checkbox />}
@@ -150,7 +150,7 @@ const LoginBox = () => {
         variant="contained"
         sx={{
           py: 1.5,
-          fontSize: 10,
+          fontSize: 12,
           backgroundColor: colors.buttoncolor,
           fontFamily: "Inter",
           borderRadius: 2,
@@ -165,7 +165,7 @@ const LoginBox = () => {
       <Typography
   sx={{
     textAlign: "center",
-    mt: 2,
+    mt: 1.5,
     cursor: "pointer",
     fontWeight: 450,
     fontFamily: "Inter",

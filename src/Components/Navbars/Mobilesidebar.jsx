@@ -25,7 +25,7 @@ import {useAuth} from "../../context/auth.context";
   const MobileSidebar = ({ open, handleClose, navigate }) => {
     const menuItems = [
       { icon: <PlaylistAddIcon/>, label: 'My Ads', route: '/my-ads' },
-      { icon: <DriveEtaIcon />, label: 'Sell My Car', route: '/sell-car' },
+      { icon: <DriveEtaIcon />, label: 'Sell My Car', route: '/ad' },
       { icon: <PersonOutlineIcon />, label: 'Message', route: '/chat' },
       { icon: <SortIcon />, label: 'Browse Deals', route: '/search' },
     ];

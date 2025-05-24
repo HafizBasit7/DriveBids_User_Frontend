@@ -72,7 +72,7 @@ const TermandCondition = () => {
   return (
     <MainLayout
       title="Terms and Conditions"
-      subtitle="Please read these terms carefully before using our platform"
+      subtitle="Please read these terms carefully "
       buttonText="Back to Home"
       onClick={() => navigate("/home")}
       isnotSellMyCar={true}
