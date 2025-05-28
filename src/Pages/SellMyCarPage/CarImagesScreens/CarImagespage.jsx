@@ -16,7 +16,8 @@ import {
   interiorImageValidation,
   wheelsImageValidation,
   tyreTreadsValidation,
-  carVideoValidation,
+  carVideoValidation
+  
 } from "../../../validations/car.validation";
 
 const steps = [

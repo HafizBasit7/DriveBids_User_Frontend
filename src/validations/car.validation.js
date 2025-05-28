@@ -89,6 +89,8 @@ export const interiorImageValidation = zod.array(attachmentValidation, {required
 export const wheelsImageValidation = zod.array(attachmentValidation, {required_error: 'wheels images are missing'}).length(4)
 export const tyreTreadsValidation = zod.array(attachmentValidation, {required_error: 'tyre treads images are missing'}).length(4)
 
+export const carVideoValidation = zod.array(attachmentValidation, {required_error: 'car video is missing'}).length(1);
+
 export const imagesValidation = zod.object({
     exterior: exteriorImageValidation,
     interior: interiorImageValidation,
