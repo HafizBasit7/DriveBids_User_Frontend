@@ -109,7 +109,11 @@ const FilterPage = () => {
 
         {/* Cars Listing Section */}
         <Box sx={{ width: { xs: "100%", md: "75%", lg: "80%" } }}>
-          <Box sx={{ justifySelf: "flex-end", width: "20%" }}>
+          <Box sx={{ 
+            width: { xs: "100%", sm: "50%", md: "30%", lg: "20%" },
+            mb: 2,
+            ml: { xs: 0, sm: "auto" }
+          }}>
             <SortByDropdown sortBy={sortBy} setsortBy={setsortBy} />
           </Box>
           <Box
@@ -122,6 +126,8 @@ const FilterPage = () => {
               justifyContent: { xs: "center", lg: "start" },
               borderRadius: 2,
               padding: 1,
+              minHeight: "300px",
+              alignItems: "center",
             }}
           >
             {isLoading ? (
@@ -137,7 +143,9 @@ const FilterPage = () => {
                 />
               ))
             ) : (
-              <EmptyPlaceHolder />
+              <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                <EmptyPlaceHolder />
+              </Box>
             )}
           </Box>
 

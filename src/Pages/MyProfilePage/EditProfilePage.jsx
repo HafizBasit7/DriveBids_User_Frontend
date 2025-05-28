@@ -21,7 +21,7 @@ const CustomInput = ({ label, placeholder, value, setValue, disabled }) => (
       component="input"
       placeholder={placeholder}
       sx={{
-        width:300,
+        width: '100%',
         p: 1.5,
         borderRadius: "8px",
         backgroundColor: "#FAFAFA",
@@ -93,7 +93,7 @@ const EditProfilePage = () => {
       onClick={() => navigate("/home")}
     >
       <Box
-        width="70%"
+        width={{ xs: '95%', sm: '90%', md: '80%', lg: '70%' }}
         mx="auto"
         my={4}
         p={{ xs: 2, md: 4 }}
@@ -107,14 +107,15 @@ const EditProfilePage = () => {
           justifyContent="space-between"
           alignItems="center"
           flexWrap="wrap"
+          gap={2}
         >
-          <Box display="flex" alignItems="center" gap={2}>
-            <Avatar src={user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} sx={{ width: 70, height: 70 }} />
+          <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+            <Avatar src={user.imgUrl || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'} sx={{ width: { xs: 50, sm: 70 }, height: { xs: 50, sm: 70 } }} />
             <Box>
-              <Typography variant="h6" sx={{ color: "#000" }}>
+              <Typography variant="h6" sx={{ color: "#000", fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                 {user.name}
               </Typography>
-              <Typography color="text.secondary">
+              <Typography color="text.secondary" sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
                 {user.email}
               </Typography>
             </Box>
@@ -130,8 +131,8 @@ const EditProfilePage = () => {
   <Typography fontWeight={600} mb={0.5} fontSize={14}>
     Phone Number
   </Typography>
-  <Box sx={{ display: "flex", gap: 1 }}>
-    <FormControl sx={{ minWidth: 80, width: "auto" }}>
+  <Box sx={{ display: "flex", gap: 1, flexDirection: { xs: 'column', sm: 'row' } }}>
+    <FormControl sx={{ minWidth: { xs: '100%', sm: 80 }, width: { xs: '100%', sm: 'auto' } }}>
       {/* <InputLabel
         id="country-code-label"
       

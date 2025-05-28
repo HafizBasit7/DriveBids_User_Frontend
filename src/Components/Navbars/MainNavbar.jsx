@@ -186,7 +186,7 @@ const MainNavbar = () => {
                 sx={{
                   color: "black",
                   textTransform: "none",
-                  fontSize: 15,
+                  fontSize: 13,
                   fontFamily: "Inter",
                   fontWeight: 500,
                   "&:hover": {

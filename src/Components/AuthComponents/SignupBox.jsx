@@ -133,16 +133,31 @@ const Signup = () => {
     <Paper
       elevation={4}
       sx={{
-        p: 5,
+        p: 3,
         width: "100%",
         maxWidth: 450,
-        py: {sm:1,md:1},
+        maxHeight: "90vh",
+        overflowY: "auto",
         borderRadius: 1,
         boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)", 
         zIndex: 1,
+        "&::-webkit-scrollbar": {
+          width: "6px",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "#f1f1f1",
+          borderRadius: "10px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          background: "#888",
+          borderRadius: "10px",
+        },
+        "&::-webkit-scrollbar-thumb:hover": {
+          background: "#555",
+        },
       }}
     >
-    <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
       <ToggleButtonGroup
         value={role}
         exclusive
@@ -244,16 +259,16 @@ const Signup = () => {
     </Box>
 
 
-      <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 27, textAlign: "start" }}>
+      <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 24, textAlign: "start" }}>
         {role === "Individual" ? "Private Account" : "Business Account"}
       </Typography>
-      <Typography color="textSecondary" sx={{ mb: 2, fontFamily: "Inter", fontSize: 11, fontWeight: 350, textAlign: "start" }}>
+      <Typography color="textSecondary" sx={{ mb: 1, fontFamily: "Inter", fontSize: 11, fontWeight: 350, textAlign: "start" }}>
         {role === "Individual" 
           ? "Buy or sell cars for personal use." 
           : "List and manage cars as a dealer or professional trader."}
       </Typography>
       
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 1.5 }}>
         <TextField
           disabled={loading}
           label="Full Name"
@@ -274,7 +289,7 @@ const Signup = () => {
         />
       </Box>
       
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 1.5 }}>
         <TextField
           disabled={loading}
           label="Email"
@@ -331,7 +346,7 @@ const Signup = () => {
       </Box>
 
       {(!token && otpSent) && (
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ mb: 1.5 }}>
           <TextField
             disabled={loading}
             label="OTP"
@@ -374,7 +389,7 @@ const Signup = () => {
         </Box>
       )}
 
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 1.5 }}>
         <TextField
           disabled={loading}
           label="Password"
@@ -405,7 +420,7 @@ const Signup = () => {
         />
       </Box>
 
-      <Box sx={{ mb: 2, display: "flex", gap: 1 }}>
+      <Box sx={{ mb: 1.5, display: "flex", gap: 1 }}>
         <FormControl sx={{ minWidth: 100, width: "auto" }}>
           <Select
             value={country}
@@ -466,7 +481,7 @@ const Signup = () => {
         />
       </Box>
 
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 1.5 }}>
         <LocationInput value={location?.name} handleChange={(location) => setLocation(location)}/>
        
       </Box>
@@ -474,7 +489,7 @@ const Signup = () => {
     
 
        {role === "Trader" && (
-        <Box sx={{ mb: 1 }}>
+        <Box sx={{ mb: 1.5 }}>
           <TextField
             disabled={loading}
             label="Business Address"
@@ -504,7 +519,7 @@ const Signup = () => {
                 backgroundColor: 'transparent'
               },
               '& .MuiSvgIcon-root': {
-                fontSize: 20
+                fontSize: 16
               }
             }}
           />
@@ -541,13 +556,12 @@ const Signup = () => {
         variant="contained"
         disabled={!token || loading}
         sx={{
-          py: 1.5,
-          fontSize: 10,
+          py: 1,
+          fontSize: 13,
           backgroundColor: colors.buttoncolor,
           fontFamily: "Inter",
           borderRadius: 2,
-          fontSize:15,
-          mb:1,
+          mb: 0.5,
           "&:hover": { backgroundColor: colors.buttoncolor },
           "&.Mui-disabled": {
             backgroundColor: "#cccccc",
@@ -561,7 +575,8 @@ const Signup = () => {
       <Typography
         sx={{
           textAlign: "center",
-          mt:1,
+          mt: 0.5,
+          mb: 0.5,
           cursor: "pointer",
           fontWeight: 450,
           fontFamily: "Inter",
