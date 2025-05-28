@@ -25,7 +25,7 @@ const BuyerandSellerProtection = () => {
           </Typography>
 
           <Typography paragraph sx={{ mb: 3, fontFamily: "Inter" }}>
-            As a buyer, you are protected by our comprehensive verification system. All listed vehicles undergo thorough documentation checks, and sellers are required to provide accurate information about the vehicle's condition, history, and legal status. We implement secure payment processing and escrow services to ensure your funds are protected until the transaction is completed. In case of any discrepancies between the listed vehicle and the actual condition, our dispute resolution team will assist you in resolving the matter.
+            As a buyer, you are protected by our comprehensive verification system. All listed vehicles undergo thorough documentation checks, and sellers are required to provide accurate information about the vehicle's condition, history, and legal status. We implement  processing and escrow services to ensure your funds are protected until the transaction is completed. In case of any discrepancies between the listed vehicle and the actual condition, our dispute resolution team will assist you in resolving the matter.
           </Typography>
 
           <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", mb: 3, fontFamily: "Inter" }}>
@@ -33,7 +33,7 @@ const BuyerandSellerProtection = () => {
           </Typography>
 
           <Typography paragraph sx={{ fontFamily: "Inter" }}>
-            Sellers on our platform benefit from our buyer verification process and secure payment handling. We verify buyer identities and ensure they have the necessary funds before allowing them to participate in auctions. Our platform provides detailed vehicle history reports and condition documentation to help you present your vehicle accurately. In case of any payment issues or disputes, our support team will work with you to resolve the situation. We also offer insurance options for vehicle transportation and provide guidance on proper documentation and legal requirements for vehicle sales.
+            Sellers on our platform benefit from our buyer verification process  handling. We verify buyer identities and ensure they have the necessary funds before allowing them to participate in auctions. Our platform provides detailed vehicle history reports and condition documentation to help you present your vehicle accurately. In case of any payment issues or disputes, our support team will work with you to resolve the situation. We also offer insurance options for vehicle transportation and provide guidance on proper documentation and legal requirements for vehicle sales.
           </Typography>
 
           <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold", mb: 3, fontFamily: "Inter" }}>

@@ -1,18 +1,18 @@
 import { Box, Typography, Button, IconButton } from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import colors from "../../Style/color";
 import { useCar } from "../../context/car.context";
-import { useEffect, useRef } from "react";
-import { uploadImage } from "../../utils/upload";
+import { useEffect, useRef, useState } from "react";
+import { uploadVideo } from "../../utils/upload";
 import toast from "react-hot-toast";
 
-const UploadBox = ({
+const VideoUploadBox = ({
   title,
   description,
-  imgSketch,
   onNext,
   type,
   index,
@@ -20,40 +20,52 @@ const UploadBox = ({
 }) => {
   const { carState, dispatch, draftSave } = useCar();
   const navigate = useNavigate();
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef(null);
+
   useEffect(() => {
     if (!carState?.regNo) {
       navigate("/ad");
     }
   }, [carState, navigate]);
-  const fileInputRef = useRef(null);
 
-  const currentSelectedImage = ((carState.images || {})[type] || [])[index]
-    ?.url;
+  const currentSelectedVideo = ((carState.images || {})[type] || [])[index]?.url;
 
-  const onSelectImage = (e) => {
+  const onSelectVideo = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      //Upload image and then update in dispatch
+      if (file.size > 100 * 1024 * 1024) { // 100MB limit
+        toast.error("Video size should be less than 100MB");
+        return;
+      }
+
+      setIsUploading(true);
       toast.promise(
         async () => {
-          const imgUrl = await uploadImage(file);
-          dispatch({
-            type: "UPDATE_IMAGE",
-            section: type,
-            index: index,
-            value: { type: "image", url: imgUrl },
-          });
+          const videoUrl = await uploadVideo(file);
+          if (videoUrl) {
+            dispatch({
+              type: "UPDATE_IMAGE",
+              section: type,
+              index: index,
+              value: { type: "video", url: videoUrl },
+            });
+          } else {
+            throw new Error("Failed to upload video");
+          }
         },
         {
-          loading: "Uploading image...",
+          loading: "Uploading video...",
           error: (e) => e.message,
-          success: "Image uploaded successfully! Click Next Step to continue.",
+          success: "Video uploaded successfully! Click Next Step to continue.",
         }
-      );
+      ).finally(() => {
+        setIsUploading(false);
+      });
     }
   };
 
-  const handleDeleteImage = () => {
+  const handleDeleteVideo = () => {
     dispatch({
       type: "UPDATE_IMAGE",
       section: type,
@@ -62,7 +74,7 @@ const UploadBox = ({
     });
   };
 
-  const saveImagesDraft = () => {
+  const saveVideoDraft = () => {
     toast.promise(
       async () => {
         await draftSave("images", type);
@@ -120,15 +132,16 @@ const UploadBox = ({
 
           <input
             type="file"
-            accept="image/*"
+            accept="video/*"
             ref={fileInputRef}
-            onChange={onSelectImage}
+            onChange={onSelectVideo}
             style={{ display: "none" }}
           />
           <Button
             variant="outlined"
             startIcon={<UploadIcon />}
             onClick={() => fileInputRef.current.click()}
+            disabled={isUploading}
             sx={{
               textTransform: "none",
               fontFamily: "Inter",
@@ -143,10 +156,11 @@ const UploadBox = ({
               },
             }}
           >
-            {currentSelectedImage ? "Replace Image" : "Upload Image"}
+            {isUploading ? "Uploading..." : currentSelectedVideo ? "Replace Video" : "Upload Video"}
           </Button>
         </Box>
-        {currentSelectedImage && (
+
+        {currentSelectedVideo && (
           <Box
             sx={{
               border: "1px dashed #B4B4B4",
@@ -158,20 +172,18 @@ const UploadBox = ({
               position: "relative",
             }}
           >
-            <img
-              src={currentSelectedImage}
-              alt="Car Sketch"
+            <video
+              src={currentSelectedVideo}
+              controls
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
             <Box
               sx={{
                 position: "absolute",
-                top: 12,
+                top: 10,
                 right: 10,
                 display: "flex",
                 gap: 1,
-                width: "auto",
-                height: "auto"
               }}
             >
               <IconButton
@@ -188,7 +200,7 @@ const UploadBox = ({
                 />
               </IconButton>
               <IconButton
-                onClick={handleDeleteImage}
+                onClick={handleDeleteVideo}
                 sx={{
                   backgroundColor: "rgba(255, 255, 255, 0.9)",
                   p: 0.5,
@@ -203,7 +215,7 @@ const UploadBox = ({
           </Box>
         )}
 
-        {!currentSelectedImage && (
+        {!currentSelectedVideo && (
           <Box
             sx={{
               border: "1px dashed #B4B4B4",
@@ -218,11 +230,7 @@ const UploadBox = ({
               alignItems: "center",
             }}
           >
-            <img
-              src={imgSketch}
-              alt="Car Sketch"
-              style={{ maxWidth: "100%", margin: "auto" }}
-            />
+            <PlayCircleIcon sx={{ fontSize: 60, color: colors.buttoncolor }} />
             <Typography
               sx={{
                 fontFamily: "Inter",
@@ -232,7 +240,7 @@ const UploadBox = ({
                 textAlign: "center",
               }}
             >
-              Upload an Image
+              Upload a Video
             </Typography>
             <Typography
               sx={{
@@ -243,7 +251,7 @@ const UploadBox = ({
                 textAlign: "center",
               }}
             >
-              Supports: PNG, JPG, JPEG
+              Supports: MP4, MOV, AVI (Max 100MB)
             </Typography>
           </Box>
         )}
@@ -260,7 +268,7 @@ const UploadBox = ({
       >
         <Button
           variant="contained"
-          disabled={!currentSelectedImage}
+          disabled={!currentSelectedVideo || isUploading}
           sx={{
             textTransform: "none",
             minWidth: "180px",
@@ -280,7 +288,7 @@ const UploadBox = ({
               opacity: 0.9,
             },
           }}
-          onClick={save ? saveImagesDraft : onNext}
+          onClick={save ? saveVideoDraft : onNext}
         >
           {save ? "SAVE & CONTINUE" : "NEXT STEP →"}
         </Button>
@@ -289,4 +297,4 @@ const UploadBox = ({
   );
 };
 
-export default UploadBox;
+export default VideoUploadBox; 

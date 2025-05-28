@@ -14,8 +14,8 @@ const HeroSection = () => {
   const [subTypedText, setSubTypedText] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
   
-  const mainText = "Smarter car sales. Seamless deals. The road to better Starts now";
-  const subText = "Smarter car deals for buyers and sellers — fast listings, secure payments, no hassle.";
+  const mainText = "Smarter car sales. Seamless deals. The road to better starts now";
+  const subText = "Smarter car deals for buyers and sellers — fast listings, no hassle.";
   const containerRef = useRef(null);
   
   const navigate = useNavigate();

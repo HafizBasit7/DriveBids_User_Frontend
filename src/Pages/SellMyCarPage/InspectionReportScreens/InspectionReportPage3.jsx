@@ -17,6 +17,9 @@ const InspectionReportPage3 = () => {
     }
   }, [carState, navigate]);
   function handleSelectTest(field, value) {
+
+    console.log("value and field", field,value);
+    
     dispatch({
       type: "UPDATE_FIELD",
       section: "carInspectionReport",

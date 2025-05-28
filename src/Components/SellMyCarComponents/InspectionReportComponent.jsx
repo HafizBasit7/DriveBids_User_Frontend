@@ -4,10 +4,12 @@ import Ok from "../../assets/SVG/ok.svg";
 import Rattention from "../../assets/SVG/Rattention.svg";
 import Nottested from "../../assets/SVG/Nottested.svg";
 import Rimmediate from "../../assets/SVG/Requireimmediat.svg";
+import NotApplicable from "../../assets/SVG/notapplicable.svg";
 import OkGrey from "../../assets/SVG/okygrey.svg";
 import NTGrey from "../../assets/SVG/NTGrey.svg";
 import NottestedGrey from "../../assets/SVG/nottestedGrey.svg";
 import NITGrey from "../../assets/SVG/NIAGrey.svg";
+import NotApplicableGrey from "../../assets/SVG/notapplicableGrey.svg";
 import colors from "../../Style/color";
 
 const InspectionReportComponent = ({ title, subtitle, tests, selectedValues, onChange, onNext,save = false }) => {
@@ -17,6 +19,7 @@ const InspectionReportComponent = ({ title, subtitle, tests, selectedValues, onC
     { icon: Rattention , label: "Not Tested", notSelected: NTGrey },
     { icon: Nottested, label: "Requires Some Attention", notSelected: NottestedGrey },
     { icon: Rimmediate , label: "Requires Immediate Attention", notSelected: NITGrey },
+    { icon: NotApplicable, label: "Not Applicable", notSelected: NotApplicableGrey },
   ];
 
   return (

@@ -48,7 +48,7 @@ const TermandCondition = () => {
           shill bidding, is strictly prohibited. Buyers must complete payment
           within the specified time frame after the auction ends. All applicable
           taxes, title fees, and transfer costs are the responsibility of the
-          buyer unless otherwise stated. We may provide secure payment channels,
+          buyer unless otherwise stated. We may provide channels,
           but we do not directly handle transactions or guarantee payment
           protection unless explicitly stated. We act solely as a platform
           provider and are not responsible for the quality, condition, or

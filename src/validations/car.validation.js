@@ -6,6 +6,7 @@ const inspectionReportEnum = [
     'Not Tested',
     'Requires Some Attention',
     'Requires Immediate Attention',
+    'Not Applicable',
 ];
 
 const attachmentValidation = zod.object({

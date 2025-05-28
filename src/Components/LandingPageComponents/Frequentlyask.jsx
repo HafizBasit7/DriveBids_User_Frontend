@@ -11,7 +11,7 @@ import qimg3 from "../../assets/SVG/qimg3.svg";
 const faqs = [
   {
     question: "How does DriveBidz work?",
-    answer: "Sellers list their cars with either a Buy It Now price or set up an auction. Buyers can bid or purchase instantly. Our platform supports verified users and secure payments for a seamless experience.",
+    answer: "Sellers list their cars with either a Buy It Now price or set up an auction. Buyers can bid or purchase instantly. Our platform supports verified users for a seamless experience.",
   },
   {
     question: "Is DriveBidz free to use?",

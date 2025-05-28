@@ -6,6 +6,7 @@ import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import ImageIcon from "@mui/icons-material/Image";
 import ShieldIcon from "@mui/icons-material/Shield";
+import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import colors from "../../../Style/color";
@@ -15,6 +16,7 @@ import {
   interiorImageValidation,
   wheelsImageValidation,
   tyreTreadsValidation,
+  carVideoValidation,
 } from "../../../validations/car.validation";
 
 const steps = [
@@ -46,6 +48,13 @@ const steps = [
     icon: <ShieldIcon fontSize="large" />,
     route: "tread-1",
   },
+  {
+    title: "Car Video",
+    status: "carVideoCompletion",
+    steps: 1,
+    icon: <VideoLibraryIcon fontSize="large" />,
+    route: "video",
+  },
 ];
 
 const CarImages = () => {
@@ -69,6 +78,9 @@ const CarImages = () => {
       tyreTreadsImageCompletion: tyreTreadsValidation.safeParse(
         carState.images.tyreTreads
       ),
+      carVideoCompletion: carVideoValidation.safeParse(
+        carState.images.carVideo
+      ),
     };
 
     const allSectionsComplete = Object.values(validations).every(
@@ -78,7 +90,7 @@ const CarImages = () => {
     return (
       <MainLayout
         title="Car Images"
-        subtitle="Complete 4 Easy Steps"
+        subtitle="Complete 5 Easy Steps"
         buttonText="Back "
         onClick={() => navigate("../")}
       >
@@ -107,7 +119,7 @@ const CarImages = () => {
                     color: colors.buttoncolor,
                   }}
                 >
-                  All Images Uploaded Successfully!
+                  All Images and Video Uploaded Successfully!
                 </Typography>
                 <Typography
                   sx={{ fontFamily: "Inter", fontSize: 16, color: "#666" }}
@@ -176,7 +188,7 @@ const CarImages = () => {
                           Completed
                         </Box>
                       ) : (
-                        "In-Complete"
+                        "InComplete"
                       )}
                     </Typography>
                   </Box>

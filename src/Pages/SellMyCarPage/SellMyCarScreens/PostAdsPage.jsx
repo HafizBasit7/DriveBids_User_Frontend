@@ -297,7 +297,7 @@ const PostAds = () => {
                           color={item.status ? "#2F61BF" : "#6F6F6F"}
                           sx={{ fontFamily: "Inter" }}
                         >
-                          {item.status ? "Complete" : "In-Complete"}
+                          {item.status ? "Complete" : "InComplete"}
                         </Typography>
                       </Box>
                     </Box>

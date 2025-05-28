@@ -35,7 +35,7 @@ const BiddingWork = () => {
     },
     {
       title: "Step 6: Finalize the Deal & Get Paid",
-      description: "DriveBidz manages secure payment processing so you never have to chase money. You hand over the car only when the transaction is complete."
+      description: "DriveBidz manages processing so you never have to chase money. You hand over the car only when the transaction is complete."
     }
   ];
 
@@ -54,7 +54,7 @@ const BiddingWork = () => {
     },
     {
       title: "Step 4: Win. Pay. Drive.",
-      description: "We facilitate secure payment and guide you through delivery or pickup. No scams. No stress."
+      description: "We facilitate  and guide you through delivery or pickup. No scams. No stress."
     }
   ];
 

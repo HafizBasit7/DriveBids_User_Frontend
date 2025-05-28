@@ -82,6 +82,7 @@ import InitialLoadingPage from "../Pages/Service/InitialLoadingPage";
 import TermandCondition from "../Pages/TermandConditionPage/TermandCondition";
 import PrivacyPolicy from "../Pages/Privacy&PolicyPage/PrivacyPolicy";
 import BuyerandSellerProtection from "../Pages/BuyerandSelllerProtectionPage/BuyerandSellerProtection";
+import CarVideoPage from "../Pages/SellMyCarPage/CarImagesScreens/CarVideoScreens/CarVideoPage";
 
 const createRouter = (authState) => createBrowserRouter([
     {path: '/', element: <LandingPage/>},
@@ -173,6 +174,7 @@ const createRouter = (authState) => createBrowserRouter([
                                     {path: 'tread-2', element: <WheelsThreadPage2/>},
                                     {path: 'tread-3', element: <WheelsThreadPage3/>},
                                     {path: 'tread-4', element: <WheelsThreadPage4/>},
+                                    {path: 'video', element: <CarVideoPage/>},
                                 ],
                             },
                             {path: 'inspection-1', element: <InspectionReportPage1/>},

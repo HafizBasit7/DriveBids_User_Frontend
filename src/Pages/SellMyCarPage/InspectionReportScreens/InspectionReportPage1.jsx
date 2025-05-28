@@ -71,8 +71,8 @@ const InspectionReportPage1 = () => {
               ([key]) =>
                 "- " +
                 key
-                  .replace(/([A-Z])/g, " $1") // insert space before capital letters
-                  .replace(/^./, (str) => str.toUpperCase()) // capitalize first letter
+                  .replace(/([A-Z])/g, " $1") 
+                  .replace(/^./, (str) => str.toUpperCase()) 
             );
 
           if (missingFields.length === 0) {
