@@ -90,6 +90,17 @@ const CarDetailsPage = () => {
     return authState.user._id === data.data.car.user._id;
   }, [data, authState]);
 
+  useEffect(() => {
+    if (socket) {
+      socket.emit("join-room", { roomId: carId });
+    }
+    return () => {
+      if (socket) {
+        socket.emit("leave-room", { roomId: carId });
+      }
+    };
+  }, [socket, carId]);
+
   if (isLoading) {
     return <CarLoader />;
   }
@@ -120,17 +131,6 @@ const CarDetailsPage = () => {
       processingRef.current = false;
     }
   };
-
-  useEffect(() => {
-    if (socket) {
-      socket.emit("join-room", { roomId: carId });
-    }
-    return () => {
-      if (socket) {
-        socket.emit("leave-room", { roomId: carId });
-      }
-    };
-  }, [socket, carId]);
 
   return (
     <MainLayout

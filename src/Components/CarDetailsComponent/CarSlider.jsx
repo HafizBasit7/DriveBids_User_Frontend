@@ -12,6 +12,7 @@ import {
   ArrowForwardIos,
   Close,
   LocationOnRounded,
+  PlayArrow,
 } from "@mui/icons-material";
 import Carimg from "../../assets/Png/cardetailimg.png";
 import Carimgg from "../../assets/Png/sellcarimage.png";
@@ -28,6 +29,8 @@ import { getCarBiddingHistory } from "../../api/calls/car";
 const CarSlider = ({ car }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
 
   const [open, setOpen] = useState(false);
   const [openBuyNowDialog, setOpenBuyNowDialog] = useState(false);
@@ -37,7 +40,7 @@ const CarSlider = ({ car }) => {
   const dialogThumbRefs = useRef([]);
   const { authState } = useAuth();
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["biddingHistory", car._id],
     queryFn: () => getCarBiddingHistory(car._id),
   });
@@ -48,7 +51,6 @@ const CarSlider = ({ car }) => {
     ? car.highestBid + 1
     : car.staringBidPrice;
   if (bid) {
-    //Self user highest bid
     if (bid.bidAmount === car.highestBid) {
       computedQuickBid = bid.maxBudget + 1;
     }
@@ -79,18 +81,23 @@ const CarSlider = ({ car }) => {
     mutationFn: buyNowCar,
   });
 
-  const images = Object.values(car.images)
-    .flat()
-    .map((val) => val.url);
+  // Separate videos and images
+  const videos = Object.values(car.videos || {}).flat().map((val) => val.url);
+  const images = Object.values(car.images || {}).flat().map((val) => val.url);
+  
+  // Combine videos and images, with videos first
+  const mediaItems = [...videos, ...images];
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % mediaItems.length);
+    setIsPlaying(false);
   };
 
   const handlePrev = () => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+      (prevIndex) => (prevIndex - 1 + mediaItems.length) % mediaItems.length
     );
+    setIsPlaying(false);
   };
 
   const handleImageClick = () => {
@@ -99,20 +106,27 @@ const CarSlider = ({ car }) => {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
+    setIsPlaying(false);
   };
-
-  useEffect(() => {
-    const activeThumbnail =
-      thumbnailRef.current?.querySelector(".active-thumb");
-    activeThumbnail?.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  }, [currentIndex]);
 
   const handleThumbnailClick = (index) => {
     setCurrentIndex(index);
+    setIsPlaying(false);
+  };
+
+  const isVideo = (url) => {
+    return url.match(/\.(mp4|webm|ogg)$/i);
+  };
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
   const navBtnStyles = (side) => ({
@@ -177,19 +191,40 @@ const CarSlider = ({ car }) => {
       }}
     >
       <Box sx={{ position: "relative", width: "100%", overflow: "hidden" }}>
-        <Box
-          component="img"
-          src={images[currentIndex]}
-          alt="Main Image"
-          onClick={handleImageClick}
-          sx={{
-            width: "100%",
-            height: { xs: "250px", sm: "350px", md: 480 },
-            objectFit: "cover",
-            borderRadius: 2,
-            cursor: "pointer",
-          }}
-        />
+        {isVideo(mediaItems[currentIndex]) ? (
+          <Box sx={{ position: "relative" }}>
+            <video
+              ref={videoRef}
+              src={mediaItems[currentIndex]}
+              style={{
+                width: "100%",
+                height: { xs: "250px", sm: "350px", md: 480 },
+                objectFit: "cover",
+                borderRadius: 8,
+              }}
+              onClick={handleImageClick}
+              muted
+              loop
+              autoPlay
+              playsInline
+            />
+          </Box>
+        ) : (
+          <Box
+            component="img"
+            src={mediaItems[currentIndex]}
+            alt="Main Image"
+            onClick={handleImageClick}
+            sx={{
+              width: "100%",
+              height: { xs: "250px", sm: "350px", md: 480 },
+              objectFit: "cover",
+              borderRadius: 2,
+              cursor: "pointer",
+            }}
+          />
+        )}
+
         <IconButton
           onClick={handleImageClick}
           sx={{
@@ -209,8 +244,7 @@ const CarSlider = ({ car }) => {
               borderRadius: 2,
               p: 0.1,
             }}
-          />{" "}
-          {/* import from @mui/icons-material */}
+          />
         </IconButton>
 
         <IconButton onClick={handlePrev} sx={navBtnStyles("left")}>
@@ -242,12 +276,12 @@ const CarSlider = ({ car }) => {
             "&::-webkit-scrollbar-track": { backgroundColor: "transparent" },
           }}
         >
-          {images.map((img, index) => (
+          {mediaItems.map((item, index) => (
             <Box
               key={index}
               ref={(el) => (mainThumbRefs.current[index] = el)}
-              component="img"
-              src={img}
+              component={isVideo(item) ? "video" : "img"}
+              src={item}
               alt={`Thumbnail ${index}`}
               onClick={() => handleThumbnailClick(index)}
               sx={{
@@ -256,7 +290,6 @@ const CarSlider = ({ car }) => {
                 objectFit: "cover",
                 borderRadius: 1,
                 cursor: "pointer",
-
                 border:
                   currentIndex === index
                     ? "2px solid white"
@@ -287,17 +320,50 @@ const CarSlider = ({ car }) => {
             <Close />
           </IconButton>
 
-          <Box
-            component="img"
-            src={images[currentIndex]}
-            alt="Zoomed"
-            sx={{
-              width: "100%",
-              height: "calc(100% - 110px)",
-              objectFit: "contain",
-              mt: 5,
-            }}
-          />
+          {isVideo(mediaItems[currentIndex]) ? (
+            <Box sx={{ position: "relative", height: "100%" }}>
+              <video
+                ref={videoRef}
+                src={mediaItems[currentIndex]}
+                style={{
+                  width: "100%",
+                  height: "calc(100% - 110px)",
+                  objectFit: "contain",
+                  marginTop: "3rem",
+                }}
+                autoPlay={isPlaying}
+                controls
+              />
+              <IconButton
+                onClick={handlePlayPause}
+                sx={{
+                  position: "absolute",
+                  top: "40%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  backgroundColor: "rgba(0,0,0,0.5)",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "rgba(0,0,0,0.7)",
+                  },
+                }}
+              >
+                {isPlaying ? <Close /> : <PlayArrow sx={{ fontSize: 40 }} />}
+              </IconButton>
+            </Box>
+          ) : (
+            <Box
+              component="img"
+              src={mediaItems[currentIndex]}
+              alt="Zoomed"
+              sx={{
+                width: "100%",
+                height: "calc(100% - 110px)",
+                objectFit: "contain",
+                mt: 5,
+              }}
+            />
+          )}
 
           <IconButton onClick={handlePrev} sx={navBtnStyles("left")}>
             <ArrowBackIos sx={arrowIconStyles} />
@@ -310,12 +376,12 @@ const CarSlider = ({ car }) => {
           <Box
             sx={{ ...thumbnailScrollStyles, position: "absolute", bottom: 10 }}
           >
-            {images.map((img, index) => (
+            {mediaItems.map((item, index) => (
               <Box
                 key={index}
                 ref={(el) => (dialogThumbRefs.current[index] = el)}
-                component="img"
-                src={img}
+                component={isVideo(item) ? "video" : "img"}
+                src={item}
                 alt={`Dialog Thumb ${index}`}
                 onClick={() => handleThumbnailClick(index)}
                 sx={{
@@ -721,11 +787,6 @@ const CarSlider = ({ car }) => {
                 : "RESERVE NOT MET"}
             </span>
           </Tooltip>
-          {/* {car.status === "sold"
-            ? "CAR SOLD"
-            : car.reserveMet
-            ? "RESERVE MET"
-            : "RESERVE NOT MET"} */}
         </Box>
 
         <Box

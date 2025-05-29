@@ -90,7 +90,7 @@ const CarImages = () => {
 
     return (
       <MainLayout
-        title="Car Images"
+        title="Car Images & Video"
         subtitle="Complete 5 Easy Steps"
         buttonText="Back "
         onClick={() => navigate("../")}

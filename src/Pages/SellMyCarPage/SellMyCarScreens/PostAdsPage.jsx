@@ -87,7 +87,7 @@ const PostAds = () => {
       icon: <DirectionsCarIcon fontSize="large" />,
     },
     {
-      title: "Car Images",
+      title: "Car Images & Video",
       status: imageCompletion.success,
       steps: 4,
       icon: <ImageIcon fontSize="large" />,

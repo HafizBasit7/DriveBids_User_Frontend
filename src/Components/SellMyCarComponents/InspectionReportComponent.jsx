@@ -63,90 +63,50 @@ const InspectionReportComponent = ({ title, subtitle, tests, selectedValues, onC
 
         {/* Main Content Area */}
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          {/* First Row - Indicators and First Test Items */}
-          <Box sx={{ 
+          {/* Indicators Row */}
+          {/* <Box sx={{ 
             width: '100%',
             display: 'flex',
-            gap: 4
+            gap: 2,
+            p: 2,
+            border: '2px solid #E9ECEF',
+            borderRadius: 2,
+            backgroundColor: '#F8F9FA',
+            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.05)'
           }}>
-            {/* Indicators Section */}
-            <Box sx={{ width: 300 }}>
-              <Typography fontSize={30} fontWeight={700} mb={1} sx={{ fontFamily: 'Outfit' }}>
-                Indicators
-              </Typography>
-              <Stack direction="column" gap={3} mt={3}>
-                {iconMap.map((item, index) => (
-                  <Stack direction="row" alignItems="center" gap={1} key={index}>
-                    <img src={item.icon} alt={item.label} width={24} />
-                    <Typography sx={{ fontFamily: 'Outfit', fontWeight: 600 }}>{item.label}</Typography>
-                  </Stack>
-                ))}
-              </Stack>
-            </Box>
-
-            {/* First Row Test Items */}
-            <Box sx={{ 
-              flex: 1,
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 2
-            }}>
-              {tests.slice(0, 2).map((test, index) => (
-                <Box 
-                  key={index} 
+            <Typography fontSize={30} fontWeight={700} sx={{ fontFamily: 'Outfit', minWidth: 150 }}>
+              Indicators
+            </Typography>
+            <Stack direction="row" spacing={4} alignItems="center">
+              {iconMap.map((item, index) => (
+                <Stack 
+                  direction="row" 
+                  alignItems="center" 
+                  gap={1} 
+                  key={index}
                   sx={{
-                    p: 2,
-                    border: '1px solid #E9ECEF',
-                    borderRadius: 2,
-                    backgroundColor: '#fff',
-                    width: 'calc(50% - 8px)',
-                    minWidth: 300
+                    p: 0.5,
+                    borderRadius: 1,
+                    '&:hover': {
+                      backgroundColor: '#FFFFFF',
+                      transition: 'background-color 0.2s ease'
+                    }
                   }}
                 >
-                  <Typography fontWeight={600} mb={1}>
-                    {test.name}
-                  </Typography>
-                  <Stack direction="column" spacing={1}>
-                    {iconMap.map((option, idx) => {
-                      const isSelected = selectedValues[test.target] === option.label;
-                      const iconSrc = isSelected ? option.icon : option.notSelected;
-
-                      return (
-                        <Stack
-                          direction="row"
-                          alignItems="center"
-                          gap={1}
-                          key={idx}
-                          onClick={() => onChange(test.target, option.label)}
-                          sx={{
-                            cursor: 'pointer',
-                            borderRadius: 2,
-                            p: 1,
-                            '&:hover': {
-                              backgroundColor: '#f5f5f5'
-                            }
-                          }}
-                        >
-                          <img src={iconSrc} alt={option.label} width={24} />
-                          <Typography sx={{ fontFamily: 'Outfit' }}>
-                            {option.label}
-                          </Typography>
-                        </Stack>
-                      );
-                    })}
-                  </Stack>
-                </Box>
+                  <img src={item.icon} alt={item.label} width={24} />
+                  <Typography sx={{ fontFamily: 'Outfit', fontWeight: 600 }}>{item.label}</Typography>
+                </Stack>
               ))}
-            </Box>
-          </Box>
+            </Stack>
+          </Box> */}
 
-          {/* Second Row and Beyond - Remaining Test Items */}
+          {/* Test Items Grid */}
           <Box sx={{ 
             display: 'flex',
             flexWrap: 'wrap',
             gap: 2
           }}>
-            {tests.slice(2).map((test, index) => (
+            {tests.map((test, index) => (
               <Box 
                 key={index} 
                 sx={{

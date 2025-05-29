@@ -5,6 +5,7 @@ import Ok from "../../assets/SVG/ok.svg";
 import Rattntion from "../../assets/SVG/Rattention.svg";
 import Nottested from "../../assets/SVG/Nottested.svg";
 import Rimmediate from "../../assets/SVG/Requireimmediat.svg";
+import NotApplicable from "../../assets/SVG/notapplicable.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import { useQuery } from "@tanstack/react-query";
 import { getCarInspectionReport } from "../../api/calls/car";
@@ -60,6 +61,7 @@ const CarInspectionModal = ({ open, onClose, car }) => {
     { icon: Rattntion, label: "Requires Some Attention" },
     { icon: Nottested, label: "Not Tested" },
     { icon: Rimmediate, label: "Requires Immediate Attention" },
+    { icon: NotApplicable, label: "Not Applicable" },
   ];
 
 
