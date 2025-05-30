@@ -8,6 +8,7 @@ import DescriptionBox from "../../Components/CarDetailsComponent/DescriptionBox"
 import CarInspectionReport from "../../Components/CarDetailsComponent/CarInspectionReport";
 import { useNavigate, useParams } from "react-router-dom";
 import ChatIcon from "@mui/icons-material/Chat";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useQuery } from "@tanstack/react-query";
 import { getCar, getSimilarCars } from "../../api/calls/car";
 import { useAuth } from "../../context/auth.context";
@@ -136,10 +137,10 @@ const CarDetailsPage = () => {
     <MainLayout
       title={car.title}
       subtitle={`Posted ${timeAgo(car.postedOn || car.createdAt)}`}
-      buttonText={!isOwner ? (isProcessing ? "Connecting..." : "Message Owner") : undefined}
-      onClick={!isOwner ? messageOwnerHandle : undefined}
+      buttonText={isOwner ? "Back" : (isProcessing ? "Connecting..." : "Message Owner")}
+      onClick={isOwner ? () => navigate(-1) : messageOwnerHandle}
       isnotSellMyCar={true}
-      icon={!isOwner ? <ChatIcon sx={{ cursor: "pointer" }} /> : undefined}
+      icon={isOwner ? <ArrowBackIcon sx={{ cursor: "pointer" }} /> : (!isOwner ? <ChatIcon sx={{ cursor: "pointer" }} /> : undefined)}
       buttonDisabled={isProcessing}
     >
       <Box

@@ -82,8 +82,10 @@ const CarSlider = ({ car }) => {
   });
 
   // Separate videos and images
-  const videos = Object.values(car.videos || {}).flat().map((val) => val.url);
-  const images = Object.values(car.images || {}).flat().map((val) => val.url);
+  const videos = car.images?.carVideo?.map((val) => val.url) || [];
+  const images = Object.entries(car.images || {})
+    .filter(([key]) => key !== 'carVideo')
+    .flatMap(([_, items]) => items.map((val) => val.url));
   
   // Combine videos and images, with videos first
   const mediaItems = [...videos, ...images];
