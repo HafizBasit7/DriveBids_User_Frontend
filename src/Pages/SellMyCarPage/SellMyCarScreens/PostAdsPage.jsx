@@ -89,7 +89,7 @@ const PostAds = () => {
     {
       title: "Car Images & Video",
       status: imageCompletion.success,
-      steps: 4,
+      steps: 5,
       icon: <ImageIcon fontSize="large" />,
     },
     {
@@ -111,6 +111,7 @@ const PostAds = () => {
       icon: <MonetizationOnIcon fontSize="large" />,
     },
   ];
+  
 
   const handleNavigate = (index) => {
     if (

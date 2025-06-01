@@ -93,6 +93,15 @@ const CarSlider = ({ car }) => {
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % mediaItems.length);
     setIsPlaying(false);
+    // Add a small delay to ensure video starts playing after state update
+    if (isVideo(mediaItems[(currentIndex + 1) % mediaItems.length])) {
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.play();
+          setIsPlaying(true);
+        }
+      }, 100);
+    }
   };
 
   const handlePrev = () => {
@@ -100,6 +109,15 @@ const CarSlider = ({ car }) => {
       (prevIndex) => (prevIndex - 1 + mediaItems.length) % mediaItems.length
     );
     setIsPlaying(false);
+    // Add a small delay to ensure video starts playing after state update
+    if (isVideo(mediaItems[(currentIndex - 1 + mediaItems.length) % mediaItems.length])) {
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.play();
+          setIsPlaying(true);
+        }
+      }, 100);
+    }
   };
 
   const handleImageClick = () => {
@@ -114,6 +132,15 @@ const CarSlider = ({ car }) => {
   const handleThumbnailClick = (index) => {
     setCurrentIndex(index);
     setIsPlaying(false);
+    // Add a small delay to ensure video starts playing after state update
+    if (isVideo(mediaItems[index])) {
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.play();
+          setIsPlaying(true);
+        }
+      }, 100);
+    }
   };
 
   const isVideo = (url) => {
@@ -209,6 +236,12 @@ const CarSlider = ({ car }) => {
               loop
               autoPlay
               playsInline
+              onLoadedData={() => {
+                if (videoRef.current) {
+                  videoRef.current.play();
+                  setIsPlaying(true);
+                }
+              }}
             />
           </Box>
         ) : (
@@ -336,22 +369,6 @@ const CarSlider = ({ car }) => {
                 autoPlay={isPlaying}
                 controls
               />
-              <IconButton
-                onClick={handlePlayPause}
-                sx={{
-                  position: "absolute",
-                  top: "40%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  backgroundColor: "rgba(0,0,0,0.5)",
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "rgba(0,0,0,0.7)",
-                  },
-                }}
-              >
-                {isPlaying ? <Close /> : <PlayArrow sx={{ fontSize: 40 }} />}
-              </IconButton>
             </Box>
           ) : (
             <Box
