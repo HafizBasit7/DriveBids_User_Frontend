@@ -35,7 +35,7 @@ const CarVarient = () => {
     navigate("../company");
   }
 
-  const { data, isLoading } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["variant", make?.toLowerCase()],
     queryFn: async () => {
       const result = await apiClient.get(`/models?make=${make?.toLowerCase()}`);
@@ -43,9 +43,8 @@ const CarVarient = () => {
     },
     refetchOnMount: false,
   });
-  const variants = data?.Models || [];
 
-  let filteredVariants = isLoading ? [] : variants;
+  let filteredVariants = isFetching ? [] : data?.Models || [];
   if (searchInput && searchInput !== "") {
     filteredVariants = filteredVariants?.filter((variant) =>
       variant.model_name.toLowerCase().includes(searchInput.toLowerCase())
@@ -237,7 +236,7 @@ const CarVarient = () => {
 
               <Box sx={{ overflowY: "auto", flex: 1, pr: 1 }}>
                 <Grid container spacing={2}>
-                  {isLoading ? (
+                  {isFetching ? (
                     <CircularProgress sx={{ mx: "auto", my: 5 }} size={24} />
                   ) : (
                     <>

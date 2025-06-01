@@ -35,7 +35,7 @@ const CarCompanyPage = () => {
   // const page = searchParams.get('page') ? parseInt(searchParams.get('page')) : 1;
   const [searchInput, setSearchInput] = useState();
 
-  const { data, isLoading } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["make"],
     queryFn: async () => {
       const result = await apiClient.get("/makes");
@@ -43,7 +43,7 @@ const CarCompanyPage = () => {
     },
     refetchOnMount: false,
   });
-  const [makes, setMakes] = useState(data?.Makes);
+
   const [showInput, setShowInput] = useState(false);
   const [customText, setCustomText] = useState("");
 
@@ -67,7 +67,7 @@ const CarCompanyPage = () => {
   //   slicedMakes = makes ? makes.slice((page - 1) * LIMIT, ((page - 1) * LIMIT) + LIMIT) : [];
   // }
 
-  let filteredMakes = isLoading ? [] : makes;
+  let filteredMakes = isFetching ? [] : data?.Makes || [];
   if (searchInput && searchInput !== "") {
     filteredMakes = filteredMakes?.filter((make) =>
       make.make_display.toLowerCase().includes(searchInput.toLowerCase())
@@ -302,7 +302,7 @@ const CarCompanyPage = () => {
             }}
           >
             <Grid container spacing={2}>
-              {isLoading ? (
+              {isFetching ? (
                 <CircularProgress sx={{ mx: "auto", my: 5 }} size={24} />
               ) : searchInput && filteredMakes?.length === 0 ? (
                 <Box sx={{ width: "100%", textAlign: "center", py: 4 }}>
