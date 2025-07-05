@@ -11,40 +11,46 @@ import qimg3 from "../../assets/SVG/qimg3.svg";
 const faqs = [
   {
     question: "How does DriveBidz work?",
-    answer: "Sellers list their cars with either a Buy It Now price or set up an auction. Buyers can bid or purchase instantly. Our platform supports verified users for a seamless experience.",
+    answer:
+      "Sellers list their cars with either a Buy It Now price or set up an auction. Buyers can bid or purchase instantly. Our platform supports verified users for a seamless experience.",
   },
   {
     question: "Is DriveBidz free to use?",
-    answer: "Creating an account and browsing is free. Listing fees and small success fees may apply for sellers — no hidden charges.",
+    answer:
+      "Creating an account and browsing is free. Listing fees and small success fees may apply for sellers — no hidden charges.",
   },
   {
     question: "How do I know if a car is legit?",
-    answer: 
+    answer:
       "· Multi-angle photos of the car using our built-in camera guide.<br>" +
       "· A fault checklist highlighting any known issues.<br>" +
       "· A detailed description of the car’s condition.<br>" +
       "Some listings may include service history or inspection reports, but this is optional.<br>" +
-      "We recommend reviewing the full listing carefully and messaging the seller with any questions before placing a bid."
+      "We recommend reviewing the full listing carefully and messaging the seller with any questions before placing a bid.",
   },
   {
     question: "What payment options are available?",
-    answer: "Buyers can use bank transfers or escrow (coming soon) for added security. Payment methods will be shown at checkout.",
+    answer:
+      "Buyers can use bank transfers or escrow (coming soon) for added security. Payment methods will be shown at checkout.",
   },
   {
     question: "Can I retract or change a bid?",
-    answer: "Bids are binding. If you placed a bid in error, contact support immediately — we'll do our best to help.",
+    answer:
+      "Bids are binding. If you placed a bid in error, contact support immediately — we'll do our best to help.",
   },
   {
     question: "What documents do I need to list my car?",
-    answer: "You'll need your car's registration, a valid ID, and any service history or finance details.",
+    answer:
+      "You'll need your car's registration, a valid ID, and any service history or finance details.",
   },
   {
     question: "How do I get paid?",
-    answer: "Once the sale is confirmed, payment is processed securely via our platform. You can choose your preferred payout method.",
+    answer: "Once the sale is confirmed, payment is processed by the buyer.",
   },
   {
     question: "What's a reserve price and should I set one?",
-    answer: "A reserve price is the minimum you're willing to accept. It helps protect your sale but may limit bidders. We recommend setting it slightly below market value for best results.",
+    answer:
+      "A reserve price is the minimum you're willing to accept. It helps protect your sale but may limit bidders. We recommend setting it slightly below market value for best results.",
   },
 ];
 
@@ -110,7 +116,7 @@ const AskQuestions = () => {
                   fontSize: { xs: "12px", sm: "14px", md: "16px" },
                   textAlign: "start",
                 }}
-                dangerouslySetInnerHTML={{ __html: faq.answer }}  // Use dangerouslySetInnerHTML
+                dangerouslySetInnerHTML={{ __html: faq.answer }} // Use dangerouslySetInnerHTML
               />
             )}
           </Box>

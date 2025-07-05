@@ -16,8 +16,7 @@ import {
   interiorImageValidation,
   wheelsImageValidation,
   tyreTreadsValidation,
-  carVideoValidation
-  
+  carVideoValidation,
 } from "../../../validations/car.validation";
 
 const steps = [
@@ -189,7 +188,7 @@ const CarImages = () => {
                           Completed
                         </Box>
                       ) : (
-                        "InComplete"
+                        "Incomplete"
                       )}
                     </Typography>
                   </Box>

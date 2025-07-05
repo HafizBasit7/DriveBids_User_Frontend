@@ -26,6 +26,7 @@ const BidModal = ({ open, onClose, car }) => {
   const { authState } = useAuth();
   const minBid = car.highestBid ? car.highestBid : car.staringBidPrice; // Minimum bid required
   const suggestedBids = [minBid + 50, minBid + 100, minBid + 250];
+  const MAX_SAFE_INTEGER = 9007199254740985;
 
   const mutation = useMutation({
     mutationFn: placeBidOnCar,
@@ -103,7 +104,13 @@ const BidModal = ({ open, onClose, car }) => {
               },
             }}
             value={bid}
-            onChange={(e) => setBid(parseInt(e.target.value) || 0)}
+            onChange={(e) => {
+              if (parseInt(e.target.value) > MAX_SAFE_INTEGER) {
+                setBid(MAX_SAFE_INTEGER);
+              } else {
+                setBid(parseInt(e.target.value));
+              }
+            }}
           />
         </Box>
 
@@ -115,9 +122,13 @@ const BidModal = ({ open, onClose, car }) => {
         ) : (
           <Button
             onClick={async () => {
+              if (bid > MAX_SAFE_INTEGER) {
+                alert("Bid amount cannot exceed AED 9007199254740985.");
+                return;
+              }
               await toast.promise(
                 mutation.mutateAsync({
-                  carId: car._id,
+                  carId: car?._id,
                   bidAmount: parseInt(bid),
                 }),
                 {

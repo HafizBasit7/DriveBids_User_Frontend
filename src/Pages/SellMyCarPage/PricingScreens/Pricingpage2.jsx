@@ -1,7 +1,6 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../../Layouts/MainLayout";
-import DealsBanner from "../../../Components/HomePageComponents/DealBanner";
 import PricingBidBox from "../../../Components/SellMyCarComponents/PricingBox";
 import colors from "../../../Style/color";
 import { useCar } from "../../../context/car.context";
@@ -9,7 +8,7 @@ import { useEffect } from "react";
 
 const PricingPage2 = () => {
   const navigate = useNavigate();
-
+  const MAX_SAFE_INTEGER = 9007199254740985;
   const { carState, dispatch } = useCar();
   useEffect(() => {
     if (!carState?.regNo) {
@@ -17,12 +16,21 @@ const PricingPage2 = () => {
     }
   }, [carState, navigate]);
   function setReservedBidPrice(value) {
-    dispatch({
-      type: "UPDATE_FIELD",
-      section: "carPricing",
-      field: "reserveBidPrice",
-      value: parseInt(value),
-    });
+    if (value <= MAX_SAFE_INTEGER) {
+      dispatch({
+        type: "UPDATE_FIELD",
+        section: "carPricing",
+        field: "reserveBidPrice",
+        value: parseInt(value),
+      });
+    } else {
+      dispatch({
+        type: "UPDATE_FIELD",
+        section: "carPricing",
+        field: "reserveBidPrice",
+        value: MAX_SAFE_INTEGER,
+      });
+    }
   }
 
   return (

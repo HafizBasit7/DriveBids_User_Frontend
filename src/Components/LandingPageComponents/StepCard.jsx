@@ -14,9 +14,7 @@ const sellerSteps = [
   {
     id: 1,
     title: "Create an Account",
-    description: [
-      "Quick and free registration to get you started.",
-    ],
+    description: ["Quick and free registration to get you started."],
     image: homeimg,
   },
   {
@@ -59,10 +57,7 @@ const buyerSteps = [
   {
     id: 3,
     title: "Drive Away with Confidence",
-    description: [
-      "Verified listings and transparent pricing.",
-      "Secure payment options for peace of mind.",
-    ],
+    description: ["Verified listings and transparent pricing."],
     image: homeimg5,
   },
 ];
@@ -100,7 +95,7 @@ const StepsCard = () => {
       opacity: 1,
       transition: {
         duration: 1,
-      }
+      },
     },
   };
 
@@ -163,9 +158,9 @@ const StepsCard = () => {
                 transition: "box-shadow 0.3s ease",
                 display: "flex",
                 flexDirection: "column",
-                '&:hover': {
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
-                }
+                "&:hover": {
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                },
               }}
             >
               <Box
@@ -182,7 +177,9 @@ const StepsCard = () => {
                 }}
               />
 
-              <Box sx={{ p: 2, flex: 1, display: "flex", flexDirection: "column" }}>
+              <Box
+                sx={{ p: 2, flex: 1, display: "flex", flexDirection: "column" }}
+              >
                 <Typography
                   sx={{
                     fontWeight: "bold",
@@ -212,10 +209,19 @@ const StepsCard = () => {
                   {step.description.map((point, index) => (
                     <Box
                       key={index}
-                      sx={{ display: "flex", alignItems: "flex-start", gap: 1, mb: 1 }}
+                      sx={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: 1,
+                        mb: 1,
+                      }}
                     >
-                      <CheckCircleIcon sx={{ color: "#0057FF", fontSize: 14, mt: 0.5 }} />
-                      <Typography sx={{ fontSize: 14, color: "#333", lineHeight: 1.4 }}>
+                      <CheckCircleIcon
+                        sx={{ color: "#0057FF", fontSize: 14, mt: 0.5 }}
+                      />
+                      <Typography
+                        sx={{ fontSize: 14, color: "#333", lineHeight: 1.4 }}
+                      >
                         {point}
                       </Typography>
                     </Box>
@@ -240,7 +246,11 @@ const StepsCard = () => {
       }}
     >
       {renderSteps(sellerSteps, "For Sellers", "List and Sell With Confidence")}
-      {renderSteps(buyerSteps, "For Buyers", "Find Your Perfect Ride, Your Way")}
+      {renderSteps(
+        buyerSteps,
+        "For Buyers",
+        "Find Your Perfect Ride, Your Way"
+      )}
     </Box>
   );
 };

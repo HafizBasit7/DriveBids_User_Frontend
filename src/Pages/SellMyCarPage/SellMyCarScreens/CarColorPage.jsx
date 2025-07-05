@@ -22,7 +22,7 @@ const CarColorPage = () => {
     { name: "Blue", hex: "#0000FF" },
     { name: "Black", hex: "#000000" },
     { name: "White", hex: "#FFFFFF" },
-    { name: "Gray", hex: "#808080" },
+    { name: "Grey", hex: "#808080" },
     { name: "Silver", hex: "#C0C0C0" },
     { name: "Green", hex: "#008000" },
     { name: "Yellow", hex: "#FFFF00" },

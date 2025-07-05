@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 const PricingPage3 = () => {
   const navigate = useNavigate();
+  const MAX_SAFE_INTEGER = 9007199254740985;
 
   const { carState, dispatch } = useCar();
   useEffect(() => {
@@ -17,12 +18,21 @@ const PricingPage3 = () => {
     }
   }, [carState, navigate]);
   function setBuynowPrice(value) {
-    dispatch({
-      type: "UPDATE_FIELD",
-      section: "carPricing",
-      field: "buyNowPrice",
-      value: parseInt(value),
-    });
+    if (value <= MAX_SAFE_INTEGER) {
+      dispatch({
+        type: "UPDATE_FIELD",
+        section: "carPricing",
+        field: "buyNowPrice",
+        value: parseInt(value),
+      });
+    } else {
+      dispatch({
+        type: "UPDATE_FIELD",
+        section: "carPricing",
+        field: "buyNowPrice",
+        value: MAX_SAFE_INTEGER,
+      });
+    }
   }
 
   return (

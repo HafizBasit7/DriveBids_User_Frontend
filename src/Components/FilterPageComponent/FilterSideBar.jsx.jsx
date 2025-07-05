@@ -185,7 +185,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
             "Blue",
             "Black",
             "White",
-            "Gray",
+            "Grey",
             "Silver",
             "Green",
             "Yellow",

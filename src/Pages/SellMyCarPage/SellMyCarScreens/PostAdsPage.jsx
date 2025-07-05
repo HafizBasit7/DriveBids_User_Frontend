@@ -60,10 +60,12 @@ const PostAds = () => {
     carDetailsCompletion.success,
     imageCompletion.success,
     carDamageReportComplection.success,
-    carFeaturesCompletion.success
+    carFeaturesCompletion.success,
   ].filter(Boolean).length;
-  
-  const completionPercentage = Math.round((completedSections / totalSections) * 100);
+
+  const completionPercentage = Math.round(
+    (completedSections / totalSections) * 100
+  );
 
   const postAdAllow =
     carPricingCompletion.success &&
@@ -111,7 +113,6 @@ const PostAds = () => {
       icon: <MonetizationOnIcon fontSize="large" />,
     },
   ];
-  
 
   const handleNavigate = (index) => {
     if (
@@ -159,76 +160,85 @@ const PostAds = () => {
             mt={4}
             sx={{ position: "relative", zIndex: 1 }}
           >
-            <Box 
-              sx={{ 
+            <Box
+              sx={{
                 mb: 4,
                 p: 3,
-                backgroundColor: '#fff',
+                backgroundColor: "#fff",
                 borderRadius: 2,
-                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                border: '1px solid #f0f0f0'
+                boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+                border: "1px solid #f0f0f0",
               }}
             >
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    fontFamily: 'Inter',
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  mb: 2,
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontFamily: "Inter",
                     fontWeight: 600,
-                    color: '#1a1a1a'
+                    color: "#1a1a1a",
                   }}
                 >
                   Post Ad Progress
                 </Typography>
-                <Box 
-                  sx={{ 
+                <Box
+                  sx={{
                     backgroundColor: colors.buttoncolor,
-                    color: 'white',
+                    color: "white",
                     px: 2,
                     py: 0.5,
                     borderRadius: 2,
                     fontWeight: 600,
-                    fontSize: '0.9rem'
+                    fontSize: "0.9rem",
                   }}
                 >
                   {completionPercentage}% Complete
                 </Box>
               </Box>
-              
+
               <Box sx={{ mb: 1.5 }}>
-                <LinearProgress 
-                  variant="determinate" 
-                  value={completionPercentage} 
-                  sx={{ 
-                    height: 10, 
+                <LinearProgress
+                  variant="determinate"
+                  value={completionPercentage}
+                  sx={{
+                    height: 10,
                     borderRadius: 5,
-                    backgroundColor: '#F2EFF2',
-                    '& .MuiLinearProgress-bar': {
+                    backgroundColor: "#F2EFF2",
+                    "& .MuiLinearProgress-bar": {
                       backgroundColor: colors.buttoncolor,
                       borderRadius: 5,
-                      transition: 'transform 0.4s ease-in-out'
-                    }
-                  }} 
+                      transition: "transform 0.4s ease-in-out",
+                    },
+                  }}
                 />
               </Box>
 
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
-                    color: '#666',
-                    fontFamily: 'Inter',
-                    fontSize: '0.85rem'
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#666",
+                    fontFamily: "Inter",
+                    fontSize: "0.85rem",
                   }}
                 >
                   {completedSections} of {totalSections} sections completed
                 </Typography>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
-                    color: '#666',
-                    fontFamily: 'Inter',
-                    fontSize: '0.85rem'
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#666",
+                    fontFamily: "Inter",
+                    fontSize: "0.85rem",
                   }}
                 >
                   {totalSections - completedSections} sections remaining
@@ -298,7 +308,7 @@ const PostAds = () => {
                           color={item.status ? "#2F61BF" : "#6F6F6F"}
                           sx={{ fontFamily: "Inter" }}
                         >
-                          {item.status ? "Complete" : "InComplete"}
+                          {item.status ? "Complete" : "Incomplete"}
                         </Typography>
                       </Box>
                     </Box>
