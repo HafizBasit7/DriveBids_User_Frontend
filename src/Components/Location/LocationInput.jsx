@@ -4,13 +4,19 @@ import { TextField } from "@mui/material";
 import colors from "../../Style/color";
 import LocationLoader from "../Loader/locationloader";
 
-export default function LocationInput({ loading, value, handleChange, placeholder, children }) {
-    const inputRef = useRef();
+export default function LocationInput({
+  loading,
+  value,
+  handleChange,
+  placeholder,
+  children,
+}) {
+  const inputRef = useRef();
 
-    useEffect(() => {
-        // Add custom styles for the Google Places Autocomplete dropdown
-        const style = document.createElement('style');
-        style.textContent = `
+  useEffect(() => {
+    // Add custom styles for the Google Places Autocomplete dropdown
+    const style = document.createElement("style");
+    style.textContent = `
             .pac-container {
                 border-radius: 8px !important;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
@@ -48,57 +54,61 @@ export default function LocationInput({ loading, value, handleChange, placeholde
                 border-bottom: none !important;
             }
         `;
-        document.head.appendChild(style);
+    document.head.appendChild(style);
 
-        return () => {
-            document.head.removeChild(style);
-        };
-    }, []);
-
-    const handlePlaceChanged = () => {
-        const [place] = inputRef.current.getPlaces();
-        if (place) {
-            const location = {
-                name: place.formatted_address,
-                coordinates: [
-                    place.geometry.location.lng(),
-                    place.geometry.location.lat()
-                ],
-            };
-            handleChange(location);
-        }
+    return () => {
+      document.head.removeChild(style);
     };
+  }, []);
 
-    return (
-        <LoadScript
-            googleMapsApiKey="AIzaSyC2oZNWzhuw6yjImkFYSvZ3miShktBq0gI"
-            libraries={["places"]}
-            loadingElement={<LocationLoader />}
-        >
-            <StandaloneSearchBox
-                onLoad={ref => (inputRef.current = ref)}
-                onPlacesChanged={handlePlaceChanged}
-            >
-                {children ? children : (
-                    <TextField
-                        disabled={loading}
-                        fullWidth
-                        label='Location'
-                        placeholder={value || placeholder || 'Location'}
-                        sx={{
-                            "& .MuiOutlinedInput-root": {
-                                height: 50,
-                                borderRadius: 2,
-                                "& fieldset": { borderColor: "#ccc" },
-                                "&:hover fieldset": { borderColor: "#2F61BF" },
-                                "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
-                            },
-                            "& .MuiInputLabel-root": { color: "#888" },
-                            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor },
-                        }}
-                    />
-                )}
-            </StandaloneSearchBox>
-        </LoadScript>
-    );
+  const handlePlaceChanged = () => {
+    const [place] = inputRef.current.getPlaces();
+    if (place) {
+      const location = {
+        name: place.formatted_address,
+        coordinates: [
+          place.geometry.location.lng(),
+          place.geometry.location.lat(),
+        ],
+      };
+      handleChange(location);
+    }
+  };
+
+  return (
+    <LoadScript
+      googleMapsApiKey="AIzaSyB7uPqMeibItFdpdNa1M4pF0jd6L1xOU7g"
+      libraries={["places"]}
+      loadingElement={<LocationLoader />}
+    >
+      <StandaloneSearchBox
+        onLoad={(ref) => (inputRef.current = ref)}
+        onPlacesChanged={handlePlaceChanged}
+      >
+        {children ? (
+          children
+        ) : (
+          <TextField
+            disabled={loading}
+            fullWidth
+            label="Location"
+            placeholder={value || placeholder || "Location"}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                height: 50,
+                borderRadius: 2,
+                "& fieldset": { borderColor: "#ccc" },
+                "&:hover fieldset": { borderColor: "#2F61BF" },
+                "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+              },
+              "& .MuiInputLabel-root": { color: "#888" },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: colors.buttoncolor,
+              },
+            }}
+          />
+        )}
+      </StandaloneSearchBox>
+    </LoadScript>
+  );
 }
