@@ -40,9 +40,9 @@ const TransparencySection = () => {
       opacity: 1,
       transition: {
         duration: 0.8,
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
@@ -52,9 +52,9 @@ const TransparencySection = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   const features = [
@@ -66,19 +66,23 @@ const TransparencySection = () => {
         "Clear photos from all exterior angles (front, back, sides, roof)",
         "Full set of interior photos (dashboard, seats, steering, controls)",
         "Detailed shots of wheels and tires",
-        "Close-ups of any scratches, dents, or visible defects"
-      ]
+        "Close-ups of any scratches, dents, or visible defects",
+      ],
     },
     {
       icon: <VideocamIcon sx={{ fontSize: 40, color: colors.buttoncolor }} />,
       title: "Guided Walk-Around Video",
-      description: "Sellers must submit a comprehensive walk-around video showing the entire car, inside and out, allowing buyers to inspect every detail from the comfort of their screen."
+      description:
+        "Sellers must submit a comprehensive walk-around video showing the entire car, inside and out, allowing buyers to inspect every detail from the comfort of their screen.",
     },
     {
-      icon: <DescriptionIcon sx={{ fontSize: 40, color: colors.buttoncolor }} />,
+      icon: (
+        <DescriptionIcon sx={{ fontSize: 40, color: colors.buttoncolor }} />
+      ),
       title: "Mandatory Inspection Report",
-      description: "Every car listed comes with a completed inspection checklist. Any defaults, defects, or issues must be disclosed upfront — no hidden surprises, ever."
-    }
+      description:
+        "Every car listed comes with a completed inspection checklist. Any defaults, defects, or issues must be disclosed upfront — no hidden surprises, ever.",
+    },
   ];
 
   return (
@@ -130,7 +134,7 @@ const TransparencySection = () => {
                     <Typography
                       sx={{
                         fontWeight: "bold",
-                        fontSize: 18,
+                        fontSize: 16,
                         fontFamily: "Inter",
                         color: colors.buttoncolor,
                         mb: 2,
@@ -149,12 +153,18 @@ const TransparencySection = () => {
                       {feature.description}
                     </Typography>
                     {feature.points && (
-                      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 1,
+                        }}
+                      >
                         {feature.points.map((point, pointIndex) => (
                           <Typography
                             key={pointIndex}
                             sx={{
-                              fontSize: 12,
+                              fontSize: 14,
                               color: "#595B61",
                               fontFamily: "Inter",
                               display: "flex",
@@ -166,7 +176,7 @@ const TransparencySection = () => {
                               sx={{
                                 color: colors.buttoncolor,
                                 mr: 1,
-                                fontSize: 16,
+                                fontSize: 14,
                               }}
                             >
                               •
@@ -195,7 +205,9 @@ const TransparencySection = () => {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-              <VerifiedUserIcon sx={{ fontSize: 40, color: colors.buttoncolor, mr: 2 }} />
+              <VerifiedUserIcon
+                sx={{ fontSize: 40, color: colors.buttoncolor, mr: 2 }}
+              />
               <Typography
                 sx={{
                   fontWeight: "bold",
@@ -228,7 +240,8 @@ const TransparencySection = () => {
                   >
                     •
                   </Box>
-                  Buyers know exactly what they&apos;re getting — no mystery, no guesswork.
+                  Buyers know exactly what they&apos;re getting — no mystery, no
+                  guesswork.
                 </Typography>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -274,7 +287,8 @@ const TransparencySection = () => {
                   >
                     •
                   </Box>
-                  DriveBidz keeps the marketplace safe, transparent, and high-quality for everyone.
+                  DriveBidz keeps the marketplace safe, transparent, and
+                  high-quality for everyone.
                 </Typography>
               </Grid>
             </Grid>
@@ -285,4 +299,4 @@ const TransparencySection = () => {
   );
 };
 
-export default TransparencySection; 
+export default TransparencySection;

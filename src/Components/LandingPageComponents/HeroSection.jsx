@@ -13,11 +13,12 @@ const HeroSection = () => {
   const [typedText, setTypedText] = useState("");
   const [subTypedText, setSubTypedText] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
-  
-  const mainText = "Smarter car sales. Seamless deals. The road to better starts now";
-  const subText = "Smarter car deals for buyers and sellers — fast listings, no hassle.";
+
+  const mainText = "Bid. Buy. Sell. Your Car Auction Marketplace";
+  const subText =
+    "Sell or buy cars quickly with live, transparent bidding. (don't use the typing effect) ";
   const containerRef = useRef(null);
-  
+
   const navigate = useNavigate();
 
   // Main animations start immediately
@@ -32,7 +33,7 @@ const HeroSection = () => {
   const startTypingAnimation = () => {
     let currentIndex = 0;
     let subIndex = 0;
-    
+
     // Main title typing
     const mainTypingInterval = setInterval(() => {
       if (currentIndex <= mainText.length) {
@@ -40,7 +41,7 @@ const HeroSection = () => {
         currentIndex++;
       } else {
         clearInterval(mainTypingInterval);
-        
+
         // Start subtitle typing after main title
         const subTypingInterval = setInterval(() => {
           if (subIndex <= subText.length) {
@@ -108,38 +109,38 @@ const HeroSection = () => {
         }}
       />
 
-      <Box 
-        sx={{ 
-          maxWidth: 600, 
-          zIndex: 1, 
+      <Box
+        sx={{
+          maxWidth: 600,
+          zIndex: 1,
           px: { xs: 3, md: 10 },
           opacity: isVisible ? 1 : 0,
           transform: isVisible ? "translateY(0)" : "translateY(20px)",
-          transition: "opacity 0.8s ease-out, transform 0.8s ease-out"
+          transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
         }}
       >
         {/* Text with typing effect */}
         <Typography
           variant="h3"
           fontWeight="600"
-          sx={{ 
-            color: "#000", 
-            mb: 2, 
+          sx={{
+            color: "#000",
+            mb: 2,
             fontFamily: "Outfit",
-            position: "relative"
+            position: "relative",
           }}
         >
           {typedText}
         </Typography>
 
         <Typography
-          sx={{ 
-            color: "#000000", 
-            mb: 3, 
-            fontFamily: "Inter", 
+          sx={{
+            color: "#000000",
+            mb: 3,
+            fontFamily: "Inter",
             fontWeight: 600,
             fontSize: "1.0rem",
-            position: "relative"
+            position: "relative",
           }}
         >
           {subTypedText}
@@ -162,10 +163,10 @@ const HeroSection = () => {
             fontSize: 12,
             position: "relative",
             overflow: "hidden",
-            "&:hover": { 
+            "&:hover": {
               backgroundColor: "#1D4FB3",
               transform: "scale(1.05)",
-              transition: "transform 0.3s ease"
+              transition: "transform 0.3s ease",
             },
             "&::before": {
               content: '""',
@@ -177,7 +178,8 @@ const HeroSection = () => {
               backgroundColor: "rgba(255, 255, 255, 0.3)",
               borderRadius: "50%",
               transform: "translate(-50%, -50%)",
-              transition: "width 0.5s ease-out, height 0.5s ease-out, top 0.5s ease-out",
+              transition:
+                "width 0.5s ease-out, height 0.5s ease-out, top 0.5s ease-out",
             },
             "& > span": {
               position: "relative",
@@ -191,8 +193,8 @@ const HeroSection = () => {
           <span>Sign Up for Free Now</span>
         </Button>
 
-        <Typography 
-          sx={{ 
+        <Typography
+          sx={{
             mt: 2,
             fontWeight: 500,
             fontSize: "1rem",
@@ -211,7 +213,7 @@ const HeroSection = () => {
               padding: 0,
               minWidth: "auto",
               position: "relative",
-              "&:hover": { 
+              "&:hover": {
                 color: colors.buttoncolor,
               },
               "&:hover::after": {
@@ -249,13 +251,13 @@ const HeroSection = () => {
           transition: "opacity 1s ease-out, transform 1s ease-out",
         }}
       >
-        <img 
-          src={CarSVG} 
-          loading="lazy" 
-          alt="Car Illustration" 
-          style={{ 
+        <img
+          src={CarSVG}
+          loading="lazy"
+          alt="Car Illustration"
+          style={{
             width: "100%",
-          }} 
+          }}
         />
 
         <img
@@ -263,7 +265,7 @@ const HeroSection = () => {
           alt="Car Light"
           style={{
             position: "absolute",
-            top: "42%", 
+            top: "42%",
             left: "24%",
             transform: "translateX(-50%)",
             width: "12%",

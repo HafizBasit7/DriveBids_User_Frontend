@@ -1,13 +1,23 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, Box, Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logosvg from "../../assets/SVG/Mainlogo.svg";
 import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = ({howItWorksRef}) => {
+const Navbar = ({ howItWorksRef }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -21,22 +31,59 @@ const Navbar = ({howItWorksRef}) => {
           boxShadow: "none",
           px: { xs: 2, sm: 4, md: 6 },
           py: 2,
-          width:"100%"
-
+          width: "100%",
         }}
       >
         <Toolbar sx={{ justifyContent: "space-between", px: 3 }}>
-         
           <Box>
             <img src={Logosvg} alt="DriveBidz Logo" style={{ height: 60 }} />
           </Box>
 
-         
-          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", pr: { md: 6, lg: 8 } }}>
-            <Button sx={{ color: "#000", mx: 1,fontSize:13,fontFamily:"Inter",fontWeight:500 }}  onClick={() => navigate("/home")}>Home</Button>
-            <Button sx={{ color: "#000", mx: 1,fontSize:13,fontFamily:"Inter",fontWeight:500 }}  onClick={() => howItWorksRef?.current?.scrollIntoView({ behavior: "smooth" })}
-            >How It Works</Button>
-            <Button sx={{ color: "#000", mx: 1 ,fontSize:13,fontFamily:"Inter",fontWeight:500}} onClick={() => navigate("/contact")}>Contact Us</Button>
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              alignItems: "center",
+              pr: { md: 6, lg: 8 },
+            }}
+          >
+            <Button
+              sx={{
+                color: "#000",
+                mx: 1,
+                fontSize: 13,
+                fontFamily: "Inter",
+                fontWeight: 500,
+              }}
+              onClick={() => navigate("/home")}
+            >
+              Home
+            </Button>
+            <Button
+              sx={{
+                color: "#000",
+                mx: 1,
+                fontSize: 13,
+                fontFamily: "Inter",
+                fontWeight: 500,
+              }}
+              onClick={() =>
+                howItWorksRef?.current?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              How It Works
+            </Button>
+            <Button
+              sx={{
+                color: "#000",
+                mx: 1,
+                fontSize: 13,
+                fontFamily: "Inter",
+                fontWeight: 500,
+              }}
+              onClick={() => navigate("/contact")}
+            >
+              Contact Us
+            </Button>
             <Button
               sx={{
                 color: "#fff",
@@ -45,13 +92,13 @@ const Navbar = ({howItWorksRef}) => {
                 fontSize: 13,
                 fontFamily: "Inter",
                 fontWeight: 500,
-                px: 2,
-                py: 0.8,
+                width: "120px",
+                height: "40px",
                 borderRadius: 2,
                 mx: 1,
                 "&:hover": {
-                  backgroundColor: "#1E4BA0"
-                }
+                  backgroundColor: "#1E4BA0",
+                },
               }}
               onClick={() => navigate("/ad")}
             >
@@ -62,13 +109,18 @@ const Navbar = ({howItWorksRef}) => {
                 color: "#fff",
                 borderColor: "#2F61BF",
                 backgroundColor: colors.buttoncolor,
-                fontSize: "12px",
+                textTransform: "none",
+                fontSize: 13,
+                fontFamily: "Inter",
+                fontWeight: 500,
                 width: "120px",
                 height: "40px",
                 borderRadius: 2,
-                fontFamily:"Inter",
                 ml: 3,
-                "&:hover": { borderColor: "#2F61BF", backgroundColor: "#1E4BA0" },
+                "&:hover": {
+                  borderColor: "#2F61BF",
+                  backgroundColor: "#1E4BA0",
+                },
               }}
               onClick={() => navigate("/login")}
             >
@@ -76,7 +128,6 @@ const Navbar = ({howItWorksRef}) => {
             </Button>
           </Box>
 
-        
           <IconButton
             onClick={handleDrawerToggle}
             sx={{ display: { xs: "block", md: "none" }, color: "#000" }}
@@ -86,7 +137,6 @@ const Navbar = ({howItWorksRef}) => {
         </Toolbar>
       </AppBar>
 
-      
       <Drawer
         anchor="right"
         open={mobileOpen}
@@ -115,8 +165,8 @@ const Navbar = ({howItWorksRef}) => {
                 borderRadius: 2,
                 mb: 2,
                 "&:hover": {
-                  backgroundColor: "#1E4BA0"
-                }
+                  backgroundColor: "#1E4BA0",
+                },
               }}
               onClick={() => {
                 navigate("/ad");

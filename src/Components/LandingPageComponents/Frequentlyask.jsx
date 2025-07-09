@@ -66,10 +66,11 @@ const AskQuestions = () => {
       sx={{
         backgroundColor: "#F4F8FF",
         borderRadius: 3,
-        p: 2,
-        width: { xs: "90%", md: "75%" },
+        p: { xs: 2, md: 4 },
+        width: { xs: "90%", md: "80%" },
         mx: "auto",
         position: "relative",
+        overflow: "hidden",
       }}
     >
       <Box sx={{ position: "relative", zIndex: 2 }}>
@@ -78,7 +79,8 @@ const AskQuestions = () => {
             key={index}
             sx={{
               py: 2,
-              width: { xs: "100%", md: "65%" },
+              width: { xs: "100%", md: "60%" },
+              pr: { md: 4 },
             }}
           >
             <Box display="flex" alignItems="center">
@@ -156,8 +158,8 @@ const AskQuestions = () => {
         sx={{
           position: "absolute",
           top: "70px",
-          right: "130px",
-          width: { xs: 0, md: 200 },
+          right: "80px",
+          width: { xs: 0, md: 180 },
           height: "auto",
           borderRadius: 2,
           transform: "translateY(0)",
@@ -170,8 +172,8 @@ const AskQuestions = () => {
         sx={{
           position: "absolute",
           top: "240px",
-          right: "45px",
-          width: { xs: 0, md: 200 },
+          right: "20px",
+          width: { xs: 0, md: 180 },
           height: "auto",
           borderRadius: 2,
           transform: "translateY(0)",
@@ -184,8 +186,8 @@ const AskQuestions = () => {
         sx={{
           position: "absolute",
           bottom: "30px",
-          right: "190px",
-          width: { xs: 0, md: 200 },
+          right: "140px",
+          width: { xs: 0, md: 180 },
           height: "auto",
           borderRadius: 2,
           transform: "translateY(0)",
