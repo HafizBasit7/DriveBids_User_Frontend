@@ -59,7 +59,13 @@ const ProfileMenu = () => {
   return (
     <Box>
       <IconButton onClick={handleClick}>
-        <Avatar src={user?.imgUrl || "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} sx={{ bgcolor: "blue" }} />
+        <Avatar
+          src={
+            user?.imgUrl ||
+            "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+          }
+          sx={{ bgcolor: "blue" }}
+        />
       </IconButton>
 
       <Menu
@@ -78,67 +84,126 @@ const ProfileMenu = () => {
       >
         {/* User Info */}
         <Box sx={{ p: 1.5, display: "flex", alignItems: "center", gap: 1.5 }}>
-          <Avatar src={user?.imgUrl || "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"} sx={{ bgcolor: "blue", width: 50, height: 50 }} />
+          <Avatar
+            src={
+              user?.imgUrl ||
+              "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+            }
+            sx={{ bgcolor: "blue", width: 50, height: 50 }}
+          />
           <Box>
             <Typography fontWeight="bold">{user?.name}</Typography>
-            <Typography variant="body2" color="gray">{user?.email}</Typography>
+            <Typography variant="body2" color="gray">
+              {user?.email}
+            </Typography>
           </Box>
         </Box>
 
         <Divider />
 
-        <MenuItem onClick={() => handleNavigate("/profile/edit")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+        <MenuItem
+          onClick={() => handleNavigate("/profile/edit")}
+          sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ListItemIcon><PersonIcon fontSize="small" /></ListItemIcon> My Profile
+            <ListItemIcon>
+              <PersonIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            My Profile
           </Box>
           <ChevronRightIcon fontSize="small" />
         </MenuItem>
 
-        <MenuItem onClick={() => handleNavigate("/my-ads")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+        <MenuItem
+          onClick={() => handleNavigate("/my-ads")}
+          sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ListItemIcon><PlaylistAddIcon fontSize="small" /></ListItemIcon> My Ads
+            <ListItemIcon>
+              <PlaylistAddIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            My Ads
           </Box>
           <ChevronRightIcon fontSize="small" />
         </MenuItem>
 
-        <MenuItem onClick={() => handleNavigate("/my-bids")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+        <MenuItem
+          onClick={() => handleNavigate("/my-bids")}
+          sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ListItemIcon><GavelIcon fontSize="small" /></ListItemIcon> My Bids
+            <ListItemIcon>
+              <GavelIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            My Bids
           </Box>
           <ChevronRightIcon fontSize="small" />
         </MenuItem>
 
-        <MenuItem onClick={() => handleNavigate("/completed-deals")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+        <MenuItem
+          onClick={() => handleNavigate("/completed-deals")}
+          sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ListItemIcon><DirectionsCar fontSize="small" /></ListItemIcon> Completed Deals
+            <ListItemIcon>
+              <DirectionsCar fontSize="small" />
+            </ListItemIcon>{" "}
+            Completed Deals
           </Box>
           <ChevronRightIcon fontSize="small" />
         </MenuItem>
 
-        <MenuItem onClick={() => handleNavigate("/watchlist")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+        <MenuItem
+          onClick={() => handleNavigate("/watchlist")}
+          sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ListItemIcon><FavoriteBorderIcon fontSize="small" /></ListItemIcon> Watchlist
+            <ListItemIcon>
+              <FavoriteBorderIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Watchlist
           </Box>
           <ChevronRightIcon fontSize="small" />
         </MenuItem>
 
-        <MenuItem onClick={() => handleNavigate("/notification-settings")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+        <MenuItem
+          onClick={() => handleNavigate("/notification-settings")}
+          sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ListItemIcon><Settings fontSize="small" /></ListItemIcon> Notification Settings
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>{" "}
+            Notification Settings
           </Box>
           <ChevronRightIcon fontSize="small" />
         </MenuItem>
 
-        <MenuItem onClick={() => handleNavigate("/profile/change-password")} sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+        <MenuItem
+          onClick={() => handleNavigate("/profile/change-password")}
+          sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <ListItemIcon><LockIcon fontSize="small" /></ListItemIcon> Change Password
+            <ListItemIcon>
+              <LockIcon fontSize="small" />
+            </ListItemIcon>{" "}
+            Change Password
           </Box>
           <ChevronRightIcon fontSize="small" />
         </MenuItem>
 
         {/* Logout */}
-        <MenuItem onClick={logoutUser} sx={{ p: 2 }}>
-          <ListItemIcon><LogoutIcon fontSize="small" /></ListItemIcon> Log Out
+        <MenuItem
+          onClick={() => {
+            logoutUser();
+            navigate("/");
+          }}
+          sx={{ p: 2 }}
+        >
+          <ListItemIcon>
+            <LogoutIcon fontSize="small" />
+          </ListItemIcon>{" "}
+          Log Out
         </MenuItem>
       </Menu>
     </Box>

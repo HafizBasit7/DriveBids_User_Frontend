@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CarSVG from "../../assets/SVG/Carsvg.svg";
 import CarLight from "../../assets/SVG/carlight.svg";
 import colors from "../../Style/color";
+import { useAuth } from "../../context/auth.context";
 
 const HeroSection = () => {
   const [showLight, setShowLight] = useState(false);
@@ -17,6 +18,7 @@ const HeroSection = () => {
   const containerRef = useRef(null);
 
   const navigate = useNavigate();
+  const { authState } = useAuth();
 
   // Main animations start immediately
   useEffect(() => {
@@ -30,7 +32,11 @@ const HeroSection = () => {
     setButtonClicked(true);
     setTimeout(() => {
       setButtonClicked(false);
-      navigate("/signup");
+      if (authState.isAuthenticated) {
+        navigate("/home");
+      } else {
+        navigate("/signup");
+      }
     }, 500);
   };
 
@@ -160,51 +166,57 @@ const HeroSection = () => {
             transition: "background-color 0.3s, transform 0.3s ease",
           }}
         >
-          <span>Sign Up for Free Now</span>
+          <span>
+            {authState.isAuthenticated
+              ? "Go to Dashboard"
+              : "Sign Up for Free Now"}
+          </span>
         </Button>
 
-        <Typography
-          sx={{
-            mt: 2,
-            fontWeight: 500,
-            fontSize: "1rem",
-            animation: isVisible ? "fadeInUp 0.8s ease-out 0.6s" : "none",
-            animationFillMode: "both",
-          }}
-        >
-          Already have an account?{" "}
-          <Button
-            onClick={() => navigate("/login")}
-            className="login-button"
+        {!authState.isAuthenticated && (
+          <Typography
             sx={{
-              color: "#000",
-              fontWeight: 600,
-              textTransform: "none",
-              padding: 0,
-              minWidth: "auto",
-              position: "relative",
-              "&:hover": {
-                color: colors.buttoncolor,
-              },
-              "&:hover::after": {
-                width: "100%",
-              },
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                bottom: -2,
-                left: 0,
-                width: 0,
-                height: 2,
-                backgroundColor: colors.buttoncolor,
-                transition: "width 0.3s ease",
-              },
-              transition: "color 0.3s",
+              mt: 2,
+              fontWeight: 500,
+              fontSize: "1rem",
+              animation: isVisible ? "fadeInUp 0.8s ease-out 0.6s" : "none",
+              animationFillMode: "both",
             }}
           >
-            Log In now
-          </Button>
-        </Typography>
+            Already have an account?{" "}
+            <Button
+              onClick={() => navigate("/login")}
+              className="login-button"
+              sx={{
+                color: "#000",
+                fontWeight: 600,
+                textTransform: "none",
+                padding: 0,
+                minWidth: "auto",
+                position: "relative",
+                "&:hover": {
+                  color: colors.buttoncolor,
+                },
+                "&:hover::after": {
+                  width: "100%",
+                },
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  bottom: -2,
+                  left: 0,
+                  width: 0,
+                  height: 2,
+                  backgroundColor: colors.buttoncolor,
+                  transition: "width 0.3s ease",
+                },
+                transition: "color 0.3s",
+              }}
+            >
+              Log In now
+            </Button>
+          </Typography>
+        )}
       </Box>
 
       <Box

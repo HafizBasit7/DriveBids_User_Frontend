@@ -14,10 +14,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Logosvg from "../../assets/SVG/Mainlogo.svg";
 import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auth.context";
 
 const Navbar = ({ howItWorksRef }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+  const { authState } = useAuth();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -104,28 +106,30 @@ const Navbar = ({ howItWorksRef }) => {
             >
               Start Selling
             </Button>
-            <Button
-              sx={{
-                color: "#fff",
-                borderColor: "#2F61BF",
-                backgroundColor: colors.buttoncolor,
-                textTransform: "none",
-                fontSize: 13,
-                fontFamily: "Inter",
-                fontWeight: 500,
-                width: "120px",
-                height: "40px",
-                borderRadius: 2,
-                ml: 3,
-                "&:hover": {
+            {!authState.isAuthenticated && (
+              <Button
+                sx={{
+                  color: "#fff",
                   borderColor: "#2F61BF",
-                  backgroundColor: "#1E4BA0",
-                },
-              }}
-              onClick={() => navigate("/login")}
-            >
-              Login
-            </Button>
+                  backgroundColor: colors.buttoncolor,
+                  textTransform: "none",
+                  fontSize: 13,
+                  fontFamily: "Inter",
+                  fontWeight: 500,
+                  width: "120px",
+                  height: "40px",
+                  borderRadius: 2,
+                  ml: 3,
+                  "&:hover": {
+                    borderColor: "#2F61BF",
+                    backgroundColor: "#1E4BA0",
+                  },
+                }}
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </Button>
+            )}
           </Box>
 
           <IconButton
@@ -176,22 +180,24 @@ const Navbar = ({ howItWorksRef }) => {
               Start Selling
             </Button>
           </ListItem>
-          <ListItem>
-            <Button
-              fullWidth
-              sx={{
-                color: "#fff",
-                borderColor: "#2F61BF",
-                backgroundColor: "#2F61BF",
-                fontSize: "12px",
-                height: "45px",
-                borderRadius: 2,
-              }}
-              onClick={() => navigate("/login")}
-            >
-              Login
-            </Button>
-          </ListItem>
+          {!authState.isAuthenticated && (
+            <ListItem>
+              <Button
+                fullWidth
+                sx={{
+                  color: "#fff",
+                  borderColor: "#2F61BF",
+                  backgroundColor: "#2F61BF",
+                  fontSize: "12px",
+                  height: "45px",
+                  borderRadius: 2,
+                }}
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </Button>
+            </ListItem>
+          )}
         </List>
       </Drawer>
     </>

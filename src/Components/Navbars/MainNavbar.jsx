@@ -361,9 +361,9 @@ const MainNavbar = () => {
           {/* Mobile location and search handling */}
           {isMobile && (
             <>
-              <IconButton 
-                onClick={handleLocationClick} 
-                sx={{ 
+              <IconButton
+                onClick={handleLocationClick}
+                sx={{
                   color: "#333",
                   "&:hover": {
                     backgroundColor: "rgba(0,0,0,0.04)",
@@ -373,9 +373,9 @@ const MainNavbar = () => {
                 <LocationOnIcon />
               </IconButton>
 
-              <IconButton 
-                onClick={handleSearchClick} 
-                sx={{ 
+              <IconButton
+                onClick={handleSearchClick}
+                sx={{
                   color: "#333",
                   "&:hover": {
                     backgroundColor: "rgba(0,0,0,0.04)",

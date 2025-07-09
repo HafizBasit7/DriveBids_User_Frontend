@@ -14,7 +14,7 @@ import {
   Select,
   MenuItem,
   FormControlLabel,
-  Checkbox
+  Checkbox,
 } from "@mui/material";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -24,10 +24,16 @@ import toast from "react-hot-toast";
 import { signupUser } from "../../api/calls/auth";
 import LocationInput from "../Location/LocationInput";
 import { countryCodes } from "../../utils/coutrycode";
-import {validateForm} from "../../utils/utils";
-import { loginValidation, signupValidation, traderSignupValidation } from "../../validations/auth.validation";
-import { generateEmailVerificationOtp, verifyEmailOtp } from "../../api/calls/reset";
-
+import { validateForm } from "../../utils/utils";
+import {
+  loginValidation,
+  signupValidation,
+  traderSignupValidation,
+} from "../../validations/auth.validation";
+import {
+  generateEmailVerificationOtp,
+  verifyEmailOtp,
+} from "../../api/calls/reset";
 
 const Signup = () => {
   const [email, setEmail] = useState();
@@ -44,18 +50,18 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
 
   const [role, setRole] = useState("Individual");
-  
+
   const [token, setToken] = useState();
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState();
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleSignupClick = () => {
     toast.promise(handleSignupUser(), {
-      loading: 'Creating your account',
+      loading: "Creating your account",
       error: (error) => error.message,
-      success: 'Account, created! Please Login now.'
+      success: "Account, created! Please Login now.",
     });
   };
 
@@ -63,70 +69,77 @@ const Signup = () => {
     setLoading(true);
     try {
       const body = {
-        email: email ? email.trim() : email, 
+        email: email ? email.trim() : email,
         token,
-        password, 
-        type: role === 'Individual' ? 'individual' : 'trader',
+        password,
+        type: role === "Individual" ? "individual" : "trader",
         name,
-        location, 
+        location,
         phoneNumber: {
           phoneNo: Number(phone),
-          countryCode: Number(country.replace("+", "")), 
+          countryCode: Number(country.replace("+", "")),
         },
-        businessAddress 
+        businessAddress,
       };
 
       //Validations
       validateForm([signupValidation, loginValidation], body);
-      const currentSignupType = role === 'Individual' ? 'individual' : 'trader';
-      if(currentSignupType === 'trader') {
+      const currentSignupType = role === "Individual" ? "individual" : "trader";
+      if (currentSignupType === "trader") {
         validateForm([traderSignupValidation], body);
       }
 
       await signupUser(body);
 
       setTimeout(() => {
-        navigate('/login')
+        navigate("/login");
       }, 2000);
-    }
-    catch(e) {
+    } catch (e) {
       setLoading(false);
       throw e;
     }
   };
 
   const requestEmailOtp = () => {
-    toast.promise(async () => {
-      await generateEmailVerificationOtp({email});
-      setOtpSent(true);
-    }, {
-      loading: 'Requesting OTP',
-      error: e => {
-        if(e?.message === 'OTP is already generated, please check your email') setOtpSent(true);
-        return e?.message;
+    toast.promise(
+      async () => {
+        await generateEmailVerificationOtp({ email });
+        setOtpSent(true);
       },
-      success: (e) => "OTP sent to your email!",
-    });
+      {
+        loading: "Requesting OTP",
+        error: (e) => {
+          if (
+            e?.message === "OTP is already generated, please check your email"
+          )
+            setOtpSent(true);
+          return e?.message;
+        },
+        success: (e) => "OTP sent to your email!",
+      }
+    );
   };
 
   const verifyOtpEmail = () => {
-    toast.promise(async () => {
-      try {
-        const result = await verifyEmailOtp({email, otp: parseInt(otp)});
-        console.log(result);
-        setToken(result.data.token);
-        setOtp();
+    toast.promise(
+      async () => {
+        try {
+          const result = await verifyEmailOtp({ email, otp: parseInt(otp) });
+          console.log(result);
+          setToken(result.data.token);
+          setOtp();
+        } catch (e) {
+          // setOtpSent(false);
+          setToken(null);
+          throw e;
+        }
+      },
+      {
+        loading: "Verifying Email",
+        error: (e) => e.message,
+        success: "Email Verified",
       }
-      catch(e) {
-        // setOtpSent(false);
-        setToken(null);
-        throw e;
-      } 
-    }, {
-      loading: 'Verifying Email',
-      error: e => e.message,
-      success: 'Email Verified',
-    });
+    );
   };
 
   return (
@@ -139,8 +152,9 @@ const Signup = () => {
         maxHeight: "90vh",
         overflowY: "auto",
         borderRadius: 1,
-        boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)", 
+        boxShadow: "-8px 0px 20px rgba(0, 0, 0, 0.4)",
         zIndex: 1,
+        mt: { xs: 2, sm: 3, md: 8 },
         "&::-webkit-scrollbar": {
           width: "6px",
         },
@@ -157,117 +171,142 @@ const Signup = () => {
         },
       }}
     >
-    <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
-      <ToggleButtonGroup
-        value={role}
-        exclusive
-        onChange={(event, newRole) => {
-          if (newRole !== null) setRole(newRole);
-        }}
-        sx={{
-          width: "auto",
-          display: "flex",
-          justifyContent: "center",
-          mt: 1,
-          gap: 0,
-          p: 0.5,
-          bgcolor: "#fff",
-          borderRadius: 1.5,
-          position: "relative",
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            width: "1px",
-            height: "70%",
-            backgroundColor: "#E0E0E0",
-            transform: "translate(-50%, -50%)",
-            zIndex: 1,
-          }
-        }}
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+        <ToggleButtonGroup
+          value={role}
+          exclusive
+          onChange={(event, newRole) => {
+            if (newRole !== null) setRole(newRole);
+          }}
+          sx={{
+            width: "auto",
+            display: "flex",
+            justifyContent: "center",
+            mt: 1,
+            gap: 0,
+            p: { xs: 0.5, sm: 0.5, md: 0.75 },
+            bgcolor: "#fff",
+            borderRadius: 1.5,
+            position: "relative",
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              width: "1px",
+              height: "70%",
+              backgroundColor: "#E0E0E0",
+              transform: "translate(-50%, -50%)",
+              zIndex: 0,
+              pointerEvents: "none",
+            },
+          }}
+        >
+          <ToggleButton
+            value="Individual"
+            sx={{
+              minWidth: { xs: "100px", sm: "110px", md: "120px" },
+              fontSize: { xs: 12, sm: 13, md: 14 },
+              textTransform: "none",
+              borderRadius: "1px 0 0 1px",
+              px: { xs: 1.5, sm: 2, md: 2.5 },
+              py: { xs: 0.8, sm: 1, md: 1.2 },
+              bgcolor: "#fff",
+              borderRadius: 2,
+              fontFamily: "Inter",
+              color: "#000",
+              transition: "all 0.2s ease",
+              borderRight: "none",
+              position: "relative",
+              zIndex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              userSelect: "none",
+              "&:hover": {
+                bgcolor: "#fff",
+                transform: "translateY(-1px)",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+              },
+              "&.Mui-selected": {
+                bgcolor: colors.buttoncolor,
+                color: "#fff",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                "&:hover": {
+                  bgcolor: colors.buttoncolor,
+                  transform: "translateY(-1px)",
+                },
+              },
+            }}
+          >
+            Individual
+          </ToggleButton>
+
+          <ToggleButton
+            value="Trader"
+            sx={{
+              minWidth: { xs: "100px", sm: "110px", md: "120px" },
+              fontSize: { xs: 12, sm: 13, md: 14 },
+              textTransform: "none",
+              borderRadius: "0 1px 1px 0",
+              fontFamily: "Inter",
+              px: { xs: 1.5, sm: 2, md: 2.5 },
+              py: { xs: 0.8, sm: 1, md: 1.2 },
+              bgcolor: "#fff",
+              color: "#000",
+              borderRadius: 2,
+              transition: "all 0.2s ease",
+              borderLeft: "none",
+              position: "relative",
+              zIndex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              userSelect: "none",
+              "&:hover": {
+                bgcolor: "#fff",
+                transform: "translateY(-1px)",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+              },
+              "&.Mui-selected": {
+                bgcolor: colors.buttoncolor,
+                color: "#fff",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                "&:hover": {
+                  bgcolor: colors.buttoncolor,
+                  transform: "translateY(-1px)",
+                },
+              },
+            }}
+          >
+            Trader
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+
+      <Typography
+        fontWeight="bold"
+        sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 24, textAlign: "start" }}
       >
-        <ToggleButton
-          value="Individual"
-          sx={{
-            minWidth: { xs: "100px", sm: "110px" },
-            fontSize: { xs: 12, sm: 13 },
-            textTransform: "none",
-            borderRadius: "1px 0 0 1px",
-            px: { xs: 1.5, sm: 2 },
-            py: { xs: 0.8, sm: 1 },
-            bgcolor: "#fff",
-            borderRadius: 2,
-            fontFamily: "Inter",
-            color: "#000",
-            transition: "all 0.2s ease",
-            borderRight: "none",
-            "&:hover": {
-              bgcolor: "#fff",
-              transform: "translateY(-1px)",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-            },
-            "&.Mui-selected": {
-              bgcolor: colors.buttoncolor,
-              color: "#fff",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-              "&:hover": {
-                bgcolor: colors.buttoncolor,
-                transform: "translateY(-1px)",
-              },
-            },
-          }}
-        >
-          Individual
-        </ToggleButton>
-
-        <ToggleButton
-          value="Trader"
-          sx={{
-            minWidth: { xs: "100px", sm: "110px" },
-            fontSize: { xs: 12, sm: 13 },
-            textTransform: "none",
-            borderRadius: "0 1px 1px 0",
-            fontFamily: "Inter",
-            px: { xs: 1.5, sm: 2 },
-            py: { xs: 0.8, sm: 1 },
-            bgcolor: "#fff",
-            color: "#000",
-            borderRadius: 2,
-
-            transition: "all 0.2s ease",
-            borderLeft: "none",
-            "&:hover": {
-              bgcolor: "#fff",
-              transform: "translateY(-1px)",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-            },
-            "&.Mui-selected": {
-              bgcolor: colors.buttoncolor,
-              color: "#fff",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-              "&:hover": {
-                bgcolor: colors.buttoncolor,
-                transform: "translateY(-1px)",
-              },
-            },
-          }}
-        >
-          Trader
-        </ToggleButton>
-      </ToggleButtonGroup>
-    </Box>
-
-
-      <Typography fontWeight="bold" sx={{ mb: 0.5, fontFamily: "Outfit", fontSize: 24, textAlign: "start" }}>
         {role === "Individual" ? "Private Account" : "Business Account"}
       </Typography>
-      <Typography color="textSecondary" sx={{ mb: 1, fontFamily: "Inter", fontSize: 11, fontWeight: 350, textAlign: "start" }}>
-        {role === "Individual" 
-          ? "Buy or sell cars for personal use." 
+      <Typography
+        color="textSecondary"
+        sx={{
+          mb: 1,
+          fontFamily: "Inter",
+          fontSize: 11,
+          fontWeight: 350,
+          textAlign: "start",
+        }}
+      >
+        {role === "Individual"
+          ? "Buy or sell cars for personal use."
           : "List and manage cars as a dealer or professional trader."}
       </Typography>
-      
+
       <Box sx={{ mb: 1.5 }}>
         <TextField
           disabled={loading}
@@ -277,18 +316,18 @@ const Signup = () => {
           onChange={(e) => setName(e.target.value)}
           sx={{
             "& .MuiOutlinedInput-root": {
-              height: 50, 
+              height: 50,
               borderRadius: 2,
               "& fieldset": { borderColor: "#ccc" },
               "&:hover fieldset": { borderColor: "#2F61BF" },
               "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
             },
-            "& .MuiInputLabel-root": { color: "#888" }, 
-            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+            "& .MuiInputLabel-root": { color: "#888" },
+            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor },
           }}
         />
       </Box>
-      
+
       <Box sx={{ mb: 1.5 }}>
         <TextField
           disabled={loading}
@@ -298,46 +337,46 @@ const Signup = () => {
           onChange={(e) => setEmail(e.target.value)}
           sx={{
             "& .MuiOutlinedInput-root": {
-              height: 50, 
+              height: 50,
               borderRadius: 2,
               "& fieldset": { borderColor: "#ccc" },
               "&:hover fieldset": { borderColor: "#2F61BF" },
               "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
             },
-            "& .MuiInputLabel-root": { color: "#888" }, 
-            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+            "& .MuiInputLabel-root": { color: "#888" },
+            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor },
           }}
         />
-        {(!otpSent && email) && (
+        {!otpSent && email && (
           <Button
             onClick={requestEmailOtp}
             variant="text"
             sx={{
-              textTransform: 'none',
+              textTransform: "none",
               padding: 0,
-              minWidth: 'auto',
-              color: 'primary.main',
+              minWidth: "auto",
+              color: "primary.main",
               fontWeight: 500,
               marginTop: 0.5,
               marginBottom: 0.3,
-              fontSize: '12px',
-              textDecoration: 'underline',
-              '&:hover': {
-                textDecoration: 'none',
-                backgroundColor: 'transparent',
+              fontSize: "12px",
+              textDecoration: "underline",
+              "&:hover": {
+                textDecoration: "none",
+                backgroundColor: "transparent",
               },
             }}
           >
             Request OTP
           </Button>
         )}
-        {(token && otpSent) && (
+        {token && otpSent && (
           <Typography
             sx={{
-              color: 'success.main',
+              color: "success.main",
               fontWeight: 500,
               my: 0.5,
-              fontSize: '13px',
+              fontSize: "13px",
             }}
           >
             Email Verified
@@ -345,7 +384,7 @@ const Signup = () => {
         )}
       </Box>
 
-      {(!token && otpSent) && (
+      {!token && otpSent && (
         <Box sx={{ mb: 1.5 }}>
           <TextField
             disabled={loading}
@@ -355,32 +394,34 @@ const Signup = () => {
             onChange={(e) => setOtp(e.target.value)}
             sx={{
               "& .MuiOutlinedInput-root": {
-                height: 50, 
+                height: 50,
                 borderRadius: 2,
                 "& fieldset": { borderColor: "#ccc" },
                 "&:hover fieldset": { borderColor: "#2F61BF" },
                 "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
               },
-              "& .MuiInputLabel-root": { color: "#888" }, 
-              "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+              "& .MuiInputLabel-root": { color: "#888" },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: colors.buttoncolor,
+              },
             }}
           />
           <Button
             onClick={verifyOtpEmail}
             variant="text"
             sx={{
-              textTransform: 'none',
+              textTransform: "none",
               padding: 0,
-              minWidth: 'auto',
-              color: 'primary.main',
+              minWidth: "auto",
+              color: "primary.main",
               fontWeight: 500,
               marginTop: 0.5,
               marginBottom: 0.3,
-              fontSize: '12px',
-              textDecoration: 'underline',
-              '&:hover': {
-                textDecoration: 'none',
-                backgroundColor: 'transparent',
+              fontSize: "12px",
+              textDecoration: "underline",
+              "&:hover": {
+                textDecoration: "none",
+                backgroundColor: "transparent",
               },
             }}
           >
@@ -400,7 +441,10 @@ const Signup = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                >
                   {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                 </IconButton>
               </InputAdornment>
@@ -408,14 +452,14 @@ const Signup = () => {
           }}
           sx={{
             "& .MuiOutlinedInput-root": {
-              height: 50, 
+              height: 50,
               borderRadius: 2,
               "& fieldset": { borderColor: "#ccc" },
               "&:hover fieldset": { borderColor: "#2F61BF" },
               "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
             },
-            "& .MuiInputLabel-root": { color: "#888" }, 
-            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+            "& .MuiInputLabel-root": { color: "#888" },
+            "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor },
           }}
         />
       </Box>
@@ -430,14 +474,18 @@ const Signup = () => {
               height: 50,
               borderRadius: 2,
               "& .MuiOutlinedInput-notchedOutline": { borderColor: "#ccc" },
-              "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#2F61BF" },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#2F61BF",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#2F61BF",
+              },
               "& .MuiSelect-select": {
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
                 minWidth: "80px",
-              }
+              },
             }}
             MenuProps={{
               PaperProps: {
@@ -448,7 +496,7 @@ const Signup = () => {
                     alignItems: "center",
                     gap: 1,
                     minWidth: "120px",
-                  }
+                  },
                 },
               },
             }}
@@ -482,13 +530,13 @@ const Signup = () => {
       </Box>
 
       <Box sx={{ mb: 1.5 }}>
-        <LocationInput value={location?.name} handleChange={(location) => setLocation(location)}/>
-       
+        <LocationInput
+          value={location?.name}
+          handleChange={(location) => setLocation(location)}
+        />
       </Box>
 
-    
-
-       {role === "Trader" && (
+      {role === "Trader" && (
         <Box sx={{ mb: 1.5 }}>
           <TextField
             disabled={loading}
@@ -504,8 +552,10 @@ const Signup = () => {
                 "&:hover fieldset": { borderColor: "#2F61BF" },
                 "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
               },
-              "& .MuiInputLabel-root": { color: "#888" }, 
-              "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor }, 
+              "& .MuiInputLabel-root": { color: "#888" },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: colors.buttoncolor,
+              },
             }}
           />
         </Box>
@@ -513,14 +563,14 @@ const Signup = () => {
 
       <FormControlLabel
         control={
-          <Checkbox 
+          <Checkbox
             sx={{
-              '&:hover': {
-                backgroundColor: 'transparent'
+              "&:hover": {
+                backgroundColor: "transparent",
               },
-              '& .MuiSvgIcon-root': {
-                fontSize: 16
-              }
+              "& .MuiSvgIcon-root": {
+                fontSize: 16,
+              },
             }}
           />
         }
@@ -542,11 +592,11 @@ const Signup = () => {
             </Typography>
           </Typography>
         }
-        sx={{ 
+        sx={{
           mb: 1,
-          '&:hover': {
-            backgroundColor: 'transparent'
-          }
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
         }}
       />
 
@@ -565,8 +615,8 @@ const Signup = () => {
           "&:hover": { backgroundColor: colors.buttoncolor },
           "&.Mui-disabled": {
             backgroundColor: "#cccccc",
-            color: "#666666"
-          }
+            color: "#666666",
+          },
         }}
       >
         {!token ? "Verify Email to Continue" : "Sign Up"}
