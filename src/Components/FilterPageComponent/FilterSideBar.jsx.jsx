@@ -103,16 +103,30 @@ const FilterSidebar = ({ filters, setFilters }) => {
         <TextField
           fullWidth
           size="small"
+          type="number"
           placeholder="Min"
           value={filters.minPrice || ""}
-          onChange={(e) => handleChange("minPrice", e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "" || /^\d+$/.test(value)) {
+              handleChange("minPrice", value);
+            }
+          }}
+          inputProps={{ min: 0 }}
         />
         <TextField
           fullWidth
           size="small"
+          type="number"
           placeholder="Max"
           value={filters.maxPrice || ""}
-          onChange={(e) => handleChange("maxPrice", e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "" || /^\d+$/.test(value)) {
+              handleChange("maxPrice", value);
+            }
+          }}
+          inputProps={{ min: 0 }}
         />
       </Box>
 
@@ -124,16 +138,30 @@ const FilterSidebar = ({ filters, setFilters }) => {
         <TextField
           fullWidth
           size="small"
+          type="number"
           placeholder="Min"
           value={filters.minMileage || ""}
-          onChange={(e) => handleChange("minMileage", e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "" || /^\d+$/.test(value)) {
+              handleChange("minMileage", value);
+            }
+          }}
+          inputProps={{ min: 0 }}
         />
         <TextField
           fullWidth
           size="small"
+          type="number"
           placeholder="Max"
           value={filters.maxMileage || ""}
-          onChange={(e) => handleChange("maxMileage", e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "" || /^\d+$/.test(value)) {
+              handleChange("maxMileage", value);
+            }
+          }}
+          inputProps={{ min: 0 }}
         />
       </Box>
 
@@ -154,9 +182,19 @@ const FilterSidebar = ({ filters, setFilters }) => {
         <TextField
           fullWidth
           size="small"
+          type="number"
           placeholder="Enter year (e.g., 2020)"
           value={filters.model || ""}
-          onChange={(e) => handleChange("model", e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === "" || /^\d+$/.test(value)) {
+              handleChange("model", value);
+            }
+          }}
+          inputProps={{
+            min: 1900,
+            max: new Date().getFullYear() + 1,
+          }}
         />
       </Box>
 

@@ -1,4 +1,4 @@
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useAuth } from "../context/auth.context";
 import LandingPage from "../Pages/LandingPage/LandingPage";
 import authLoader from "./loaders/auth.loader";
@@ -84,122 +84,127 @@ import PrivacyPolicy from "../Pages/Privacy&PolicyPage/PrivacyPolicy";
 import BuyerandSellerProtection from "../Pages/BuyerandSelllerProtectionPage/BuyerandSellerProtection";
 import CarVideoPage from "../Pages/SellMyCarPage/CarImagesScreens/CarVideoScreens/CarVideoPage";
 
-const createRouter = (authState) => createBrowserRouter([
-    {path: '/', element: <LandingPage/>},
+const createRouter = (authState) =>
+  createBrowserRouter([
+    { path: "/", element: <LandingPage /> },
     //Auth Stack
     {
-        path: '/', 
-        element: <InitialLoadingPage/>,
-        loader: () => authLoader(authState),
-        children: [
-            {path: 'login', element: <LoginPage/>},
-            {path: 'signup', element: <SignupPage/>},
-            {path: 'reset-pass', element: <ForgetPasswordPage/>},
-            {path: 'otp', loader: otpLoader, element: <EnterOtpPage/>},
-            {path: 'confirm-reset-pass', loader: resetLoader, element: <ResetPasswordPage/>},
-        ]
+      path: "/",
+      element: <InitialLoadingPage />,
+      loader: () => authLoader(authState),
+      children: [
+        { path: "login", element: <LoginPage /> },
+        { path: "signup", element: <SignupPage /> },
+        { path: "reset-pass", element: <ForgetPasswordPage /> },
+        { path: "otp", loader: otpLoader, element: <EnterOtpPage /> },
+        {
+          path: "confirm-reset-pass",
+          loader: resetLoader,
+          element: <ResetPasswordPage />,
+        },
+      ],
     },
     //Public Pages
-    {path: 'terms-and-conditions', element: <TermandCondition/>},
-    {path: 'privacy-policy', element: <PrivacyPolicy/>},
-    {path: 'buyer-seller-protection', element: <BuyerandSellerProtection/>},
+    { path: "terms-and-conditions", element: <TermandCondition /> },
+    { path: "privacy-policy", element: <PrivacyPolicy /> },
+    { path: "buyer-seller-protection", element: <BuyerandSellerProtection /> },
+    { path: "contact", element: <ContactPage /> },
     //Dashboard stack
     {
-        path: '/',
-        element:  <InitialLoadingPage/>,
-        loader: () => dashboardLoader(authState),
-        children: [
-            {path: 'home', element: <HomePage/>},
-            {path: 'search', element: <FilterPage/>},
-            {path: 'all/:type', element: <ViewAllCars/>},
-            {path: 'chat', element: <ChatPage/>},
-            {path: 'car/:carId', element: <CarDetailsPage/>},
-            {path: 'cars/:userId', element: <CarListingPage/>},
-            {path: 'contact', element: <ContactPage/>},
-            //User
-            {path: 'my-ads', element: <MyAdsPage/>},
-            {path: 'my-bids', element: <MyBidsPage/>},
-            {path: 'completed-deals', element: <CompletedDeals/>},
-            {path: 'notification-settings', element: <NotificationSettings/>},
-            {path: 'watchlist', element: <MyWatchPage/>},
-            {path: 'profile/edit', element: <EditProfilePage/>},
-            {path: 'profile/change-password', element: <ChangePasswordPage/>},
-            //Post Ad (Sell a car) Stack
+      path: "/",
+      element: <InitialLoadingPage />,
+      loader: () => dashboardLoader(authState),
+      children: [
+        { path: "home", element: <HomePage /> },
+        { path: "search", element: <FilterPage /> },
+        { path: "all/:type", element: <ViewAllCars /> },
+        { path: "chat", element: <ChatPage /> },
+        { path: "car/:carId", element: <CarDetailsPage /> },
+        { path: "cars/:userId", element: <CarListingPage /> },
+        //User
+        { path: "my-ads", element: <MyAdsPage /> },
+        { path: "my-bids", element: <MyBidsPage /> },
+        { path: "completed-deals", element: <CompletedDeals /> },
+        { path: "notification-settings", element: <NotificationSettings /> },
+        { path: "watchlist", element: <MyWatchPage /> },
+        { path: "profile/edit", element: <EditProfilePage /> },
+        { path: "profile/change-password", element: <ChangePasswordPage /> },
+        //Post Ad (Sell a car) Stack
+        {
+          path: "ad",
+          element: <PostAdMainPage />,
+          children: [
+            { path: "", element: <SellMyCar /> },
             {
-                path: 'ad',
-                element: <PostAdMainPage/>,
-                children: [
-                    {path: '', element: <SellMyCar/>},
-                    {
-                        path: 'post', 
-                        element: <PostAds/>,
-                        children: [
-                            {path: 'vehicle-register', element: <VehicleRegistration/>},
-                            {path: 'company', element: <CarCompanyPage/>},
-                            {path: 'variant', element: <CarVarient/>},
-                            {path: 'model', element: <CarModelPage/>},
-                            {path: 'city', element: <CityPage/>},
-                            {path: 'mileage', element: <CarMileagePage/>},
-                            {path: 'fuel', element: <CarFuelPage/>},
-                            {path: 'color', element: <CarColorPage/>},
-                            {path: 'engine', element: <CarEnginePage/>},
-                            {path: 'transmission', element: <CarTransmissionPage/>},
-                            {path: 'owner', element: <CarOwnerPage/>},
-                            {path: 'horse-power', element: <CarHorsePower/>},
-                            {path: 'condition', element: <CarConditionPage/>},
-                            {path: 'title', element: <AdsDescription/>},
-                            {path: 'accident', element: <AccidentDescription/>},
-                            {path: 'feature-1', element: <CarFeaturesPage1/>},
-                            {path: 'feature-2', element: <CarFeaturesPage2/>},
-                            {
-                                path: 'images', 
-                                element: <CarImages/>,
-                                children: [
-                                    {path: 'exterior-1', element: <ExteriorImages1/>}, 
-                                    {path: 'exterior-2', element: <ExteriorImages2/>}, 
-                                    {path: 'exterior-3', element: <ExteriorImages3/>}, 
-                                    {path: 'exterior-4', element: <ExteriorImages4/>}, 
-                                    {path: 'exterior-5', element: <ExteriorImages5/>},
-                                    {path: 'exterior-6', element: <ExteriorImages6/>},  
-                                    {path: 'interior-1', element: <InteriorImagesPage1/>}, 
-                                    {path: 'interior-2', element: <InteriorImagesPage2/>}, 
-                                    {path: 'interior-3', element: <InteriorImagesPage3/>}, 
-                                    {path: 'interior-4', element: <InteriorImagesPage4/>}, 
-                                    {path: 'interior-5', element: <InteriorImagesPage5/>},
-                                    {path: 'wheel-1', element: <WheelsImagesPage1/>},
-                                    {path: 'wheel-2', element: <WheelsImagesPage2/>},
-                                    {path: 'wheel-3', element: <WheelsImagesPage3/>},
-                                    {path: 'wheel-4', element: <WheelsImagesPage4/>},
-                                    {path: 'tread-1', element: <WheelsThreadPage1/>},
-                                    {path: 'tread-2', element: <WheelsThreadPage2/>},
-                                    {path: 'tread-3', element: <WheelsThreadPage3/>},
-                                    {path: 'tread-4', element: <WheelsThreadPage4/>},
-                                    {path: 'video', element: <CarVideoPage/>},
-                                ],
-                            },
-                            {path: 'inspection-1', element: <InspectionReportPage1/>},
-                            {path: 'inspection-2', element: <InspectionReportPage2/>},
-                            {path: 'inspection-3', element: <InspectionReportPage3/>},
-                            {path: 'pricing-1', element: <PricingPage1/>},
-                            {path: 'pricing-2', element: <PricingPage2/>},
-                            {path: 'pricing-3', element: <PricingPage3/>},
-                            {path: 'pricing-4', element: <PricingPage4/>},
-                            {path: 'damage-1', element: <DamgeReportPage1/>},
-                            {path: 'damage-2', element: <DamgeReportPage2/>},
-                            {path: 'damage-3', element: <DamgeReportPage3/>},
-                            {path: 'damage-4', element: <DamgeReportPage4/>},
-                            {path: 'success', element: <AdsSuccessScreen/>}
-                        ],
-                    },
-                    {path: 'drafts', element: <Draft/>},
-                ],
-            }
-        ],
+              path: "post",
+              element: <PostAds />,
+              children: [
+                { path: "vehicle-register", element: <VehicleRegistration /> },
+                { path: "company", element: <CarCompanyPage /> },
+                { path: "variant", element: <CarVarient /> },
+                { path: "model", element: <CarModelPage /> },
+                { path: "city", element: <CityPage /> },
+                { path: "mileage", element: <CarMileagePage /> },
+                { path: "fuel", element: <CarFuelPage /> },
+                { path: "color", element: <CarColorPage /> },
+                { path: "engine", element: <CarEnginePage /> },
+                { path: "transmission", element: <CarTransmissionPage /> },
+                { path: "owner", element: <CarOwnerPage /> },
+                { path: "horse-power", element: <CarHorsePower /> },
+                { path: "condition", element: <CarConditionPage /> },
+                { path: "title", element: <AdsDescription /> },
+                { path: "accident", element: <AccidentDescription /> },
+                { path: "feature-1", element: <CarFeaturesPage1 /> },
+                { path: "feature-2", element: <CarFeaturesPage2 /> },
+                {
+                  path: "images",
+                  element: <CarImages />,
+                  children: [
+                    { path: "exterior-1", element: <ExteriorImages1 /> },
+                    { path: "exterior-2", element: <ExteriorImages2 /> },
+                    { path: "exterior-3", element: <ExteriorImages3 /> },
+                    { path: "exterior-4", element: <ExteriorImages4 /> },
+                    { path: "exterior-5", element: <ExteriorImages5 /> },
+                    { path: "exterior-6", element: <ExteriorImages6 /> },
+                    { path: "interior-1", element: <InteriorImagesPage1 /> },
+                    { path: "interior-2", element: <InteriorImagesPage2 /> },
+                    { path: "interior-3", element: <InteriorImagesPage3 /> },
+                    { path: "interior-4", element: <InteriorImagesPage4 /> },
+                    { path: "interior-5", element: <InteriorImagesPage5 /> },
+                    { path: "wheel-1", element: <WheelsImagesPage1 /> },
+                    { path: "wheel-2", element: <WheelsImagesPage2 /> },
+                    { path: "wheel-3", element: <WheelsImagesPage3 /> },
+                    { path: "wheel-4", element: <WheelsImagesPage4 /> },
+                    { path: "tread-1", element: <WheelsThreadPage1 /> },
+                    { path: "tread-2", element: <WheelsThreadPage2 /> },
+                    { path: "tread-3", element: <WheelsThreadPage3 /> },
+                    { path: "tread-4", element: <WheelsThreadPage4 /> },
+                    { path: "video", element: <CarVideoPage /> },
+                  ],
+                },
+                { path: "inspection-1", element: <InspectionReportPage1 /> },
+                { path: "inspection-2", element: <InspectionReportPage2 /> },
+                { path: "inspection-3", element: <InspectionReportPage3 /> },
+                { path: "pricing-1", element: <PricingPage1 /> },
+                { path: "pricing-2", element: <PricingPage2 /> },
+                { path: "pricing-3", element: <PricingPage3 /> },
+                { path: "pricing-4", element: <PricingPage4 /> },
+                { path: "damage-1", element: <DamgeReportPage1 /> },
+                { path: "damage-2", element: <DamgeReportPage2 /> },
+                { path: "damage-3", element: <DamgeReportPage3 /> },
+                { path: "damage-4", element: <DamgeReportPage4 /> },
+                { path: "success", element: <AdsSuccessScreen /> },
+              ],
+            },
+            { path: "drafts", element: <Draft /> },
+          ],
+        },
+      ],
     },
-    {path: "*", element: <Page404/>}
-]);;
+    { path: "*", element: <Page404 /> },
+  ]);
 
 export default function AppBrowserRouter() {
-    const {authState} = useAuth();
-    return <RouterProvider router={createRouter(authState)}/>
+  const { authState } = useAuth();
+  return <RouterProvider router={createRouter(authState)} />;
 }

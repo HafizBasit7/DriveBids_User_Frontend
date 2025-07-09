@@ -335,6 +335,30 @@ const Signup = () => {
           fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          InputProps={{
+            endAdornment: !otpSent && email && (
+              <InputAdornment position="end">
+                <Button
+                  onClick={requestEmailOtp}
+                  variant="text"
+                  sx={{
+                    textTransform: "none",
+                    color: colors.buttoncolor,
+                    fontWeight: 600,
+                    fontSize: "13px",
+                    minWidth: "auto",
+                    px: 1,
+                    py: 0.5,
+                    "&:hover": {
+                      backgroundColor: `${colors.buttoncolor}10`,
+                    },
+                  }}
+                >
+                  Request OTP
+                </Button>
+              </InputAdornment>
+            ),
+          }}
           sx={{
             "& .MuiOutlinedInput-root": {
               height: 50,
@@ -347,29 +371,6 @@ const Signup = () => {
             "& .MuiInputLabel-root.Mui-focused": { color: colors.buttoncolor },
           }}
         />
-        {!otpSent && email && (
-          <Button
-            onClick={requestEmailOtp}
-            variant="text"
-            sx={{
-              textTransform: "none",
-              padding: 0,
-              minWidth: "auto",
-              color: "primary.main",
-              fontWeight: 500,
-              marginTop: 0.5,
-              marginBottom: 0.3,
-              fontSize: "12px",
-              textDecoration: "underline",
-              "&:hover": {
-                textDecoration: "none",
-                backgroundColor: "transparent",
-              },
-            }}
-          >
-            Request OTP
-          </Button>
-        )}
         {token && otpSent && (
           <Typography
             sx={{
@@ -408,20 +409,20 @@ const Signup = () => {
           />
           <Button
             onClick={verifyOtpEmail}
-            variant="text"
+            variant="contained"
             sx={{
               textTransform: "none",
-              padding: 0,
-              minWidth: "auto",
-              color: "primary.main",
-              fontWeight: 500,
-              marginTop: 0.5,
-              marginBottom: 0.3,
-              fontSize: "12px",
-              textDecoration: "underline",
+              backgroundColor: colors.buttoncolor,
+              color: "white",
+              fontWeight: 600,
+              marginTop: 1,
+              fontSize: "13px",
+              px: 3,
+              py: 1,
+              borderRadius: 2,
               "&:hover": {
-                textDecoration: "none",
-                backgroundColor: "transparent",
+                backgroundColor: colors.buttoncolor,
+                opacity: 0.9,
               },
             }}
           >

@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
+import { StandaloneSearchBox, useLoadScript } from "@react-google-maps/api";
 import { TextField } from "@mui/material";
 import colors from "../../Style/color";
 import LocationLoader from "../Loader/locationloader";
@@ -12,6 +12,11 @@ export default function LocationInput({
   children,
 }) {
   const inputRef = useRef();
+
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyB7uPqMeibItFdpdNa1M4pF0jd6L1xOU7g",
+    libraries: ["places"],
+  });
 
   useEffect(() => {
     // Add custom styles for the Google Places Autocomplete dropdown
@@ -75,40 +80,59 @@ export default function LocationInput({
     }
   };
 
+  // Show loader while script is loading
+  if (!isLoaded) {
+    return <LocationLoader />;
+  }
+
+  // Show error if script failed to load
+  if (loadError) {
+    return (
+      <TextField
+        disabled={true}
+        fullWidth
+        label="Location"
+        placeholder="Error loading location service"
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            height: 50,
+            borderRadius: 2,
+            "& fieldset": { borderColor: "#ccc" },
+          },
+          "& .MuiInputLabel-root": { color: "#888" },
+        }}
+      />
+    );
+  }
+
   return (
-    <LoadScript
-      googleMapsApiKey="AIzaSyB7uPqMeibItFdpdNa1M4pF0jd6L1xOU7g"
-      libraries={["places"]}
-      loadingElement={<LocationLoader />}
+    <StandaloneSearchBox
+      onLoad={(ref) => (inputRef.current = ref)}
+      onPlacesChanged={handlePlaceChanged}
     >
-      <StandaloneSearchBox
-        onLoad={(ref) => (inputRef.current = ref)}
-        onPlacesChanged={handlePlaceChanged}
-      >
-        {children ? (
-          children
-        ) : (
-          <TextField
-            disabled={loading}
-            fullWidth
-            label="Location"
-            placeholder={value || placeholder || "Location"}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                height: 50,
-                borderRadius: 2,
-                "& fieldset": { borderColor: "#ccc" },
-                "&:hover fieldset": { borderColor: "#2F61BF" },
-                "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
-              },
-              "& .MuiInputLabel-root": { color: "#888" },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: colors.buttoncolor,
-              },
-            }}
-          />
-        )}
-      </StandaloneSearchBox>
-    </LoadScript>
+      {children ? (
+        children
+      ) : (
+        <TextField
+          disabled={loading}
+          fullWidth
+          label="Location"
+          placeholder={value || placeholder || "Location"}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              height: 50,
+              borderRadius: 2,
+              "& fieldset": { borderColor: "#ccc" },
+              "&:hover fieldset": { borderColor: "#2F61BF" },
+              "&.Mui-focused fieldset": { borderColor: "#2F61BF" },
+            },
+            "& .MuiInputLabel-root": { color: "#888" },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: colors.buttoncolor,
+            },
+          }}
+        />
+      )}
+    </StandaloneSearchBox>
   );
 }

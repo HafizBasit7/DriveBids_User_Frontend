@@ -196,22 +196,20 @@ const DamageReportBox = ({
             {description}
           </Typography>
 
-          <Button
+          <Typography
             sx={{
-              textTransform: "none",
               fontFamily: "Inter",
               backgroundColor: colors.buttoncolor,
               fontWeight: 600,
-              borderColor: colors.buttoncolor,
               color: "white",
-              "&:hover": {
-                borderColor: colors.buttoncolor,
-                backgroundColor: `${colors.buttoncolor}10`,
-              },
+              px: 2,
+              py: 1,
+              borderRadius: 1,
+              display: "inline-block",
             }}
           >
             Damage Labels
-          </Button>
+          </Typography>
 
           <Box
             sx={{
