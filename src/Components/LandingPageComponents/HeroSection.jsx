@@ -10,13 +10,10 @@ const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [carVisible, setCarVisible] = useState(false);
   const [stripsVisible, setStripsVisible] = useState(false);
-  const [typedText, setTypedText] = useState("");
-  const [subTypedText, setSubTypedText] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
 
   const mainText = "Bid. Buy. Sell. Your Car Auction Marketplace";
-  const subText =
-    "Sell or buy cars quickly with live, transparent bidding. (don't use the typing effect) ";
+  const subText = "Sell or buy cars quickly with live, transparent bidding.";
   const containerRef = useRef(null);
 
   const navigate = useNavigate();
@@ -24,36 +21,9 @@ const HeroSection = () => {
   // Main animations start immediately
   useEffect(() => {
     setIsVisible(true);
-    startTypingAnimation();
     setCarVisible(true);
     setStripsVisible(true);
   }, []);
-
-  // Text typing effect
-  const startTypingAnimation = () => {
-    let currentIndex = 0;
-    let subIndex = 0;
-
-    // Main title typing
-    const mainTypingInterval = setInterval(() => {
-      if (currentIndex <= mainText.length) {
-        setTypedText(mainText.substring(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(mainTypingInterval);
-
-        // Start subtitle typing after main title
-        const subTypingInterval = setInterval(() => {
-          if (subIndex <= subText.length) {
-            setSubTypedText(subText.substring(0, subIndex));
-            subIndex++;
-          } else {
-            clearInterval(subTypingInterval);
-          }
-        }, 30);
-      }
-    }, 50);
-  };
 
   // Button click animation handler
   const handleButtonClick = () => {
@@ -119,7 +89,7 @@ const HeroSection = () => {
           transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
         }}
       >
-        {/* Text with typing effect */}
+        {/* Text content */}
         <Typography
           variant="h3"
           fontWeight="600"
@@ -130,7 +100,7 @@ const HeroSection = () => {
             position: "relative",
           }}
         >
-          {typedText}
+          {mainText}
         </Typography>
 
         <Typography
@@ -143,7 +113,7 @@ const HeroSection = () => {
             position: "relative",
           }}
         >
-          {subTypedText}
+          {subText}
         </Typography>
 
         {/* Button with click animation */}
