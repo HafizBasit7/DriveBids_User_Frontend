@@ -22,6 +22,7 @@ export function formatAmount(amount) {
 }
 
 export function timeAgo(utcString) {
+ 
   const now = new Date();
   const past = new Date(utcString);
 

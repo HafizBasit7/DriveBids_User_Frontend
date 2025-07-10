@@ -306,7 +306,7 @@ const ChatWindow = () => {
                 mt: 0.5,
               }}
             >
-              {timeAgo(msg.createdAt)}
+              {timeAgo(msg.createdAt || new Date().toISOString())}
             </Typography>
           </Box>
 
