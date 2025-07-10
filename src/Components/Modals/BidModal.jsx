@@ -108,6 +108,10 @@ const BidModal = ({ open, onClose, car }) => {
               if (parseInt(e.target.value) > MAX_SAFE_INTEGER) {
                 setBid(MAX_SAFE_INTEGER);
               } else {
+                if (e.target.value === "") {
+                  setBid(0);
+                return;
+                }
                 setBid(parseInt(e.target.value));
               }
             }}
