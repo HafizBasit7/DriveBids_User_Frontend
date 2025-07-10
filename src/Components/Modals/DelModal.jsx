@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogActions, Button, Typography } from '@mui/m
 import CloseIcon from "@mui/icons-material/Close";
 import DealsBanner from '../HomePageComponents/DealBanner';
 
-const DeleteAdModal = ({ open, handleClose, handleDelete }) => {
+const DeleteAdModal = ({ad, open, handleClose, handleDelete }) => {
   return (
     <Dialog
       open={open}
@@ -20,7 +20,7 @@ const DeleteAdModal = ({ open, handleClose, handleDelete }) => {
     >
       <DialogContent sx={{ px: 2, py: 2, textAlign: 'center' }}>
         <DealsBanner
-          title="Delete My Ad"
+          title="Mark as Sold"
           subtitle=""
           buttonText="Close"
           showClose
@@ -33,8 +33,8 @@ const DeleteAdModal = ({ open, handleClose, handleDelete }) => {
           }
         />
         <Typography variant="body1" sx={{ my: 6 }}>
-          Are you sure you want to delete your ad for the car <b>Volkswagen Passat</b><br />
-          Reg No: <b>ES44WD</b>
+          Are you sure you want to mark your ad <b>{ad.title} {ad.model}</b> as <b>sold?</b> This will make your ad unlisted and auction will be ended immediately. <br />
+          Reg No: <b>{ad.regNo}</b>
         </Typography>
       </DialogContent>
 
@@ -44,7 +44,7 @@ const DeleteAdModal = ({ open, handleClose, handleDelete }) => {
           variant="contained"
           sx={{ backgroundColor: '#3B61CF', px: 3, py: 1, fontFamily: "Inter" }}
         >
-          Delete Ad
+          I confirm, Mark as Sold
         </Button>
       </DialogActions>
     </Dialog>

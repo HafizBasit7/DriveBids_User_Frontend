@@ -14,7 +14,6 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import SpeedIcon from "@mui/icons-material/Speed";
 import SettingsIcon from "@mui/icons-material/Settings";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 import cardarrow from "../../assets/SVG/cardarrow.SVG";
 import colors from "../../Style/color";
@@ -22,12 +21,12 @@ import { useNavigate } from "react-router-dom";
 import DeleteAdModal from "../Modals/DelModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleWatchList } from "../../api/calls/watchlist";
-import { deleteAd } from "../../api/calls/car";
+  import { markAsSold } from "../../api/calls/car";
 import { calculateTimeLeft, formatAmount } from "../../utils/utils";
 import {
   LocalGasStation,
   PaletteOutlined,
-  PrecisionManufacturing,
+  PrecisionManufacturing,CheckCircle
 } from "@mui/icons-material";
 import { useAuth } from "../../context/auth.context";
 import toast from "react-hot-toast";
@@ -89,20 +88,20 @@ const CarCard = ({
     },
   });
 
-  const deleteAdMutation = useMutation({
-    mutationFn: deleteAd,
+  const markAsSoldMutation = useMutation({
+    mutationFn: markAsSold,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["myAds"] });
-      toast.success("Ad deleted successfully");
+      toast.success("Ad marked as sold successfully");
       setOpenDelete(false);
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to delete ad");
+      toast.error(error.message || "Failed to mark ad as sold");
     },
   });
 
   const handleDeleteAd = () => {
-    deleteAdMutation.mutate(ad._id);
+    markAsSoldMutation.mutate(ad._id);
   };
 
   const isCarInWatchList =
@@ -171,8 +170,9 @@ const CarCard = ({
         />
 
         {/* Delete Icon - Only show on My Ads page */}
-        {isFromMyAds && (
+        {(isFromMyAds && ad.status !== "sold") && (
           <IconButton
+
             sx={{
               position: "absolute",
               top: 10,
@@ -188,7 +188,7 @@ const CarCard = ({
             }}
             onClick={() => setOpenDelete(true)}
           >
-            <DeleteIcon />
+            <CheckCircle />
           </IconButton>
         )}
 
@@ -323,6 +323,8 @@ const CarCard = ({
             sx={{
               fontWeight: 900,
               borderRadius: 2,
+              bgcolor: "#F3DCE1",
+              color: "#B3261E",
               p: 0.5,
               fontSize: 12,
               height: 25,
@@ -381,6 +383,7 @@ const CarCard = ({
 
       <DeleteAdModal
         open={openDelete}
+        ad={ad}
         handleClose={() => setOpenDelete(false)}
         handleDelete={handleDeleteAd}
       />

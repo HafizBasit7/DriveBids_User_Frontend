@@ -439,9 +439,12 @@ export const getCompletedDeals = async (page = 1, limit = 10, type = "buy") => {
   }
 };
 
-export const deleteAd = async (carId) => {
+export const markAsSold = async (carId) => {
   try {
-    const result = await apiClient.delete(`/car/${carId}`);
+    
+    
+    const result = await apiClient.delete(`/car/${carId}/markSold`);
+    console.log(result.data);
     const resultData = result.data;
 
     if (!resultData.status) {
