@@ -19,7 +19,10 @@ const SimilarCars = ({ make, carId }) => {
   });
 
   const cars = data?.data.cars;
-  const filteredCars = cars?.filter((car) => car._id !== carId);
+   // Filter out same carId and undefined cars
+  const filteredCars = cars.filter(
+    (car) => car && car._id && car._id !== carId
+  );
 
   return (
     <>

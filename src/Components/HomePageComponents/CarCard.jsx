@@ -39,6 +39,8 @@ const CarCard = ({
   isFromCompletedDeals = false,
   isFromMyAds = false,
 }) => {
+  if (!ad || !ad._id) return null;
+
   const navigate = useNavigate();
   const { authState } = useAuth();
   const [openDelete, setOpenDelete] = useState(false);

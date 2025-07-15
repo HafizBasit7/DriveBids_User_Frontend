@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import colors from "../../Style/color";
 
-const DealsBanner = ({ title, subtitle, buttonText, onClick, onClose, icon }) => {
+const DealsBanner = ({ title, subtitle, buttonText, onClick, onClose, icon, isFromCarDetails = false }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); 
 
@@ -66,6 +66,7 @@ const DealsBanner = ({ title, subtitle, buttonText, onClick, onClose, icon }) =>
           }}
         />
       )}
+      {isFromCarDetails==false && (
 <Box
   sx={{
     backgroundColor: colors.buttoncolor,
@@ -112,7 +113,7 @@ const DealsBanner = ({ title, subtitle, buttonText, onClick, onClose, icon }) =>
   >
     {buttonText}
   </Typography>
-</Box>
+</Box>)}
 
 
     </Box>

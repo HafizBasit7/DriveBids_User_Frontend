@@ -27,6 +27,8 @@ import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import { getCarBiddingHistory } from "../../api/calls/car";
 
 const CarSlider = ({ car }) => {
+  const [isVerticalVideo, setIsVerticalVideo] = useState(false);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -226,22 +228,27 @@ const CarSlider = ({ car }) => {
               ref={videoRef}
               src={mediaItems[currentIndex]}
               style={{
-                width: "100%",
-                height: { xs: "250px", sm: "350px", md: 480 },
-                objectFit: "cover",
-                borderRadius: 8,
+                width: isVerticalVideo ? "auto" : "100%",
+  height: isVerticalVideo ? "480px" : (typeof window !== "undefined" && window.innerWidth < 600 ? "250px" : "350px"),
+  objectFit: isVerticalVideo ? "contain" : "cover",
+  maxWidth: "100%",
+  borderRadius: 8,
+  display: "block",
+  margin: "0 auto",
               }}
               onClick={handleImageClick}
               muted
               loop
               autoPlay
               playsInline
-              onLoadedData={() => {
-                if (videoRef.current) {
-                  videoRef.current.play();
-                  setIsPlaying(true);
-                }
-              }}
+             onLoadedData={() => {
+  if (videoRef.current) {
+    const { videoWidth, videoHeight } = videoRef.current;
+    setIsVerticalVideo(videoHeight > videoWidth); // Detect orientation
+    videoRef.current.play();
+    setIsPlaying(true);
+  }
+}}
             />
           </Box>
         ) : (

@@ -6,7 +6,7 @@ import {
   Avatar,
   Popover,
   Badge,
-  CircularProgress,
+  Skeleton ,
 } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -23,17 +23,25 @@ const Notifications = () => {
   const loaderRef = useRef();
   const observer = useRef();
   const queryClient = useQueryClient();
+  const [loadingOnOpen, setLoadingOnOpen] = useState(false);
 
-  const handleOpen = (event) => setAnchorEl(event.currentTarget);
+
+  const handleOpen = (event) => {
+  setAnchorEl(event.currentTarget);
+ setLoadingOnOpen(true); // force show loader
+};
+
   const handleClose = () => setAnchorEl(null);
 
   // Notifications query
   const {
     data,
     isLoading: messagesLoading,
+     isFetching,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+   
   } = useInfiniteQuery({
     queryKey: ['notifications'],
     queryFn: ({ pageParam = 1 }) => getMyNotifications(pageParam, LIMIT),
@@ -42,6 +50,7 @@ const Notifications = () => {
         ? allPages.length + 1
         : undefined;
     },
+     enabled: open, // ✅ prevent auto-loading on page render
     staleTime: 1000 * 30,
   });
 
@@ -147,6 +156,13 @@ const Notifications = () => {
     }
   };
 
+  useEffect(() => {
+  if (open && isFetching === false) {
+    setLoadingOnOpen(false);
+  }
+}, [isFetching, open]);
+
+
   return (
     <Box>
       <IconButton onClick={handleOpen}>
@@ -167,6 +183,7 @@ const Notifications = () => {
           sx={{
             width: 320,
             maxHeight: 400,
+            minHeight: 300, // ✅ fix height
             overflowY: "auto",
             bgcolor: "white",
             borderRadius: 2,
@@ -185,73 +202,112 @@ const Notifications = () => {
             <Typography variant="h6">Notifications</Typography>
           </Box>
 
-          {notifications.length === 0 && !messagesLoading ? (
-            <Box sx={{ px: 2, py: 3, textAlign: "center" }}>
-              <Typography variant="body2" color="text.secondary">
-                No notifications yet
+{loadingOnOpen ? (
+  <Box sx={{ px: 1 }}>
+    {[...Array(5)].map((_, idx) => (
+      <Box
+        key={idx}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          py: 1,
+          gap: 1,
+          borderBottom: "1px solid #f0f0f0",
+        }}
+      >
+        <Skeleton variant="circular" width={40} height={40} />
+        <Box sx={{ flex: 1 }}>
+          <Skeleton variant="text" width="60%" height={20} />
+          <Skeleton variant="text" width="80%" height={18} />
+          <Skeleton variant="text" width="40%" height={16} />
+        </Box>
+      </Box>
+    ))}
+  </Box>
+) : notifications.length === 0 ? (
+  <Box
+    sx={{
+      flex: 1,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+      px: 2,
+    }}
+  >
+    <Typography variant="body2" color="text.secondary">
+      No notifications yet
+    </Typography>
+  </Box>
+) : (
+
+      <>
+        {notifications.map((notification) => (
+          <Box
+            onClick={() => handleNotiClick(notification)}
+            key={notification._id}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              px: 1,
+              py: 1,
+              bgcolor: !notification.isRead ? "#E9F2FF" : "white",
+              borderBottom: "1px solid #f0f0f0",
+              cursor: "pointer",
+              "&:hover": { bgcolor: "#f5f5f5" },
+            }}
+          >
+            <Avatar
+              src={
+                notification.user.imgUrl ||
+                "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+              }
+              sx={{ width: 40, height: 40, mr: 1 }}
+            />
+            <Box sx={{ flex: 1 }}>
+              <Typography fontWeight="bold" sx={{ fontSize: 14 }}>
+                {notification.user.name}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ fontSize: 12 }}
+              >
+                {notification.body}
+              </Typography>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ fontSize: 12 }}
+              >
+                {timeAgo(notification.createdAt)}
               </Typography>
             </Box>
-          ) : (
-            notifications.map((notification) => (
-              <Box
-                onClick={() => handleNotiClick(notification)}
-                key={notification._id}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  px: 1,
-                  py: 1,
-                  bgcolor: !notification.isRead ? "#E9F2FF" : "white",
-                  borderBottom: "1px solid #f0f0f0",
-                  cursor: "pointer",
-                  "&:hover": { bgcolor: "#f5f5f5" },
-                }}
-              >
-                <Avatar
-                  src={
-                    notification.user.imgUrl ||
-                    "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
-                  }
-                  sx={{ width: 40, height: 40, mr: 1 }}
-                />
-                <Box sx={{ flex: 1 }}>
-                  <Typography fontWeight="bold" sx={{ fontSize: 14 }}>
-                    {notification.user.name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ fontSize: 12 }}
-                  >
-                    {notification.body}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    sx={{ fontSize: 12 }}
-                  >
-                    {timeAgo(notification.createdAt)}
-                  </Typography>
-                </Box>
-              </Box>
-            ))
-          )}
+          </Box>
+        ))}
 
-          {hasNextPage && open && (
-            <Box
-              ref={loaderRef}
-              sx={{
-                height: 30,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <CircularProgress size={20} />
-            </Box>
-          )}
-        </Box>
-      </Popover>
+       {hasNextPage && open && (
+  <Box
+    ref={loaderRef}
+    sx={{
+      py: 1,
+      px: 2,
+    }}
+  >
+    <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+      <Skeleton variant="circular" width={40} height={40} />
+      <Box sx={{ flex: 1 }}>
+        <Skeleton width="80%" height={12} />
+        <Skeleton width="60%" height={10} />
+      </Box>
+    </Box>
+  </Box>
+)}
+
+      </>
+    )}
+  </Box>
+</Popover>
     </Box>
   );
 };

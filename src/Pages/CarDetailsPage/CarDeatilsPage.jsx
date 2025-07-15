@@ -42,7 +42,7 @@ const SimilarCars = ({ make, carId }) => {
   return (
     <>
       <Box sx={{ width: "100%", mt: 3 }}>
-        <DealsBanner title="Similar Cars" buttonText={make} />
+        <DealsBanner title="Similar Cars" buttonText={make} isFromCarDetails = {true}/>
       </Box>
       <Box
         sx={{
