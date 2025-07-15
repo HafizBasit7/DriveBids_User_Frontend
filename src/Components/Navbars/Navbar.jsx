@@ -9,14 +9,18 @@ import {
   List,
   ListItem,
   ListItemText,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Logosvg from "../../assets/SVG/Mainlogo.svg";
+import Logosvg from "../../assets/Png/Logo.png";
 import colors from "../../Style/color";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth.context";
 
 const Navbar = ({ howItWorksRef }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // or 'md' for tablets
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { authState } = useAuth();
@@ -37,9 +41,17 @@ const Navbar = ({ howItWorksRef }) => {
         }}
       >
         <Toolbar sx={{ justifyContent: "space-between", px: 3 }}>
-          <Box>
-            <img src={Logosvg} alt="DriveBidz Logo" style={{ height: 60 }} />
-          </Box>
+         <Box>
+      <Box
+        component="img"
+        src={Logosvg}
+        alt="DriveBidz Logo"
+        sx={{
+          height: isMobile ? 150 : 130,     // 50px on small screens, 100px on larger
+          width: 'auto',
+        }}
+      />
+    </Box>
 
           <Box
             sx={{

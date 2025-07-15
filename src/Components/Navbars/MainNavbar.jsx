@@ -18,7 +18,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Notifications from "../Modals/Notification";
 import ProfileMenu from "../Modals/Profilemenu";
 import { useNavigate } from "react-router-dom";
-import Logosvg from "../../assets/SVG/Mainlogo.svg";
+import Logosvg from "../../assets/Png/Logo.png";
 import colors from "../../Style/color";
 import MobileSidebar from "./Mobilesidebar";
 import { useAuth } from "../../context/auth.context";
@@ -142,21 +142,30 @@ const MainNavbar = () => {
           },
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            width: isMobile ? "50px" : "150px", // Reduced width from 200px to 150px
-            px: isMobile ? 1 : 3, // Reduced padding from 7 to 3
-          }}
-        >
-          <img
-            src={Logosvg}
-            alt="DriveBidz Logo"
-            style={{ height: isMobile ? 50 : 62, cursor: "pointer" }}
-            onClick={() => navigate("/home")}
-          />
-        </Box>
+<Box
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    width: isMobile ? "100px" : "200px", // ✅ Increased width for logo space
+    px: isMobile ? 1 : 3,
+  }}
+>
+  <Box
+    component="img"
+    src={Logosvg}
+    alt="DriveBidz Logo"
+    onClick={() => navigate("/home")}
+    sx={{
+      height: { xs: 150, sm: 150 }, // Responsive height
+      width: "auto",
+      maxWidth: "100%",
+      cursor: "pointer",
+    }}
+  />
+</Box>
+
+
+
 
         <Box
           sx={{
