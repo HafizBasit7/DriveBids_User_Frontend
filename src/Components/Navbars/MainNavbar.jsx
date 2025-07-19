@@ -33,7 +33,7 @@ const MainNavbar = () => {
   const locationInputRef = useRef(null);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Back to "sm" so laptops show desktop version
+  const isMobile = useMediaQuery("(max-width:730px)"); // Custom breakpoint at 730px
   const isTablet = useMediaQuery(theme.breakpoints.down("lg"));
   const navigate = useNavigate();
   const { authState, dispatch } = useAuth();
@@ -125,31 +125,29 @@ const MainNavbar = () => {
           alignItems: "center",
           width: "100%",
           height: { xs: "70px", sm: "75px", md: "80px" }, // Responsive height
-          background: "linear-gradient(90deg, #F7DD2F 38%, white 30%)",
+          background: "#F7DD2F",
           borderRadius: 3,
-          [theme.breakpoints.up("sm")]: {
-            "&::before": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: "29%",
-              width: "11%",
-              borderRight: "2px solid #dbdbdb",
-              backgroundColor: "white",
-              transform: "skewX(45deg)",
-              zIndex: 2,
-            },
-          },
         }}
       >
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            width: { xs: "80px", sm: "120px", md: "160px", lg: "200px" }, // Better responsive width
-            px: { xs: 1, sm: 2, md: 3 },
-            minWidth: { xs: "80px", sm: "120px", md: "160px", lg: "200px" }, // Ensure minimum width
+            width: {
+              xs: "60px",
+              sm: "80px",
+              md: "80px",
+              lg: "140px",
+              xl: "180px",
+            }, // Responsive width
+            px: { xs: 0.5, sm: 1, md: 1, lg: 2.5, xl: 3 },
+            minWidth: {
+              xs: "60px",
+              sm: "80px",
+              md: "80px",
+              lg: "140px",
+              xl: "180px",
+            }, // Responsive minimum width
           }}
         >
           <Box
@@ -158,7 +156,7 @@ const MainNavbar = () => {
             alt="DriveBidz Logo"
             onClick={() => navigate("/home")}
             sx={{
-              height: { xs: 120, sm: 130, md: 140, lg: 150 }, // Better responsive height
+              height: { xs: 80, sm: 100, md: 120, lg: 140 }, // Much smaller on small screens
               width: "auto",
               maxWidth: "100%",
               cursor: "pointer",
@@ -174,25 +172,23 @@ const MainNavbar = () => {
             top: 0,
             height: "100%",
             width: {
-              xs: "70%",
-              sm: "68%",
-              md: "65%",
-              lg: "63%",
-            }, // Better responsive width distribution
+              xs: "80%",
+              sm: "75%",
+              md: "75%",
+              lg: "68%",
+              xl: "64%",
+            }, // Responsive width for tabs section
             display: "flex",
             alignItems: "center",
             gap: { xs: 0.2, sm: 0.3, md: 0.5, lg: 1 },
             justifyContent: "flex-end",
             borderRadius: 2,
-            border: isMobile ? "none" : "2px solid #dbdbdb",
-            borderLeft: "none",
-            backgroundColor: isMobile ? colors.yellowbackground : "white",
+            border: "none",
+            backgroundColor: "#F7DD2F",
             paddingX: { xs: 0.2, sm: 0.3, md: 0.5, lg: 1 },
             pr: { xs: 0.3, sm: 0.5, md: 1, lg: 1.5 },
             zIndex: 1,
-            clipPath: isMobile
-              ? "none"
-              : "polygon(-5% 0, 100% 0, 100% 100%, -5% 100%)",
+            clipPath: "none",
           }}
         >
           {!isMobile &&
@@ -225,50 +221,12 @@ const MainNavbar = () => {
                 gap: { xs: 0.2, sm: 0.3, md: 0.5 },
               }}
             >
-              {/* Compact Location button */}
-              {!isMobile && !showLocationInput && (
-                <Box
-                  onClick={handleLocationClick}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    borderRadius: 2,
-                    px: { xs: 0.6, sm: 0.8, md: 1 },
-                    py: { xs: 0.4, sm: 0.5, md: 0.6 },
-                    backgroundColor: "white",
-                    cursor: "pointer",
-                    minWidth: "auto",
-                    maxWidth: { xs: 80, sm: 90, md: 100 },
-                    transition: "all 0.2s ease",
-                  }}
-                >
-                  <LocationOnIcon
-                    sx={{
-                      color: "#333",
-                      fontSize: { xs: 14, sm: 16, md: 18 },
-                      mr: { xs: 0.2, sm: 0.3 },
-                      mb: { xs: 0.2, sm: 0.3 },
-                    }}
-                  />
-                  <Typography
-                    noWrap
-                    sx={{
-                      fontSize: { xs: "0.7rem", sm: "0.8rem", md: "0.9rem" },
-                      color: "#333",
-                      textDecoration: "underline",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {getLocationDisplayName()}
-                  </Typography>
-                </Box>
-              )}
-
-              <Fade in={showLocationInput}>
+              {/* Location Input - Full on desktop, icon on mobile */}
+              {!isMobile ? (
                 <Box
                   sx={{
                     position: "relative",
-                    display: showLocationInput ? "block" : "none",
+                    display: "block",
                   }}
                 >
                   <LocationInput handleChange={handleLocationChange}>
@@ -316,22 +274,28 @@ const MainNavbar = () => {
                     </Box>
                   </LocationInput>
                 </Box>
-              </Fade>
+              ) : (
+                <IconButton
+                  onClick={handleLocationClick}
+                  sx={{
+                    color: "#333",
+                    "&:hover": {
+                      backgroundColor: "rgba(0,0,0,0.04)",
+                    },
+                  }}
+                >
+                  <LocationOnIcon />
+                </IconButton>
+              )}
 
-              {/* Compact Search button */}
+              {/* Search button right after location */}
               {!isMobile && !showSearchInput && (
                 <IconButton
                   onClick={handleSearchClick}
                   sx={{
-                    border: "1px solid #eaeaea",
-                    borderRadius: 2,
-                    backgroundColor: "white",
-                    p: { xs: 0.8, sm: 1 },
                     color: "#333",
-                    transition: "all 0.2s ease",
                     "&:hover": {
-                      borderColor: "#ddd",
-                      boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                      backgroundColor: "rgba(0,0,0,0.04)",
                     },
                   }}
                 >
@@ -392,21 +356,9 @@ const MainNavbar = () => {
             </Box>
           </ClickAwayListener>
 
-          {/* Mobile location and search handling */}
+          {/* Mobile search handling */}
           {isMobile && (
             <>
-              <IconButton
-                onClick={handleLocationClick}
-                sx={{
-                  color: "#333",
-                  "&:hover": {
-                    backgroundColor: "rgba(0,0,0,0.04)",
-                  },
-                }}
-              >
-                <LocationOnIcon />
-              </IconButton>
-
               <IconButton
                 onClick={handleSearchClick}
                 sx={{
