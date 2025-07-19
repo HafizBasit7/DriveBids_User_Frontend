@@ -134,7 +134,7 @@ const MainNavbar = () => {
               top: 0,
               bottom: 0,
               left: "29%",
-              width: "10%",
+              width: "11%",
               borderRight: "2px solid #dbdbdb",
               backgroundColor: "white",
               transform: "skewX(45deg)",
