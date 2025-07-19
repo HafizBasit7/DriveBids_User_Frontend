@@ -33,7 +33,8 @@ const MainNavbar = () => {
   const locationInputRef = useRef(null);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Back to "sm" so laptops show desktop version
+  const isTablet = useMediaQuery(theme.breakpoints.down("lg"));
   const navigate = useNavigate();
   const { authState, dispatch } = useAuth();
   const showSearchInput = authState.searchOpen;
@@ -123,17 +124,17 @@ const MainNavbar = () => {
           display: "flex",
           alignItems: "center",
           width: "100%",
-          height: "80px",
+          height: { xs: "70px", sm: "75px", md: "80px" }, // Responsive height
           background: "linear-gradient(90deg, #F7DD2F 38%, white 30%)",
           borderRadius: 3,
-          [theme.breakpoints.up("md")]: {
+          [theme.breakpoints.up("sm")]: {
             "&::before": {
               content: '""',
               position: "absolute",
               top: 0,
               bottom: 0,
-              left: "33%",
-              width: "8%",
+              left: "29%",
+              width: "10%",
               borderRight: "2px solid #dbdbdb",
               backgroundColor: "white",
               transform: "skewX(45deg)",
@@ -142,30 +143,29 @@ const MainNavbar = () => {
           },
         }}
       >
-<Box
-  sx={{
-    display: "flex",
-    alignItems: "center",
-    width: isMobile ? "100px" : "200px", // ✅ Increased width for logo space
-    px: isMobile ? 1 : 3,
-  }}
->
-  <Box
-    component="img"
-    src={Logosvg}
-    alt="DriveBidz Logo"
-    onClick={() => navigate("/home")}
-    sx={{
-      height: { xs: 150, sm: 150 }, // Responsive height
-      width: "auto",
-      maxWidth: "100%",
-      cursor: "pointer",
-    }}
-  />
-</Box>
-
-
-
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            width: { xs: "80px", sm: "120px", md: "160px", lg: "200px" }, // Better responsive width
+            px: { xs: 1, sm: 2, md: 3 },
+            minWidth: { xs: "80px", sm: "120px", md: "160px", lg: "200px" }, // Ensure minimum width
+          }}
+        >
+          <Box
+            component="img"
+            src={Logosvg}
+            alt="DriveBidz Logo"
+            onClick={() => navigate("/home")}
+            sx={{
+              height: { xs: 120, sm: 130, md: 140, lg: 150 }, // Better responsive height
+              width: "auto",
+              maxWidth: "100%",
+              cursor: "pointer",
+              objectFit: "contain",
+            }}
+          />
+        </Box>
 
         <Box
           sx={{
@@ -173,19 +173,26 @@ const MainNavbar = () => {
             right: 0,
             top: 0,
             height: "100%",
-            width: { xs: "65%", md: "63%" }, // Increased width from 63% to 68%
+            width: {
+              xs: "70%",
+              sm: "68%",
+              md: "65%",
+              lg: "63%",
+            }, // Better responsive width distribution
             display: "flex",
             alignItems: "center",
-            gap: isMobile ? 1 : 1.5,
+            gap: { xs: 0.2, sm: 0.3, md: 0.5, lg: 1 },
             justifyContent: "flex-end",
             borderRadius: 2,
             border: isMobile ? "none" : "2px solid #dbdbdb",
             borderLeft: "none",
             backgroundColor: isMobile ? colors.yellowbackground : "white",
-            paddingX: 1,
-            pr: 2,
+            paddingX: { xs: 0.2, sm: 0.3, md: 0.5, lg: 1 },
+            pr: { xs: 0.3, sm: 0.5, md: 1, lg: 1.5 },
             zIndex: 1,
-            clipPath: "polygon(-5% 0, 100% 0, 100% 100%, -5% 100%)",
+            clipPath: isMobile
+              ? "none"
+              : "polygon(-5% 0, 100% 0, 100% 100%, -5% 100%)",
           }}
         >
           {!isMobile &&
@@ -195,9 +202,11 @@ const MainNavbar = () => {
                 sx={{
                   color: "black",
                   textTransform: "none",
-                  fontSize: 13,
+                  fontSize: { xs: 9, sm: 10, md: 11, lg: 12 }, // Even smaller text
                   fontFamily: "Inter",
                   fontWeight: 500,
+                  px: { xs: 0.2, sm: 0.3, md: 0.5, lg: 1 }, // Even more reduced padding
+                  mx: { xs: 0.1, sm: 0.2, md: 0.3, lg: 0.5 }, // Even more reduced margin
                   "&:hover": {
                     backgroundColor: "rgba(0,0,0,0.04)",
                   },
@@ -209,7 +218,13 @@ const MainNavbar = () => {
             ))}
 
           <ClickAwayListener onClickAway={closeAllInputs}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: { xs: 0.2, sm: 0.3, md: 0.5 },
+              }}
+            >
               {/* Compact Location button */}
               {!isMobile && !showLocationInput && (
                 <Box
@@ -217,28 +232,28 @@ const MainNavbar = () => {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    // border: "1px solid #eaeaea",
                     borderRadius: 2,
-                    px: 1.5,
-                    py: 0.8,
+                    px: { xs: 0.6, sm: 0.8, md: 1 },
+                    py: { xs: 0.4, sm: 0.5, md: 0.6 },
                     backgroundColor: "white",
                     cursor: "pointer",
                     minWidth: "auto",
-                    maxWidth: 120,
+                    maxWidth: { xs: 80, sm: 90, md: 100 },
                     transition: "all 0.2s ease",
-                    // "&:hover": {
-                    //   borderColor: "#ddd",
-                    //   boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
-                    // }
                   }}
                 >
                   <LocationOnIcon
-                    sx={{ color: "#333", fontSize: 20, mr: 0.5, mb: 0.5 }}
+                    sx={{
+                      color: "#333",
+                      fontSize: { xs: 14, sm: 16, md: 18 },
+                      mr: { xs: 0.2, sm: 0.3 },
+                      mb: { xs: 0.2, sm: 0.3 },
+                    }}
                   />
                   <Typography
                     noWrap
                     sx={{
-                      fontSize: "0.95rem",
+                      fontSize: { xs: "0.7rem", sm: "0.8rem", md: "0.9rem" },
                       color: "#333",
                       textDecoration: "underline",
                       fontWeight: 500,
@@ -264,16 +279,20 @@ const MainNavbar = () => {
                         alignItems: "center",
                         border: "1px solid #eaeaea",
                         borderRadius: 2,
-                        px: 1.5,
-                        py: 1,
+                        px: { xs: 1, sm: 1.5 },
+                        py: { xs: 0.8, sm: 1 },
                         backgroundColor: "white",
-                        width: 220,
+                        width: { xs: 180, sm: 200, md: 220 },
                         boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                       }}
                       ref={locationInputRef}
                     >
                       <LocationOnIcon
-                        sx={{ color: "#333", fontSize: 20, mr: 1 }}
+                        sx={{
+                          color: "#333",
+                          fontSize: { xs: 18, sm: 20 },
+                          mr: { xs: 0.5, sm: 1 },
+                        }}
                       />
                       <Box
                         component="input"
@@ -283,7 +302,7 @@ const MainNavbar = () => {
                           outline: "none",
                           flex: 1,
                           minWidth: 0,
-                          fontSize: "0.9rem",
+                          fontSize: { xs: "0.8rem", sm: "0.9rem" },
                         }}
                         autoFocus
                       />
@@ -307,7 +326,7 @@ const MainNavbar = () => {
                     border: "1px solid #eaeaea",
                     borderRadius: 2,
                     backgroundColor: "white",
-                    p: 1,
+                    p: { xs: 0.8, sm: 1 },
                     color: "#333",
                     transition: "all 0.2s ease",
                     "&:hover": {
@@ -316,7 +335,7 @@ const MainNavbar = () => {
                     },
                   }}
                 >
-                  <SearchIcon sx={{ fontSize: 20 }} />
+                  <SearchIcon sx={{ fontSize: { xs: 18, sm: 20 } }} />
                 </IconButton>
               )}
 
@@ -329,14 +348,20 @@ const MainNavbar = () => {
                     alignItems: "center",
                     border: "1px solid #eaeaea",
                     borderRadius: 2,
-                    px: 1.5,
-                    py: 0.8,
+                    px: { xs: 1, sm: 1.5 },
+                    py: { xs: 0.6, sm: 0.8 },
                     backgroundColor: "white",
-                    width: 220,
+                    width: { xs: 180, sm: 200, md: 220 },
                     boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
                   }}
                 >
-                  <SearchIcon sx={{ color: "#333", fontSize: 20, mr: 1 }} />
+                  <SearchIcon
+                    sx={{
+                      color: "#333",
+                      fontSize: { xs: 18, sm: 20 },
+                      mr: { xs: 0.5, sm: 1 },
+                    }}
+                  />
                   <Box
                     component="input"
                     placeholder="Search cars..."
@@ -351,7 +376,7 @@ const MainNavbar = () => {
                       outline: "none",
                       flex: 1,
                       minWidth: 0,
-                      fontSize: "0.9rem",
+                      fontSize: { xs: "0.8rem", sm: "0.9rem" },
                     }}
                     ref={searchInputRef}
                   />
