@@ -119,6 +119,9 @@ const TransparencySection = () => {
                       p: 3,
                       minHeight: "365px",
                       borderRadius: 3,
+                      display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
                       backgroundColor: "rgba(255, 255, 255, 0.7)",
                       backdropFilter: "blur(10px)",
                       border: "1px solid rgba(255, 255, 255, 0.3)",
@@ -134,7 +137,7 @@ const TransparencySection = () => {
                     <Typography
                       sx={{
                         fontWeight: "bold",
-                        fontSize: 16,
+                        fontSize: 18,
                         fontFamily: "Inter",
                         color: colors.buttoncolor,
                         mb: 2,

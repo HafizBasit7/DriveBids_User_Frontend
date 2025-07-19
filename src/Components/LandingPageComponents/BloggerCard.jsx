@@ -2,32 +2,39 @@ import React, { useEffect, useRef } from "react";
 import { Box, Typography, Avatar } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import avatar1 from "../../assets/Png/avtarimg.jfif";
-import avatar2 from "../../assets/Png/homeimg2.jfif";
-import avatar3 from "../../assets/Png/homeimg3.jfif";
+// import avatar1 from "../../assets/Png/avtarimg.jfif";
+// import avatar2 from "../../assets/Png/homeimg2.jfif";
+// import avatar3 from "../../assets/Png/homeimg3.jfif";
 import { motion, useAnimation } from "framer-motion";
+import avatar1 from "../../assets/Png/avatar_sara.jpg";
+import avatar2 from "../../assets/Png/avatar_noor.jpg";
+import avatar3 from "../../assets/Png/avatar_mohammad.jpg";
+
 
 const testimonials = [
   {
-    name: "Ahmed Al-Kuwaiti",
-    role: "Car Seller",
+    name: "Sara Thompson",
+    role: "Verified Buyer",
     rating: 5,
-    review: "Sold my Range Rover in just 2 days! The bidding process was transparent and I got a better price than expected. Highly recommend DriveBids for selling luxury vehicles.",
-    avatar: avatar1
+    review:
+      "As a first-time buyer, I was impressed by how smooth the entire process was. The bidding feature gave me full control, and I love my new car!",
+    avatar: avatar2,
   },
   {
-    name: "Sarah Thompson",
-    role: "First-time Buyer",
+    name: "Mohammad Ahmad",
+    role: "Professional Seller",
     rating: 5,
-    review: "As a first-time car buyer, I was nervous about the process. But DriveBids made it so easy! The detailed car reports and transparent bidding gave me confidence in my purchase.",
-    avatar: avatar2
+    review:
+      "I’ve listed multiple cars on DriveBidz. It’s reliable, attracts serious buyers, and their support team is incredibly responsive.",
+    avatar: avatar3,
   },
   {
-    name: "Mohammed Al-Dubai",
-    role: "Regular Seller",
+    name: "Noor Hajri",
+    role: "First-time Seller",
     rating: 5,
-    review: "I've sold multiple cars through DriveBids. Their inspection process is thorough and the platform attracts serious buyers. The mobile app makes it even easier to manage my listings on the go!",
-    avatar: avatar3
+    review:
+      "I wasn’t sure what to expect, but I sold my car in less than 3 days! I appreciated the detailed vehicle reports and secure transaction.",
+    avatar: avatar1,
   }
 ];
 
@@ -107,10 +114,18 @@ const BloggerCard = ({ index = 0 }) => {
         />
 
         <Box mt={4}>
-          <Typography fontWeight="bold" sx={{ fontSize:18, fontFamily:"Inter" }}>
+          <Typography
+  variant="subtitle1"
+  fontWeight="bold"
+  sx={{ fontFamily: "Inter", color: "#000" }}
+>
             {testimonial.name}
           </Typography>
-          <Typography color="text.secondary" mb={1} sx={{ fontSize:18, fontFamily:"Inter" }}>
+         <Typography
+  variant="body2"
+  color="text.secondary"
+  sx={{ fontFamily: "Inter", mb: 1 }}
+>
             {testimonial.role}
           </Typography>
 

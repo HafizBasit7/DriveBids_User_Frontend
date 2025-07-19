@@ -244,8 +244,8 @@ const FeatureGrid = () => {
           {/* First row with 3 cards */}
           <Grid container spacing={3} sx={{ mb: 3 }}>
             {features.slice(0, 3).map((feature, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <motion.div variants={itemVariants}>
+              <Grid item xs={12} sm={6} md={4} key={index} display="flex">
+                <motion.div style={{ flex: 1 }} variants={itemVariants}>
                   <SliderSellCard
                     title={feature.title}
                     description={feature.description}
@@ -260,16 +260,16 @@ const FeatureGrid = () => {
           <Grid 
             container 
             spacing={3} 
-            sx={{ 
-              justifyContent: "center",
-              "& > .MuiGrid-item": {
-                maxWidth: { xs: "100%", sm: "calc(50% - 12px)", md: "calc(33.33% - 12px)" }
-              }
-            }}
+            // sx={{ 
+            //   justifyContent: "flex-start",
+            //   "& > .MuiGrid-item": {
+            //     maxWidth: { xs: "100%", sm: "calc(50% - 12px)", md: "calc(33.33% - 12px)" }
+            //   }
+            // }}
           >
             {features.slice(3).map((feature, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index + 3}>
-                <motion.div variants={itemVariants}>
+              <Grid item xs={12} sm={6} md={4} key={index + 3} display="flex">
+                <motion.div style={{ flex: 1 }} variants={itemVariants}>
                   <SliderSellCard
                     title={feature.title}
                     description={feature.description}

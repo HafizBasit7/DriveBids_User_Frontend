@@ -18,7 +18,7 @@ const SliderSellCard = ({ title, description, icon }) => {
         minHeight: "240px",
         position: "relative",
         p: 2,
-        boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.15)", // stronger shadow
         transition: "transform 0.3s ease-in-out",
         "&:hover": {
           transform: "translateY(-3px)",

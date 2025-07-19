@@ -9,6 +9,7 @@ import homeimg5 from "../../assets/Png/2.avif";
 import homeimg6 from "../../assets/Png/3.avif";
 
 import { motion, useAnimation } from "framer-motion";
+import { Divider } from "@mui/material";
 
 const sellerSteps = [
   {
@@ -106,8 +107,13 @@ const StepsCard = () => {
         sx={{
           textAlign: "center",
           mb: 1,
-          fontWeight: 600,
-          color: "#000",
+          fontWeight: 700,
+          color:
+            title === "For Sellers"
+              ? "#2F61BF" // blue
+              : title === "For Buyers"
+                ? "#FFA726" // orange
+                : "#000",   // fallback
           fontFamily: "Outfit",
           fontSize: { xs: 24, md: 34 },
         }}
@@ -246,6 +252,16 @@ const StepsCard = () => {
       }}
     >
       {renderSteps(sellerSteps, "For Sellers", "List and Sell With Confidence")}
+      <Divider
+        sx={{
+          my: 4,
+          borderColor: "#E0E0E0", // light grey line
+          borderBottomWidth: 3,
+          width: "60%",
+          mx: "auto",
+          
+        }}
+      />
       {renderSteps(
         buyerSteps,
         "For Buyers",

@@ -46,7 +46,7 @@ const HeroSection = () => {
       sx={{
         minHeight: "100%",
         background: colors.yellowbackground,
-        pt: { xs: 15, md: 2 },
+        pt: { xs: 20, sm: 22, md: 10 },
         py: 5,
         display: "flex",
         flexDirection: { xs: "column", md: "row" },

@@ -10,7 +10,8 @@ import {
   ListItem,
   ListItemText,
   useMediaQuery,
-  useTheme
+  useTheme,
+  Typography
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logosvg from "../../assets/Png/Logo.png";
@@ -38,20 +39,29 @@ const Navbar = ({ howItWorksRef }) => {
           px: { xs: 2, sm: 4, md: 6 },
           py: 2,
           width: "100%",
+          // height:80
         }}
       >
-        <Toolbar sx={{ justifyContent: "space-between", px: 3 }}>
-         <Box>
-      <Box
-        component="img"
-        src={Logosvg}
-        alt="DriveBidz Logo"
-        sx={{
-          height: isMobile ? 150 : 130,     // 50px on small screens, 100px on larger
-          width: 'auto',
-        }}
-      />
-    </Box>
+        <Toolbar sx={{ justifyContent: "space-between", alignItems: "center", px: 3, height:"100%" }}>
+          <Box
+    sx={{
+      height: 80, // Fixed height for the logo container
+      display: "flex",
+      alignItems: "center",
+      // overflow: "hidden",
+    }}
+  >
+            <Box
+              component="img"
+              src={Logosvg}
+              alt="DriveBidz Logo"
+              sx={{
+                height: isMobile ? 160 : 230,     // 50px on small screens, 100px on larger
+                width: 'auto',
+              }}
+            />
+        
+          </Box>
 
           <Box
             sx={{
@@ -98,31 +108,10 @@ const Navbar = ({ howItWorksRef }) => {
             >
               Contact Us
             </Button>
-            <Button
-              sx={{
-                color: "#fff",
-                backgroundColor: colors.buttoncolor,
-                textTransform: "none",
-                fontSize: 13,
-                fontFamily: "Inter",
-                fontWeight: 500,
-                width: "120px",
-                height: "40px",
-                borderRadius: 2,
-                mx: 1,
-                "&:hover": {
-                  backgroundColor: "#1E4BA0",
-                },
-              }}
-              onClick={() => navigate("/ad")}
-            >
-              Start Selling
-            </Button>
-            {!authState.isAuthenticated && (
+            <Box display="flex" alignItems="center" gap={1.5}>
               <Button
                 sx={{
                   color: "#fff",
-                  borderColor: "#2F61BF",
                   backgroundColor: colors.buttoncolor,
                   textTransform: "none",
                   fontSize: 13,
@@ -131,17 +120,41 @@ const Navbar = ({ howItWorksRef }) => {
                   width: "120px",
                   height: "40px",
                   borderRadius: 2,
-                  ml: 3,
+                  // mx: 1,
                   "&:hover": {
-                    borderColor: "#2F61BF",
                     backgroundColor: "#1E4BA0",
                   },
                 }}
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/ad")}
               >
-                Login
+                Start Selling
               </Button>
-            )}
+              {!authState.isAuthenticated && (
+                <Button
+                  sx={{
+                    color: "#fff",
+                    borderColor: "#2F61BF",
+                    backgroundColor: colors.buttoncolor,
+                    textTransform: "none",
+                    fontSize: 13,
+                    fontFamily: "Inter",
+                    fontWeight: 500,
+                    width: "120px",
+                    height: "40px",
+                    borderRadius: 2,
+
+                    // ml: 3,
+                    "&:hover": {
+                      borderColor: "#2F61BF",
+                      backgroundColor: "#1E4BA0",
+                    },
+                  }}
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </Button>
+              )}
+            </Box>
           </Box>
 
           <IconButton
