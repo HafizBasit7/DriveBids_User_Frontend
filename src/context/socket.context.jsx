@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import url from "../api/config";
+import  chatBaseUrl from "../api/config";
 import { useAuth } from "./auth.context";
 import { useQueryClient } from "@tanstack/react-query";
 import { bidApiClient } from "../api/client";
@@ -17,8 +17,10 @@ export default function SocketContextProvider ({children}) {
     //Bid Socket
     useEffect(() => {
         if(authState.isAuthenticated && !bidSocket) {
-            const newSocket = io("wss://srv694651.hstgr.cloud", {
-                path: "/socket.io/drivebidbidding",
+            console.log(chatBaseUrl);
+            
+            const newSocket = io(chatBaseUrl.chatBaseUrl, {
+                // path: "/socket.io/drivebidbidding",
                 reconnection: true,
                 autoConnect: true,
                 reconnectionAttempts: 8,
@@ -64,8 +66,9 @@ export default function SocketContextProvider ({children}) {
     //Chat Socket
     useEffect(() => {
         if(authState.isAuthenticated && !chatSocket) {
-            const newSocket = io("wss://srv694651.hstgr.cloud", {
-                path: "/socket.io/drivebidmessages",
+            console.log(chatBaseUrl);
+            const newSocket = io(chatBaseUrl.chatBaseUrl, {
+                // path: "/socket.io/drivebidmessages",
                 reconnection: true,
                 autoConnect: true,
                 reconnectionAttempts: 8,
