@@ -1,6 +1,6 @@
 export default {
-  baseUrl: "https://srv694651.hstgr.cloud/drivebidapi",
+  baseUrl: "https://drivebidz-api-be-55925510897.us-central1.run.app",
 // baseUrl:"http://localhost:3021",
-  chatBaseUrl: "https://srv694651.hstgr.cloud/drivebidapiV2",
-  bidBaseUrl: "https://srv694651.hstgr.cloud/drivebidapiV1",
+  chatBaseUrl: "https://drivebidz-messages-websocket-55925510897.us-central1.run.app",
+  bidBaseUrl: "https://drivebidz-bidding-websocket-55925510897.us-central1.run.app ",
 };

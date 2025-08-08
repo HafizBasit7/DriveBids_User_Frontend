@@ -5,10 +5,10 @@ export const uploadImage = async (file) => {
 
     console.log("Uploading Image:", file.name);
 
-    const response = await fetch("https://srv694651.hstgr.cloud/storage/upload", {
+    const response = await fetch("https://drivebidz-storage-gcp-55925510897.us-central1.run.app", {
       method: "POST",
       headers: {
-        "x-api-key": "ayzenn09876@", 
+        "x-api-key": "hFEX8aUH1nlHVZlNuchEFNeqCvCLgUsxDGT36NwCM2cSku&PVrd<$lG>", 
       },
       body: formData,
     });
